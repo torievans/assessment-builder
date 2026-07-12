@@ -962,8 +962,36 @@ function deleteQuestion(qid){
   const q=qs.find(q=>q.id===qid);if(!q)return;
   const label=q.text?`"${q.text.slice(0,50)}"`:`Q${qs.indexOf(q)+1}`;
   if(!confirm(`Delete question ${label}?\n\nThis cannot be undone.`))return;
+  const imagePath=q.imagePath||null;
   nuggetState[activeId].questions=qs.filter(q=>q.id!==qid);
   save();renderQuestions();renderSidebar();renderWorkflow();
+  if(imagePath)deleteImageFile(imagePath);
+}
+async function deleteImageFile(imagePath){
+  // imagePath = "question-data/nugget-001-slug/q-1001.png"
+  const parts=imagePath.split('/');if(parts.length<3)return;
+  const filename=parts[parts.length-1];
+  const slug=parts[parts.length-2];
+  // Local deletion via File System Access API
+  if(folderHandle){
+    try{
+      const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:false});
+      const nDir=await qdDir.getDirectoryHandle(slug,{create:false});
+      await nDir.removeEntry(filename);
+    }catch(e){}
+  }
+  // GitHub deletion
+  if(ghToken){
+    try{
+      const base=`https://api.github.com/repos/${ghOwner}/${ghRepo}`;
+      const hdrs={'Authorization':`token ${ghToken}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
+      const r=await fetch(`${base}/contents/${imagePath}`,{headers:hdrs});
+      if(r.ok){
+        const d=await r.json();
+        await fetch(`${base}/contents/${imagePath}`,{method:'DELETE',headers:hdrs,body:JSON.stringify({message:`Delete image ${imagePath}`,sha:d.sha})});
+      }
+    }catch(e){console.error('GitHub image delete failed',e);}
+  }
 }
 
 /* ── Tool panel ── */
