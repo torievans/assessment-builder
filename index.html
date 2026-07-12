@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Year 1 Maths — Assessment Builder</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
@@ -250,6 +251,30 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .batch-del-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:14px;padding:3px 7px;border-radius:5px;transition:color .12s}
 .batch-del-btn:hover{color:var(--red)}
 .batch-actions{display:flex;gap:8px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+/* Toast */
+#save-toast{position:fixed;bottom:24px;right:24px;padding:10px 18px;border-radius:10px;color:#fff;font-size:13px;font-weight:600;font-family:var(--font);z-index:500;display:none;box-shadow:0 4px 16px rgba(0,0,0,.18);pointer-events:none}
+/* Header extras */
+.hbtn-green{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.12);color:#34D399}
+.hbtn-green:hover{background:rgba(16,185,129,.22)}
+.hbtn-save{border-color:rgba(74,143,224,.4);background:rgba(74,143,224,.12);color:#60A5FA}
+.hbtn-save:hover{background:rgba(74,143,224,.22)}
+/* Settings modal */
+.settings-section{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.settings-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#6B7280}
+.settings-input{padding:8px 13px;border-radius:8px;border:1.5px solid #E5E7EB;font-size:13.5px;font-family:var(--font);color:#1A1A2E;background:#F9FAFB;width:100%}
+.settings-input:focus{outline:none;border-color:#4A8FE0;background:#fff}
+.settings-hint{font-size:11.5px;color:#9CA3AF;line-height:1.5}
+.settings-row{display:flex;gap:8px}
+.settings-row .settings-input{flex:1}
+.folder-status{font-size:12px;color:#6B7280;padding:8px 12px;background:#F3F4F6;border-radius:8px;display:flex;align-items:center;gap:6px}
+.folder-status.connected{background:rgba(16,185,129,.08);color:#059669}
+/* Custom question panel */
+.custom-img-drop{border:2px dashed #D1D5DB;border-radius:10px;padding:28px 20px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;background:#FAFBFC}
+.custom-img-drop:hover,.custom-img-drop.drag-over{border-color:#4A8FE0;background:#EFF6FF}
+.custom-img-drop p{font-size:13px;color:#9CA3AF;margin-top:6px}
+.custom-img-drop .drop-icon{font-size:28px}
+.custom-img-preview{max-width:100%;max-height:220px;border-radius:8px;display:block;margin:0 auto}
+.custom-img-clear{background:none;border:none;font-size:11px;color:#EF4444;cursor:pointer;font-family:var(--font);margin-top:6px;display:block;text-align:center;width:100%}
 </style>
 </head>
 <body>
@@ -260,10 +285,14 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
     <p>Select an assessment from the sidebar to view or edit questions</p>
   </div>
   <div class="hdr-space"></div>
+  <button class="hbtn" id="btn-connect" onclick="connectFolder()">📁 Connect folder</button>
+  <button class="hbtn hbtn-save" id="btn-save" onclick="manualSave()" title="Save current nugget to folder + GitHub">💾 Save</button>
+  <button class="hbtn" onclick="openSettings()">⚙️ Settings</button>
   <button class="hbtn" onclick="handleExportImport()">⇅ Export / Import</button>
   <button class="hbtn hbtn-gold" onclick="switchView('export')">🏅 QTI Downloads</button>
   <span class="upload-ctr" id="upload-ctr"><strong>0</strong> of 59 uploaded</span>
 </header>
+<div id="save-toast"></div>
 
 <div class="tabs">
   <button class="tab active" id="tab-builder" onclick="switchTab('builder')">📓 Builder</button>
@@ -297,6 +326,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
           <button class="tool-tab" data-tool="nl" onclick="openTool('nl')">📏 Number Line</button>
           <button class="tool-tab" data-tool="bm" onclick="openTool('bm')">▭ Bar Model</button>
           <button class="tool-tab" data-tool="text" onclick="openTool('text')">✏️ Free Text</button>
+          <button class="tool-tab" data-tool="custom" onclick="openTool('custom')">🖼 Custom Image</button>
         </div>
 
         <!-- ── Number Line panel ── -->
@@ -422,6 +452,31 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
           </div>
         </div>
 
+        <!-- Custom image tool panel -->
+        <div class="tool-panel hidden" id="tool-panel-custom">
+          <div class="form-card">
+            <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px">For questions with a unique image — e.g. a photo, hand-drawn diagram, or screenshot.</p>
+            <div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="custom-q-text" placeholder="e.g. How many squares can you see?"></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="custom-answer" placeholder="e.g. 4"></div>
+            </div>
+            <div style="margin:12px 0 4px">
+              <div class="fc-title">Image</div>
+              <div class="custom-img-drop" id="custom-drop-zone" onclick="document.getElementById('custom-file-input').click()" ondragover="customDragOver(event)" ondragleave="customDragLeave(event)" ondrop="customDrop(event)">
+                <div id="custom-drop-inner">
+                  <div class="drop-icon">🖼</div>
+                  <p>Click to choose or drag an image here</p>
+                </div>
+              </div>
+              <input type="file" id="custom-file-input" accept="image/*" style="display:none" onchange="customFileSelected(this)">
+            </div>
+            <div class="form-actions" style="margin-top:14px">
+              <button class="btn btn-blue" onclick="addToolQuestion('custom')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
         <div class="q-grid" id="q-grid"></div>
       </div>
     </div>
@@ -471,25 +526,301 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
   </div>
 </div>
 
+<!-- Settings modal -->
+<div class="modal-overlay hidden" id="settings-modal" onclick="closeSettings(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-hdr-text"><h2>⚙️ Settings</h2><p>Connect your project folder and GitHub repo for auto-save</p></div>
+      <button class="modal-close" onclick="closeSettings()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-card">
+        <div class="modal-card-title">📁 Project folder</div>
+        <div class="modal-card-desc">Grant access to your local project folder. Questions will be saved as JSON files in <code>data/questions/</code> every time you add or edit a question.</div>
+        <div class="folder-status" id="folder-status-display">Not connected</div>
+        <div style="margin-top:10px">
+          <button class="btn-teal" onclick="connectFolder()">Connect folder</button>
+        </div>
+      </div>
+      <div class="modal-card">
+        <div class="modal-card-title">☁️ GitHub auto-commit</div>
+        <div class="modal-card-desc">Enter your GitHub details to commit question files automatically on every save. Leave blank to skip GitHub sync.</div>
+        <div class="settings-section">
+          <div class="settings-label">GitHub owner / repo</div>
+          <div class="settings-row">
+            <input class="settings-input" id="gh-owner-input" placeholder="torievans" style="flex:1">
+            <span style="align-self:center;color:#9CA3AF;font-weight:700">/</span>
+            <input class="settings-input" id="gh-repo-input" placeholder="assessment-builder" style="flex:2">
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-label">Personal access token</div>
+          <input class="settings-input" id="gh-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+          <div class="settings-hint">Needs <strong>repo</strong> scope. Stored only in this browser — never committed to the repo.</div>
+        </div>
+        <button class="btn-teal" onclick="saveSettings()">Save settings</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-<script src="js/palette.js"></script>
-<script src="js/number-line-renderer.js"></script>
-<script src="js/bar-model-renderer.js"></script>
-<script src="js/utils.js"></script>
-<script src="js/nuggets.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 'use strict';
-
 /* ── Palette & SVG renderers ── */
-/* → js/palette.js */
+const FONT="'Proxima Soft','Nunito','Arial Rounded MT Bold',sans-serif";
+const LABEL_COLOR='#1A1A2E';
+const NL_PAL={grey:'#AAAAAA',red:'#D46B55',orange:'#F5995B',yellow:'#FECC6B',green:'#319377',blue:'#7898F0',purple:'#847AC9',pink:'#FC7E91',dark:'#293039'};
+const NL_SWATCH=['grey','red','orange','yellow','green','blue','purple','pink'];
+const JP_SWATCH=['dark','red','orange','yellow','green','blue','purple','pink'];
+const BM_STROKES=['#D46B55','#F5995B','#FECC6B','#319377','#7898F0','#847AC9','#FC7E91'];
+const BM_FILLS=['#F9DDD9','#FDE8D4','#FEF5D8','#CDE8E1','#DCE4FD','#DDD9F5','#FEDDEA'];
+const BM_TEXTS=['#7A2E1E','#903F08','#976401','#246E59','#0F2F89','#342C6C','#950319'];
 
-/* → js/number-line-renderer.js */
-/* → js/bar-model-renderer.js */
-/* → js/utils.js */
+function resolveNLC(k){return NL_PAL[k]||'#AAAAAA';}
+function numberLineSVG(cfg){
+  const{start,end,partitions,valuesGivenEvery,answer,lineStyle='through',colour,hideFrom,hideTo,
+    jumpFrom,jumpTo,jumpType='single',jumpLabel='',jumpArrow=true,jumpCircle='none',jumpColour='dark',
+    jump2From,jump2To,jump2Type='single',jump2Label='',jump2Arrow=true,jump2Circle='none',jump2Colour='dark'}=cfg;
+  const terminate=lineStyle==='terminate';const C=resolveNLC(colour);
+  const BAR_W=380,pxU=BAR_W/(end-start);
+  const lStep=(!isNaN(valuesGivenEvery)&&valuesGivenEvery>0)?valuesGivenEvery:null;
+  const ansNum=answer?Math.round(parseFloat(answer)*1000)/1000:null;
+  const tStep=partitions>0?(end-start)/partitions:0;const AS=7;
+  let ansAbove=false;
+  if(ansNum!==null&&lStep!==null){const rem=Math.round(((ansNum-start)%lStep)*1e6)/1e6;const onG=Math.abs(rem)<0.001||Math.abs(Math.abs(rem)-lStep)<0.001;if(!onG){const dp=rem*pxU,dn=(lStep-rem)*pxU;ansAbove=Math.min(dp,dn)<20;}}
+  const ansBetween=ansNum!==null&&ansNum>start&&ansNum<end&&tStep>0&&(()=>{const r=Math.round(((ansNum-start)%tStep)*1e6)/1e6;return!(Math.abs(r)<0.001||Math.abs(Math.abs(r)-tStep)<0.001);})();
+  const hasJ=jumpFrom!==undefined&&jumpTo!==undefined&&!isNaN(jumpFrom)&&!isNaN(jumpTo)&&jumpFrom!==jumpTo;
+  const hasJ2=jump2From!==undefined&&jump2To!==undefined&&!isNaN(jump2From)&&!isNaN(jump2To)&&jump2From!==jump2To;
+  let arcH=0;if(hasJ){const sp=Math.abs(jumpTo-jumpFrom)*pxU;arcH=jumpType==='single'?Math.min(sp*0.45,68):Math.min(tStep*pxU*0.6,32);}
+  if(hasJ2){const sp2=Math.abs(jump2To-jump2From)*pxU;const h2=jump2Type==='single'?Math.min(sp2*0.45,68):Math.min(tStep*pxU*0.6,32);arcH=Math.max(arcH,h2);}
+  const arcPadT=(hasJ||hasJ2)?arcH+((jumpLabel||jump2Label)?26:10):0;
+  const hasC=hasJ&&jumpCircle!=='none';const cVal=hasC?(jumpCircle==='start'?jumpFrom:jumpTo):null;
+  const cLen=cVal!==null?String(Math.round(cVal)).length:1;const crMin=cLen<=1?9:11;const cr=hasC?Math.min(Math.max(crMin,Math.floor(pxU*0.32)),18):0;
+  const EXT=terminate?0:20;const PAD_L=terminate?22:8+EXT,PAD_R=terminate?22:8+EXT;
+  const PAD_T=Math.max((ansAbove||ansBetween)?34:16,arcPadT);
+  const PAD_B=hasC?Math.max(36,Math.ceil(18+cr+6)):36;
+  const W=BAR_W+PAD_L+PAD_R,LY=PAD_T,TH=8,H=PAD_T+TH+PAD_B;
+  const bx=PAD_L,v2x=v=>bx+BAR_W*(v-start)/(end-start);
+  const JC1=resolveNLC(jumpColour),JC2=resolveNLC(jump2Colour);
+  const ticks=[];for(let i=0;i<=partitions;i++){ticks.push({value:Math.round((start+(end-start)*i/partitions)*1000)/1000,x:bx+BAR_W*i/partitions});}
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">`;
+  if(terminate){s+=`<line x1="${bx}" y1="${LY}" x2="${bx+BAR_W}" y2="${LY}" stroke="${C}" stroke-width="2.5" stroke-linecap="round"/>`;}
+  else{const lx=bx-EXT,rx=bx+BAR_W+EXT;s+=`<line x1="${lx}" y1="${LY}" x2="${rx}" y2="${LY}" stroke="${C}" stroke-width="2.5" stroke-linecap="round"/>`;s+=`<polygon points="${lx-AS},${LY} ${lx},${LY-AS/2} ${lx},${LY+AS/2}" fill="${C}" stroke="${C}" stroke-width="1" stroke-linejoin="round"/>`;s+=`<polygon points="${rx+AS},${LY} ${rx},${LY-AS/2} ${rx},${LY+AS/2}" fill="${C}" stroke="${C}" stroke-width="1" stroke-linejoin="round"/>`;}
+  let ansR=false;
+  ticks.forEach(({value,x},i)=>{
+    const isE=i===0||i===ticks.length-1,th=(terminate&&isE)?TH+2:TH;
+    const isA=ansNum!==null&&Math.abs(value-ansNum)<0.001;if(isA)ansR=true;
+    const rem=lStep!==null?Math.round(((value-start)%lStep)*1e6)/1e6:0;
+    const onG=lStep===null||Math.abs(rem)<0.001||Math.abs(Math.abs(rem)-lStep)<0.001;
+    const op=onG?1:0.3;const isHid=hideFrom!==undefined&&hideTo!==undefined&&value>=hideFrom&&value<=hideTo;
+    const show=(onG||isA)&&(!isHid||isA);
+    s+=`<line x1="${x.toFixed(1)}" y1="${(LY-th).toFixed(1)}" x2="${x.toFixed(1)}" y2="${(LY+th).toFixed(1)}" stroke="${C}" stroke-width="${terminate&&isE?2.5:2}" stroke-linecap="round" opacity="${op}"/>`;
+    if(isA&&ansAbove){const ty=LY-th-5,by2=ty-7,aw=3.5;s+=`<polygon points="${x.toFixed(1)},${ty.toFixed(1)} ${(x-aw).toFixed(1)},${by2.toFixed(1)} ${(x+aw).toFixed(1)},${by2.toFixed(1)}" fill="${LABEL_COLOR}" stroke="${LABEL_COLOR}" stroke-width="1" stroke-linejoin="round"/>`;s+=`<text x="${x.toFixed(1)}" y="${(by2-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${LABEL_COLOR}">?</text>`;}
+    else if(show){const ly=(LY+TH+14).toFixed(1);const isC=cVal!==null&&Math.abs(value-cVal)<0.001;if(isC){const cy=(parseFloat(ly)+4).toFixed(1);s+=`<circle cx="${x.toFixed(1)}" cy="${cy}" r="${cr}" fill="none" stroke="${JC1}" stroke-width="2"/>`;}s+=`<text x="${x.toFixed(1)}" y="${ly}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="13" fill="${LABEL_COLOR}">${isA?'?':String(value)}</text>`;}
+  });
+  if(ansBetween&&!ansR){const ax=v2x(ansNum),ty=LY-5,by2=ty-8,aw=3.5;s+=`<polygon points="${ax.toFixed(1)},${ty.toFixed(1)} ${(ax-aw).toFixed(1)},${by2.toFixed(1)} ${(ax+aw).toFixed(1)},${by2.toFixed(1)}" fill="${LABEL_COLOR}" stroke="${LABEL_COLOR}" stroke-width="1" stroke-linejoin="round"/>`;s+=`<text x="${ax.toFixed(1)}" y="${(by2-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${LABEL_COLOR}">?</text>`;}
+  const GAP=3,arcY=LY-TH-GAP;
+  const aSize=sp=>{const ah=Math.min(Math.max(sp*0.2,5),9),sw=Math.min(Math.max(sp*0.07,1),2.2);return{ah,aw:ah*0.65,sw};};
+  const drawArc=(x1,x2,type,arrow,label,col,step2)=>{
+    if(type==='single'){const sp=Math.abs(x2-x1),{ah:AH,aw:AW,sw:SW}=aSize(sp),h=Math.min(sp*0.45,68),aT=arcY-h,pEY=arrow?arcY-AH+1:arcY;s+=`<path d="M${x1.toFixed(1)},${arcY} C${x1.toFixed(1)},${aT} ${x2.toFixed(1)},${aT} ${x2.toFixed(1)},${pEY}" fill="none" stroke="${col}" stroke-width="${SW.toFixed(2)}" stroke-linecap="round"/>`;if(arrow)s+=`<polygon points="${x2.toFixed(1)},${arcY} ${(x2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(x2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${col}" stroke="${col}" stroke-width="1" stroke-linejoin="round"/>`;if(label)s+=`<text x="${((x1+x2)/2).toFixed(1)}" y="${(aT+h*0.25-2).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${col}">${label}</text>`;}
+    else{const jF=step2.from,jT=step2.to,d=jT>jF?1:-1,st=Math.round(Math.abs(jT-jF)/tStep);for(let i=0;i<st;i++){const fv=Math.round((jF+d*i*tStep)*1000)/1000,tv=Math.round((jF+d*(i+1)*tStep)*1000)/1000,ax1=v2x(fv),ax2=v2x(tv),sp=Math.abs(ax2-ax1),{ah:AH,aw:AW,sw:SW}=aSize(sp),h=Math.min(sp*0.6,32),aT=arcY-h,pEY=arrow?arcY-AH+1:arcY;s+=`<path d="M${ax1.toFixed(1)},${arcY} C${ax1.toFixed(1)},${aT} ${ax2.toFixed(1)},${aT} ${ax2.toFixed(1)},${pEY}" fill="none" stroke="${col}" stroke-width="${SW.toFixed(2)}" stroke-linecap="round"/>`;if(arrow)s+=`<polygon points="${ax2.toFixed(1)},${arcY} ${(ax2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(ax2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${col}" stroke="${col}" stroke-width="1" stroke-linejoin="round"/>`;if(label)s+=`<text x="${((ax1+ax2)/2).toFixed(1)}" y="${(aT+h*0.25-2).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${col}">${label}</text>`;}}
+  };
+  if(hasJ2)drawArc(v2x(jump2From),v2x(jump2To),jump2Type,jump2Arrow,jump2Label,JC2,{from:jump2From,to:jump2To});
+  if(hasJ)drawArc(v2x(jumpFrom),v2x(jumpTo),jumpType,jumpArrow,jumpLabel,JC1,{from:jumpFrom,to:jumpTo});
+  return s+'</svg>';
+}
+function barModelSVG(cfg){
+  const{segments,total}=cfg;const ci=(cfg.colorIdx??0)%BM_STROKES.length;
+  const FILL=BM_FILLS[ci],STROKE=BM_STROKES[ci],TEXTC=BM_TEXTS[ci];
+  const BT=13,BA=5,HP=28,BH=50;
+  const hasBrace=segments.some(sg=>(sg.braceLabel??sg.label)!=null&&(sg.braceLabel??sg.label)!=='');
+  const TOP=cfg.topBar?(14+50+4):50,BOT=hasBrace?50:20;
+  const knownSum=segments.reduce((s,sg)=>s+(typeof sg.value==='number'?sg.value:0),0);
+  const fullT=typeof total==='number'?total:knownSum;
+  const BW=340,SVG_W=BW+HP*2,SVG_H=TOP+BH+BOT;
+  const bx=HP,by=TOP,tLbl=String(total);
+  const sW=segments.map(sg=>{const v=typeof sg.value==='number'?sg.value:fullT-knownSum;return(v/fullT)*BW;});
+  let s=`<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">`;
+  if(cfg.topBar){s+=`<rect x="${bx}" y="14" width="${BW}" height="50" fill="${FILL}" stroke="${STROKE}" stroke-width="2" rx="3"/>`;s+=`<text x="${(bx+BW/2).toFixed(1)}" y="39" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-weight="900" font-size="22" fill="${TEXTC}">${tLbl}</text>`;}
+  let cx=bx;
+  segments.forEach((sg,i)=>{const sw=sW[i];if(sg.blank){cx+=sw;return;}const sCi=cfg.multi?(ci+i*3)%BM_STROKES.length:ci;const sF=cfg.multi?BM_FILLS[sCi]:FILL,sS=cfg.multi?BM_STROKES[sCi]:STROKE;if(cfg.multi){const iF=i===0,iL=i===segments.length-1,x=cx,y2=by+BH,x2=cx+sw,r=3;let d;if(iF&&iL)d=`M${x+r},${by} H${x2-r} Q${x2},${by} ${x2},${by+r} V${y2-r} Q${x2},${y2} ${x2-r},${y2} H${x+r} Q${x},${y2} ${x},${y2-r} V${by+r} Q${x},${by} ${x+r},${by} Z`;else if(iF)d=`M${x+r},${by} H${x2} V${y2} H${x+r} Q${x},${y2} ${x},${y2-r} V${by+r} Q${x},${by} ${x+r},${by} Z`;else if(iL)d=`M${x},${by} H${x2-r} Q${x2},${by} ${x2},${by+r} V${y2-r} Q${x2},${y2} ${x2-r},${y2} H${x} V${by} Z`;else d=`M${x},${by} H${x2} V${y2} H${x} Z`;s+=`<path d="${d}" fill="${sF}" stroke="${sS}" stroke-width="2"/>`;}else s+=`<rect x="${cx.toFixed(1)}" y="${by}" width="${sw.toFixed(1)}" height="${BH}" fill="${sF}" stroke="${sS}" stroke-width="1"/>`;cx+=sw;});
+  cx=bx;segments.forEach((sg,i)=>{const sw=sW[i];const sCi=cfg.multi?(ci+i*3)%BM_STROKES.length:ci;const sS=cfg.multi?BM_STROKES[sCi]:STROKE,sT=cfg.multi?BM_TEXTS[sCi]:TEXTC;if(sg.blank){const bl=sg.braceLabel??sg.label;if(bl){const x1=cx,x2=cx+sw,bY=by+BH+5,mid=(x1+x2)/2;s+=`<path d="M${x1},${bY} V${bY+BA} H${(mid-3).toFixed(1)} L${mid},${bY+BT} L${(mid+3).toFixed(1)},${bY+BA} H${x2} V${bY}" fill="none" stroke="#AAAAAA" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;s+=`<text x="${mid}" y="${bY+BT+5}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="15" fill="#AAAAAA">${bl}</text>`;}cx+=sw;return;}if(i>0&&!cfg.multi&&!segments[i-1]?.blank)s+=`<line x1="${cx.toFixed(1)}" y1="${by}" x2="${cx.toFixed(1)}" y2="${by+BH}" stroke="${STROKE}" stroke-width="2.5"/>`;const lbl=sg.segLabel;if(lbl)s+=`<text x="${(cx+sw/2).toFixed(1)}" y="${by+BH/2}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-weight="900" font-size="22" fill="${sT}">${lbl}</text>`;const bl=sg.braceLabel??sg.label;if(bl){const x1=cx,x2=cx+sw,bY=by+BH+5,mid=(x1+x2)/2;s+=`<path d="M${x1},${bY} V${bY+BA} H${(mid-3).toFixed(1)} L${mid},${bY+BT} L${(mid+3).toFixed(1)},${bY+BA} H${x2} V${bY}" fill="none" stroke="${sS}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;s+=`<text x="${mid}" y="${bY+BT+5}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="15" fill="${sT}">${bl}</text>`;}cx+=sw;});
+  if(!cfg.multi){let rx=bx,gS=null,gW=0;segments.forEach((sg,i)=>{const sw=sW[i];if(!sg.blank){if(gS===null){gS=rx;gW=0;}gW+=sw;}else{if(gS!==null){s+=`<rect x="${gS.toFixed(1)}" y="${by}" width="${gW.toFixed(1)}" height="${BH}" fill="none" stroke="${STROKE}" stroke-width="2" rx="3"/>`;gS=null;gW=0;}}rx+=sw;});if(gS!==null)s+=`<rect x="${gS.toFixed(1)}" y="${by}" width="${gW.toFixed(1)}" height="${BH}" fill="none" stroke="${STROKE}" stroke-width="2" rx="3"/>`;}
+  if(!cfg.topBar&&!cfg.hideTotal){const tY=by-5,tM=bx+BW/2;s+=`<path d="M${bx},${tY} V${tY-BA} H${(tM-3).toFixed(1)} L${tM},${tY-BT} L${(tM+3).toFixed(1)},${tY-BA} H${bx+BW} V${tY}" fill="none" stroke="#AAAAAA" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;s+=`<text x="${tM}" y="${tY-BT-4}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="900" font-size="22" fill="#AAAAAA">${tLbl}</text>`;}
+  return s+'</svg>';
+}
+function svgToPng(svgStr){
+  return new Promise((res,rej)=>{const div=document.createElement('div');div.innerHTML=svgStr;const el=div.querySelector('svg');const vb=(el?.getAttribute('viewBox')||'0 0 460 120').split(/\s+/).map(Number);const w=vb[2],h=vb[3],sc=2;const cv=document.createElement('canvas');cv.width=w*sc;cv.height=h*sc;const ctx=cv.getContext('2d');ctx.scale(sc,sc);ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);const blob=new Blob([svgStr],{type:'image/svg+xml;charset=utf-8'});const url=URL.createObjectURL(blob);const img=new Image();img.onload=()=>{ctx.drawImage(img,0,0,w,h);URL.revokeObjectURL(url);cv.toBlob(res,'image/png');};img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('SVG render failed'));};img.src=url;});
+}
 
 /* ── Nuggets ── */
-/* → js/nuggets.js */
+const NUGGETS=[
+  {id:1, topic:'Number – Number & Place Value', name:'Counting forwards 1–20',          obj:'Count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:2, topic:'Number – Number & Place Value', name:'Counting backwards 1–20',         obj:'Count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:3, topic:'Number – Number & Place Value', name:'Counting forwards 20–100',         obj:'Count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:4, topic:'Number – Number & Place Value', name:'Counting backwards 20–100',        obj:'Count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:5, topic:'Number – Number & Place Value', name:'Count in multiples of 2',          obj:'Count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:6, topic:'Number – Number & Place Value', name:'Count in multiples of 5',          obj:'Count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:7, topic:'Number – Number & Place Value', name:'Count in multiples of 10',         obj:'Count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:8, topic:'Number – Number & Place Value', name:'One more than',                    obj:'Given a number, identify one more and one less'},
+  {id:9, topic:'Number – Number & Place Value', name:'One less than',                    obj:'Given a number, identify one more and one less'},
+  {id:10,topic:'Number – Number & Place Value', name:'Counting pictorial representations 1–10',  obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
+  {id:11,topic:'Number – Number & Place Value', name:'Counting pictorial representations 11–20', obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
+  {id:12,topic:'Number – Number & Place Value', name:'Tens and ones',                    obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
+  {id:13,topic:'Number – Number & Place Value', name:'Number line 1–10',                 obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
+  {id:14,topic:'Number – Number & Place Value', name:'Number line 11–20',                obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
+  {id:15,topic:'Number – Number & Place Value', name:'Equal to, more than, less than, most, least', obj:'Use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:16,topic:'Number – Number & Place Value', name:'Read and write numbers 1–20 in numerals and words', obj:'Read and write numbers from 1 to 20 in numerals and words'},
+  {id:17,topic:'Number – Addition & Subtraction', name:'Understanding + − =',            obj:'Read, write and interpret mathematical statements involving addition (+), subtraction (−) and equals (=) signs'},
+  {id:18,topic:'Number – Addition & Subtraction', name:'Number bonds to 10',             obj:'Represent and use number bonds and related subtraction facts within 20'},
+  {id:19,topic:'Number – Addition & Subtraction', name:'Number bonds to 20',             obj:'Represent and use number bonds and related subtraction facts within 20'},
+  {id:20,topic:'Number – Addition & Subtraction', name:'Adding up to 10',                obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:21,topic:'Number – Addition & Subtraction', name:'Subtracting up to 10',           obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:22,topic:'Number – Addition & Subtraction', name:'Adding up to 10 with pictorial representations',    obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:23,topic:'Number – Addition & Subtraction', name:'Subtracting up to 10 with pictorial representations',obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:24,topic:'Number – Addition & Subtraction', name:'Adding up to 10 with number lines',    obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:25,topic:'Number – Addition & Subtraction', name:'Subtracting up to 10 with number lines',obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:26,topic:'Number – Addition & Subtraction', name:'Adding up to 10 abstract',       obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:27,topic:'Number – Addition & Subtraction', name:'Subtracting up to 10 abstract',  obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:28,topic:'Number – Addition & Subtraction', name:'Adding up to 20 with pictorial representations',    obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:29,topic:'Number – Addition & Subtraction', name:'Subtracting up to 20 with pictorial representations',obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:30,topic:'Number – Addition & Subtraction', name:'Adding up to 20 with number lines',    obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:31,topic:'Number – Addition & Subtraction', name:'Subtracting up to 20 with number lines',obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:32,topic:'Number – Addition & Subtraction', name:'Adding up to 20 abstract',       obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:33,topic:'Number – Addition & Subtraction', name:'Subtracting up to 20 abstract',  obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:34,topic:'Number – Addition & Subtraction', name:'Addition word problems 1–20 with pictorial representations',    obj:'Solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations'},
+  {id:35,topic:'Number – Addition & Subtraction', name:'Subtraction word problems 1–20 with pictorial representations', obj:'Solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations'},
+  {id:36,topic:'Number – Addition & Subtraction', name:'Mixed word problems 1–20 with pictorial representations',       obj:'Solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations'},
+  {id:37,topic:'Number – Addition & Subtraction', name:'Missing number problems',         obj:'Solve missing number problems such as 7 = □ − 9'},
+  {id:38,topic:'Number – Multiplication & Division', name:'Multiplying by 2 with pictorial representations / arrays', obj:'Solve one-step problems involving multiplication and division, using concrete objects, pictorial representations and arrays'},
+  {id:39,topic:'Number – Multiplication & Division', name:'Multiplying by 5 with pictorial representations / arrays', obj:'Solve one-step problems involving multiplication and division, using concrete objects, pictorial representations and arrays'},
+  {id:40,topic:'Number – Multiplication & Division', name:'Multiplying by 10 with pictorial representations / arrays',obj:'Solve one-step problems involving multiplication and division, using concrete objects, pictorial representations and arrays'},
+  {id:41,topic:'Number – Fractions', name:'Recognise and find a half',    obj:'Recognise, find and name a half as one of two equal parts of an object, shape or quantity'},
+  {id:42,topic:'Number – Fractions', name:'Recognise and find a quarter', obj:'Recognise, find and name a quarter as one of four equal parts of an object, shape or quantity'},
+  {id:43,topic:'Measurement', name:'Describing and comparing length',           obj:'Compare, describe and solve practical problems for lengths and heights'},
+  {id:44,topic:'Measurement', name:'Describing and comparing mass',             obj:'Compare, describe and solve practical problems for mass/weight'},
+  {id:45,topic:'Measurement', name:'Describing and comparing volume and capacity', obj:'Compare, describe and solve practical problems for capacity and volume'},
+  {id:46,topic:'Measurement', name:'Describing and comparing time',             obj:'Compare, describe and solve practical problems for time'},
+  {id:47,topic:'Measurement', name:'Measure with blocks',                        obj:'Measure and begin to record lengths and heights'},
+  {id:48,topic:'Measurement', name:'Measure with cm up to 30 cm',               obj:'Measure and begin to record lengths and heights'},
+  {id:49,topic:'Measurement', name:'Measure mass (multiples of 10g up to 100g)',obj:'Measure and begin to record mass/weight'},
+  {id:50,topic:'Measurement', name:'Measure litres 1–10',                       obj:'Measure and begin to record capacity and volume'},
+  {id:51,topic:'Measurement', name:'Measure time (hours minutes seconds)',       obj:'Measure and begin to record time (hours, minutes, seconds)'},
+  {id:52,topic:'Measurement', name:'Recognising coins and notes',               obj:'Recognise and know the value of different denominations of coins and notes'},
+  {id:53,topic:'Measurement', name:'Sequencing events',                         obj:'Sequence events in chronological order using language'},
+  {id:54,topic:'Measurement', name:'Days of the week',                          obj:'Recognise and use language relating to dates, including days of the week, weeks, months and years'},
+  {id:55,topic:'Measurement', name:'Months of the year',                        obj:'Recognise and use language relating to dates, including days of the week, weeks, months and years'},
+  {id:56,topic:'Measurement', name:'Tell the time to the hour and half past',   obj:'Tell the time to the hour and half past the hour and draw the hands on a clock face'},
+  {id:57,topic:'Geometry – Properties of Shapes', name:'Recognise and name common 2-D shapes', obj:'Recognise and name common 2-D shapes (rectangles, squares, circles, triangles)'},
+  {id:58,topic:'Geometry – Properties of Shapes', name:'Recognise and name common 3-D shapes', obj:'Recognise and name common 3-D shapes (cuboids, cubes, pyramids, spheres)'},
+  {id:59,topic:'Geometry – Position & Direction', name:'Position and direction', obj:'Describe position, direction and movement, including whole, half, quarter and three-quarter turns'},
+];
+const TOPICS=[...new Set(NUGGETS.map(n=>n.topic))];
+const STATUS_LABELS={'not-started':'Not started','in-progress':'In progress','ready-for-qa':'Ready for QA','ready-for-qti':'Ready for QTI','uploaded-to-cms':'Uploaded to CMS'};
+const STATUS_CM={'not-started':'ns','in-progress':'ip','ready-for-qa':'qa','ready-for-qti':'rd','uploaded-to-cms':'up'};
+
+/* ── File System & GitHub ── */
+let folderHandle=null;
+let ghToken=localStorage.getItem('gh-token')||'';
+let ghOwner=localStorage.getItem('gh-owner')||'torievans';
+let ghRepo=localStorage.getItem('gh-repo')||'assessment-builder';
+
+async function connectFolder(){
+  if(!window.showDirectoryPicker){alert('File System Access API is not supported in this browser. Use Chrome.');return;}
+  try{
+    folderHandle=await window.showDirectoryPicker({mode:'readwrite'});
+    updateFolderStatus();
+    showToast('✓ Folder connected');
+    closeSettings();
+  }catch(e){if(e.name!=='AbortError')showToast('⚠ Could not connect: '+e.message,true);}
+}
+function updateFolderStatus(){
+  const btn=document.getElementById('btn-connect');
+  const disp=document.getElementById('folder-status-display');
+  if(folderHandle){
+    btn.textContent='📁 Connected';btn.classList.add('hbtn-green');
+    if(disp){disp.textContent='✓ Folder connected';disp.classList.add('connected');}
+  }else{
+    btn.textContent='📁 Connect folder';btn.classList.remove('hbtn-green');
+    if(disp){disp.textContent='Not connected';disp.classList.remove('connected');}
+  }
+}
+async function loadNuggetFromFile(nid){
+  if(!folderHandle)return null;
+  try{
+    const dataDir=await folderHandle.getDirectoryHandle('data',{create:false});
+    const qDir=await dataDir.getDirectoryHandle('questions',{create:false});
+    const fname=`nugget-${String(nid).padStart(3,'0')}.json`;
+    const fh=await qDir.getFileHandle(fname,{create:false});
+    const file=await fh.getFile();
+    return JSON.parse(await file.text());
+  }catch(e){return null;}
+}
+async function saveNuggetToFile(nid){
+  const ns=nuggetState[nid];if(!ns)return;
+  const today=new Date().toISOString().slice(0,10);
+  const data={nuggetId:nid,status:ns.status,nextQId,questions:ns.questions.map(q=>({...q,updatedAt:q.updatedAt||today,createdAt:q.createdAt||today}))};
+  const json=JSON.stringify(data,null,2);
+  const fname=`nugget-${String(nid).padStart(3,'0')}.json`;
+  let localOk=false,ghOk=false;
+  if(folderHandle){
+    try{
+      const dataDir=await folderHandle.getDirectoryHandle('data',{create:true});
+      const qDir=await dataDir.getDirectoryHandle('questions',{create:true});
+      const fh=await qDir.getFileHandle(fname,{create:true});
+      const w=await fh.createWritable();await w.write(json);await w.close();
+      localOk=true;
+    }catch(e){showToast('⚠ Local save failed: '+e.message,true);}
+  }
+  if(ghToken){
+    try{await commitToGitHub(`data/questions/${fname}`,json);ghOk=true;}
+    catch(e){showToast('⚠ GitHub save failed: '+e.message,true);}
+  }
+  if(localOk||ghOk){showToast(`✓ Saved nugget ${nid}${ghOk?' + GitHub':''}`);}
+  else if(!folderHandle&&!ghToken){/* silent — no targets configured */}
+}
+async function saveImageToFile(filename,dataURL){
+  if(!folderHandle)return null;
+  try{
+    const dataDir=await folderHandle.getDirectoryHandle('data',{create:true});
+    const imgDir=await dataDir.getDirectoryHandle('images',{create:true});
+    const base64=dataURL.split(',')[1];
+    const bin=atob(base64);const arr=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+    const fh=await imgDir.getFileHandle(filename,{create:true});
+    const w=await fh.createWritable();await w.write(arr.buffer);await w.close();
+    return `data/images/${filename}`;
+  }catch(e){console.error('Image save failed',e);return null;}
+}
+async function commitToGitHub(path,content){
+  const base=`https://api.github.com/repos/${ghOwner}/${ghRepo}`;
+  const hdrs={'Authorization':`token ${ghToken}`,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};
+  let sha=null;
+  try{const r=await fetch(`${base}/contents/${path}`,{headers:hdrs});if(r.ok){const d=await r.json();sha=d.sha;}}catch(e){}
+  const body={message:`Update ${path}`,content:btoa(unescape(encodeURIComponent(content))),...(sha&&{sha})};
+  const r=await fetch(`${base}/contents/${path}`,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});
+  if(!r.ok)throw new Error(`GitHub API ${r.status}`);
+}
+function showToast(msg,isError=false){
+  const t=document.getElementById('save-toast');
+  t.textContent=msg;t.style.background=isError?'#EF4444':'#10B981';t.style.display='block';
+  clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',3500);
+}
+function openSettings(){
+  document.getElementById('gh-owner-input').value=ghOwner;
+  document.getElementById('gh-repo-input').value=ghRepo;
+  document.getElementById('gh-token-input').value=ghToken;
+  updateFolderStatus();
+  document.getElementById('settings-modal').classList.remove('hidden');
+}
+function closeSettings(e){if(!e||e.target===document.getElementById('settings-modal'))document.getElementById('settings-modal').classList.add('hidden');}
+function saveSettings(){
+  ghOwner=document.getElementById('gh-owner-input').value.trim()||'torievans';
+  ghRepo=document.getElementById('gh-repo-input').value.trim()||'assessment-builder';
+  ghToken=document.getElementById('gh-token-input').value.trim();
+  localStorage.setItem('gh-owner',ghOwner);localStorage.setItem('gh-repo',ghRepo);localStorage.setItem('gh-token',ghToken);
+  showToast('✓ Settings saved');closeSettings();
+}
+async function manualSave(){if(activeId)await saveNuggetToFile(activeId);else showToast('Select a nugget first',true);}
 
 /* ── State ── */
 let nuggetState={};let activeId=null;let activeTab='builder';let filter='all';let collapseMap={};let nextQId=1;
@@ -520,7 +851,10 @@ function applyState(s){
   });
   nuggetState=s.nuggetState;nextQId=Math.max(s.nextQId||1,SEED_NEXT);
 }
-function save(){try{localStorage.setItem(STORE,JSON.stringify(getState()));}catch(e){}}
+function save(){
+  try{localStorage.setItem(STORE,JSON.stringify(getState()));}catch(e){}
+  if(activeId)saveNuggetToFile(activeId);
+}
 function loadStorage(){try{const d=localStorage.getItem(STORE);if(d)applyState(JSON.parse(d));else nextQId=SEED_NEXT;}catch(e){}}
 
 /* ── Tab / view switching ── */
@@ -552,9 +886,17 @@ function updateStats(){
 }
 
 /* ── Nugget detail ── */
-function selectNugget(id){
+async function selectNugget(id){
   activeId=id;if(activeTab!=='builder')switchTab('builder');
   closeTool();renderSidebar();
+  // Try loading from JSON file if folder is connected
+  if(folderHandle){
+    const fileData=await loadNuggetFromFile(id);
+    if(fileData){
+      nuggetState[id]={status:fileData.status,questions:fileData.questions||[]};
+      if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
+    }
+  }
   const n=NUGGETS.find(n=>n.id===id);
   document.getElementById('builder-empty').style.display='none';
   document.getElementById('builder-detail').style.display='block';
@@ -581,7 +923,8 @@ function renderQVisual(q){
   if(q.visualType==='nl'&&q.cfg&&Object.keys(q.cfg).length){try{return`<div class="q-svg-wrap">${numberLineSVG(q.cfg)}</div>`;}catch(e){}}
   if(q.visualType==='bm'&&q.cfg&&Object.keys(q.cfg).length){try{return`<div class="q-svg-wrap">${barModelSVG(q.cfg)}</div>`;}catch(e){}}
   if(q.visualType==='text')return'';
-  if(q.image)return`<div class="q-img" style="padding:0 14px 8px;text-align:center"><img src="${esc(q.image)}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'q-img-ph\\'>🖼 ${esc(q.image)}</div>'"></div>`;
+  const imgSrc=q.imagePath||q.image||'';
+  if(imgSrc)return`<div class="q-img" style="padding:0 14px 8px;text-align:center"><img src="${esc(imgSrc)}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'q-img-ph\\'>🖼 ${esc(imgSrc.split('/').pop())}</div>'"></div>`;
   return'';
 }
 function renderQuestions(){
@@ -608,6 +951,7 @@ function openTool(type){
   if(type==='nl'){document.getElementById('nl-text').value='';document.getElementById('nl-answer').value='';['f-start','f-end','f-step','f-vge','f-hide-from','f-hide-to'].forEach(id=>{const el=document.getElementById(id);if(el){if(id==='f-start')el.value='0';else if(id==='f-end')el.value='20';else if(id==='f-step')el.value='1';else el.value='';}});document.getElementById('nl-preview').innerHTML='<p class="preview-empty">Fill in settings above to preview.</p>';if(nlJumpOpen)nlToggleJump();if(nlJump2Open)nlToggleJump2();}
   else if(type==='bm'){document.getElementById('bm-text').value='';document.getElementById('bm-answer').value='';['bm-total','bm-seg1-val','bm-seg1-lbl','bm-seg1-brace','bm-seg2-val','bm-seg2-lbl','bm-seg2-brace'].forEach(id=>document.getElementById(id).value='');if(bmSeg3)bmToggleSeg3(false);document.getElementById('bm-preview').innerHTML='<p class="preview-empty">Fill in segment values above to preview.</p>';}
   else if(type==='text'){document.getElementById('text-q-text').value='';document.getElementById('text-answer').value='';}
+  else if(type==='custom'){document.getElementById('custom-q-text').value='';document.getElementById('custom-answer').value='';customResetImage();}
 }
 function closeTool(){
   if(activeTool){document.getElementById('tool-panel-'+activeTool).classList.add('hidden');}
@@ -631,13 +975,26 @@ function addToolQuestion(type){
   let text,answer;
   if(type==='nl'){text=document.getElementById('nl-text').value.trim();answer=document.getElementById('nl-answer').value.trim();}
   else if(type==='bm'){text=document.getElementById('bm-text').value.trim();answer=document.getElementById('bm-answer').value.trim();}
+  else if(type==='custom'){text=document.getElementById('custom-q-text').value.trim();answer=document.getElementById('custom-answer').value.trim();}
   else{text=document.getElementById('text-q-text').value.trim();answer=document.getElementById('text-answer').value.trim();}
   if(!text){alert('Please enter the question text.');return;}
   if(!answer){alert('Please enter the correct answer.');return;}
   const id=nextQId++;
   const q={id,text,answer,type:'exact',image:'',display:'',qaComment:'',visualType:type==='text'?'text':type,cfg:{}};
   if(type==='nl'){const cfg=getNLConfig();if(!cfg){alert('Check number line settings (start, end, goes up in).');nextQId--;return;}q.cfg=cfg;}
-  else if(type==='bm'){const cfg=getBMConfig();if(!cfg){alert('Check bar model settings (total and segment values).');nextQId--;return;}q.cfg=cfg;}
+  else if(type==='bm'){const cfg=getBMConfig();if(!cfg){alert('Please fill in at least one segment value.');nextQId--;return;}q.cfg=cfg;}
+  else if(type==='custom'){
+    if(!customImageDataURL&&!customImagePath){alert('Please add an image for this question.');nextQId--;return;}
+    q.visualType='custom';
+    if(customImageDataURL){
+      // save image file if folder connected, otherwise embed as data URL
+      const fname=`nugget-${String(activeId).padStart(3,'0')}-q-${String(id).padStart(4,'0')}.png`;
+      if(folderHandle){
+        saveImageToFile(fname,customImageDataURL).then(p=>{if(p)q.imagePath=p;});
+        q.imagePath=`data/images/${fname}`;q.image='';
+      }else{q.image=customImageDataURL;q.imagePath=null;}
+    }
+  }
   if(nuggetState[activeId].status==='not-started')nuggetState[activeId].status='in-progress';
   nuggetState[activeId].questions.push(q);
   save();renderQuestions();renderSidebar();renderWorkflow();closeTool();
@@ -788,7 +1145,9 @@ function initBMPanel(){
 }
 function parseBMV(s){if(!s||s.trim()==='')return undefined;const t=s.trim();if(t==='?')return'?';const n=Number(t);return isNaN(n)?t:n;}
 function getBMConfig(){
-  const total=parseBMV(document.getElementById('bm-total').value);if(total===undefined)return null;
+  // Default total to '?' when empty — matches standalone bar-model-creator behaviour
+  const totalRaw=document.getElementById('bm-total').value.trim();
+  const total=totalRaw===''?'?':parseBMV(totalRaw);
   const mkSeg=n=>{const v=parseBMV(document.getElementById(`bm-seg${n}-val`).value);if(v===undefined)return null;const sg={value:v};const l=document.getElementById(`bm-seg${n}-lbl`).value.trim();const b=document.getElementById(`bm-seg${n}-brace`).value.trim();if(l)sg.segLabel=l;if(b)sg.braceLabel=b;if(bmSegT[n]==='blank')sg.blank=true;return sg;};
   const segs=[mkSeg(1),mkSeg(2)].filter(Boolean);if(bmSeg3){const s3=mkSeg(3);if(s3)segs.push(s3);}if(!segs.length)return null;
   return{segments:segs,total,colorIdx:bmColIdx,multi:bmMulti||undefined,topBar:bmTotDisp==='top bar'||undefined,hideTotal:bmTotDisp==='none'||undefined};
@@ -820,7 +1179,7 @@ function renderExportView(){
   el.innerHTML=ns.map(n=>{const s=nuggetState[n.id];const st=s.status;const cm=STATUS_CM[st]||'ns';return`<div class="ex-row exs-${cm}"><input type="checkbox" class="ex-cb" id="ec-${n.id}"${st==='ready-for-qti'?' checked':''}><label class="ex-name" for="ec-${n.id}">${esc(n.name)}</label><span class="ex-st">${STATUS_LABELS[st]}</span><span class="ex-qcnt">${s.questions.length} Q</span></div>`;}).join('');
 }
 function selectAllEx(v){document.querySelectorAll('.ex-cb').forEach(c=>c.checked=v);}
-/* → js/utils.js */
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function qtiXML(q,imgFile){
   const rid=`RESPONSE-${10000+q.id}`,iid=`ITEM-${String(q.id).padStart(3,'0')}`;
   const ans=parseFloat(q.answer);const av=isNaN(ans)?q.answer:ans;
@@ -850,9 +1209,29 @@ async function batchExport(){
   }catch(e){prog.textContent='Error: '+e.message;}finally{btn.disabled=false;}
 }
 
-/* ── Init ── */
-initState();loadStorage();renderSidebar();initNLPanel();initBMPanel();
+/* ── Custom image panel ── */
+let customImageDataURL=null,customImagePath=null;
+function customResetImage(){
+  customImageDataURL=null;customImagePath=null;
+  document.getElementById('custom-drop-inner').innerHTML='<div class="drop-icon">🖼</div><p>Click to choose or drag an image here</p>';
+  document.getElementById('custom-drop-zone').classList.remove('drag-over');
+}
+function customSetImage(file){
+  const reader=new FileReader();
+  reader.onload=e=>{
+    customImageDataURL=e.target.result;
+    document.getElementById('custom-drop-inner').innerHTML=
+      `<img class="custom-img-preview" src="${customImageDataURL}" alt="preview"><button class="custom-img-clear" onclick="event.stopPropagation();customResetImage()">✕ Remove image</button>`;
+  };
+  reader.readAsDataURL(file);
+}
+function customFileSelected(input){if(input.files[0])customSetImage(input.files[0]);}
+function customDragOver(e){e.preventDefault();document.getElementById('custom-drop-zone').classList.add('drag-over');}
+function customDragLeave(e){document.getElementById('custom-drop-zone').classList.remove('drag-over');}
+function customDrop(e){e.preventDefault();document.getElementById('custom-drop-zone').classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f&&f.type.startsWith('image/'))customSetImage(f);}
 
+/* ── Init ── */
+initState();loadStorage();renderSidebar();initNLPanel();initBMPanel();updateFolderStatus();
 </script>
 </body>
 </html>
