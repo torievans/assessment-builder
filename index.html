@@ -536,7 +536,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
     <div class="modal-body">
       <div class="modal-card">
         <div class="modal-card-title">📁 Project folder</div>
-        <div class="modal-card-desc">Grant access to your local project folder. Questions will be saved as JSON files in <code>data/questions/</code> every time you add or edit a question.</div>
+        <div class="modal-card-desc">Grant access to your local project folder. Questions will be saved in <code>question-data/{nugget}/</code> — each nugget gets its own folder containing its JSON and any images.</div>
         <div class="folder-status" id="folder-status-display">Not connected</div>
         <div style="margin-top:10px">
           <button class="btn-teal" onclick="connectFolder()">Connect folder</button>
@@ -751,64 +751,75 @@ function nuggetSlug(nid){
   return`nugget-${String(nid).padStart(3,'0')}${name?'-'+name:''}`;
 }
 async function loadNuggetFromFile(nid){
-  const fname=`${nuggetSlug(nid)}.json`;
+  const slug=nuggetSlug(nid);
+  const fname=`${slug}.json`;
   // 1. Try connected local folder first
   if(folderHandle){
     try{
-      const dataDir=await folderHandle.getDirectoryHandle('data',{create:false});
-      const qDir=await dataDir.getDirectoryHandle('questions',{create:false});
-      const fh=await qDir.getFileHandle(fname,{create:false});
+      const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:false});
+      const nDir=await qdDir.getDirectoryHandle(slug,{create:false});
+      const fh=await nDir.getFileHandle(fname,{create:false});
       return JSON.parse(await (await fh.getFile()).text());
     }catch(e){}
   }
   // 2. Fall back to fetching from the server (works on GitHub Pages for all users)
   try{
-    const r=await fetch(`data/questions/${fname}`);
+    const r=await fetch(`question-data/${slug}/${fname}`);
     if(r.ok)return await r.json();
   }catch(e){}
   return null;
 }
 async function saveNuggetToFile(nid){
   const ns=nuggetState[nid];if(!ns)return;
+  const slug=nuggetSlug(nid);
   const today=new Date().toISOString().slice(0,10);
   const data={nuggetId:nid,status:ns.status,nextQId,questions:ns.questions.map(q=>({...q,updatedAt:q.updatedAt||today,createdAt:q.createdAt||today}))};
   const json=JSON.stringify(data,null,2);
-  const fname=`${nuggetSlug(nid)}.json`;
+  const fname=`${slug}.json`;
+  const ghPath=`question-data/${slug}/${fname}`;
   let localOk=false,ghOk=false;
   if(folderHandle){
     try{
-      const dataDir=await folderHandle.getDirectoryHandle('data',{create:true});
-      const qDir=await dataDir.getDirectoryHandle('questions',{create:true});
-      const fh=await qDir.getFileHandle(fname,{create:true});
+      const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:true});
+      const nDir=await qdDir.getDirectoryHandle(slug,{create:true});
+      const fh=await nDir.getFileHandle(fname,{create:true});
       const w=await fh.createWritable();await w.write(json);await w.close();
       localOk=true;
     }catch(e){showToast('⚠ Local save failed: '+e.message,true);}
   }
   if(ghToken){
-    try{await commitToGitHub(`data/questions/${fname}`,json);ghOk=true;}
+    try{await commitToGitHub(ghPath,json);ghOk=true;}
     catch(e){showToast('⚠ GitHub save failed: '+e.message,true);}
   }
   if(localOk||ghOk){showToast(`✓ Saved nugget ${nid}${ghOk?' + GitHub':''}`);}
   else if(!folderHandle&&!ghToken){/* silent — no targets configured */}
 }
-async function saveImageToFile(filename,dataURL){
-  if(!folderHandle)return null;
-  try{
-    const dataDir=await folderHandle.getDirectoryHandle('data',{create:true});
-    const imgDir=await dataDir.getDirectoryHandle('images',{create:true});
-    const base64=dataURL.split(',')[1];
-    const bin=atob(base64);const arr=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
-    const fh=await imgDir.getFileHandle(filename,{create:true});
-    const w=await fh.createWritable();await w.write(arr.buffer);await w.close();
-    return `data/images/${filename}`;
-  }catch(e){console.error('Image save failed',e);return null;}
+async function saveImageToFile(nid,filename,dataURL){
+  const slug=nuggetSlug(nid);
+  const ghPath=`question-data/${slug}/${filename}`;
+  const base64=dataURL.split(',')[1];
+  if(folderHandle){
+    try{
+      const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:true});
+      const nDir=await qdDir.getDirectoryHandle(slug,{create:true});
+      const bin=atob(base64);const arr=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+      const fh=await nDir.getFileHandle(filename,{create:true});
+      const w=await fh.createWritable();await w.write(arr.buffer);await w.close();
+    }catch(e){console.error('Image local save failed',e);}
+  }
+  if(ghToken){
+    try{await commitToGitHub(ghPath,base64,true);}
+    catch(e){console.error('GitHub image commit failed',e);}
+  }
+  return ghPath;
 }
-async function commitToGitHub(path,content){
+async function commitToGitHub(path,content,isBinary=false){
   const base=`https://api.github.com/repos/${ghOwner}/${ghRepo}`;
   const hdrs={'Authorization':`token ${ghToken}`,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};
   let sha=null;
   try{const r=await fetch(`${base}/contents/${path}`,{headers:hdrs});if(r.ok){const d=await r.json();sha=d.sha;}}catch(e){}
-  const body={message:`Update ${path}`,content:btoa(unescape(encodeURIComponent(content))),...(sha&&{sha})};
+  const encodedContent=isBinary?content:btoa(unescape(encodeURIComponent(content)));
+  const body={message:`Update ${path}`,content:encodedContent,...(sha&&{sha})};
   const r=await fetch(`${base}/contents/${path}`,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});
   if(!r.ok)throw new Error(`GitHub API ${r.status}`);
 }
@@ -997,12 +1008,10 @@ function addToolQuestion(type){
     if(!customImageDataURL&&!customImagePath){alert('Please add an image for this question.');nextQId--;return;}
     q.visualType='custom';
     if(customImageDataURL){
-      // save image file if folder connected, otherwise embed as data URL
-      const fname=`${nuggetSlug(activeId)}-q-${String(id).padStart(4,'0')}.png`;
-      if(folderHandle){
-        saveImageToFile(fname,customImageDataURL).then(p=>{if(p)q.imagePath=p;});
-        q.imagePath=`data/images/${fname}`;q.image='';
-      }else{q.image=customImageDataURL;q.imagePath=null;}
+      const fname=`q-${String(id).padStart(4,'0')}.png`;
+      const imagePath=`question-data/${nuggetSlug(activeId)}/${fname}`;
+      saveImageToFile(activeId,fname,customImageDataURL);
+      q.imagePath=imagePath;q.image='';
     }
   }
   if(nuggetState[activeId].status==='not-started')nuggetState[activeId].status='in-progress';
