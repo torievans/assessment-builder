@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Line Creator</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Proxima Soft', 'Nunito', 'Arial Rounded MT Bold', sans-serif;
+    background: #F4F5F7;
+    color: #1A1A2E;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: #fff;
+    border-bottom: 1.5px solid #E5E7EB;
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .header h1 { font-size: 1.25rem; font-weight: 900; color: #1A1A2E; }
+  .header p  { font-size: 0.82rem; color: #6B7280; margin-top: 2px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 8px; font-size: 0.85rem;
+    font-weight: 700; cursor: pointer; border: none;
+    font-family: inherit; transition: opacity .15s;
+  }
+  .btn:hover { opacity: .85; }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid #D1D5DB;
+    color: #374151;
+  }
+
+  /* ── Toolbar ── */
+  #toolbar {
+    display: none;
+    background: #fff;
+    border-bottom: 1.5px solid #E5E7EB;
+    padding: 10px 28px;
+    gap: 10px;
+    align-items: center;
+  }
+  .toolbar-info { font-size: 0.82rem; color: #6B7280; margin-left: auto; }
+
+  /* ── Drop zone ── */
+  .main { padding: 32px 28px; max-width: 1200px; margin: 0 auto; }
+
+  .drop-zone {
+    border: 2px dashed #D1D5DB;
+    border-radius: 12px;
+    background: #fff;
+    padding: 48px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+  }
+  .drop-zone:hover, .drop-zone.drag-over {
+    border-color: #6C63FF;
+    background: #F5F3FF;
+  }
+  .drop-zone svg { color: #9CA3AF; margin-bottom: 12px; }
+  .drop-zone h2 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+  .drop-zone p  { font-size: 0.82rem; color: #6B7280; line-height: 1.5; }
+  .btn-primary {
+    background: #6C63FF; color: #fff;
+    margin-top: 16px;
+  }
+
+  #file-input { display: none; }
+
+  /* ── Message ── */
+  #message {
+    display: none;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  #message.error { background: #FEE2E2; color: #991B1B; }
+  #message.info  { background: #DBEAFE; color: #1E40AF; }
+
+  /* ── Grid ── */
+  #grid {
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    gap: 20px;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px 22px 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  }
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .q-badge {
+    background: #F3F4F6;
+    color: #6B7280;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  .q-text { font-size: 1rem; font-weight: 700; line-height: 1.3; }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+    font-size: 0.78rem;
+  }
+  .answer-wrap { display: flex; align-items: center; gap: 6px; color: #6B7280; font-weight: 600; }
+  .answer-badge {
+    background: #D1FAE5; color: #065F46;
+    font-weight: 700; padding: 2px 9px; border-radius: 20px;
+    font-size: 0.78rem;
+  }
+  .mode-badge {
+    background: #F3F4F6; color: #6B7280;
+    font-weight: 600; padding: 3px 10px; border-radius: 20px;
+  }
+
+  /* ── Mode toggle ── */
+  .mode-toggle {
+    display: flex;
+    background: #F3F4F6;
+    border-radius: 10px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .mode-btn {
+    padding: 6px 16px; border-radius: 8px; border: none;
+    background: transparent; font-size: 0.85rem; font-weight: 700;
+    color: #6B7280; cursor: pointer; font-family: inherit;
+    transition: all .15s;
+  }
+  .mode-btn.active {
+    background: #fff; color: #1A1A2E;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  }
+
+  /* ── Manual form ── */
+  #manual-panel { display: none; margin-bottom: 28px; }
+  .form-card {
+    background: #fff; border-radius: 14px;
+    padding: 24px 28px; box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  }
+  .form-row {
+    display: flex; gap: 14px; align-items: flex-end; margin-bottom: 18px; flex-wrap: wrap;
+  }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label {
+    font-size: 0.72rem; font-weight: 700; color: #6B7280;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .field input[type="text"],
+  .field input[type="number"] {
+    padding: 8px 11px; border: 1.5px solid #E5E7EB; border-radius: 8px;
+    font-size: 0.9rem; font-family: inherit; color: #1A1A2E;
+    background: #fff; transition: border-color .15s; width: 100%;
+  }
+  .field input:focus { outline: none; border-color: #6C63FF; }
+  .field-grow { flex: 1; min-width: 160px; }
+  .field-sm input { width: 76px; }
+
+  .style-toggle { display: flex; gap: 6px; }
+  .style-btn {
+    padding: 7px 14px; border: 1.5px solid #E5E7EB; border-radius: 8px;
+    background: #fff; font-size: 0.85rem; font-weight: 700; color: #6B7280;
+    cursor: pointer; font-family: inherit; transition: all .15s;
+  }
+  .style-btn.active { border-color: #6C63FF; background: #F5F3FF; color: #4C46B6; }
+
+  .swatch-row { display: flex; gap: 7px; align-items: center; }
+  .swatch {
+    width: 24px; height: 24px; border-radius: 50%; cursor: pointer;
+    border: 2.5px solid transparent; transition: transform .15s, border-color .15s;
+    flex-shrink: 0;
+  }
+  .swatch:hover { transform: scale(1.12); }
+  .swatch.selected { border-color: #1A1A2E; transform: scale(1.12); }
+
+  .preview-box {
+    border: 1.5px solid #E5E7EB; border-radius: 10px;
+    padding: 16px 16px 8px; margin: 4px 0 20px; background: #FAFAFA;
+    min-height: 72px; display: flex; align-items: center; justify-content: center;
+  }
+  .preview-box p { font-size: 0.82rem; color: #9CA3AF; }
+  .form-actions { display: flex; justify-content: flex-end; }
+  .btn-add { background: #6C63FF; color: #fff; font-size: 0.9rem; }
+
+  /* ── Jump section ── */
+  .jump-toggle-row { margin-bottom: 4px; }
+  .jump-toggle-btn {
+    background: transparent; border: 1.5px dashed #D1D5DB;
+    color: #6B7280; font-size: 0.82rem; font-weight: 700;
+    padding: 6px 14px; border-radius: 8px; cursor: pointer;
+    font-family: inherit; transition: border-color .15s, color .15s;
+  }
+  .jump-toggle-btn:hover { border-color: #6C63FF; color: #4C46B6; }
+  .jump-toggle-btn.open { border-color: #6C63FF; color: #4C46B6; background: #F5F3FF; border-style: solid; }
+  #jump-section { display: none; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 700; color: #6B7280;
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px;
+  }
+  .section-hr { border: none; border-top: 1.5px solid #F3F4F6; margin: 4px 0 18px; }
+
+  /* ── Batch panel ── */
+  #batch-panel { display: none; margin-top: 20px; }
+  .batch-card {
+    background: #fff; border-radius: 14px;
+    padding: 22px 26px; box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  }
+  .batch-header {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: 4px;
+  }
+  .batch-header h2 { font-size: 1rem; font-weight: 900; }
+  .batch-subtitle { font-size: 0.78rem; color: #6B7280; margin-bottom: 12px; }
+  .batch-locked-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+  .locked-tag {
+    background: #F3F4F6; color: #6B7280; font-size: 0.72rem; font-weight: 700;
+    padding: 3px 9px; border-radius: 6px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .batch-table-wrap { overflow-x: auto; }
+  .batch-table { border-collapse: collapse; width: 100%; font-size: 0.82rem; }
+  .batch-table th {
+    text-align: left; font-size: 0.68rem; font-weight: 700; color: #6B7280;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 0 6px 10px; white-space: nowrap;
+  }
+  .batch-table td { padding: 5px 6px; vertical-align: middle; }
+  .batch-table tbody tr:not(:last-child) td { border-bottom: 1px solid #F9FAFB; }
+  .batch-input {
+    padding: 6px 8px; border: 1.5px solid #E5E7EB; border-radius: 6px;
+    font-size: 0.82rem; font-family: inherit; color: #1A1A2E;
+    background: #fff; transition: border-color .15s;
+  }
+  .batch-input:focus { outline: none; border-color: #6C63FF; }
+  .batch-input-num  { width: 62px; }
+  .batch-input-text { width: 150px; }
+  .batch-input-lbl  { width: 68px; }
+  .batch-preview-cell { min-width: 240px; max-width: 280px; padding-right: 12px; }
+  .batch-preview-cell svg { width: 100%; height: auto; display: block; }
+  .batch-preview-cell .batch-no-preview {
+    font-size: 0.72rem; color: #9CA3AF; text-align: center; padding: 8px 0;
+  }
+  .batch-swatch-wrap { margin-top: 7px; display: flex; flex-direction: column; gap: 4px; }
+  .batch-mini-swatch-row { display: flex; align-items: center; gap: 4px; }
+  .batch-swatch-label {
+    font-size: 0.62rem; font-weight: 700; color: #9CA3AF;
+    text-transform: uppercase; letter-spacing: 0.04em; width: 18px; flex-shrink: 0;
+  }
+  .mini-swatch {
+    width: 15px; height: 15px; border-radius: 50%; cursor: pointer;
+    border: 2px solid transparent; transition: transform .12s, border-color .12s;
+    flex-shrink: 0; padding: 0;
+  }
+  .mini-swatch:hover { transform: scale(1.18); }
+  .mini-swatch.selected { border-color: #1A1A2E; transform: scale(1.12); }
+  .batch-del-btn {
+    background: none; border: none; cursor: pointer; color: #D1D5DB;
+    font-size: 1rem; padding: 4px 8px; border-radius: 6px; transition: color .15s;
+  }
+  .batch-del-btn:hover { color: #EF4444; }
+  .batch-actions {
+    display: flex; gap: 10px; justify-content: space-between;
+    align-items: center; margin-top: 18px; flex-wrap: wrap;
+  }
+  .btn-generate { background: #319377; color: #fff; }
+  .btn-generate:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-create-more {
+    background: #F5F3FF; color: #4C46B6; border: 1.5px solid #C4B5FD;
+    font-size: 0.85rem; font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-row">
+    <h1>Number Line Creator</h1>
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="mode-csv-btn" onclick="setMode('csv')">↑ Upload CSV</button>
+      <button class="mode-btn" id="mode-manual-btn" onclick="setMode('manual')">✎ Build manually</button>
+    </div>
+    <button class="btn btn-outline" onclick="downloadTemplate()">↓ Download template</button>
+  </div>
+</header>
+
+<div id="toolbar">
+  <button class="btn btn-outline" id="clear-btn">✕ Clear</button>
+  <span class="toolbar-info" id="toolbar-info"></span>
+</div>
+
+<main class="main">
+  <div id="message"></div>
+
+  <div class="drop-zone" id="drop-zone">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M8 12l4-4 4 4M12 8v8"/>
+    </svg>
+    <h2>Drop your CSV here</h2>
+    <p>Drop your number-line-template.xlsx (or CSV) here<br>or click to browse.</p>
+    <label class="btn btn-primary" for="file-input">Choose file</label>
+    <input type="file" id="file-input" accept=".csv,.tsv,.txt,.xlsx">
+  </div>
+
+  <!-- ── Manual build panel ── -->
+  <div id="manual-panel">
+    <div class="form-card">
+      <div class="form-row">
+        <div class="field field-sm">
+          <label>Q#</label>
+          <input type="number" id="f-qnum" value="1" min="1">
+        </div>
+        <div class="field field-grow">
+          <label>Question text</label>
+          <input type="text" id="f-text" placeholder="e.g. What number is missing?">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field field-sm"><label>Start</label><input type="number" id="f-start" value="0"></div>
+        <div class="field field-sm"><label>End</label><input type="number" id="f-end" value="20"></div>
+        <div class="field field-sm"><label>Goes up in</label><input type="number" id="f-step" value="1" min="0.001" step="any"></div>
+        <div class="field field-sm"><label>Label every</label><input type="number" id="f-vge" placeholder="all" step="any"></div>
+        <div class="field field-sm"><label>Answer</label><input type="text" id="f-answer" placeholder="optional"></div>
+        <div class="field field-sm"><label>Hide from</label><input type="number" id="f-hide-from" placeholder="none" step="any"></div>
+        <div class="field field-sm"><label>Hide to</label><input type="number" id="f-hide-to" placeholder="none" step="any"></div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Style</label>
+          <div class="style-toggle">
+            <button class="style-btn active" data-style="through">Through</button>
+            <button class="style-btn" data-style="terminate">Terminate</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Colour</label>
+          <div class="swatch-row" id="swatch-row"></div>
+        </div>
+      </div>
+      <!-- ── Jump section ── -->
+      <div class="jump-toggle-row">
+        <button class="jump-toggle-btn" id="jump-toggle-btn" onclick="toggleJumpSection()">＋ Add jumps</button>
+      </div>
+
+      <div id="jump-section">
+        <hr class="section-hr">
+        <div class="section-label">Jumps</div>
+        <div class="form-row">
+          <div class="field field-sm"><label>From</label><input type="number" id="f-from" placeholder="e.g. 2" step="any"></div>
+          <div class="field field-sm"><label>To</label><input type="number" id="f-to" placeholder="e.g. 5" step="any"></div>
+          <div class="field">
+            <label>Arc type</label>
+            <div class="style-toggle">
+              <button class="style-btn active" data-arctype="single">Single arc</button>
+              <button class="style-btn" data-arctype="unit">Unit arcs</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field field-sm">
+            <label>Label</label>
+            <input type="text" id="f-jump-label" placeholder="e.g. +3 or blank">
+          </div>
+          <div class="field">
+            <label>Arrow</label>
+            <div class="style-toggle">
+              <button class="style-btn active" data-arrow="yes">Yes</button>
+              <button class="style-btn" data-arrow="no">No</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Circle</label>
+            <div class="style-toggle">
+              <button class="style-btn active" data-circle="none">None</button>
+              <button class="style-btn" data-circle="start">Start</button>
+              <button class="style-btn" data-circle="end">End</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>Colour</label>
+            <div class="swatch-row" id="jump-swatch-row"></div>
+          </div>
+        </div>
+
+        <div class="jump-toggle-row" style="margin-top:10px">
+          <button class="jump-toggle-btn" id="jump2-toggle-btn" onclick="toggleJump2Section()">＋ Add second jump</button>
+        </div>
+        <div id="jump2-section" style="display:none">
+          <hr class="section-hr" style="margin:10px 0">
+          <div class="section-label">Jump 2</div>
+          <div class="form-row">
+            <div class="field field-sm"><label>From</label><input type="number" id="f-from2" placeholder="e.g. 10" step="any"></div>
+            <div class="field field-sm"><label>To</label><input type="number" id="f-to2" placeholder="e.g. 14" step="any"></div>
+            <div class="field">
+              <label>Arc type</label>
+              <div class="style-toggle" id="arctype2-toggle">
+                <button class="style-btn active" data-arctype2="single">Single arc</button>
+                <button class="style-btn" data-arctype2="unit">Unit arcs</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field field-sm">
+              <label>Label</label>
+              <input type="text" id="f-jump-label2" placeholder="e.g. +4 or blank">
+            </div>
+            <div class="field">
+              <label>Arrow</label>
+              <div class="style-toggle" id="arrow2-toggle">
+                <button class="style-btn active" data-arrow2="yes">Yes</button>
+                <button class="style-btn" data-arrow2="no">No</button>
+              </div>
+            </div>
+            <div class="field">
+              <label>Circle</label>
+              <div class="style-toggle" id="circle2-toggle">
+                <button class="style-btn active" data-circle2="none">None</button>
+                <button class="style-btn" data-circle2="start">Start</button>
+                <button class="style-btn" data-circle2="end">End</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Colour</label>
+              <div class="swatch-row" id="jump2-swatch-row"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-box" id="manual-preview"><p>Fill in the fields above to preview.</p></div>
+      <div class="form-actions" style="gap:10px;">
+        <button class="btn btn-create-more" onclick="openBatchPanel()">⊞ Create more like this</button>
+        <button class="btn btn-add" onclick="addManualQuestion()">+ Add to page</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Batch panel ── -->
+  <div id="batch-panel">
+    <div class="batch-card">
+      <div class="batch-header">
+        <h2>Batch variations</h2>
+        <button class="btn btn-outline" onclick="closeBatchPanel()" style="padding:5px 12px;font-size:0.8rem;">✕ Close</button>
+      </div>
+      <p class="batch-subtitle">Arc style is locked from the builder above. Numbers and colours can be changed per row.</p>
+      <div class="batch-locked-tags" id="batch-locked-tags"></div>
+      <div class="batch-table-wrap">
+        <table class="batch-table">
+          <thead><tr id="batch-thead-row"></tr></thead>
+          <tbody id="batch-tbody"></tbody>
+        </table>
+      </div>
+      <div class="batch-actions">
+        <button class="btn btn-outline" onclick="addBatchRow()">＋ Add row</button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-outline" onclick="addBatchToPage()">+ Add all to page</button>
+          <button class="btn btn-generate" id="btn-generate" onclick="generateAllPNGs()">↓ Download all PNGs</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="grid"></div>
+</main>
+
+<script>
+// ─── Renderer ──────────────────────────────────────────────────────────────
+
+const FONT = "'Proxima Soft','Nunito','Arial Rounded MT Bold',sans-serif";
+const LABEL_COLOR = '#1A1A2E';
+const ARROW_SIZE  = 7;
+const DEFAULT_LINE_COLOR = '#AAAAAA';
+
+// Fully-saturated CENTURY palette (same as bar model creator)
+const PALETTE = {
+  dark:   '#1A1A2E',
+  grey:   '#AAAAAA',
+  red:    '#D46B55',
+  orange: '#F5995B',
+  yellow: '#FECC6B',
+  green:  '#319377',
+  blue:   '#7898F0',
+  purple: '#847AC9',
+  pink:   '#FC7E91',
+};
+const JUMP_PALETTE_NAMES = ['dark','red','orange','yellow','green','blue','purple','pink'];
+
+function resolveColour(raw) {
+  if (!raw) return DEFAULT_LINE_COLOR;
+  const key = raw.trim().toLowerCase();
+  if (PALETTE[key]) return PALETTE[key];
+  if (/^#[0-9a-f]{3,6}$/i.test(raw.trim())) return raw.trim();
+  return DEFAULT_LINE_COLOR;
+}
+
+function numberLineSVG(config) {
+  const {
+    start, end, partitions, valuesGivenEvery, answer,
+    lineStyle = 'through', colour,
+    hideFrom, hideTo,
+    // Optional jump overlay
+    jumpFrom, jumpTo, jumpType = 'single',
+    jumpLabel = '', jumpArrow = true, jumpCircle = 'none', jumpColour = 'dark',
+    // Optional second jump
+    jump2From, jump2To, jump2Type = 'single',
+    jump2Label = '', jump2Arrow = true, jump2Circle = 'none', jump2Colour = 'dark',
+  } = config;
+
+  const terminate  = lineStyle === 'terminate';
+  const C          = resolveColour(colour);
+  const BAR_W      = 380;
+  const pxPerUnit  = BAR_W / (end - start);
+  const labelStep  = (!isNaN(valuesGivenEvery) && valuesGivenEvery > 0) ? valuesGivenEvery : null;
+  const answerNum  = answer ? Math.round(parseFloat(answer) * 1000) / 1000 : null;
+  const tickStep   = partitions > 0 ? (end - start) / partitions : 0;
+
+  // Answer float-above logic (unchanged)
+  let answerAbove = false;
+  if (answerNum !== null && labelStep !== null) {
+    const rem = Math.round(((answerNum - start) % labelStep) * 1e6) / 1e6;
+    const onGrid = Math.abs(rem) < 0.001 || Math.abs(Math.abs(rem) - labelStep) < 0.001;
+    if (!onGrid) {
+      const distToPrev = rem * pxPerUnit;
+      const distToNext = (labelStep - rem) * pxPerUnit;
+      answerAbove = Math.min(distToPrev, distToNext) < 20;
+    }
+  }
+  const answerBetweenTicks = answerNum !== null && answerNum > start && answerNum < end && tickStep > 0 && (() => {
+    const rem = Math.round(((answerNum - start) % tickStep) * 1e6) / 1e6;
+    return !(Math.abs(rem) < 0.001 || Math.abs(Math.abs(rem) - tickStep) < 0.001);
+  })();
+
+  // Pre-compute arc height so PAD_T can accommodate jumps
+  const hasJump = jumpFrom !== undefined && jumpTo !== undefined &&
+                  !isNaN(jumpFrom) && !isNaN(jumpTo) && jumpFrom !== jumpTo;
+  const hasJump2 = jump2From !== undefined && jump2To !== undefined &&
+                   !isNaN(jump2From) && !isNaN(jump2To) && jump2From !== jump2To;
+  let arcH = 0;
+  if (hasJump) {
+    const spanPx = Math.abs(jumpTo - jumpFrom) * pxPerUnit;
+    arcH = jumpType === 'single'
+      ? Math.min(spanPx * 0.45, 68)
+      : Math.min(tickStep * pxPerUnit * 0.6, 32);
+  }
+  if (hasJump2) {
+    const spanPx2 = Math.abs(jump2To - jump2From) * pxPerUnit;
+    const arcH2 = jump2Type === 'single'
+      ? Math.min(spanPx2 * 0.45, 68)
+      : Math.min(tickStep * pxPerUnit * 0.6, 32);
+    arcH = Math.max(arcH, arcH2);
+  }
+  const arcPadT = (hasJump || hasJump2) ? arcH + ((jumpLabel || jump2Label) ? 26 : 10) : 0;
+
+  // Pre-compute circleVal and radius so PAD_B can be sized correctly
+  const hasCircle = hasJump && jumpCircle !== 'none';
+  const circleVal = hasCircle ? (jumpCircle === 'start' ? jumpFrom : jumpTo) : null;
+  // Minimum radius to just clear the text (based on label length), plus scale up on sparser lines
+  const circleLblLen = circleVal !== null ? String(Math.round(circleVal)).length : 1;
+  const crMin = circleLblLen <= 1 ? 9 : 11;  // text half-diagonal + ~2.5px clearance
+  const cr = hasCircle ? Math.min(Math.max(crMin, Math.floor(pxPerUnit * 0.32)), 18) : 0;
+
+  const EXTEND    = terminate ? 0 : 20;
+  const PAD_L     = terminate ? 22 : 8 + EXTEND;
+  const PAD_R     = terminate ? 22 : 8 + EXTEND;
+  const PAD_T     = Math.max((answerAbove || answerBetweenTicks) ? 34 : 16, arcPadT);
+  // Circle bottom sits at TICK_HALF + 14 (label top) + 4 (centre offset) + cr below LINE_Y
+  const PAD_B     = hasCircle ? Math.max(36, Math.ceil(18 + cr + 6)) : 36;
+  const SVG_W     = BAR_W + PAD_L + PAD_R;
+  const LINE_Y    = PAD_T;
+  const TICK_HALF = 8;
+  const SVG_H     = PAD_T + TICK_HALF + PAD_B;
+  const bx        = PAD_L;
+  const ex        = PAD_L + BAR_W;
+  const valToX    = v => bx + BAR_W * (v - start) / (end - start);
+
+  // Jump colours (needed during tick loop for circle rendering)
+  const JC1 = resolveColour(jumpColour);
+  const JC2 = resolveColour(jump2Colour);
+
+  // Tick positions
+  const ticks = [];
+  for (let i = 0; i <= partitions; i++) {
+    const value = start + (end - start) * i / partitions;
+    ticks.push({ value: Math.round(value * 1000) / 1000, x: bx + BAR_W * i / partitions });
+  }
+
+  let s = `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">`;
+
+  // ── Line ──
+  if (terminate) {
+    s += `<line x1="${bx}" y1="${LINE_Y}" x2="${ex}" y2="${LINE_Y}" stroke="${C}" stroke-width="2.5" stroke-linecap="round"/>`;
+  } else {
+    const lx = bx - EXTEND, rx = ex + EXTEND;
+    s += `<line x1="${lx}" y1="${LINE_Y}" x2="${rx}" y2="${LINE_Y}" stroke="${C}" stroke-width="2.5" stroke-linecap="round"/>`;
+    s += `<polygon points="${lx - ARROW_SIZE},${LINE_Y} ${lx},${LINE_Y - ARROW_SIZE / 2} ${lx},${LINE_Y + ARROW_SIZE / 2}" fill="${C}" stroke="${C}" stroke-width="1" stroke-linejoin="round"/>`;
+    s += `<polygon points="${rx + ARROW_SIZE},${LINE_Y} ${rx},${LINE_Y - ARROW_SIZE / 2} ${rx},${LINE_Y + ARROW_SIZE / 2}" fill="${C}" stroke="${C}" stroke-width="1" stroke-linejoin="round"/>`;
+  }
+
+  // circleVal computed above (needed early for PAD_B sizing)
+
+  // ── Ticks and labels ──
+  let answerRendered = false;
+  ticks.forEach(({ value, x }, i) => {
+    const isEndpoint = i === 0 || i === ticks.length - 1;
+    const th         = (terminate && isEndpoint) ? TICK_HALF + 2 : TICK_HALF;
+    const isAnswer   = answerNum !== null && Math.abs(value - answerNum) < 0.001;
+    if (isAnswer) answerRendered = true;
+    const rem    = labelStep !== null ? Math.round(((value - start) % labelStep) * 1e6) / 1e6 : 0;
+    const onGrid = labelStep === null || Math.abs(rem) < 0.001 || Math.abs(Math.abs(rem) - labelStep) < 0.001;
+    const opacity = onGrid ? 1 : 0.3;
+    const hasHideRange  = hideFrom !== undefined && hideTo !== undefined;
+    const isHiddenValue = hasHideRange && value >= hideFrom && value <= hideTo;
+    const show    = (onGrid || isAnswer) && (!isHiddenValue || isAnswer);
+
+    s += `<line x1="${x.toFixed(1)}" y1="${(LINE_Y - th).toFixed(1)}" x2="${x.toFixed(1)}" y2="${(LINE_Y + th).toFixed(1)}" stroke="${C}" stroke-width="${terminate && isEndpoint ? 2.5 : 2}" stroke-linecap="round" opacity="${opacity}"/>`;
+
+    if (isAnswer && answerAbove) {
+      const arrowTipY  = LINE_Y - th - 5;
+      const arrowBaseY = arrowTipY - 7;
+      const AW = 3.5;
+      s += `<polygon points="${x.toFixed(1)},${arrowTipY.toFixed(1)} ${(x-AW).toFixed(1)},${arrowBaseY.toFixed(1)} ${(x+AW).toFixed(1)},${arrowBaseY.toFixed(1)}" fill="${LABEL_COLOR}" stroke="${LABEL_COLOR}" stroke-width="1" stroke-linejoin="round"/>`;
+      s += `<text x="${x.toFixed(1)}" y="${(arrowBaseY-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${LABEL_COLOR}">?</text>`;
+    } else if (show) {
+      const lbl = isAnswer ? '?' : String(value);
+      const ly  = (LINE_Y + TICK_HALF + 14).toFixed(1);
+      const isCircled = circleVal !== null && Math.abs(value - circleVal) < 0.001;
+      if (isCircled) {
+        // cr is pre-computed above, scaled to pxPerUnit; +4 centres on the text's visual middle
+        const circleCy = (parseFloat(ly) + 4).toFixed(1);
+        s += `<circle cx="${x.toFixed(1)}" cy="${circleCy}" r="${cr}" fill="none" stroke="${JC1}" stroke-width="2"/>`;
+      }
+      s += `<text x="${x.toFixed(1)}" y="${ly}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="13" fill="${LABEL_COLOR}">${lbl}</text>`;
+    }
+  });
+
+  // Between-ticks answer marker (unchanged)
+  if (answerBetweenTicks && !answerRendered) {
+    const ax         = bx + BAR_W * (answerNum - start) / (end - start);
+    const arrowTipY  = LINE_Y - 5;
+    const arrowBaseY = arrowTipY - 8;
+    const AW = 3.5;
+    s += `<polygon points="${ax.toFixed(1)},${arrowTipY.toFixed(1)} ${(ax-AW).toFixed(1)},${arrowBaseY.toFixed(1)} ${(ax+AW).toFixed(1)},${arrowBaseY.toFixed(1)}" fill="${LABEL_COLOR}" stroke="${LABEL_COLOR}" stroke-width="1" stroke-linejoin="round"/>`;
+    s += `<text x="${ax.toFixed(1)}" y="${(arrowBaseY-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${LABEL_COLOR}">?</text>`;
+  }
+
+  // ── Jump arcs (shared setup) ──
+  const GAP = 3; // gap between arc endpoints and top of tick markers
+  const arcY = LINE_Y - TICK_HALF - GAP; // shared by both jump overlays
+
+  // Arrowhead/stroke scaled to arc span
+  const arrowSize = span => {
+    const ah = Math.min(Math.max(span * 0.2, 5), 9);
+    const sw = Math.min(Math.max(span * 0.07, 1), 2.2);
+    return { ah, aw: ah * 0.65, sw };
+  };
+
+  // Each arc uses its own natural height based on its span
+
+  // ── Jump 2 arcs (rendered first = behind jump 1) ──
+  if (hasJump2) {
+    const x1 = valToX(jump2From);
+    const x2 = valToX(jump2To);
+
+    if (jump2Type === 'single') {
+      const span     = Math.abs(x2 - x1);
+      const { ah: AH, aw: AW, sw: SW } = arrowSize(span);
+      const h        = Math.min(span * 0.45, 68);
+      const arcTop   = arcY - h;
+      const pathEndY = jump2Arrow ? arcY - AH + 1 : arcY;
+      s += `<path d="M${x1.toFixed(1)},${arcY} C${x1.toFixed(1)},${arcTop} ${x2.toFixed(1)},${arcTop} ${x2.toFixed(1)},${pathEndY}" fill="none" stroke="${JC2}" stroke-width="${SW.toFixed(2)}" stroke-linecap="round"/>`;
+      if (jump2Arrow) {
+        s += `<polygon points="${x2.toFixed(1)},${arcY} ${(x2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(x2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${JC2}" stroke="${JC2}" stroke-width="1" stroke-linejoin="round"/>`;
+      }
+      if (jump2Label) {
+        s += `<text x="${((x1+x2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 2).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC2}">${jump2Label}</text>`;
+      }
+    } else {
+      const direction2 = jump2To > jump2From ? 1 : -1;
+      const steps2     = Math.round(Math.abs(jump2To - jump2From) / tickStep);
+      for (let i = 0; i < steps2; i++) {
+        const fv   = Math.round((jump2From + direction2 * i * tickStep) * 1000) / 1000;
+        const tv   = Math.round((jump2From + direction2 * (i + 1) * tickStep) * 1000) / 1000;
+        const ax1  = valToX(fv), ax2 = valToX(tv);
+        const span = Math.abs(ax2 - ax1);
+        const { ah: AH, aw: AW, sw: SW } = arrowSize(span);
+        const h        = Math.min(span * 0.6, 32);
+        const arcTop   = arcY - h;
+        const pathEndY = jump2Arrow ? arcY - AH + 1 : arcY;
+        s += `<path d="M${ax1.toFixed(1)},${arcY} C${ax1.toFixed(1)},${arcTop} ${ax2.toFixed(1)},${arcTop} ${ax2.toFixed(1)},${pathEndY}" fill="none" stroke="${JC2}" stroke-width="${SW.toFixed(2)}" stroke-linecap="round"/>`;
+        if (jump2Arrow) {
+          s += `<polygon points="${ax2.toFixed(1)},${arcY} ${(ax2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(ax2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${JC2}" stroke="${JC2}" stroke-width="1" stroke-linejoin="round"/>`;
+        }
+        if (jump2Label) {
+          s += `<text x="${((ax1+ax2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 2).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC2}">${jump2Label}</text>`;
+        }
+      }
+    }
+
+    // Circle for jump 2
+    if (jump2Circle !== 'none') {
+      const circleVal2 = jump2Circle === 'start' ? jump2From : jump2To;
+      const cx2 = valToX(circleVal2);
+      const lbl2 = String(circleVal2);
+      const cr2 = Math.min(Math.max(lbl2.length <= 1 ? 9 : 11, Math.floor(pxPerUnit * 0.32)), 18);
+      const ly2 = (LINE_Y + TICK_HALF + 14).toFixed(1);
+      const circleCy2 = (parseFloat(ly2) + 4).toFixed(1);
+      s += `<circle cx="${cx2.toFixed(1)}" cy="${circleCy2}" r="${cr2}" fill="none" stroke="${JC2}" stroke-width="2"/>`;
+      s += `<text x="${cx2.toFixed(1)}" y="${ly2}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC2}">${lbl2}</text>`;
+    }
+  }
+
+  // ── Jump 1 arcs (rendered second = on top of jump 2) ──
+  if (hasJump) {
+    const x1 = valToX(jumpFrom);
+    const x2 = valToX(jumpTo);
+    if (jumpType === 'single') {
+      const span     = Math.abs(x2 - x1);
+      const { ah: AH, aw: AW, sw: SW } = arrowSize(span);
+      const h        = Math.min(span * 0.45, 68);
+      const arcTop   = arcY - h;
+      const pathEndY = jumpArrow ? arcY - AH + 1 : arcY;
+      s += `<path d="M${x1.toFixed(1)},${arcY} C${x1.toFixed(1)},${arcTop} ${x2.toFixed(1)},${arcTop} ${x2.toFixed(1)},${pathEndY}" fill="none" stroke="${JC1}" stroke-width="${SW.toFixed(2)}" stroke-linecap="round"/>`;
+      if (jumpArrow) {
+        s += `<polygon points="${x2.toFixed(1)},${arcY} ${(x2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(x2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${JC1}" stroke="${JC1}" stroke-width="1" stroke-linejoin="round"/>`;
+      }
+      if (jumpLabel) {
+        s += `<text x="${((x1+x2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 2).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC1}">${jumpLabel}</text>`;
+      }
+    } else {
+      // Unit arcs — one per step
+      const direction = jumpTo > jumpFrom ? 1 : -1;
+      const steps     = Math.round(Math.abs(jumpTo - jumpFrom) / tickStep);
+      for (let i = 0; i < steps; i++) {
+        const fv   = Math.round((jumpFrom + direction * i * tickStep) * 1000) / 1000;
+        const tv   = Math.round((jumpFrom + direction * (i + 1) * tickStep) * 1000) / 1000;
+        const ax1  = valToX(fv), ax2 = valToX(tv);
+        const span = Math.abs(ax2 - ax1);
+        const { ah: AH, aw: AW, sw: SW } = arrowSize(span);
+        const h        = Math.min(span * 0.6, 32);
+        const arcTop   = arcY - h;
+        const pathEndY = jumpArrow ? arcY - AH + 1 : arcY;
+        s += `<path d="M${ax1.toFixed(1)},${arcY} C${ax1.toFixed(1)},${arcTop} ${ax2.toFixed(1)},${arcTop} ${ax2.toFixed(1)},${pathEndY}" fill="none" stroke="${JC1}" stroke-width="${SW.toFixed(2)}" stroke-linecap="round"/>`;
+        if (jumpArrow) {
+          s += `<polygon points="${ax2.toFixed(1)},${arcY} ${(ax2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(ax2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${JC1}" stroke="${JC1}" stroke-width="1" stroke-linejoin="round"/>`;
+        }
+        if (jumpLabel) {
+          s += `<text x="${((ax1+ax2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 2).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC1}">${jumpLabel}</text>`;
+        }
+      }
+    }
+  }
+
+  s += `</svg>`;
+  return s;
+}
+
+// ─── CSV parsing ──────────────────────────────────────────────────────────
+
+function strVal(v) {
+  if (v == null) return undefined;
+  const s = String(v).trim();
+  return s === '' ? undefined : s;
+}
+
+function rowToQuestion(row, idx) {
+  const qNum = strVal(row[0]);
+  if (!qNum || isNaN(Number(qNum))) return null;
+
+  const text             = strVal(row[1]) || '';
+  const start            = parseFloat(row[2]);
+  const end              = parseFloat(row[3]);
+  const stepSize         = parseFloat(row[4]);        // col E: "Number line goes up in"
+  const valuesGivenEvery = parseFloat(row[5]);        // col F: "Values given every"
+  const answer           = strVal(row[6]);            // col G: answer (auto-placed as ?)
+  const lineStyle        = strVal(row[7])?.toLowerCase() || 'through'; // col H
+  const colour           = strVal(row[8]) || '';      // col I
+
+  if (isNaN(start) || isNaN(end)) return null;
+
+  const partitions = (!isNaN(stepSize) && stepSize > 0)
+    ? Math.round((end - start) / stepSize)
+    : 10;
+
+  // Shown values and ? placement are now computed in numberLineSVG from valuesGivenEvery and answer.
+  const cfg = { start, end, partitions, valuesGivenEvery, answer, lineStyle, colour };
+  return { id: Number(qNum), text, answer, lineStyle, colour, stepSize, cfg };
+}
+
+function processCSV(results, fileName) {
+  const rows = results.data;
+  const questions = [];
+  let idx = 0;
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const first = String(row[0] || '').trim();
+    if (!first || isNaN(Number(first)) || first.startsWith('↓') || first.startsWith('e.g')) continue;
+    const q = rowToQuestion(row, idx++);
+    if (q) questions.push(q);
+  }
+  if (questions.length === 0) throw new Error('No valid question rows found. Check the format matches the template.');
+  return questions;
+}
+
+// ─── Render ───────────────────────────────────────────────────────────────
+
+function render(questions, fileName) {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  questions.forEach(q => {
+    const svg = numberLineSVG(q.cfg);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-header">
+        <span class="q-badge">Q${q.id}</span>
+        <span class="q-text">${q.text}</span>
+      </div>
+      ${svg}
+      <div class="card-footer">
+        ${q.answer ? `<div class="answer-wrap">Answer: <span class="answer-badge">${q.answer}</span></div>` : '<div></div>'}
+        <span class="mode-badge">${q.cfg.start}–${q.cfg.end} · step ${q.stepSize ?? (q.cfg.partitions ? (q.cfg.end - q.cfg.start) / q.cfg.partitions : '?')} · ${q.lineStyle}${q.colour ? ' · ' + q.colour : ''}</span>
+      </div>`;
+    grid.appendChild(card);
+  });
+  grid.style.display = 'grid';
+  document.getElementById('toolbar').style.display = 'flex';
+  document.getElementById('toolbar-info').textContent = `${questions.length} question${questions.length !== 1 ? 's' : ''} from ${fileName}`;
+  document.getElementById('drop-zone').style.display = 'none';
+}
+
+// ─── File handling ────────────────────────────────────────────────────────
+
+function showError(msg) {
+  const el = document.getElementById('message');
+  el.className = 'error';
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function handleFile(file) {
+  if (!file) return;
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  grid.style.display = 'none';
+  document.getElementById('toolbar').style.display = 'none';
+  document.getElementById('message').style.display = 'none';
+
+  if (file.name.match(/\.xlsx$/i)) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const wb = XLSX.read(e.target.result, { type: 'array' });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+        const questions = processCSV({ data: rows }, file.name);
+        render(questions, file.name);
+      } catch (err) {
+        showError('Could not parse the file: ' + err.message);
+      }
+    };
+    reader.readAsArrayBuffer(file);
+    return;
+  }
+  if (!file.name.match(/\.(csv|tsv|txt)$/i)) {
+    showError('Please upload a CSV or Excel (.xlsx) file.');
+    return;
+  }
+  Papa.parse(file, {
+    skipEmptyLines: false,
+    complete(results) {
+      try {
+        const questions = processCSV(results, file.name);
+        render(questions, file.name);
+      } catch (e) {
+        showError('Could not parse the file: ' + e.message);
+      }
+    },
+    error(err) { showError('Parse error: ' + err.message); }
+  });
+}
+
+const dropZone  = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+
+dropZone.addEventListener('click', e => {
+  if (e.target.closest('label')) return;
+  fileInput.value = '';
+  fileInput.click();
+});
+document.querySelector('label[for="file-input"]').addEventListener('click', () => {
+  fileInput.value = '';
+});
+fileInput.addEventListener('change', e => handleFile(e.target.files[0]));
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  handleFile(e.dataTransfer.files[0]);
+});
+
+// ─── Manual mode ─────────────────────────────────────────────────────────
+
+const PALETTE_NAMES = ['grey','red','orange','yellow','green','blue','purple','pink'];
+let selectedColour = 'grey';
+let selectedStyle  = 'through';
+let nextQNum       = 1;
+let currentMode    = 'csv';
+
+// Jump state
+let jumpSectionOpen  = false;
+let jump2SectionOpen = false;
+let jumpMode         = 'addition';
+let arcType          = 'single';
+let arcType2         = 'single';
+let jumpArrow2       = true;
+let jumpCircle2      = 'none';
+let jumpColour       = 'dark';
+let jump2Colour      = 'dark';
+let jumpArrow       = true;
+let jumpCircle      = 'none';
+
+function toggleJumpSection() {
+  jumpSectionOpen = !jumpSectionOpen;
+  document.getElementById('jump-section').style.display = jumpSectionOpen ? 'block' : 'none';
+  const btn = document.getElementById('jump-toggle-btn');
+  btn.textContent = jumpSectionOpen ? '✕ Remove jumps' : '＋ Add jumps';
+  btn.classList.toggle('open', jumpSectionOpen);
+  // Hide jump2 if jump1 is removed
+  if (!jumpSectionOpen && jump2SectionOpen) toggleJump2Section();
+  updatePreview();
+}
+
+function toggleJump2Section() {
+  jump2SectionOpen = !jump2SectionOpen;
+  document.getElementById('jump2-section').style.display = jump2SectionOpen ? 'block' : 'none';
+  const btn = document.getElementById('jump2-toggle-btn');
+  btn.textContent = jump2SectionOpen ? '✕ Remove second jump' : '＋ Add second jump';
+  btn.classList.toggle('open', jump2SectionOpen);
+  if (!jump2SectionOpen) {
+    document.getElementById('f-from2').value = '';
+    document.getElementById('f-to2').value = '';
+    document.getElementById('f-jump-label2').value = '';
+  }
+  updatePreview();
+}
+
+document.getElementById('clear-btn').addEventListener('click', () => {
+  document.getElementById('grid').innerHTML = '';
+  document.getElementById('grid').style.display = 'none';
+  document.getElementById('toolbar').style.display = 'none';
+  document.getElementById('message').style.display = 'none';
+  if (currentMode === 'csv') document.getElementById('drop-zone').style.display = '';
+  fileInput.value = '';
+  nextQNum = 1;
+  document.getElementById('f-qnum').value = 1;
+});
+
+initManual();
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('mode-csv-btn').classList.toggle('active', mode === 'csv');
+  document.getElementById('mode-manual-btn').classList.toggle('active', mode === 'manual');
+  const dz = document.getElementById('drop-zone');
+  const mp = document.getElementById('manual-panel');
+  if (mode === 'csv') { dz.style.display = ''; mp.style.display = 'none'; }
+  else                { dz.style.display = 'none'; mp.style.display = 'block'; updatePreview(); }
+}
+
+function buildSwatchRow(containerId, paletteNames, defaultName, onChange) {
+  const row = document.getElementById(containerId);
+  paletteNames.forEach(name => {
+    const btn = document.createElement('button');
+    btn.className = 'swatch' + (name === defaultName ? ' selected' : '');
+    btn.style.background = PALETTE[name];
+    btn.title = name;
+    btn.addEventListener('click', () => {
+      row.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+      btn.classList.add('selected');
+      onChange(name);
+      updatePreview();
+    });
+    row.appendChild(btn);
+  });
+}
+
+function initManual() {
+  // Build colour swatches
+  buildSwatchRow('swatch-row', PALETTE_NAMES, 'grey', name => { selectedColour = name; });
+  buildSwatchRow('jump-swatch-row', JUMP_PALETTE_NAMES, 'dark', name => { jumpColour = name; });
+  buildSwatchRow('jump2-swatch-row', JUMP_PALETTE_NAMES, 'dark', name => { jump2Colour = name; });
+
+  // Style toggle
+  document.querySelectorAll('.style-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedStyle = btn.dataset.style;
+      updatePreview();
+    });
+  });
+
+  // Arc type toggle
+  document.querySelectorAll('.style-btn[data-arctype]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.style-btn[data-arctype]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      arcType = btn.dataset.arctype;
+      updatePreview();
+    });
+  });
+
+  // Arrow toggle
+  document.querySelectorAll('.style-btn[data-arrow]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.style-btn[data-arrow]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      jumpArrow = btn.dataset.arrow === 'yes';
+      updatePreview();
+    });
+  });
+
+  // Circle toggle
+  document.querySelectorAll('.style-btn[data-circle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.style-btn[data-circle]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      jumpCircle = btn.dataset.circle;
+      updatePreview();
+    });
+  });
+
+  // Arc type 2 toggle
+  document.querySelectorAll('.style-btn[data-arctype2]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.style-btn[data-arctype2]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      arcType2 = btn.dataset.arctype2;
+      updatePreview();
+    });
+  });
+
+  // Arrow 2 toggle
+  document.querySelectorAll('.style-btn[data-arrow2]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.style-btn[data-arrow2]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      jumpArrow2 = btn.dataset.arrow2 === 'yes';
+      updatePreview();
+    });
+  });
+
+  // Circle 2 toggle
+  document.querySelectorAll('.style-btn[data-circle2]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.style-btn[data-circle2]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      jumpCircle2 = btn.dataset.circle2;
+      updatePreview();
+    });
+  });
+
+  // Live preview on non-jump fields
+  ['f-qnum','f-text','f-start','f-end','f-step','f-vge','f-answer','f-hide-from','f-hide-to'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', updatePreview);
+  });
+
+  // Jump fields: auto-calculate the third from the other two
+  setupJumpAutoCalc('f-from', 'f-to', 'f-jump-label');
+  setupJumpAutoCalc('f-from2', 'f-to2', 'f-jump-label2');
+}
+
+function parseJumpLabel(s) {
+  if (!s || !s.trim()) return NaN;
+  return parseFloat(s.trim().replace(/^\+/, ''));
+}
+
+function formatJumpLabel(diff) {
+  if (!isFinite(diff)) return '';
+  const n = Math.round(diff * 1000) / 1000; // avoid float noise
+  return (n >= 0 ? '+' : '') + n;
+}
+
+function setupJumpAutoCalc(fromId, toId, labelId) {
+  const fromEl  = document.getElementById(fromId);
+  const toEl    = document.getElementById(toId);
+  const labelEl = document.getElementById(labelId);
+  if (!fromEl || !toEl || !labelEl) return;
+
+  fromEl.addEventListener('input', () => {
+    const from = parseFloat(fromEl.value);
+    const to   = parseFloat(toEl.value);
+    const lbl  = parseJumpLabel(labelEl.value);
+    if (!isNaN(from) && !isNaN(to))       labelEl.value = formatJumpLabel(to - from);
+    else if (!isNaN(from) && !isNaN(lbl)) toEl.value    = from + lbl;
+    updatePreview();
+  });
+
+  toEl.addEventListener('input', () => {
+    const from = parseFloat(fromEl.value);
+    const to   = parseFloat(toEl.value);
+    const lbl  = parseJumpLabel(labelEl.value);
+    if (!isNaN(from) && !isNaN(to))      labelEl.value = formatJumpLabel(to - from);
+    else if (!isNaN(to) && !isNaN(lbl))  fromEl.value  = to - lbl;
+    updatePreview();
+  });
+
+  labelEl.addEventListener('input', () => {
+    const from = parseFloat(fromEl.value);
+    const to   = parseFloat(toEl.value);
+    const lbl  = parseJumpLabel(labelEl.value);
+    if (!isNaN(from) && !isNaN(lbl))      toEl.value   = from + lbl;
+    else if (!isNaN(to) && !isNaN(lbl))   fromEl.value = to - lbl;
+    updatePreview();
+  });
+}
+
+function getManualConfig() {
+  const start          = parseFloat(document.getElementById('f-start').value);
+  const end            = parseFloat(document.getElementById('f-end').value);
+  const stepSize       = parseFloat(document.getElementById('f-step').value);
+  const valuesGivenEvery = parseFloat(document.getElementById('f-vge').value);
+  const answer         = document.getElementById('f-answer').value.trim() || undefined;
+  if (isNaN(start) || isNaN(end) || isNaN(stepSize) || stepSize <= 0) return null;
+  const partitions = Math.round((end - start) / stepSize);
+  if (partitions <= 0) return null;
+
+  const hideFromRaw = parseFloat(document.getElementById('f-hide-from').value);
+  const hideToRaw   = parseFloat(document.getElementById('f-hide-to').value);
+  const hideFrom    = isNaN(hideFromRaw) ? undefined : hideFromRaw;
+  const hideTo      = isNaN(hideToRaw)   ? undefined : hideToRaw;
+
+  const cfg = { start, end, partitions, valuesGivenEvery, answer, lineStyle: selectedStyle, colour: selectedColour, hideFrom, hideTo };
+
+  if (jumpSectionOpen) {
+    const from = parseFloat(document.getElementById('f-from').value);
+    const to   = parseFloat(document.getElementById('f-to').value);
+    const lbl  = document.getElementById('f-jump-label').value.trim();
+    if (!isNaN(from) && !isNaN(to) && from !== to) {
+      cfg.jumpFrom   = from;
+      cfg.jumpTo     = to;
+      cfg.jumpType   = arcType;
+      cfg.jumpLabel  = lbl;
+      cfg.jumpArrow  = jumpArrow;
+      cfg.jumpCircle = jumpCircle;
+      cfg.jumpColour = jumpColour;
+    }
+    if (jump2SectionOpen) {
+      const from2 = parseFloat(document.getElementById('f-from2').value);
+      const to2   = parseFloat(document.getElementById('f-to2').value);
+      const lbl2  = document.getElementById('f-jump-label2').value.trim();
+      if (!isNaN(from2) && !isNaN(to2) && from2 !== to2) {
+        cfg.jump2From   = from2;
+        cfg.jump2To     = to2;
+        cfg.jump2Type   = arcType2;
+        cfg.jump2Label  = lbl2;
+        cfg.jump2Arrow  = jumpArrow2;
+        cfg.jump2Circle = jumpCircle2;
+        cfg.jump2Colour = jump2Colour;
+      }
+    }
+  }
+
+  return cfg;
+}
+
+function updatePreview() {
+  const box = document.getElementById('manual-preview');
+  const cfg = getManualConfig();
+  if (!cfg) { box.innerHTML = '<p>Fill in Start, End and "Goes up in" to see a preview.</p>'; return; }
+  box.innerHTML = numberLineSVG(cfg);
+}
+
+function addManualQuestion() {
+  const cfg = getManualConfig();
+  if (!cfg) { alert('Please fill in Start, End and "Goes up in".'); return; }
+  const qNum     = parseInt(document.getElementById('f-qnum').value) || nextQNum;
+  const text     = document.getElementById('f-text').value.trim();
+  const answer   = document.getElementById('f-answer').value.trim() || undefined;
+  const stepSize = parseFloat(document.getElementById('f-step').value);
+  const q = { id: qNum, text, answer, lineStyle: selectedStyle, colour: selectedColour, stepSize, cfg };
+  appendCard(q);
+  nextQNum = qNum + 1;
+  document.getElementById('f-qnum').value = nextQNum;
+  document.getElementById('toolbar').style.display = 'flex';
+  document.getElementById('toolbar-info').textContent = `${document.querySelectorAll('.card').length} question(s)`;
+}
+
+function appendCard(q) {
+  const grid = document.getElementById('grid');
+  const svg  = numberLineSVG(q.cfg);
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-header">
+      <span class="q-badge">Q${q.id}</span>
+      <span class="q-text">${q.text}</span>
+    </div>
+    ${svg}
+    <div class="card-footer">
+      ${q.answer ? `<div class="answer-wrap">Answer: <span class="answer-badge">${q.answer}</span></div>` : '<div></div>'}
+      <span class="mode-badge">${q.cfg.start}–${q.cfg.end} · step ${q.stepSize} · ${q.lineStyle}${q.colour ? ' · ' + q.colour : ''}</span>
+    </div>`;
+  grid.appendChild(card);
+  grid.style.display = 'grid';
+}
+
+// ─── Batch panel ─────────────────────────────────────────────────────────
+
+let batchStructure    = null; // locked structural settings from builder
+let batchHasJump      = false;
+let batchHasJump2     = false;
+let batchRowIdx       = 0;   // ever-incrementing row ID (never reused, so previews stay stable)
+let batchDefaultNums  = { start: 0, end: 20, step: 1 }; // inherited from builder when panel opens
+const batchRowColours = {}; // { rowIdx: { colour, jumpColour, jump2Colour } }
+
+function openBatchPanel() {
+  const cfg = getManualConfig();
+  if (!cfg) { alert('Please fill in Start, End and "Goes up in" first.'); return; }
+
+  batchHasJump  = cfg.jumpFrom  !== undefined;
+  batchHasJump2 = cfg.jump2From !== undefined;
+
+  // Remember the builder's number range so new rows inherit it
+  batchDefaultNums = {
+    start: cfg.start,
+    end:   cfg.end,
+    step:  parseFloat(document.getElementById('f-step').value),
+  };
+
+  // Structural (locked) settings inherited by every batch row
+  batchStructure = {
+    lineStyle:    cfg.lineStyle,
+    colour:       cfg.colour,
+    valuesGivenEvery: cfg.valuesGivenEvery,
+    jumpType:     cfg.jumpType,
+    jumpArrow:    cfg.jumpArrow,
+    jumpCircle:   cfg.jumpCircle,
+    jumpColour:   cfg.jumpColour,
+    jump2Type:    cfg.jump2Type,
+    jump2Arrow:   cfg.jump2Arrow,
+    jump2Circle:  cfg.jump2Circle,
+    jump2Colour:  cfg.jump2Colour,
+  };
+
+  // Build locked-settings tags (colours are per-row, so not listed here)
+  const tagsEl = document.getElementById('batch-locked-tags');
+  tagsEl.innerHTML = '';
+  const tags = [`Line: ${cfg.lineStyle}`];
+  if (batchHasJump)  tags.push(`Jump 1: ${cfg.jumpType} arc${cfg.jumpArrow ? ' · arrow' : ''}${cfg.jumpCircle !== 'none' ? ' · circle ' + cfg.jumpCircle : ''}`);
+  if (batchHasJump2) tags.push(`Jump 2: ${cfg.jump2Type} arc${cfg.jump2Arrow ? ' · arrow' : ''}${cfg.jump2Circle !== 'none' ? ' · circle ' + cfg.jump2Circle : ''}`);
+  tags.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'locked-tag';
+    span.textContent = t;
+    tagsEl.appendChild(span);
+  });
+
+  // Build table header
+  buildBatchHeaders();
+
+  // Clear rows, pre-fill with current builder values
+  document.getElementById('batch-tbody').innerHTML = '';
+  batchRowIdx = 0;
+
+  addBatchRow({
+    qnum:        parseInt(document.getElementById('f-qnum').value) || 1,
+    text:        document.getElementById('f-text').value.trim(),
+    start:       cfg.start,
+    end:         cfg.end,
+    step:        parseFloat(document.getElementById('f-step').value),
+    answer:      document.getElementById('f-answer').value.trim(),
+    jumpFrom:    cfg.jumpFrom,
+    jumpTo:      cfg.jumpTo,
+    jumpLabel:   cfg.jumpLabel,
+    jump2From:   cfg.jump2From,
+    jump2To:     cfg.jump2To,
+    jump2Label:  cfg.jump2Label,
+    colour:      cfg.colour,
+    jumpColour:  cfg.jumpColour,
+    jump2Colour: cfg.jump2Colour,
+  });
+
+  document.getElementById('batch-panel').style.display = 'block';
+  document.getElementById('batch-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeBatchPanel() {
+  document.getElementById('batch-panel').style.display = 'none';
+}
+
+function buildBatchHeaders() {
+  const tr = document.getElementById('batch-thead-row');
+  const cols = ['Preview', 'Q#', 'Question', 'Start', 'End', 'Step'];
+  if (batchHasJump)  cols.push('J1 From', 'J1 To', 'J1 Label');
+  if (batchHasJump2) cols.push('J2 From', 'J2 To', 'J2 Label');
+  cols.push('Answer', '');
+  tr.innerHTML = cols.map(c => `<th>${c}</th>`).join('');
+}
+
+function addBatchRow(defaults = {}) {
+  const idx   = batchRowIdx++;
+  const tbody = document.getElementById('batch-tbody');
+  const tr    = document.createElement('tr');
+  tr.dataset.rowIdx = idx;
+
+  const n = (field, val, cls = 'batch-input-num') =>
+    `<input data-field="${field}" class="batch-input ${cls}" type="number" value="${val ?? ''}" step="any" oninput="updateBatchPreview(${idx})">`;
+  const t = (field, val, cls = '') =>
+    `<input data-field="${field}" class="batch-input ${cls}" type="text" value="${val ?? ''}" oninput="updateBatchPreview(${idx})">`;
+
+  let cells = `<td class="batch-preview-cell"><div id="bp-${idx}"></div></td>`;
+  cells += `<td>${n('qnum', defaults.qnum ?? idx + 1)}</td>`;
+  cells += `<td>${t('text', defaults.text ?? '', 'batch-input-text')}</td>`;
+  cells += `<td>${n('start', defaults.start ?? batchDefaultNums.start)}</td>`;
+  cells += `<td>${n('end',   defaults.end   ?? batchDefaultNums.end)}</td>`;
+  cells += `<td>${n('step',  defaults.step  ?? batchDefaultNums.step)}</td>`;
+
+  if (batchHasJump) {
+    cells += `<td>${n('jumpFrom',  defaults.jumpFrom)}</td>`;
+    cells += `<td>${n('jumpTo',    defaults.jumpTo)}</td>`;
+    cells += `<td>${t('jumpLabel', defaults.jumpLabel ?? '', 'batch-input-lbl')}</td>`;
+  }
+  if (batchHasJump2) {
+    cells += `<td>${n('jump2From',  defaults.jump2From)}</td>`;
+    cells += `<td>${n('jump2To',    defaults.jump2To)}</td>`;
+    cells += `<td>${t('jump2Label', defaults.jump2Label ?? '', 'batch-input-lbl')}</td>`;
+  }
+
+  cells += `<td>${t('answer', defaults.answer ?? '', 'batch-input-num')}</td>`;
+  cells += `<td><button class="batch-del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
+
+  tr.innerHTML = cells;
+  tbody.appendChild(tr);
+  buildBatchSwatches(idx, defaults);
+  setTimeout(() => updateBatchPreview(idx), 0);
+}
+
+function buildBatchSwatches(idx, defaults) {
+  batchRowColours[idx] = {
+    colour:      defaults.colour      ?? batchStructure.colour      ?? 'grey',
+    jumpColour:  defaults.jumpColour  ?? batchStructure.jumpColour  ?? 'dark',
+    jump2Colour: defaults.jump2Colour ?? batchStructure.jump2Colour ?? 'dark',
+  };
+
+  const cell = document.querySelector(`tr[data-row-idx="${idx}"] .batch-preview-cell`);
+  const wrap = document.createElement('div');
+  wrap.className = 'batch-swatch-wrap';
+
+  wrap.appendChild(makeMiniSwatchRow(idx, 'Line', 'colour',      batchRowColours[idx].colour,      PALETTE_NAMES));
+  if (batchHasJump)  wrap.appendChild(makeMiniSwatchRow(idx, 'J1', 'jumpColour',  batchRowColours[idx].jumpColour,  JUMP_PALETTE_NAMES));
+  if (batchHasJump2) wrap.appendChild(makeMiniSwatchRow(idx, 'J2', 'jump2Colour', batchRowColours[idx].jump2Colour, JUMP_PALETTE_NAMES));
+
+  cell.appendChild(wrap);
+}
+
+function makeMiniSwatchRow(idx, label, field, defaultColour, paletteNames) {
+  const row = document.createElement('div');
+  row.className = 'batch-mini-swatch-row';
+
+  const lbl = document.createElement('span');
+  lbl.className = 'batch-swatch-label';
+  lbl.textContent = label;
+  row.appendChild(lbl);
+
+  paletteNames.forEach(name => {
+    const btn = document.createElement('button');
+    btn.className = 'mini-swatch' + (name === defaultColour ? ' selected' : '');
+    btn.style.background = PALETTE[name];
+    btn.title = name;
+    btn.addEventListener('click', () => {
+      row.querySelectorAll('.mini-swatch').forEach(s => s.classList.remove('selected'));
+      btn.classList.add('selected');
+      batchRowColours[idx][field] = name;
+      updateBatchPreview(idx);
+    });
+    row.appendChild(btn);
+  });
+
+  return row;
+}
+
+function getBatchRowData(tr) {
+  const g = field => tr.querySelector(`[data-field="${field}"]`)?.value.trim() ?? '';
+  const start  = parseFloat(g('start'));
+  const end    = parseFloat(g('end'));
+  const step   = parseFloat(g('step'));
+  if (isNaN(start) || isNaN(end) || isNaN(step) || step <= 0) return null;
+  const partitions = Math.round((end - start) / step);
+  if (partitions <= 0) return null;
+
+  const idx     = parseInt(tr.dataset.rowIdx);
+  const colours = batchRowColours[idx] || {};
+  const cfg = {
+    ...batchStructure,
+    start, end, partitions,
+    colour:      colours.colour      ?? batchStructure?.colour,
+    jumpColour:  colours.jumpColour  ?? batchStructure?.jumpColour,
+    jump2Colour: colours.jump2Colour ?? batchStructure?.jump2Colour,
+  };
+  const ans = g('answer');
+  if (ans) cfg.answer = ans;
+
+  if (batchHasJump) {
+    const from = parseFloat(g('jumpFrom')), to = parseFloat(g('jumpTo'));
+    if (!isNaN(from) && !isNaN(to) && from !== to) {
+      cfg.jumpFrom = from; cfg.jumpTo = to; cfg.jumpLabel = g('jumpLabel');
+    }
+  }
+  if (batchHasJump2) {
+    const from2 = parseFloat(g('jump2From')), to2 = parseFloat(g('jump2To'));
+    if (!isNaN(from2) && !isNaN(to2) && from2 !== to2) {
+      cfg.jump2From = from2; cfg.jump2To = to2; cfg.jump2Label = g('jump2Label');
+    }
+  }
+
+  return {
+    qnum:   parseInt(g('qnum')) || 1,
+    text:   g('text'),
+    answer: ans || undefined,
+    cfg,
+  };
+}
+
+function updateBatchPreview(idx) {
+  const tr  = document.querySelector(`tr[data-row-idx="${idx}"]`);
+  const box = document.getElementById(`bp-${idx}`);
+  if (!tr || !box) return;
+  const data = getBatchRowData(tr);
+  if (!data) { box.innerHTML = '<div class="batch-no-preview">Invalid</div>'; return; }
+  box.innerHTML = numberLineSVG(data.cfg);
+}
+
+function addBatchToPage() {
+  document.querySelectorAll('#batch-tbody tr').forEach(tr => {
+    const data = getBatchRowData(tr);
+    if (!data) return;
+    const step = (data.cfg.end - data.cfg.start) / data.cfg.partitions;
+    appendCard({ id: data.qnum, text: data.text, answer: data.answer,
+      lineStyle: data.cfg.lineStyle, colour: data.cfg.colour, stepSize: step, cfg: data.cfg });
+  });
+  const count = document.querySelectorAll('.card').length;
+  if (count > 0) {
+    document.getElementById('toolbar').style.display = 'flex';
+    document.getElementById('toolbar-info').textContent = `${count} question(s)`;
+  }
+}
+
+async function generateAllPNGs() {
+  const rows = document.querySelectorAll('#batch-tbody tr');
+  const items = [];
+  rows.forEach(tr => { const d = getBatchRowData(tr); if (d) items.push(d); });
+  if (!items.length) { alert('No valid rows to export.'); return; }
+
+  const btn = document.getElementById('btn-generate');
+  btn.textContent = 'Generating…'; btn.disabled = true;
+
+  try {
+    const zip = new JSZip();
+    for (const { qnum, cfg } of items) {
+      const svgStr  = numberLineSVG(cfg);
+      const pngBlob = await svgToPng(svgStr);
+      zip.file(`Q${String(qnum).padStart(2, '0')}_number-line.png`, pngBlob);
+    }
+    const blob = await zip.generateAsync({ type: 'blob' });
+    const a    = document.createElement('a');
+    a.href     = URL.createObjectURL(blob);
+    a.download = 'number-lines.zip';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  } catch (err) {
+    alert('Export failed: ' + err.message);
+  } finally {
+    btn.textContent = '↓ Download all PNGs'; btn.disabled = false;
+  }
+}
+
+function svgToPng(svgStr) {
+  return new Promise((resolve, reject) => {
+    const div = document.createElement('div');
+    div.innerHTML = svgStr;
+    const svgEl = div.querySelector('svg');
+    const vb    = svgEl?.getAttribute('viewBox')?.split(/\s+/).map(Number) ?? [0, 0, 460, 100];
+    const w = vb[2], h = vb[3];
+    const scale  = 2; // 2× for crisp PNGs
+    const canvas = document.createElement('canvas');
+    canvas.width  = w * scale;
+    canvas.height = h * scale;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(scale, scale);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, w, h);
+
+    const blob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const img  = new Image();
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, w, h);
+      URL.revokeObjectURL(url);
+      canvas.toBlob(resolve, 'image/png');
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('SVG render failed')); };
+    img.src = url;
+  });
+}
+
+// ─── Template download ────────────────────────────────────────────────────
+
+function downloadTemplate() {
+  const rows = [
+    ['Number Line Questions'],
+    ['Q#', 'Question Text', 'Start', 'End', 'Number line goes up in', 'Values given every', 'Answer', 'Line Style', 'Colour'],
+    ['e.g. 1 2 3', 'e.g. What number is missing?', 'start of line', 'end of line', 'tick spacing', 'show a label at every N (blank = all)', 'correct answer (shown as ?)', 'through or terminate (blank = through)', 'blank = grey  |  red  orange  yellow  green  blue  purple  pink'],
+    ['1', 'Use this number line to help you', '0', '20', '1', '2', '', 'terminate', 'grey'],
+    ['2', 'What number is missing?', '0', '20', '5', '5', '10', 'terminate', 'red'],
+    ['3', 'What number is missing?', '0', '20', '1', '10', '10', 'through', 'purple'],
+    ['↓ Add your questions below'],
+  ];
+
+  const csv = rows.map(r => r.map(cell => {
+    const s = String(cell ?? '');
+    return (s.includes(',') || s.includes('"') || s.includes('\n')) ? `"${s.replace(/"/g, '""')}"` : s;
+  }).join(',')).join('\n');
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'number-line-template.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>

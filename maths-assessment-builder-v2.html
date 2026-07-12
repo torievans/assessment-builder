@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CENTURY Assessment Builder v2</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F3F2EF;--surface:#FFFFFF;--text:#333333;--text-muted:#818B96;--text-active:#5A626C;
+  --sidebar-bg:#293039;--sidebar-hover:rgba(255,255,255,.07);--sidebar-active:rgba(11,172,254,.18);--sidebar-active-border:#0BACFE;
+  --border:#D1D5D8;--border-light:#EBEBEB;--blue:#0BACFE;--red:#FB115A;--green:#319377;--green-light:#CDE8E1;
+  --shadow:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 12px rgba(0,0,0,.1);
+  --r-card:6px;--r-btn:15px;--r-input:18px;--r-badge:3px;
+  --font:proxima-soft,"Proxima Soft",-apple-system,"system-ui","Segoe UI",Roboto,sans-serif;--header-h:58px;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden;font-size:15px}
+.header{height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);padding:0 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:var(--shadow)}
+.header-left{display:flex;align-items:center;gap:12px}
+.logo{width:28px;height:28px;background:var(--sidebar-bg);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;flex-shrink:0}
+.header-title{font-size:17px;font-weight:600}
+.header-sub{font-size:12px;color:var(--text-muted);margin-left:8px}
+.header-right{display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:7px 18px;border-radius:var(--r-btn);font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:opacity .15s;white-space:nowrap}
+.btn:disabled{opacity:.38;cursor:default}
+.btn-blue{background:var(--blue);color:#fff}.btn-blue:hover:not(:disabled){opacity:.87}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover:not(:disabled){opacity:.87}
+.btn-ghost{background:transparent;color:var(--text-active);border:1.5px solid var(--border)}.btn-ghost:hover:not(:disabled){background:var(--bg)}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn-icon{padding:5px;border-radius:6px;background:transparent;border:none;cursor:pointer;color:var(--text-muted);transition:color .12s,background .12s;display:inline-flex;align-items:center;font-size:14px}
+.btn-icon:hover{color:var(--red);background:rgba(251,17,90,.08)}
+.app-layout{display:flex;flex:1;overflow:hidden}
+
+/* Sidebar */
+.sidebar{width:270px;flex-shrink:0;background:var(--sidebar-bg);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0}
+.sidebar-tab{flex:1;padding:11px 0;text-align:center;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.45);cursor:pointer;border-bottom:2px solid transparent;transition:color .12s,border-color .12s}
+.sidebar-tab.active{color:#fff;border-bottom-color:var(--blue)}
+.sidebar-panel{display:none;flex:1;overflow:hidden;flex-direction:column}
+.sidebar-panel.show{display:flex}
+.sidebar-search{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.sidebar-search input{width:100%;padding:5px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#fff;font-family:var(--font);font-size:12.5px}
+.sidebar-search input:focus{outline:none;border-color:var(--blue);background:rgba(255,255,255,.1)}
+.sidebar-search input::placeholder{color:rgba(255,255,255,.35)}
+.sidebar-scroll{flex:1;overflow-y:auto;padding-bottom:10px}
+.sidebar-scroll::-webkit-scrollbar{width:4px}
+.sidebar-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:4px}
+
+/* Nugget list */
+.topic-hdr{padding:6px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.38);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.topic-hdr:hover{color:rgba(255,255,255,.6)}
+.nugget-item{display:flex;align-items:center;gap:7px;padding:7px 10px 7px 14px;cursor:pointer;border-left:2px solid transparent;transition:background .12s;margin-bottom:1px}
+.nugget-item:hover{background:var(--sidebar-hover)}
+.nugget-item.active{background:var(--sidebar-active);border-left-color:var(--sidebar-active-border)}
+.n-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.n-dot.none{background:rgba(255,255,255,.2)}.n-dot.partial{background:#FBBF24}.n-dot.done{background:#34D399}
+.n-name{font-size:12px;color:rgba(255,255,255,.8);flex:1;line-height:1.35}
+.nugget-item.active .n-name{color:#fff;font-weight:600}
+.n-count{font-size:10px;color:rgba(255,255,255,.35);flex-shrink:0}
+
+/* Add question buttons in sidebar */
+.sidebar-add-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.35);padding:10px 10px 6px;flex-shrink:0}
+.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:0 10px 10px;flex-shrink:0}
+.tool-btn{padding:7px 5px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:none;background:rgba(255,255,255,.09);color:rgba(255,255,255,.8);font-family:var(--font);transition:background .12s;text-align:left;display:flex;align-items:center;gap:4px}
+.tool-btn:hover{background:rgba(11,172,254,.25);color:#fff}
+.tool-btn:disabled{opacity:.35;cursor:default}
+.tool-icon{font-size:13px;flex-shrink:0}
+
+/* Question list in sidebar */
+.q-item{display:flex;align-items:center;gap:6px;padding:6px 10px;cursor:pointer;border-left:2px solid transparent;transition:background .12s;margin-bottom:1px}
+.q-item:hover{background:var(--sidebar-hover)}
+.q-item.active{background:var(--sidebar-active);border-left-color:var(--sidebar-active-border)}
+.q-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.q-dot.draft{background:rgba(255,255,255,.2)}.q-dot.ready{background:#34D399}
+.q-item-info{flex:1;min-width:0}
+.q-item-label{font-size:12px;color:#fff;font-weight:600;display:flex;gap:5px;align-items:center;white-space:nowrap}
+.q-item-sub{font-size:10.5px;color:rgba(255,255,255,.38);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.q-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:1px 5px;border-radius:3px;flex-shrink:0}
+.q-tag-qa{background:rgba(170,170,170,.25);color:rgba(255,255,255,.6)}
+.q-tag-nl{background:rgba(49,147,119,.3);color:#6EE7B7}
+.q-tag-bm{background:rgba(248,196,107,.25);color:#FCD34D}
+.q-tag-tf{background:rgba(11,172,254,.22);color:#7DD3FC}
+.q-tag-pv{background:rgba(132,122,201,.3);color:#C4B5FD}
+.q-del{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.15);font-size:12px;padding:2px 4px;border-radius:3px;opacity:0;transition:opacity .1s,color .1s;flex-shrink:0;line-height:1}
+.q-item:hover .q-del{opacity:1}.q-del:hover{color:var(--red)}
+.q-empty-msg{font-size:12px;color:rgba(255,255,255,.3);padding:14px 12px;text-align:center}
+
+/* Main */
+.builder-main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:40px;text-align:center}
+.empty-icon{font-size:40px;opacity:.45}
+.empty-state h2{font-size:17px;font-weight:600;color:var(--text-active)}
+.empty-state p{font-size:13px;color:var(--text-muted);max-width:340px;line-height:1.65}
+
+/* Builder panel */
+.builder-panel{display:none;padding:20px 26px 40px;max-width:820px;width:100%}
+.builder-panel.visible{display:block}
+.panel-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);margin-bottom:3px}
+.panel-nugget-crumb{font-size:12px;color:var(--blue);margin-bottom:3px;display:flex;align-items:center;gap:4px}
+.panel-heading{font-size:20px;font-weight:600;margin-bottom:18px}
+.preview-wrap{background:var(--surface);border-radius:var(--r-card);border:1px solid var(--border);box-shadow:var(--shadow);padding:18px;margin-bottom:14px;min-height:90px;display:flex;align-items:center;justify-content:center}
+.preview-wrap svg{max-width:480px;width:100%}
+.preview-empty{font-size:13px;color:var(--text-muted)}
+.form-card{background:var(--surface);border-radius:var(--r-card);border:1px solid var(--border);box-shadow:var(--shadow);padding:16px 18px;margin-bottom:12px}
+.form-card-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);margin-bottom:11px}
+.form-row{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:9px}
+.form-row:last-child{margin-bottom:0}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted)}
+.field input[type=number],.field input[type=text],.field textarea{padding:7px 13px;border-radius:var(--r-input);border:1.5px solid var(--border);font-size:14px;font-family:var(--font);color:var(--text);background:var(--bg);transition:border-color .13s}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--blue);background:var(--surface);box-shadow:0 0 0 3px rgba(11,172,254,.1)}
+.field textarea{resize:vertical;border-radius:10px}
+.field-grow{flex:1}.field-grow input,.field-grow textarea{width:100%;min-width:120px}
+.field-sm input{width:72px}.field-xs input{width:54px}
+.section-hr{border:none;border-top:1px solid var(--border-light);margin:12px 0}
+.section-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:7px}
+.tog-row{display:flex;gap:3px;flex-wrap:wrap}
+.tog-btn{padding:5px 11px;border-radius:var(--r-btn);border:1.5px solid var(--border);font-size:12px;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text-active);font-family:var(--font);transition:all .1s;white-space:nowrap}
+.tog-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.tog-btn:hover:not(.active){border-color:var(--blue);color:var(--blue)}
+.swatch-row{display:flex;gap:4px;flex-wrap:wrap;padding-top:2px}
+.swatch{width:19px;height:19px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform .1s,border-color .1s;flex-shrink:0;padding:0}
+.swatch:hover{transform:scale(1.2)}.swatch.selected{border-color:var(--text);transform:scale(1.12)}
+.jump-toggle{padding:5px 12px;border-radius:var(--r-btn);border:1.5px dashed var(--border);font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:var(--text-muted);font-family:var(--font);transition:all .1s;margin-top:6px;display:inline-flex;align-items:center;gap:4px}
+.jump-toggle:hover{border-color:var(--blue);color:var(--blue)}
+.jump-toggle.open{border-style:solid;border-color:var(--red);color:var(--red)}
+#jump-section,#jump2-section{display:none}
+.seg-block{background:var(--bg);border-radius:var(--r-card);border:1px solid var(--border-light);padding:11px 13px;margin-bottom:7px}
+.seg-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.seg-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted)}
+/* Status badge */
+.status-badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:var(--r-badge)}
+.status-ready{background:rgba(52,211,153,.15);color:#059669}
+.status-draft{background:rgba(129,139,150,.12);color:var(--text-muted)}
+#export-status{font-size:12px;color:var(--text-muted)}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-left">
+    <div class="logo">C</div>
+    <span class="header-title">Assessment Builder</span>
+    <span class="header-sub" id="header-sub"></span>
+  </div>
+  <div class="header-right">
+    <span id="export-status"></span>
+    <button class="btn btn-ghost btn-sm" onclick="clearAll()">Clear all</button>
+    <button class="btn btn-blue" id="export-btn" disabled onclick="exportQTIZip()">↓ Export QTI ZIP</button>
+  </div>
+</header>
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-tabs">
+      <div class="sidebar-tab active" id="tab-nuggets" onclick="switchTab('nuggets')">Nuggets</div>
+      <div class="sidebar-tab" id="tab-questions" onclick="switchTab('questions')">Questions</div>
+    </div>
+
+    <!-- Nuggets panel -->
+    <div class="sidebar-panel show" id="panel-nuggets">
+      <div class="sidebar-add-label">Add to selected nugget</div>
+      <div class="tool-grid">
+        <button class="tool-btn" id="add-qa-btn" onclick="addQuestion('qa')"><span class="tool-icon">💬</span>Q&amp;A</button>
+        <button class="tool-btn" id="add-nl-btn" onclick="addQuestion('nl')"><span class="tool-icon">⟷</span>Number Line</button>
+        <button class="tool-btn" id="add-bm-btn" onclick="addQuestion('bm')"><span class="tool-icon">▬</span>Bar Model</button>
+        <button class="tool-btn" id="add-tf-btn" onclick="addQuestion('tf')"><span class="tool-icon">⊞</span>Ten Frame</button>
+        <button class="tool-btn" id="add-pv-btn" onclick="addQuestion('pv')"><span class="tool-icon">①</span>Place Value</button>
+      </div>
+      <div class="sidebar-search"><input type="text" id="nugget-search" placeholder="Search nuggets…" oninput="renderNuggets()"></div>
+      <div class="sidebar-scroll" id="nugget-list"></div>
+    </div>
+
+    <!-- Questions panel -->
+    <div class="sidebar-panel" id="panel-questions">
+      <div class="sidebar-scroll" id="question-list"></div>
+    </div>
+  </aside>
+
+  <main class="builder-main">
+    <div id="empty-state" class="empty-state">
+      <div class="empty-icon">📐</div>
+      <h2>Select a nugget, then add a question</h2>
+      <p>Use the Nuggets tab to navigate the Year 1 curriculum. Select a nugget, then choose a question type above the list to start building.</p>
+    </div>
+
+    <!-- QA panel -->
+    <div id="qa-panel" class="builder-panel">
+      <div class="panel-nugget-crumb" id="qa-crumb"></div>
+      <div class="panel-eyebrow">Q&amp;A</div>
+      <div class="panel-heading" id="qa-heading">New Question</div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="field field-grow"><label>Question text</label><textarea id="qa-text" rows="3" placeholder="e.g. What is 7 + 5?"></textarea></div>
+        </div>
+        <div class="form-row">
+          <div class="field field-grow"><label>Correct answer</label><input type="text" id="qa-answer" placeholder="e.g. 12"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NL panel -->
+    <div id="nl-panel" class="builder-panel">
+      <div class="panel-nugget-crumb" id="nl-crumb"></div>
+      <div class="panel-eyebrow">Number Line</div>
+      <div class="panel-heading" id="nl-heading">New Question</div>
+      <div class="preview-wrap" id="nl-preview"><p class="preview-empty">Fill in settings below to preview.</p></div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="field field-grow"><label>Question text</label><input type="text" id="nl-text" placeholder="e.g. What number is missing?"></div>
+          <div class="field field-sm"><label>Answer</label><input type="text" id="nl-answer" placeholder="e.g. 7"></div>
+        </div>
+        <div class="form-row">
+          <div class="field field-sm"><label>Start</label><input type="number" id="f-start" value="0"></div>
+          <div class="field field-sm"><label>End</label><input type="number" id="f-end" value="20"></div>
+          <div class="field field-sm"><label>Step</label><input type="number" id="f-step" value="1" min="0.001" step="any"></div>
+          <div class="field field-sm"><label>Label every</label><input type="number" id="f-vge" placeholder="all" step="any"></div>
+          <div class="field field-sm"><label>Hide from</label><input type="number" id="f-hide-from" placeholder="none" step="any"></div>
+          <div class="field field-sm"><label>Hide to</label><input type="number" id="f-hide-to" placeholder="none" step="any"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Style</label><div class="tog-row"><button class="tog-btn active" data-style="through">Through</button><button class="tog-btn" data-style="terminate">Terminate</button></div></div>
+          <div class="field"><label>Colour</label><div class="swatch-row" id="nl-swatch-row"></div></div>
+        </div>
+        <button class="jump-toggle" id="jump-toggle-btn" onclick="nlToggleJump()">＋ Add jumps</button>
+        <div id="jump-section">
+          <div class="section-hr"></div>
+          <div class="section-label">Jump 1</div>
+          <div class="form-row">
+            <div class="field field-sm"><label>From</label><input type="number" id="f-from" step="any"></div>
+            <div class="field field-sm"><label>To</label><input type="number" id="f-to" step="any"></div>
+            <div class="field"><label>Type</label><div class="tog-row"><button class="tog-btn active" data-arctype="single">Single</button><button class="tog-btn" data-arctype="unit">Unit</button></div></div>
+          </div>
+          <div class="form-row">
+            <div class="field field-sm"><label>Label</label><input type="text" id="f-jump-label" placeholder="+3"></div>
+            <div class="field"><label>Arrow</label><div class="tog-row"><button class="tog-btn active" data-arrow="yes">Yes</button><button class="tog-btn" data-arrow="no">No</button></div></div>
+            <div class="field"><label>Circle</label><div class="tog-row"><button class="tog-btn active" data-circle="none">None</button><button class="tog-btn" data-circle="start">Start</button><button class="tog-btn" data-circle="end">End</button></div></div>
+            <div class="field"><label>Colour</label><div class="swatch-row" id="jump1-swatch-row"></div></div>
+          </div>
+          <button class="jump-toggle" id="jump2-toggle-btn" style="margin-top:4px" onclick="nlToggleJump2()">＋ Add second jump</button>
+          <div id="jump2-section">
+            <div class="section-hr" style="margin:10px 0"></div>
+            <div class="section-label">Jump 2</div>
+            <div class="form-row">
+              <div class="field field-sm"><label>From</label><input type="number" id="f-from2" step="any"></div>
+              <div class="field field-sm"><label>To</label><input type="number" id="f-to2" step="any"></div>
+              <div class="field"><label>Type</label><div class="tog-row"><button class="tog-btn active" data-arctype2="single">Single</button><button class="tog-btn" data-arctype2="unit">Unit</button></div></div>
+            </div>
+            <div class="form-row">
+              <div class="field field-sm"><label>Label</label><input type="text" id="f-jump-label2" placeholder="+4"></div>
+              <div class="field"><label>Arrow</label><div class="tog-row"><button class="tog-btn active" data-arrow2="yes">Yes</button><button class="tog-btn" data-arrow2="no">No</button></div></div>
+              <div class="field"><label>Circle</label><div class="tog-row"><button class="tog-btn active" data-circle2="none">None</button><button class="tog-btn" data-circle2="start">Start</button><button class="tog-btn" data-circle2="end">End</button></div></div>
+              <div class="field"><label>Colour</label><div class="swatch-row" id="jump2-swatch-row"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BM panel -->
+    <div id="bm-panel" class="builder-panel">
+      <div class="panel-nugget-crumb" id="bm-crumb"></div>
+      <div class="panel-eyebrow">Bar Model</div>
+      <div class="panel-heading" id="bm-heading">New Question</div>
+      <div class="preview-wrap" id="bm-preview"><p class="preview-empty">Fill in settings below to preview.</p></div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="field field-grow"><label>Question text</label><input type="text" id="bm-text" placeholder="e.g. What is the missing number?"></div>
+          <div class="field field-sm"><label>Answer</label><input type="text" id="bm-answer" placeholder="e.g. 6"></div>
+        </div>
+        <div class="form-row">
+          <div class="field field-sm"><label>Total</label><input type="text" id="bm-total" placeholder="10 or ?"></div>
+          <div class="field"><label>Total display</label><div class="tog-row"><button class="tog-btn active" data-totdisp="brace">Brace</button><button class="tog-btn" data-totdisp="top bar">Top bar</button><button class="tog-btn" data-totdisp="none">None</button></div></div>
+          <div class="field"><label>Colour mode</label><div class="tog-row"><button class="tog-btn active" data-colmode="single">Single</button><button class="tog-btn" data-colmode="multi">Multi</button></div></div>
+          <div class="field"><label>Colour</label><div class="swatch-row" id="bm-swatch-row"></div></div>
+        </div>
+      </div>
+      <div class="form-card">
+        <div class="form-card-title">Segments</div>
+        <div class="seg-block">
+          <div class="seg-header"><span class="seg-title">Segment 1</span><div class="tog-row"><button class="tog-btn active" data-bmseg="1" data-segtype="fill">Fill</button><button class="tog-btn" data-bmseg="1" data-segtype="blank">Blank</button></div></div>
+          <div class="form-row"><div class="field field-sm"><label>Value</label><input type="text" id="bm-seg1-val" placeholder="4 or ?"></div><div class="field field-grow"><label>Bar label</label><input type="text" id="bm-seg1-lbl"></div><div class="field field-grow"><label>Brace label</label><input type="text" id="bm-seg1-brace"></div></div>
+        </div>
+        <div class="seg-block">
+          <div class="seg-header"><span class="seg-title">Segment 2</span><div class="tog-row"><button class="tog-btn active" data-bmseg="2" data-segtype="fill">Fill</button><button class="tog-btn" data-bmseg="2" data-segtype="blank">Blank</button></div></div>
+          <div class="form-row"><div class="field field-sm"><label>Value</label><input type="text" id="bm-seg2-val" placeholder="6 or ?"></div><div class="field field-grow"><label>Bar label</label><input type="text" id="bm-seg2-lbl"></div><div class="field field-grow"><label>Brace label</label><input type="text" id="bm-seg2-brace"></div></div>
+        </div>
+        <div class="seg-block" id="bm-seg3-block" style="display:none">
+          <div class="seg-header"><span class="seg-title">Segment 3</span><div style="display:flex;gap:7px;align-items:center"><div class="tog-row"><button class="tog-btn active" data-bmseg="3" data-segtype="fill">Fill</button><button class="tog-btn" data-bmseg="3" data-segtype="blank">Blank</button></div><button class="btn btn-ghost btn-sm" onclick="bmToggleSeg3(false)">✕</button></div></div>
+          <div class="form-row"><div class="field field-sm"><label>Value</label><input type="text" id="bm-seg3-val" placeholder="3 or ?"></div><div class="field field-grow"><label>Bar label</label><input type="text" id="bm-seg3-lbl"></div><div class="field field-grow"><label>Brace label</label><input type="text" id="bm-seg3-brace"></div></div>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="bm-add-seg3" style="margin-top:4px" onclick="bmToggleSeg3(true)">+ Third segment</button>
+      </div>
+    </div>
+
+    <!-- TF panel -->
+    <div id="tf-panel" class="builder-panel">
+      <div class="panel-nugget-crumb" id="tf-crumb"></div>
+      <div class="panel-eyebrow">Ten Frame</div>
+      <div class="panel-heading" id="tf-heading">New Question</div>
+      <div class="preview-wrap" id="tf-preview"><p class="preview-empty">Fill in settings below to preview.</p></div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="field field-grow"><label>Question text</label><input type="text" id="tf-text" placeholder="e.g. How many more to make 10?"></div>
+          <div class="field field-sm"><label>Answer</label><input type="text" id="tf-answer" placeholder="e.g. 4"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Frame size</label><div class="tog-row"><button class="tog-btn active" data-tfsize="10">Ten frame</button><button class="tog-btn" data-tfsize="5">Five frame</button></div></div>
+          <div class="field field-sm"><label>Filled counters</label><input type="number" id="tf-filled" value="0" min="0" max="10"></div>
+          <div class="field"><label>Counter colour</label><div class="swatch-row" id="tf-swatch-row"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PV panel -->
+    <div id="pv-panel" class="builder-panel">
+      <div class="panel-nugget-crumb" id="pv-crumb"></div>
+      <div class="panel-eyebrow">Place Value</div>
+      <div class="panel-heading" id="pv-heading">New Question</div>
+      <div class="preview-wrap" id="pv-preview"><p class="preview-empty">Fill in settings below to preview.</p></div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="field field-grow"><label>Question text</label><input type="text" id="pv-text" placeholder="e.g. What digit is in the tens column?"></div>
+          <div class="field field-sm"><label>Answer</label><input type="text" id="pv-answer" placeholder="e.g. 4"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Columns shown</label><div class="tog-row"><button class="tog-btn" data-pvcol="H">H</button><button class="tog-btn active" data-pvcol="T">T</button><button class="tog-btn active" data-pvcol="O">O</button></div></div>
+        </div>
+        <div class="form-row" id="pv-fields-row">
+          <div class="field field-sm" id="pv-field-H" style="display:none"><label>Hundreds</label><input type="text" id="pv-val-H" placeholder="0–9 or ?"></div>
+          <div class="field field-sm" id="pv-field-T"><label>Tens</label><input type="text" id="pv-val-T" placeholder="0–9 or ?"></div>
+          <div class="field field-sm" id="pv-field-O"><label>Ones</label><input type="text" id="pv-val-O" placeholder="0–9 or ?"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+'use strict';
+const FONT='proxima-soft,"Proxima Soft",-apple-system,sans-serif';
+const NL_PAL={grey:'#AAAAAA',red:'#D46B55',orange:'#F5995B',yellow:'#FECC6B',green:'#319377',blue:'#7898F0',purple:'#847AC9',pink:'#FC7E91',dark:'#293039'};
+const NL_SWATCH=['grey','red','orange','yellow','green','blue','purple','pink'];
+const JP_SWATCH=['dark','red','orange','yellow','green','blue','purple','pink'];
+const BM_STROKES=['#D46B55','#F5995B','#FECC6B','#319377','#7898F0','#847AC9','#FC7E91'];
+const BM_FILLS=['#F9DDD9','#FDE8D4','#FEF5D8','#CDE8E1','#DCE4FD','#DDD9F5','#FEDDEA'];
+const BM_TEXTS=['#7A2E1E','#903F08','#976401','#246E59','#0F2F89','#342C6C','#950319'];
+const TF_COLS={red:'#D46B55',orange:'#F5995B',yellow:'#FECC6B',green:'#319377',blue:'#7898F0',purple:'#847AC9',pink:'#FC7E91'};
+const TF_SWATCH=['red','orange','yellow','green','blue','purple','pink'];
+
+const NUGGETS=[
+  {id:1,topic:'Number – Number & Place Value',name:'Counting forwards 1–20',obj:'Count to and across 100 forwards and backwards beginning with 0 or 1 or from any given number'},
+  {id:2,topic:'Number – Number & Place Value',name:'Counting backwards 1–20',obj:'Count to and across 100 forwards and backwards beginning with 0 or 1 or from any given number'},
+  {id:3,topic:'Number – Number & Place Value',name:'Counting forwards 20–100',obj:'Count to and across 100 forwards and backwards beginning with 0 or 1 or from any given number'},
+  {id:4,topic:'Number – Number & Place Value',name:'Counting backwards 20–100',obj:'Count to and across 100 forwards and backwards beginning with 0 or 1 or from any given number'},
+  {id:5,topic:'Number – Number & Place Value',name:'Count in multiples of 2',obj:'Count read and write numbers to 100 in numerals; count in multiples of twos fives and tens'},
+  {id:6,topic:'Number – Number & Place Value',name:'Count in multiples of 5',obj:'Count read and write numbers to 100 in numerals; count in multiples of twos fives and tens'},
+  {id:7,topic:'Number – Number & Place Value',name:'Count in multiples of 10',obj:'Count read and write numbers to 100 in numerals; count in multiples of twos fives and tens'},
+  {id:8,topic:'Number – Number & Place Value',name:'One more/less than',obj:'Given a number identify one more and one less'},
+  {id:10,topic:'Number – Number & Place Value',name:'Counting pictorial representations 1–10',obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
+  {id:11,topic:'Number – Number & Place Value',name:'Counting pictorial representations 11–20',obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
+  {id:12,topic:'Number – Number & Place Value',name:'Tens and ones',obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
+  {id:13,topic:'Number – Number & Place Value',name:'Number line 1–10',obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
+  {id:14,topic:'Number – Number & Place Value',name:'Number line 11–20',obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
+  {id:15,topic:'Number – Number & Place Value',name:'Equal to more than less than most least',obj:'Use the language of: equal to more than less than (fewer) most least'},
+  {id:16,topic:'Number – Number & Place Value',name:'Read and write numbers 1–20 in numerals and words',obj:'Read and write numbers from 1 to 20 in numerals and words'},
+  {id:17,topic:'Number – Addition & Subtraction',name:'Understanding + − =',obj:'Read write and interpret mathematical statements involving addition (+) subtraction (−) and equals (=) signs'},
+  {id:18,topic:'Number – Addition & Subtraction',name:'Number bonds to 10',obj:'Represent and use number bonds and related subtraction facts within 20'},
+  {id:19,topic:'Number – Addition & Subtraction',name:'Number bonds to 20',obj:'Represent and use number bonds and related subtraction facts within 20'},
+  {id:20,topic:'Number – Addition & Subtraction',name:'Adding up to 10',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:21,topic:'Number – Addition & Subtraction',name:'Subtracting up to 10',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:22,topic:'Number – Addition & Subtraction',name:'Adding up to 10 with pictorial representations',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:23,topic:'Number – Addition & Subtraction',name:'Subtracting up to 10 with pictorial representations',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:24,topic:'Number – Addition & Subtraction',name:'Adding up to 10 with number lines',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:25,topic:'Number – Addition & Subtraction',name:'Subtracting up to 10 with number lines',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:26,topic:'Number – Addition & Subtraction',name:'Adding up to 10 abstract',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:27,topic:'Number – Addition & Subtraction',name:'Subtracting up to 10 abstract',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:28,topic:'Number – Addition & Subtraction',name:'Adding up to 20 with pictorial representations',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:29,topic:'Number – Addition & Subtraction',name:'Subtracting up to 20 with pictorial representations',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:30,topic:'Number – Addition & Subtraction',name:'Adding up to 20 with number lines',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:31,topic:'Number – Addition & Subtraction',name:'Subtracting up to 20 with number lines',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:32,topic:'Number – Addition & Subtraction',name:'Adding up to 20 abstract',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:33,topic:'Number – Addition & Subtraction',name:'Subtracting up to 20 abstract',obj:'Add and subtract one-digit and two-digit numbers to 20 including zero'},
+  {id:34,topic:'Number – Addition & Subtraction',name:'Addition word problems 1–20 with pictorial representations',obj:'Solve one-step problems that involve addition and subtraction using concrete objects and pictorial representations'},
+  {id:35,topic:'Number – Addition & Subtraction',name:'Subtraction word problems 1–20 with pictorial representations',obj:'Solve one-step problems that involve addition and subtraction using concrete objects and pictorial representations'},
+  {id:36,topic:'Number – Addition & Subtraction',name:'Mixed word problems 1–20 with pictorial representations',obj:'Solve one-step problems that involve addition and subtraction using concrete objects and pictorial representations'},
+  {id:37,topic:'Number – Addition & Subtraction',name:'Missing number problems',obj:'Solve missing number problems such as 7 = □ − 9'},
+  {id:38,topic:'Number – Multiplication & Division',name:'Multiplying by 2 with pictorial representations / arrays',obj:'Solve one-step problems involving multiplication and division using concrete objects pictorial representations and arrays'},
+  {id:39,topic:'Number – Multiplication & Division',name:'Multiplying by 5 with pictorial representations / arrays',obj:'Solve one-step problems involving multiplication and division using concrete objects pictorial representations and arrays'},
+  {id:40,topic:'Number – Multiplication & Division',name:'Multiplying by 10 with pictorial representations / arrays',obj:'Solve one-step problems involving multiplication and division using concrete objects pictorial representations and arrays'},
+  {id:41,topic:'Number – Fractions',name:'Recognise and find a half',obj:'Recognise find and name a half as one of two equal parts of an object shape or quantity'},
+  {id:42,topic:'Number – Fractions',name:'Recognise and find a quarter',obj:'Recognise find and name a quarter as one of four equal parts of an object shape or quantity'},
+  {id:43,topic:'Measurement',name:'Describing and comparing length',obj:'Compare describe and solve practical problems for lengths and heights'},
+  {id:44,topic:'Measurement',name:'Describing and comparing mass',obj:'Compare describe and solve practical problems for mass/weight'},
+  {id:45,topic:'Measurement',name:'Describing and comparing volume and capacity',obj:'Compare describe and solve practical problems for capacity and volume'},
+  {id:46,topic:'Measurement',name:'Describing and comparing time',obj:'Compare describe and solve practical problems for time'},
+  {id:47,topic:'Measurement',name:'Measure with blocks',obj:'Measure and begin to record lengths and heights'},
+  {id:48,topic:'Measurement',name:'Measure with cm up to 30 cm',obj:'Measure and begin to record lengths and heights'},
+  {id:49,topic:'Measurement',name:'Measure mass (multiples of 10g up to 100g)',obj:'Measure and begin to record mass/weight'},
+  {id:50,topic:'Measurement',name:'Measure litres 1–10',obj:'Measure and begin to record capacity and volume'},
+  {id:51,topic:'Measurement',name:'Measure time (hours minutes seconds)',obj:'Measure and begin to record time (hours minutes seconds)'},
+  {id:52,topic:'Measurement',name:'Recognising coins and notes',obj:'Recognise and know the value of different denominations of coins and notes'},
+  {id:53,topic:'Measurement',name:'Sequencing events',obj:'Sequence events in chronological order using language'},
+  {id:54,topic:'Measurement',name:'Days of the week',obj:'Recognise and use language relating to dates including days of the week weeks months and years'},
+  {id:55,topic:'Measurement',name:'Months of the year',obj:'Recognise and use language relating to dates including days of the week weeks months and years'},
+  {id:56,topic:'Measurement',name:'Tell the time to the hour and half past',obj:'Tell the time to the hour and half past the hour and draw the hands on a clock face'},
+  {id:57,topic:'Geometry – Properties of Shapes',name:'Recognise and name common 2-D shapes',obj:'Recognise and name common 2-D shapes (rectangles squares circles triangles)'},
+  {id:58,topic:'Geometry – Properties of Shapes',name:'Recognise and name common 3-D shapes',obj:'Recognise and name common 3-D shapes (cuboids cubes pyramids spheres)'},
+  {id:59,topic:'Geometry – Position & Direction',name:'Position and direction',obj:'Describe position direction and movement including whole half quarter and three-quarter turns'},
+];
+
+// ── SVG renderers ──────────────────────────────────────────────────────────
+function resolveNLC(k){return NL_PAL[k]||'#AAAAAA';}
+function numberLineSVG(cfg){
+  const{start,end,partitions,valuesGivenEvery,answer,lineStyle='through',colour,hideFrom,hideTo,
+    jumpFrom,jumpTo,jumpType='single',jumpLabel='',jumpArrow=true,jumpCircle='none',jumpColour='dark',
+    jump2From,jump2To,jump2Type='single',jump2Label='',jump2Arrow=true,jump2Circle='none',jump2Colour='dark'}=cfg;
+  const terminate=lineStyle==='terminate';
+  const C=resolveNLC(colour);
+  const BAR_W=380,pxU=BAR_W/(end-start);
+  const lStep=(!isNaN(valuesGivenEvery)&&valuesGivenEvery>0)?valuesGivenEvery:null;
+  const ansNum=answer?Math.round(parseFloat(answer)*1000)/1000:null;
+  const tStep=partitions>0?(end-start)/partitions:0;
+  const AS=7;
+  let ansAbove=false;
+  if(ansNum!==null&&lStep!==null){const rem=Math.round(((ansNum-start)%lStep)*1e6)/1e6;const onG=Math.abs(rem)<0.001||Math.abs(Math.abs(rem)-lStep)<0.001;if(!onG){const dp=rem*pxU,dn=(lStep-rem)*pxU;ansAbove=Math.min(dp,dn)<20;}}
+  const ansBetween=ansNum!==null&&ansNum>start&&ansNum<end&&tStep>0&&(()=>{const r=Math.round(((ansNum-start)%tStep)*1e6)/1e6;return!(Math.abs(r)<0.001||Math.abs(Math.abs(r)-tStep)<0.001);})();
+  const hasJ=jumpFrom!==undefined&&jumpTo!==undefined&&!isNaN(jumpFrom)&&!isNaN(jumpTo)&&jumpFrom!==jumpTo;
+  const hasJ2=jump2From!==undefined&&jump2To!==undefined&&!isNaN(jump2From)&&!isNaN(jump2To)&&jump2From!==jump2To;
+  let arcH=0;if(hasJ){const sp=Math.abs(jumpTo-jumpFrom)*pxU;arcH=jumpType==='single'?Math.min(sp*0.45,68):Math.min(tStep*pxU*0.6,32);}
+  if(hasJ2){const sp2=Math.abs(jump2To-jump2From)*pxU;const h2=jump2Type==='single'?Math.min(sp2*0.45,68):Math.min(tStep*pxU*0.6,32);arcH=Math.max(arcH,h2);}
+  const arcPadT=(hasJ||hasJ2)?arcH+((jumpLabel||jump2Label)?26:10):0;
+  const hasC=hasJ&&jumpCircle!=='none';const cVal=hasC?(jumpCircle==='start'?jumpFrom:jumpTo):null;
+  const cLen=cVal!==null?String(Math.round(cVal)).length:1;const crMin=cLen<=1?9:11;const cr=hasC?Math.min(Math.max(crMin,Math.floor(pxU*0.32)),18):0;
+  const EXT=terminate?0:20;const PAD_L=terminate?22:8+EXT,PAD_R=terminate?22:8+EXT;
+  const PAD_T=Math.max((ansAbove||ansBetween)?34:16,arcPadT);
+  const PAD_B=hasC?Math.max(36,Math.ceil(18+cr+6)):36;
+  const W=BAR_W+PAD_L+PAD_R,LY=PAD_T,TH=8,H=PAD_T+TH+PAD_B;
+  const bx=PAD_L,v2x=v=>bx+BAR_W*(v-start)/(end-start);
+  const JC1=resolveNLC(jumpColour),JC2=resolveNLC(jump2Colour);
+  const ticks=[];for(let i=0;i<=partitions;i++){ticks.push({value:Math.round((start+(end-start)*i/partitions)*1000)/1000,x:bx+BAR_W*i/partitions});}
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">`;
+  if(terminate){s+=`<line x1="${bx}" y1="${LY}" x2="${bx+BAR_W}" y2="${LY}" stroke="${C}" stroke-width="2.5" stroke-linecap="round"/>`;}
+  else{const lx=bx-EXT,rx=bx+BAR_W+EXT;s+=`<line x1="${lx}" y1="${LY}" x2="${rx}" y2="${LY}" stroke="${C}" stroke-width="2.5" stroke-linecap="round"/>`;s+=`<polygon points="${lx-AS},${LY} ${lx},${LY-AS/2} ${lx},${LY+AS/2}" fill="${C}"/>`;s+=`<polygon points="${rx+AS},${LY} ${rx},${LY-AS/2} ${rx},${LY+AS/2}" fill="${C}"/>`;}
+  let ansR=false;
+  ticks.forEach(({value,x},i)=>{
+    const isE=i===0||i===ticks.length-1,th=(terminate&&isE)?TH+2:TH;
+    const isA=ansNum!==null&&Math.abs(value-ansNum)<0.001;if(isA)ansR=true;
+    const rem=lStep!==null?Math.round(((value-start)%lStep)*1e6)/1e6:0;
+    const onG=lStep===null||Math.abs(rem)<0.001||Math.abs(Math.abs(rem)-lStep)<0.001;
+    const op=onG?1:0.3;const isHid=hideFrom!==undefined&&hideTo!==undefined&&value>=hideFrom&&value<=hideTo;
+    const show=(onG||isA)&&(!isHid||isA);
+    s+=`<line x1="${x.toFixed(1)}" y1="${(LY-th).toFixed(1)}" x2="${x.toFixed(1)}" y2="${(LY+th).toFixed(1)}" stroke="${C}" stroke-width="${terminate&&isE?2.5:2}" stroke-linecap="round" opacity="${op}"/>`;
+    if(isA&&ansAbove){const ty=LY-th-5,by2=ty-7,aw=3.5;s+=`<polygon points="${x.toFixed(1)},${ty.toFixed(1)} ${(x-aw).toFixed(1)},${by2.toFixed(1)} ${(x+aw).toFixed(1)},${by2.toFixed(1)}" fill="#333"/>`;s+=`<text x="${x.toFixed(1)}" y="${(by2-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="#333">?</text>`;}
+    else if(show){const ly=(LY+TH+14).toFixed(1);const isC=cVal!==null&&Math.abs(value-cVal)<0.001;if(isC){const cy=(parseFloat(ly)+4).toFixed(1);s+=`<circle cx="${x.toFixed(1)}" cy="${cy}" r="${cr}" fill="none" stroke="${JC1}" stroke-width="2"/>`;}s+=`<text x="${x.toFixed(1)}" y="${ly}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="13" fill="#333">${isA?'?':String(value)}</text>`;}
+  });
+  if(ansBetween&&!ansR){const ax=v2x(ansNum),ty=LY-5,by2=ty-8,aw=3.5;s+=`<polygon points="${ax.toFixed(1)},${ty.toFixed(1)} ${(ax-aw).toFixed(1)},${by2.toFixed(1)} ${(ax+aw).toFixed(1)},${by2.toFixed(1)}" fill="#333"/>`;s+=`<text x="${ax.toFixed(1)}" y="${(by2-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="#333">?</text>`;}
+  const GAP=3,arcY=LY-TH-GAP;
+  const aSize=sp=>{const ah=Math.min(Math.max(sp*0.2,5),9),sw=Math.min(Math.max(sp*0.07,1),2.2);return{ah,aw:ah*0.65,sw};};
+  const drawArc=(x1,x2,type,arrow,label,col,step2)=>{
+    if(type==='single'){const sp=Math.abs(x2-x1),{ah:AH,aw:AW,sw:SW}=aSize(sp),h=Math.min(sp*0.45,68),aT=arcY-h,pEY=arrow?arcY-AH+1:arcY;s+=`<path d="M${x1.toFixed(1)},${arcY} C${x1.toFixed(1)},${aT} ${x2.toFixed(1)},${aT} ${x2.toFixed(1)},${pEY}" fill="none" stroke="${col}" stroke-width="${SW.toFixed(2)}" stroke-linecap="round"/>`;if(arrow)s+=`<polygon points="${x2.toFixed(1)},${arcY} ${(x2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(x2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${col}"/>`;if(label)s+=`<text x="${((x1+x2)/2).toFixed(1)}" y="${(aT+h*0.25-2).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${col}">${label}</text>`;}
+    else{const jF=step2.from,jT=step2.to,d=jT>jF?1:-1,st=Math.round(Math.abs(jT-jF)/tStep);for(let i=0;i<st;i++){const fv=Math.round((jF+d*i*tStep)*1000)/1000,tv=Math.round((jF+d*(i+1)*tStep)*1000)/1000,ax1=v2x(fv),ax2=v2x(tv),sp=Math.abs(ax2-ax1),{ah:AH,aw:AW,sw:SW}=aSize(sp),h=Math.min(sp*0.6,32),aT=arcY-h,pEY=arrow?arcY-AH+1:arcY;s+=`<path d="M${ax1.toFixed(1)},${arcY} C${ax1.toFixed(1)},${aT} ${ax2.toFixed(1)},${aT} ${ax2.toFixed(1)},${pEY}" fill="none" stroke="${col}" stroke-width="${SW.toFixed(2)}" stroke-linecap="round"/>`;if(arrow)s+=`<polygon points="${ax2.toFixed(1)},${arcY} ${(ax2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(ax2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${col}"/>`;if(label)s+=`<text x="${((ax1+ax2)/2).toFixed(1)}" y="${(aT+h*0.25-2).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${col}">${label}</text>`;}}
+  };
+  if(hasJ2)drawArc(v2x(jump2From),v2x(jump2To),jump2Type,jump2Arrow,jump2Label,JC2,{from:jump2From,to:jump2To});
+  if(hasJ)drawArc(v2x(jumpFrom),v2x(jumpTo),jumpType,jumpArrow,jumpLabel,JC1,{from:jumpFrom,to:jumpTo});
+  return s+'</svg>';
+}
+function barModelSVG(cfg){
+  const{segments,total}=cfg;const ci=(cfg.colorIdx??0)%BM_STROKES.length;
+  const FILL=BM_FILLS[ci],STROKE=BM_STROKES[ci],TEXTC=BM_TEXTS[ci];
+  const BT=13,BA=5,HP=28,BH=50;
+  const hasBrace=segments.some(sg=>(sg.braceLabel??sg.label)!=null&&(sg.braceLabel??sg.label)!=='');
+  const TOP=cfg.topBar?(14+50+4):50,BOT=hasBrace?50:20;
+  const knownSum=segments.reduce((s,sg)=>s+(typeof sg.value==='number'?sg.value:0),0);
+  const fullT=typeof total==='number'?total:knownSum;
+  const BW=340,SVG_W=BW+HP*2,SVG_H=TOP+BH+BOT;
+  const bx=HP,by=TOP,tLbl=String(total);
+  const sW=segments.map(sg=>{const v=typeof sg.value==='number'?sg.value:fullT-knownSum;return(v/fullT)*BW;});
+  let s=`<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">`;
+  if(cfg.topBar){s+=`<rect x="${bx}" y="14" width="${BW}" height="50" fill="${FILL}" stroke="${STROKE}" stroke-width="2" rx="3"/>`;s+=`<text x="${(bx+BW/2).toFixed(1)}" y="39" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-weight="900" font-size="22" fill="${TEXTC}">${tLbl}</text>`;}
+  let cx=bx;
+  segments.forEach((sg,i)=>{const sw=sW[i];if(sg.blank){cx+=sw;return;}const sCi=cfg.multi?(ci+i*3)%BM_STROKES.length:ci;const sF=cfg.multi?BM_FILLS[sCi]:FILL,sS=cfg.multi?BM_STROKES[sCi]:STROKE;if(cfg.multi){const iF=i===0,iL=i===segments.length-1,x=cx,y2=by+BH,x2=cx+sw,r=3;let d;if(iF&&iL)d=`M${x+r},${by} H${x2-r} Q${x2},${by} ${x2},${by+r} V${y2-r} Q${x2},${y2} ${x2-r},${y2} H${x+r} Q${x},${y2} ${x},${y2-r} V${by+r} Q${x},${by} ${x+r},${by} Z`;else if(iF)d=`M${x+r},${by} H${x2} V${y2} H${x+r} Q${x},${y2} ${x},${y2-r} V${by+r} Q${x},${by} ${x+r},${by} Z`;else if(iL)d=`M${x},${by} H${x2-r} Q${x2},${by} ${x2},${by+r} V${y2-r} Q${x2},${y2} ${x2-r},${y2} H${x} V${by} Z`;else d=`M${x},${by} H${x2} V${y2} H${x} Z`;s+=`<path d="${d}" fill="${sF}" stroke="${sS}" stroke-width="2"/>`;}else s+=`<rect x="${cx.toFixed(1)}" y="${by}" width="${sw.toFixed(1)}" height="${BH}" fill="${sF}" stroke="${sS}" stroke-width="1"/>`;cx+=sw;});
+  cx=bx;segments.forEach((sg,i)=>{const sw=sW[i];const sCi=cfg.multi?(ci+i*3)%BM_STROKES.length:ci;const sS=cfg.multi?BM_STROKES[sCi]:STROKE,sT=cfg.multi?BM_TEXTS[sCi]:TEXTC;if(sg.blank){const bl=sg.braceLabel??sg.label;if(bl){const x1=cx,x2=cx+sw,bY=by+BH+5,mid=(x1+x2)/2;s+=`<path d="M${x1},${bY} V${bY+BA} H${(mid-3).toFixed(1)} L${mid},${bY+BT} L${(mid+3).toFixed(1)},${bY+BA} H${x2} V${bY}" fill="none" stroke="#AAAAAA" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;s+=`<text x="${mid}" y="${bY+BT+5}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="15" fill="#AAAAAA">${bl}</text>`;}cx+=sw;return;}if(i>0&&!cfg.multi&&!segments[i-1]?.blank)s+=`<line x1="${cx.toFixed(1)}" y1="${by}" x2="${cx.toFixed(1)}" y2="${by+BH}" stroke="${STROKE}" stroke-width="2.5"/>`;const lbl=sg.segLabel;if(lbl)s+=`<text x="${(cx+sw/2).toFixed(1)}" y="${by+BH/2}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-weight="900" font-size="22" fill="${sT}">${lbl}</text>`;const bl=sg.braceLabel??sg.label;if(bl){const x1=cx,x2=cx+sw,bY=by+BH+5,mid=(x1+x2)/2;s+=`<path d="M${x1},${bY} V${bY+BA} H${(mid-3).toFixed(1)} L${mid},${bY+BT} L${(mid+3).toFixed(1)},${bY+BA} H${x2} V${bY}" fill="none" stroke="${sS}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;s+=`<text x="${mid}" y="${bY+BT+5}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="15" fill="${sT}">${bl}</text>`;}cx+=sw;});
+  if(!cfg.multi){let rx=bx,gS=null,gW=0;segments.forEach((sg,i)=>{const sw=sW[i];if(!sg.blank){if(gS===null){gS=rx;gW=0;}gW+=sw;}else{if(gS!==null){s+=`<rect x="${gS.toFixed(1)}" y="${by}" width="${gW.toFixed(1)}" height="${BH}" fill="none" stroke="${STROKE}" stroke-width="2" rx="3"/>`;gS=null;gW=0;}}rx+=sw;});if(gS!==null)s+=`<rect x="${gS.toFixed(1)}" y="${by}" width="${gW.toFixed(1)}" height="${BH}" fill="none" stroke="${STROKE}" stroke-width="2" rx="3"/>`;}
+  if(!cfg.topBar&&!cfg.hideTotal){const tY=by-5,tM=bx+BW/2;s+=`<path d="M${bx},${tY} V${tY-BA} H${(tM-3).toFixed(1)} L${tM},${tY-BT} L${(tM+3).toFixed(1)},${tY-BA} H${bx+BW} V${tY}" fill="none" stroke="#AAAAAA" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;s+=`<text x="${tM}" y="${tY-BT-4}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="900" font-size="22" fill="#AAAAAA">${tLbl}</text>`;}
+  return s+'</svg>';
+}
+function tenFrameSVG(cfg){
+  const{filled=0,total=10,colour='red'}=cfg;const COLS=5,ROWS=total<=5?1:2;
+  const CS=44,PAD=8,R=14,OUTER=4;const W=COLS*CS+PAD*2,H=ROWS*CS+PAD*2;
+  const DOT=TF_COLS[colour]||TF_COLS.red;const FRAME='#293039',GRID='rgba(41,48,57,.35)';
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:${W}px;height:auto;display:block">`;
+  s+=`<rect x="${PAD-OUTER}" y="${PAD-OUTER}" width="${COLS*CS+OUTER*2}" height="${ROWS*CS+OUTER*2}" rx="4" fill="#fff" stroke="${FRAME}" stroke-width="2.5"/>`;
+  for(let c=1;c<COLS;c++){const x=PAD+c*CS;s+=`<line x1="${x}" y1="${PAD}" x2="${x}" y2="${PAD+ROWS*CS}" stroke="${GRID}" stroke-width="1.5"/>`;}
+  if(ROWS>1){const y=PAD+CS;s+=`<line x1="${PAD}" y1="${y}" x2="${PAD+COLS*CS}" y2="${y}" stroke="${FRAME}" stroke-width="2"/>`;}
+  for(let i=0;i<total;i++){const col=i%COLS,row=Math.floor(i/COLS),cx=PAD+col*CS+CS/2,cy=PAD+row*CS+CS/2;if(i<filled){s+=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="${DOT}"/>`;s+=`<circle cx="${cx}" cy="${cy-3}" r="${R*0.35}" fill="rgba(255,255,255,.3)"/>`; }}
+  return s+'</svg>';
+}
+function placeValueSVG(cfg){
+  const{cols=[],digits={}}=cfg;if(!cols.length)return'<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><text x="100" y="50" text-anchor="middle" font-family="'+FONT+'" font-size="13" fill="#818B96">No columns selected</text></svg>';
+  const CW=70,HH=38,VH=68,PAD=1;const W=cols.length*CW+PAD*2,HT=HH+VH+PAD*2;
+  let s=`<svg viewBox="0 0 ${W} ${HT}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:${W}px;height:auto;display:block">`;
+  cols.forEach((col,i)=>{const x=PAD+i*CW;s+=`<rect x="${x}" y="${PAD}" width="${CW}" height="${HH}" fill="#293039"/>`;s+=`<text x="${x+CW/2}" y="${PAD+HH/2}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-weight="700" font-size="15" fill="#fff">${col}</text>`;const val=digits[col];const disp=(val===undefined||val==='')?'':String(val);const isQ=disp==='?';s+=`<rect x="${x}" y="${PAD+HH}" width="${CW}" height="${VH}" fill="#fff" stroke="#D1D5D8" stroke-width="1"/>`;if(disp!=='')s+=`<text x="${x+CW/2}" y="${PAD+HH+VH/2}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-weight="900" font-size="34" fill="${isQ?'#0BACFE':'#333333'}">${disp}</text>`;});
+  s+=`<rect x="${PAD}" y="${PAD}" width="${W-PAD*2}" height="${HT-PAD*2}" fill="none" stroke="#D1D5D8" stroke-width="1.5"/>`;
+  return s+'</svg>';
+}
+function svgToPng(svgStr){
+  return new Promise((res,rej)=>{const div=document.createElement('div');div.innerHTML=svgStr;const el=div.querySelector('svg');const vb=(el?.getAttribute('viewBox')||'0 0 460 120').split(/\s+/).map(Number);const w=vb[2],h=vb[3],sc=2;const cv=document.createElement('canvas');cv.width=w*sc;cv.height=h*sc;const ctx=cv.getContext('2d');ctx.scale(sc,sc);ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);const blob=new Blob([svgStr],{type:'image/svg+xml;charset=utf-8'});const url=URL.createObjectURL(blob);const img=new Image();img.onload=()=>{ctx.drawImage(img,0,0,w,h);URL.revokeObjectURL(url);cv.toBlob(res,'image/png');};img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('SVG render failed'));};img.src=url;});
+}
+
+// ── Tool registry ──────────────────────────────────────────────────────────
+const TOOL_FNS={
+  qa:{renderSVG:()=>null,defaultConfig:()=>({}),getConfig:getQAConfig,loadConfig:loadQAConfig},
+  nl:{renderSVG:cfg=>numberLineSVG(cfg),defaultConfig:()=>({start:0,end:20,partitions:20,colour:'grey',lineStyle:'through'}),getConfig:getNLConfig,loadConfig:loadNLConfig},
+  bm:{renderSVG:cfg=>barModelSVG(cfg),defaultConfig:()=>({segments:[{value:4},{value:'?'}],total:10,colorIdx:0}),getConfig:getBMConfig,loadConfig:loadBMConfig},
+  tf:{renderSVG:cfg=>tenFrameSVG(cfg),defaultConfig:()=>({filled:0,total:10,colour:'red'}),getConfig:getTFConfig,loadConfig:loadTFConfig},
+  pv:{renderSVG:cfg=>placeValueSVG(cfg),defaultConfig:()=>({cols:['T','O'],digits:{T:'',O:'?'}}),getConfig:getPVConfig,loadConfig:loadPVConfig},
+};
+const TOOL_META={qa:{name:'Q&A',icon:'💬'},nl:{name:'Number Line',icon:'⟷'},bm:{name:'Bar Model',icon:'▬'},tf:{name:'Ten Frame',icon:'⊞'},pv:{name:'Place Value',icon:'①'}};
+
+// ── State ──────────────────────────────────────────────────────────────────
+let questions=[],activeQId=null,activeNuggetId=null,nextQId=1;
+const STORE='maths-assessment-builder-v2';
+function save(){try{localStorage.setItem(STORE,JSON.stringify({questions,nextQId}));}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(STORE)||'{}');questions=d.questions||[];nextQId=d.nextQId||1;}catch(e){}}
+
+function addQuestion(type){
+  if(!activeNuggetId){alert('Select a nugget first.');return;}
+  const id=nextQId++;
+  questions.push({id,type,nuggetId:activeNuggetId,text:'',answer:'',cfg:TOOL_FNS[type].defaultConfig(),status:'draft'});
+  save();renderNuggets();renderQuestionList();selectQuestion(id);switchTab('questions');
+}
+function deleteQuestion(id){
+  if(!confirm('Delete this question?'))return;
+  questions=questions.filter(q=>q.id!==id);
+  if(activeQId===id){activeQId=null;showEmpty();}
+  save();renderNuggets();renderQuestionList();updateExportBtn();
+}
+function clearAll(){if(!questions.length)return;if(!confirm('Clear all questions?'))return;questions=[];activeQId=null;nextQId=1;save();renderNuggets();renderQuestionList();showEmpty();updateExportBtn();}
+
+function selectQuestion(id){
+  activeQId=id;const q=questions.find(q=>q.id===id);if(!q)return;
+  renderQuestionList();
+  ['qa','nl','bm','tf','pv'].forEach(t=>document.getElementById(`${t}-panel`).classList.remove('visible'));
+  document.getElementById('empty-state').style.display='none';
+  document.getElementById(`${q.type}-panel`).classList.add('visible');
+  const n=NUGGETS.find(n=>n.id===q.nuggetId);
+  const crumb=document.getElementById(`${q.type}-crumb`);
+  if(crumb)crumb.textContent=n?`📍 ${n.name}`:'';
+  document.getElementById(`${q.type}-heading`).textContent=`Q${q.id} – ${TOOL_META[q.type].name}`;
+  TOOL_FNS[q.type].loadConfig(q);
+}
+function showEmpty(){document.getElementById('empty-state').style.display='flex';['qa','nl','bm','tf','pv'].forEach(t=>document.getElementById(`${t}-panel`).classList.remove('visible'));}
+
+function autoSave(){
+  if(activeQId===null)return;const q=questions.find(q=>q.id===activeQId);if(!q)return;
+  const fns=TOOL_FNS[q.type];const cfg=fns.getConfig();if(!cfg&&q.type!=='qa')return;
+  q.cfg=cfg||{};
+  q.text=document.getElementById(`${q.type}-text`)?.value.trim()||'';
+  q.answer=document.getElementById(`${q.type}-answer`)?.value.trim()||'';
+  q.status=(q.answer!==''&&!isNaN(parseFloat(q.answer)))?'ready':'draft';
+  if(q.type!=='qa'){const box=document.getElementById(`${q.type}-preview`);try{box.innerHTML=cfg?fns.renderSVG(cfg):'<p class="preview-empty">Fill in settings to preview.</p>';}catch(e){}}
+  save();renderQuestionList();renderNuggets();updateExportBtn();
+}
+function updateExportBtn(){const r=questions.filter(q=>q.status==='ready').length;const btn=document.getElementById('export-btn');btn.disabled=r===0;btn.textContent=r>0?`↓ Export QTI ZIP (${r})`:'↓ Export QTI ZIP';}
+
+// ── Sidebar tabs ───────────────────────────────────────────────────────────
+let activeSidebarTab='nuggets';
+function switchTab(t){activeSidebarTab=t;['nuggets','questions'].forEach(tab=>{document.getElementById(`tab-${tab}`).classList.toggle('active',tab===t);document.getElementById(`panel-${tab}`).classList.toggle('show',tab===t);});}
+
+// ── Nugget list ────────────────────────────────────────────────────────────
+const collapseState={};
+const TOPICS=[...new Set(NUGGETS.map(n=>n.topic))];
+function qForNugget(nid){return questions.filter(q=>q.nuggetId===nid);}
+function nuggetDot(nid){const qs=qForNugget(nid);return qs.length===0?'none':qs.some(q=>q.status==='ready')?'done':'partial';}
+
+function renderNuggets(){
+  const fl=document.getElementById('nugget-search').value.toLowerCase();
+  const el=document.getElementById('nugget-list');let html='';
+  TOPICS.forEach(topic=>{
+    const items=NUGGETS.filter(n=>!fl||n.name.toLowerCase().includes(fl)||topic.toLowerCase().includes(fl));
+    if(!items.length)return;
+    const slug=topic.replace(/\W+/g,'-');const collapsed=collapseState[topic];
+    html+=`<div class="topic-hdr" onclick="toggleTopic('${topic}')">${topic.split('–')[1]?.trim()||topic}<span style="opacity:.5">${collapsed?'▸':'▾'}</span></div>`;
+    if(!collapsed){items.forEach(n=>{const dot=nuggetDot(n.id);const qc=qForNugget(n.id).length;html+=`<div class="nugget-item${n.id===activeNuggetId?' active':''}" onclick="selectNugget(${n.id})"><div class="n-dot ${dot}"></div><div class="n-name">${n.name}</div><div class="n-count">${qc||''}</div></div>`;});}
+  });
+  el.innerHTML=html||'<div class="q-empty-msg">No nuggets found.</div>';
+  // header sub
+  const withQ=NUGGETS.filter(n=>qForNugget(n.id).length>0).length;
+  const ready=questions.filter(q=>q.status==='ready').length;
+  document.getElementById('header-sub').textContent=`${withQ}/58 nuggets · ${ready} ready`;
+  // disable tool buttons if no nugget selected
+  ['qa','nl','bm','tf','pv'].forEach(t=>{const b=document.getElementById(`add-${t}-btn`);if(b)b.disabled=!activeNuggetId;});
+}
+function selectNugget(id){activeNuggetId=id;renderNuggets();}
+function toggleTopic(topic){collapseState[topic]=!collapseState[topic];renderNuggets();}
+
+// ── Question list ──────────────────────────────────────────────────────────
+function renderQuestionList(){
+  const el=document.getElementById('question-list');
+  if(!questions.length){el.innerHTML='<div class="q-empty-msg">No questions yet. Select a nugget and add questions.</div>';return;}
+  el.innerHTML=questions.map(q=>{
+    const n=NUGGETS.find(n=>n.id===q.nuggetId);
+    return`<div class="q-item${q.id===activeQId?' active':''}" onclick="selectQuestion(${q.id})">
+      <div class="q-dot ${q.status}"></div>
+      <div class="q-item-info">
+        <div class="q-item-label">Q${q.id} <span class="q-tag q-tag-${q.type}">${q.type.toUpperCase()}</span></div>
+        <div class="q-item-sub">${q.text||n?.name||'No text'}</div>
+      </div>
+      <button class="q-del" onclick="event.stopPropagation();deleteQuestion(${q.id})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+// ── NL builder ─────────────────────────────────────────────────────────────
+let nlStyle='through',nlColour='grey',nlJumpOpen=false,nlJump2Open=false;
+let nlArcType='single',nlArcType2='single',nlArrow=true,nlArrow2=true;
+let nlCircle='none',nlCircle2='none',nlJumpCol='dark',nlJump2Col='dark';
+
+function buildSwatches(rowId,names,palette,def,cb){const row=document.getElementById(rowId);if(!row)return;row.innerHTML='';names.forEach(n=>{const b=document.createElement('button');b.className='swatch'+(n===def?' selected':'');b.style.background=palette[n];b.title=n;b.onclick=()=>{row.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));b.classList.add('selected');cb(n);autoSave();};row.appendChild(b);});}
+
+function initNLPanel(){
+  buildSwatches('nl-swatch-row',NL_SWATCH,NL_PAL,'grey',n=>{nlColour=n;});
+  buildSwatches('jump1-swatch-row',JP_SWATCH,NL_PAL,'dark',n=>{nlJumpCol=n;});
+  buildSwatches('jump2-swatch-row',JP_SWATCH,NL_PAL,'dark',n=>{nlJump2Col=n;});
+  document.querySelectorAll('.tog-btn[data-style]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-style]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlStyle=b.dataset.style;autoSave();}));
+  document.querySelectorAll('.tog-btn[data-arctype]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-arctype]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlArcType=b.dataset.arctype;autoSave();}));
+  document.querySelectorAll('.tog-btn[data-arrow]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-arrow]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlArrow=b.dataset.arrow==='yes';autoSave();}));
+  document.querySelectorAll('.tog-btn[data-circle]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-circle]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlCircle=b.dataset.circle;autoSave();}));
+  document.querySelectorAll('.tog-btn[data-arctype2]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-arctype2]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlArcType2=b.dataset.arctype2;autoSave();}));
+  document.querySelectorAll('.tog-btn[data-arrow2]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-arrow2]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlArrow2=b.dataset.arrow2==='yes';autoSave();}));
+  document.querySelectorAll('.tog-btn[data-circle2]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-circle2]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlCircle2=b.dataset.circle2;autoSave();}));
+  ['nl-text','nl-answer','f-start','f-end','f-step','f-vge','f-hide-from','f-hide-to'].forEach(id=>document.getElementById(id)?.addEventListener('input',autoSave));
+  setupJumpCalc('f-from','f-to','f-jump-label');setupJumpCalc('f-from2','f-to2','f-jump-label2');
+}
+function parseJL(s){if(!s||!s.trim())return NaN;return parseFloat(s.trim().replace(/^\+/,''));}
+function fmtJL(d){if(!isFinite(d))return'';const n=Math.round(d*1000)/1000;return(n>=0?'+':'')+n;}
+function setupJumpCalc(fId,tId,lId){
+  const f=document.getElementById(fId),t=document.getElementById(tId),l=document.getElementById(lId);if(!f||!t||!l)return;
+  f.addEventListener('input',()=>{const fv=parseFloat(f.value),tv=parseFloat(t.value),lv=parseJL(l.value);if(!isNaN(fv)&&!isNaN(tv))l.value=fmtJL(tv-fv);else if(!isNaN(fv)&&!isNaN(lv))t.value=fv+lv;autoSave();});
+  t.addEventListener('input',()=>{const fv=parseFloat(f.value),tv=parseFloat(t.value),lv=parseJL(l.value);if(!isNaN(fv)&&!isNaN(tv))l.value=fmtJL(tv-fv);else if(!isNaN(tv)&&!isNaN(lv))f.value=tv-lv;autoSave();});
+  l.addEventListener('input',()=>{const fv=parseFloat(f.value),tv=parseFloat(t.value),lv=parseJL(l.value);if(!isNaN(fv)&&!isNaN(lv))t.value=fv+lv;else if(!isNaN(tv)&&!isNaN(lv))f.value=tv-lv;autoSave();});
+}
+function nlToggleJump(){nlJumpOpen=!nlJumpOpen;const s=document.getElementById('jump-section'),b=document.getElementById('jump-toggle-btn');s.style.display=nlJumpOpen?'block':'none';b.textContent=nlJumpOpen?'✕ Remove jumps':'＋ Add jumps';b.classList.toggle('open',nlJumpOpen);if(!nlJumpOpen&&nlJump2Open)nlToggleJump2();autoSave();}
+function nlToggleJump2(){nlJump2Open=!nlJump2Open;const s=document.getElementById('jump2-section'),b=document.getElementById('jump2-toggle-btn');s.style.display=nlJump2Open?'block':'none';b.textContent=nlJump2Open?'✕ Remove second jump':'＋ Add second jump';b.classList.toggle('open',nlJump2Open);if(!nlJump2Open){['f-from2','f-to2','f-jump-label2'].forEach(id=>{document.getElementById(id).value='';});}autoSave();}
+function getNLConfig(){
+  const start=parseFloat(document.getElementById('f-start').value),end=parseFloat(document.getElementById('f-end').value),step=parseFloat(document.getElementById('f-step').value),vge=parseFloat(document.getElementById('f-vge').value),hF=parseFloat(document.getElementById('f-hide-from').value),hT=parseFloat(document.getElementById('f-hide-to').value);
+  if(isNaN(start)||isNaN(end)||isNaN(step)||step<=0)return null;const p=Math.round((end-start)/step);if(p<=0)return null;
+  const ans=document.getElementById('nl-answer').value.trim()||undefined;
+  const cfg={start,end,partitions:p,valuesGivenEvery:vge,answer:ans,lineStyle:nlStyle,colour:nlColour,hideFrom:isNaN(hF)?undefined:hF,hideTo:isNaN(hT)?undefined:hT};
+  if(nlJumpOpen){const from=parseFloat(document.getElementById('f-from').value),to=parseFloat(document.getElementById('f-to').value),lbl=document.getElementById('f-jump-label').value.trim();if(!isNaN(from)&&!isNaN(to)&&from!==to){cfg.jumpFrom=from;cfg.jumpTo=to;cfg.jumpType=nlArcType;cfg.jumpLabel=lbl;cfg.jumpArrow=nlArrow;cfg.jumpCircle=nlCircle;cfg.jumpColour=nlJumpCol;}
+  if(nlJump2Open){const from2=parseFloat(document.getElementById('f-from2').value),to2=parseFloat(document.getElementById('f-to2').value),lbl2=document.getElementById('f-jump-label2').value.trim();if(!isNaN(from2)&&!isNaN(to2)&&from2!==to2){cfg.jump2From=from2;cfg.jump2To=to2;cfg.jump2Type=nlArcType2;cfg.jump2Label=lbl2;cfg.jump2Arrow=nlArrow2;cfg.jump2Circle=nlCircle2;cfg.jump2Colour=nlJump2Col;}}}
+  return cfg;
+}
+function loadNLConfig(q){
+  const cfg=q.cfg;document.getElementById('nl-text').value=q.text||'';document.getElementById('nl-answer').value=q.answer||'';
+  document.getElementById('f-start').value=cfg.start??0;document.getElementById('f-end').value=cfg.end??20;
+  const step=cfg.partitions>0?(cfg.end-cfg.start)/cfg.partitions:1;document.getElementById('f-step').value=step;
+  document.getElementById('f-vge').value=isNaN(cfg.valuesGivenEvery)?'':cfg.valuesGivenEvery;
+  document.getElementById('f-hide-from').value=cfg.hideFrom??'';document.getElementById('f-hide-to').value=cfg.hideTo??'';
+  nlStyle=cfg.lineStyle||'through';document.querySelectorAll('.tog-btn[data-style]').forEach(b=>b.classList.toggle('active',b.dataset.style===nlStyle));
+  nlColour=cfg.colour||'grey';document.querySelectorAll('#nl-swatch-row .swatch').forEach(b=>b.classList.toggle('selected',b.title===nlColour));
+  if(nlJumpOpen)nlToggleJump();if(nlJump2Open)nlToggleJump2();
+  if(cfg.jumpFrom!==undefined){nlToggleJump();document.getElementById('f-from').value=cfg.jumpFrom??'';document.getElementById('f-to').value=cfg.jumpTo??'';document.getElementById('f-jump-label').value=cfg.jumpLabel||'';nlArcType=cfg.jumpType||'single';nlArrow=cfg.jumpArrow??true;nlCircle=cfg.jumpCircle||'none';nlJumpCol=cfg.jumpColour||'dark';document.querySelectorAll('.tog-btn[data-arctype]').forEach(b=>b.classList.toggle('active',b.dataset.arctype===nlArcType));document.querySelectorAll('.tog-btn[data-arrow]').forEach(b=>b.classList.toggle('active',b.dataset.arrow===(nlArrow?'yes':'no')));document.querySelectorAll('.tog-btn[data-circle]').forEach(b=>b.classList.toggle('active',b.dataset.circle===nlCircle));document.querySelectorAll('#jump1-swatch-row .swatch').forEach(b=>b.classList.toggle('selected',b.title===nlJumpCol));
+  if(cfg.jump2From!==undefined){nlToggleJump2();document.getElementById('f-from2').value=cfg.jump2From??'';document.getElementById('f-to2').value=cfg.jump2To??'';document.getElementById('f-jump-label2').value=cfg.jump2Label||'';nlArcType2=cfg.jump2Type||'single';nlArrow2=cfg.jump2Arrow??true;nlCircle2=cfg.jump2Circle||'none';nlJump2Col=cfg.jump2Colour||'dark';document.querySelectorAll('.tog-btn[data-arctype2]').forEach(b=>b.classList.toggle('active',b.dataset.arctype2===nlArcType2));document.querySelectorAll('.tog-btn[data-arrow2]').forEach(b=>b.classList.toggle('active',b.dataset.arrow2===(nlArrow2?'yes':'no')));document.querySelectorAll('.tog-btn[data-circle2]').forEach(b=>b.classList.toggle('active',b.dataset.circle2===nlCircle2));document.querySelectorAll('#jump2-swatch-row .swatch').forEach(b=>b.classList.toggle('selected',b.title===nlJump2Col));}}
+  try{const box=document.getElementById('nl-preview');box.innerHTML=numberLineSVG(cfg);}catch(e){}
+}
+
+// ── BM builder ─────────────────────────────────────────────────────────────
+let bmColIdx=0,bmMulti=false,bmTotDisp='brace',bmSeg3=false,bmSegT={1:'fill',2:'fill',3:'fill'};
+function initBMPanel(){
+  buildSwatches('bm-swatch-row',BM_STROKES.map((_,i)=>i),Object.fromEntries(BM_STROKES.map((c,i)=>[i,c])),0,n=>{bmColIdx=parseInt(n);});
+  document.querySelectorAll('.tog-btn[data-totdisp]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-totdisp]').forEach(x=>x.classList.remove('active'));b.classList.add('active');bmTotDisp=b.dataset.totdisp;autoSave();}));
+  document.querySelectorAll('.tog-btn[data-colmode]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-colmode]').forEach(x=>x.classList.remove('active'));b.classList.add('active');bmMulti=b.dataset.colmode==='multi';autoSave();}));
+  document.querySelectorAll('.tog-btn[data-bmseg]').forEach(b=>b.addEventListener('click',()=>{const seg=parseInt(b.dataset.bmseg);document.querySelectorAll(`.tog-btn[data-bmseg="${seg}"]`).forEach(x=>x.classList.remove('active'));b.classList.add('active');bmSegT[seg]=b.dataset.segtype;autoSave();}));
+  ['bm-text','bm-answer','bm-total','bm-seg1-val','bm-seg1-lbl','bm-seg1-brace','bm-seg2-val','bm-seg2-lbl','bm-seg2-brace','bm-seg3-val','bm-seg3-lbl','bm-seg3-brace'].forEach(id=>document.getElementById(id)?.addEventListener('input',autoSave));
+}
+function parseBMV(s){if(!s||s.trim()==='')return undefined;const t=s.trim();if(t==='?')return'?';const n=Number(t);return isNaN(n)?t:n;}
+function getBMConfig(){
+  const total=parseBMV(document.getElementById('bm-total').value);if(total===undefined)return null;
+  const mkSeg=n=>{const v=parseBMV(document.getElementById(`bm-seg${n}-val`).value);if(v===undefined)return null;const sg={value:v};const l=document.getElementById(`bm-seg${n}-lbl`).value.trim();const b=document.getElementById(`bm-seg${n}-brace`).value.trim();if(l)sg.segLabel=l;if(b)sg.braceLabel=b;if(bmSegT[n]==='blank')sg.blank=true;return sg;};
+  const segs=[mkSeg(1),mkSeg(2)].filter(Boolean);if(bmSeg3){const s3=mkSeg(3);if(s3)segs.push(s3);}if(!segs.length)return null;
+  return{segments:segs,total,colorIdx:bmColIdx,multi:bmMulti||undefined,topBar:bmTotDisp==='top bar'||undefined,hideTotal:bmTotDisp==='none'||undefined};
+}
+function bmToggleSeg3(show){bmSeg3=show;document.getElementById('bm-seg3-block').style.display=show?'block':'none';document.getElementById('bm-add-seg3').style.display=show?'none':'inline-flex';if(!show)['bm-seg3-val','bm-seg3-lbl','bm-seg3-brace'].forEach(id=>document.getElementById(id).value='');autoSave();}
+function loadBMConfig(q){
+  const cfg=q.cfg;document.getElementById('bm-text').value=q.text||'';document.getElementById('bm-answer').value=q.answer||'';
+  document.getElementById('bm-total').value=cfg.total!==undefined?String(cfg.total):'';
+  bmTotDisp=cfg.topBar?'top bar':(cfg.hideTotal?'none':'brace');document.querySelectorAll('.tog-btn[data-totdisp]').forEach(b=>b.classList.toggle('active',b.dataset.totdisp===bmTotDisp));
+  bmMulti=!!cfg.multi;document.querySelectorAll('.tog-btn[data-colmode]').forEach(b=>b.classList.toggle('active',b.dataset.colmode===(bmMulti?'multi':'single')));
+  bmColIdx=cfg.colorIdx??0;document.querySelectorAll('#bm-swatch-row .swatch').forEach(b=>b.classList.toggle('selected',parseInt(b.title)===bmColIdx));
+  const segs=cfg.segments||[];for(let i=1;i<=3;i++){const sg=segs[i-1];document.getElementById(`bm-seg${i}-val`).value=sg?String(sg.value??''):'';document.getElementById(`bm-seg${i}-lbl`).value=sg?.segLabel||'';document.getElementById(`bm-seg${i}-brace`).value=sg?.braceLabel||'';bmSegT[i]=sg?.blank?'blank':'fill';document.querySelectorAll(`.tog-btn[data-bmseg="${i}"]`).forEach(b=>b.classList.toggle('active',b.dataset.segtype===bmSegT[i]));}
+  const has3=segs.length>=3;if(has3!==bmSeg3)bmToggleSeg3(has3);
+  try{const box=document.getElementById('bm-preview');box.innerHTML=barModelSVG(cfg);}catch(e){}
+}
+
+// ── TF builder ─────────────────────────────────────────────────────────────
+let tfSize=10,tfColour='red';
+function initTFPanel(){
+  buildSwatches('tf-swatch-row',TF_SWATCH,TF_COLS,'red',n=>{tfColour=n;});
+  document.querySelectorAll('.tog-btn[data-tfsize]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-tfsize]').forEach(x=>x.classList.remove('active'));b.classList.add('active');tfSize=parseInt(b.dataset.tfsize);document.getElementById('tf-filled').max=tfSize;autoSave();}));
+  ['tf-text','tf-answer','tf-filled'].forEach(id=>document.getElementById(id)?.addEventListener('input',autoSave));
+}
+function getTFConfig(){const filled=parseInt(document.getElementById('tf-filled').value)||0;return{filled:Math.min(filled,tfSize),total:tfSize,colour:tfColour};}
+function loadTFConfig(q){const cfg=q.cfg;document.getElementById('tf-text').value=q.text||'';document.getElementById('tf-answer').value=q.answer||'';tfSize=cfg.total||10;tfColour=cfg.colour||'red';document.getElementById('tf-filled').value=cfg.filled||0;document.getElementById('tf-filled').max=tfSize;document.querySelectorAll('.tog-btn[data-tfsize]').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.tfsize)===tfSize));document.querySelectorAll('#tf-swatch-row .swatch').forEach(b=>b.classList.toggle('selected',b.title===tfColour));try{document.getElementById('tf-preview').innerHTML=tenFrameSVG(cfg);}catch(e){}}
+
+// ── PV builder ─────────────────────────────────────────────────────────────
+let pvCols=['T','O'];
+function initPVPanel(){
+  document.querySelectorAll('.tog-btn[data-pvcol]').forEach(b=>{b.addEventListener('click',()=>{b.classList.toggle('active');pvCols=Array.from(document.querySelectorAll('.tog-btn[data-pvcol].active')).map(x=>x.dataset.pvcol);['H','T','O'].forEach(c=>{const f=document.getElementById(`pv-field-${c}`);if(f)f.style.display=pvCols.includes(c)?'flex':'none';});autoSave();});});
+  ['pv-text','pv-answer','pv-val-H','pv-val-T','pv-val-O'].forEach(id=>document.getElementById(id)?.addEventListener('input',autoSave));
+}
+function getPVConfig(){if(!pvCols.length)return null;const digits={};pvCols.forEach(c=>{const v=document.getElementById(`pv-val-${c}`)?.value.trim();digits[c]=v||'';});return{cols:pvCols,digits};}
+function loadPVConfig(q){const cfg=q.cfg;document.getElementById('pv-text').value=q.text||'';document.getElementById('pv-answer').value=q.answer||'';pvCols=cfg.cols||['T','O'];document.querySelectorAll('.tog-btn[data-pvcol]').forEach(b=>{const on=pvCols.includes(b.dataset.pvcol);b.classList.toggle('active',on);const f=document.getElementById(`pv-field-${b.dataset.pvcol}`);if(f)f.style.display=on?'flex':'none';});['H','T','O'].forEach(c=>{const el=document.getElementById(`pv-val-${c}`);if(el)el.value=cfg.digits?.[c]??'';});try{document.getElementById('pv-preview').innerHTML=placeValueSVG(cfg);}catch(e){}}
+
+// ── QA builder ─────────────────────────────────────────────────────────────
+function getQAConfig(){return{};}
+function loadQAConfig(q){document.getElementById('qa-text').value=q.text||'';document.getElementById('qa-answer').value=q.answer||'';}
+['qa-text','qa-answer'].forEach(id=>document.getElementById(id)?.addEventListener('input',autoSave));
+
+// ── QTI export ─────────────────────────────────────────────────────────────
+function qtiXML(q,imgFile){
+  const rid=`RESPONSE-${10000+q.id}`,iid=`ITEM-${String(q.id).padStart(3,'0')}`;
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const imgEl=imgFile?`<p><img src="${imgFile}" alt=""/></p>\n      `:'';
+  return`<?xml version="1.0" encoding="UTF-8"?>\n<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"\n  identifier="${iid}" title="${esc((q.text||'Question '+q.id).slice(0,60))}"\n  adaptive="false" timeDependent="false">\n  <responseDeclaration identifier="${rid}" cardinality="single" baseType="float">\n    <correctResponse><value>${parseFloat(q.answer)||0}</value></correctResponse>\n  </responseDeclaration>\n  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">\n    <defaultValue><value>0</value></defaultValue>\n  </outcomeDeclaration>\n  <itemBody>\n    <div>\n      <p>${esc(q.text||'')}</p>\n      ${imgEl}<p><textEntryInteraction responseIdentifier="${rid}"/></p>\n    </div>\n    <div/>\n  </itemBody>\n  <responseProcessing>\n    <responseCondition><responseIf>\n      <match><variable identifier="${rid}"/><correct identifier="${rid}"/></match>\n      <setOutcomeValue identifier="SCORE"><baseValue baseType="float">1</baseValue></setOutcomeValue>\n    </responseIf></responseCondition>\n  </responseProcessing>\n</assessmentItem>`;
+}
+async function exportQTIZip(){
+  const ready=questions.filter(q=>q.status==='ready');if(!ready.length)return;
+  const btn=document.getElementById('export-btn'),st=document.getElementById('export-status');btn.disabled=true;
+  try{const zip=new JSZip();for(let i=0;i<ready.length;i++){const q=ready[i];st.textContent=`Rendering ${i+1}/${ready.length}…`;const fns=TOOL_FNS[q.type];const folder=`q${String(q.id).padStart(3,'0')}`;let imgFile=null;if(q.type!=='qa'&&q.cfg){const svg=fns.renderSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${folder}/image.png`,png);imgFile='image.png';}zip.file(`${folder}/question.xml`,qtiXML(q,imgFile));}
+  const blob=await zip.generateAsync({type:'blob'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`qti-export-${new Date().toISOString().slice(0,10)}.zip`;a.click();URL.revokeObjectURL(a.href);st.textContent=`✓ ${ready.length} exported`;setTimeout(()=>st.textContent='',4000);}
+  catch(e){st.textContent='Export failed: '+e.message;}finally{btn.disabled=false;updateExportBtn();}
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+initNLPanel();initBMPanel();initTFPanel();initPVPanel();
+load();renderNuggets();renderQuestionList();updateExportBtn();showEmpty();
+// init BM swatches properly
+(function(){const row=document.getElementById('bm-swatch-row');if(row&&!row.children.length){BM_STROKES.forEach((c,i)=>{const b=document.createElement('button');b.className='swatch'+(i===0?' selected':'');b.style.background=c;b.title=i;b.onclick=()=>{row.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));b.classList.add('selected');bmColIdx=i;autoSave();};row.appendChild(b);});}})();
+</script>
+</body>
+</html>
