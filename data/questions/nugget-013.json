@@ -1,0 +1,33 @@
+{
+  "nuggetId": 13,
+  "status": "in-progress",
+  "nextQId": 1014,
+  "questions": [
+    {
+      "id": 1013,
+      "text": "5 + ? = 10",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 5,
+            "segLabel": "5"
+          },
+          {
+            "value": 5,
+            "segLabel": "?"
+          }
+        ],
+        "total": 10,
+        "colorIdx": 5
+      },
+      "updatedAt": "2026-07-12",
+      "createdAt": "2026-07-12"
+    }
+  ]
+}
