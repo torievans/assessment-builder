@@ -896,13 +896,11 @@ function updateStats(){
 async function selectNugget(id){
   activeId=id;if(activeTab!=='builder')switchTab('builder');
   closeTool();renderSidebar();
-  // Try loading from JSON file if folder is connected
-  if(folderHandle){
-    const fileData=await loadNuggetFromFile(id);
-    if(fileData){
-      nuggetState[id]={status:fileData.status,questions:fileData.questions||[]};
-      if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
-    }
+  // Load from JSON file (local folder if connected, otherwise fetch from server)
+  const fileData=await loadNuggetFromFile(id);
+  if(fileData){
+    nuggetState[id]={status:fileData.status,questions:fileData.questions||[]};
+    if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
   }
   const n=NUGGETS.find(n=>n.id===id);
   document.getElementById('builder-empty').style.display='none';
