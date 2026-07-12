@@ -746,15 +746,22 @@ function updateFolderStatus(){
   }
 }
 async function loadNuggetFromFile(nid){
-  if(!folderHandle)return null;
+  const fname=`nugget-${String(nid).padStart(3,'0')}.json`;
+  // 1. Try connected local folder first
+  if(folderHandle){
+    try{
+      const dataDir=await folderHandle.getDirectoryHandle('data',{create:false});
+      const qDir=await dataDir.getDirectoryHandle('questions',{create:false});
+      const fh=await qDir.getFileHandle(fname,{create:false});
+      return JSON.parse(await (await fh.getFile()).text());
+    }catch(e){}
+  }
+  // 2. Fall back to fetching from the server (works on GitHub Pages for all users)
   try{
-    const dataDir=await folderHandle.getDirectoryHandle('data',{create:false});
-    const qDir=await dataDir.getDirectoryHandle('questions',{create:false});
-    const fname=`nugget-${String(nid).padStart(3,'0')}.json`;
-    const fh=await qDir.getFileHandle(fname,{create:false});
-    const file=await fh.getFile();
-    return JSON.parse(await file.text());
-  }catch(e){return null;}
+    const r=await fetch(`data/questions/${fname}`);
+    if(r.ok)return await r.json();
+  }catch(e){}
+  return null;
 }
 async function saveNuggetToFile(nid){
   const ns=nuggetState[nid];if(!ns)return;
