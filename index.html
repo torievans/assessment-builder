@@ -745,8 +745,13 @@ function updateFolderStatus(){
     if(disp){disp.textContent='Not connected';disp.classList.remove('connected');}
   }
 }
+function nuggetSlug(nid){
+  const n=NUGGETS.find(n=>n.id===nid);
+  const name=(n?n.name:'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);
+  return`nugget-${String(nid).padStart(3,'0')}${name?'-'+name:''}`;
+}
 async function loadNuggetFromFile(nid){
-  const fname=`nugget-${String(nid).padStart(3,'0')}.json`;
+  const fname=`${nuggetSlug(nid)}.json`;
   // 1. Try connected local folder first
   if(folderHandle){
     try{
@@ -768,7 +773,7 @@ async function saveNuggetToFile(nid){
   const today=new Date().toISOString().slice(0,10);
   const data={nuggetId:nid,status:ns.status,nextQId,questions:ns.questions.map(q=>({...q,updatedAt:q.updatedAt||today,createdAt:q.createdAt||today}))};
   const json=JSON.stringify(data,null,2);
-  const fname=`nugget-${String(nid).padStart(3,'0')}.json`;
+  const fname=`${nuggetSlug(nid)}.json`;
   let localOk=false,ghOk=false;
   if(folderHandle){
     try{
@@ -993,7 +998,7 @@ function addToolQuestion(type){
     q.visualType='custom';
     if(customImageDataURL){
       // save image file if folder connected, otherwise embed as data URL
-      const fname=`nugget-${String(activeId).padStart(3,'0')}-q-${String(id).padStart(4,'0')}.png`;
+      const fname=`${nuggetSlug(activeId)}-q-${String(id).padStart(4,'0')}.png`;
       if(folderHandle){
         saveImageToFile(fname,customImageDataURL).then(p=>{if(p)q.imagePath=p;});
         q.imagePath=`data/images/${fname}`;q.image='';
