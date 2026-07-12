@@ -275,6 +275,8 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .custom-img-drop .drop-icon{font-size:28px}
 .custom-img-preview{max-width:100%;max-height:220px;border-radius:8px;display:block;margin:0 auto}
 .custom-img-clear{background:none;border:none;font-size:11px;color:#EF4444;cursor:pointer;font-family:var(--font);margin-top:6px;display:block;text-align:center;width:100%}
+.q-del-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:13px;padding:3px 6px;border-radius:5px;line-height:1;transition:color .12s,background .12s;font-family:var(--font)}
+.q-del-btn:hover{color:var(--red);background:rgba(239,68,68,.08)}
 </style>
 </head>
 <body>
@@ -951,9 +953,18 @@ function renderQVisual(q){
 function renderQuestions(){
   if(!activeId)return;const qs=nuggetState[activeId]?.questions||[];const el=document.getElementById('q-grid');
   if(!qs.length){el.innerHTML='<div class="q-empty-grid">No questions yet — use the tools above to add questions for this nugget.</div>';return;}
-  el.innerHTML=qs.map((q,i)=>`<div class="q-card"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`).join('');
+  el.innerHTML=qs.map((q,i)=>`<div class="q-card"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`).join('');
 }
 function saveQA(qid,val){if(!activeId)return;const q=nuggetState[activeId].questions.find(q=>q.id===qid);if(q){q.qaComment=val;save();}}
+function deleteQuestion(qid){
+  if(!activeId)return;
+  const qs=nuggetState[activeId].questions;
+  const q=qs.find(q=>q.id===qid);if(!q)return;
+  const label=q.text?`"${q.text.slice(0,50)}"`:`Q${qs.indexOf(q)+1}`;
+  if(!confirm(`Delete question ${label}?\n\nThis cannot be undone.`))return;
+  nuggetState[activeId].questions=qs.filter(q=>q.id!==qid);
+  save();renderQuestions();renderSidebar();renderWorkflow();
+}
 
 /* ── Tool panel ── */
 let activeTool=null;
