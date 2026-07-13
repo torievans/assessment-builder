@@ -794,7 +794,7 @@ async function saveNuggetToFile(nid){
     catch(e){showToast('⚠ GitHub save failed: '+e.message,true);}
   }
   if(localOk||ghOk){showToast(`✓ Saved nugget ${nid}${ghOk?' + GitHub':''}`);}
-  else if(!folderHandle&&!ghToken){/* silent — no targets configured */}
+  else if(!folderHandle&&!ghToken){showToast('⚠ No save destination — add a GitHub token in Settings',true);}
 }
 async function saveImageToFile(nid,filename,dataURL){
   const slug=nuggetSlug(nid);
