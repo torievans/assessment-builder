@@ -909,22 +909,25 @@ function updateFolderStatus(){
     if(disp){disp.textContent='Not connected';disp.classList.remove('connected');}
   }
 }
-function nuggetSlug(nid){
-  return`nugget-${String(nid).padStart(3,'0')}`;
-}
-// Hardcoded map of new nugget IDs → old slug strings for backwards-compatible loading.
-// Only nuggets that had data files in the old format need entries here.
-const LEGACY_SLUG_MAP={
-  1:'nugget-001-counting-forwards-1-20',  // old "Counting forwards 1–20" → new ID 1
-  2:'nugget-013-number-line-1-10',        // old "Number line 1–10" (ID 13) → new ID 2
-};
-function legacySlug(nid){
-  return LEGACY_SLUG_MAP[nid]||null;
-}
 // Returns custom name if set, otherwise default name from NUGGETS array
 function nuggetDisplayName(nid){
   return nuggetState[nid]?.customName||NUGGETS.find(n=>n.id===nid)?.name||`Nugget ${nid}`;
 }
+// Slug = ID + slugified current display name, so folders are always human-readable.
+// Renaming a nugget changes the slug; the next save writes to the new folder automatically.
+function nameToSlugPart(name){
+  return name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);
+}
+function nuggetSlug(nid){
+  return`nugget-${String(nid).padStart(3,'0')}-${nameToSlugPart(nuggetDisplayName(nid))}`;
+}
+// Fallback slugs tried during loading when the current-name slug isn't found.
+// Covers: ID-only (transitional format) and pre-July-2026 named folders.
+const LEGACY_SLUG_MAP={
+  1:'nugget-001-counting-forwards-1-20',
+  2:'nugget-013-number-line-1-10',
+};
+function legacySlug(nid){return LEGACY_SLUG_MAP[nid]||null;}
 // ── Rename nugget ──
 function startRenameNugget(){
   if(!activeId)return;
@@ -956,45 +959,57 @@ function saveNuggetRename(newName){
   save();renderSidebar();
 }
 async function loadNuggetFromFile(nid){
-  const slug=nuggetSlug(nid);
-  const fname=`${slug}.json`;
-  const lSlug=legacySlug(nid); // null if no legacy mapping
-  const lFname=lSlug?`${lSlug}.json`:null;
-  // 1. Try connected local folder first (new slug, then legacy)
+  const slug=nuggetSlug(nid);       // current name-based slug (e.g. nugget-001-1-10-what-next-number-track)
+  const idSlug=`nugget-${String(nid).padStart(3,'0')}`;  // ID-only fallback
+  const lSlug=legacySlug(nid);     // pre-July-2026 hardcoded fallback, or null
+  // Build ordered list of slugs to try (skip duplicates / nulls)
+  const candidates=[slug,idSlug,...(lSlug?[lSlug]:[])].filter((s,i,a)=>a.indexOf(s)===i);
+  // 1. Try connected local folder
   if(folderHandle){
     try{
       const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:false});
-      try{const nDir=await qdDir.getDirectoryHandle(slug,{create:false});const fh=await nDir.getFileHandle(fname,{create:false});return JSON.parse(await (await fh.getFile()).text());}catch(e){}
-      if(lSlug){try{const nDir=await qdDir.getDirectoryHandle(lSlug,{create:false});const fh=await nDir.getFileHandle(lFname,{create:false});return JSON.parse(await (await fh.getFile()).text());}catch(e){}}
+      for(const s of candidates){
+        try{const nDir=await qdDir.getDirectoryHandle(s,{create:false});const fh=await nDir.getFileHandle(`${s}.json`,{create:false});return JSON.parse(await (await fh.getFile()).text());}catch(e){}
+      }
     }catch(e){}
   }
-  // 2. Try new slug from server, then legacy slug
-  try{const r=await fetch(`question-data/${slug}/${fname}`,{cache:'no-store'});if(r.ok)return await r.json();}catch(e){}
-  if(lSlug){try{const r=await fetch(`question-data/${lSlug}/${lFname}`,{cache:'no-store'});if(r.ok)return await r.json();}catch(e){}}
+  // 2. Fetch from server (GitHub Pages) — try each candidate slug
+  for(const s of candidates){
+    try{const r=await fetch(`question-data/${s}/${s}.json`,{cache:'no-store'});if(r.ok)return await r.json();}catch(e){}
+  }
   return null;
 }
 async function saveNuggetToFile(nid){
   const ns=nuggetState[nid];if(!ns)return;
-  const slug=nuggetSlug(nid);
+  const slug=nuggetSlug(nid);   // name-based, human-readable (e.g. nugget-001-1-10-what-next-number-track)
+  const idSlug=`nugget-${String(nid).padStart(3,'0')}`;  // ID-only canonical path
   const today=new Date().toISOString().slice(0,10);
   const customName=nuggetState[nid]?.customName;
   const data={nuggetId:nid,status:ns.status,nextQId,questions:ns.questions.map(q=>({...q,updatedAt:q.updatedAt||today,createdAt:q.createdAt||today})),...(customName&&{customName})};
   const json=JSON.stringify(data,null,2);
-  const fname=`${slug}.json`;
-  const ghPath=`question-data/${slug}/${fname}`;
   let localOk=false,ghOk=false;
+  // Save to local folder (name-based path only — readable on disk)
   if(folderHandle){
     try{
       const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:true});
       const nDir=await qdDir.getDirectoryHandle(slug,{create:true});
-      const fh=await nDir.getFileHandle(fname,{create:true});
+      const fh=await nDir.getFileHandle(`${slug}.json`,{create:true});
       const w=await fh.createWritable();await w.write(json);await w.close();
       localOk=true;
     }catch(e){showToast('⚠ Local save failed: '+e.message,true);}
   }
+  // Save to GitHub: write BOTH the name-based path (readable) and the ID-only path (stable fallback).
+  // The ID-only path ensures any browser can find the latest data even after a rename.
   if(ghToken){
-    try{await commitToGitHub(ghPath,json);ghOk=true;}
-    catch(e){showToast('⚠ GitHub save failed: '+e.message,true);}
+    try{
+      await commitToGitHub(`question-data/${slug}/${slug}.json`,json);
+      // Silently also update the ID-only canonical path (ignore errors — secondary)
+      try{
+        const idData={...data};  // same content
+        await commitToGitHub(`question-data/${idSlug}/${idSlug}.json`,JSON.stringify(idData,null,2));
+      }catch(e){}
+      ghOk=true;
+    }catch(e){showToast('⚠ GitHub save failed: '+e.message,true);}
   }
   if(localOk||ghOk){showToast(`✓ Saved nugget ${nid}${ghOk?' + GitHub':''}`);}
   else if(!folderHandle&&!ghToken){showToast('⚠ No save destination — add a GitHub token in Settings',true);}
