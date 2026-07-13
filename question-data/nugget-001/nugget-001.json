@@ -1,7 +1,7 @@
 {
   "nuggetId": 1,
   "status": "uploaded-to-cms",
-  "nextQId": 1023,
+  "nextQId": 1025,
   "questions": [
     {
       "id": 1001,
@@ -10,7 +10,7 @@
       "image": "",
       "type": "exact",
       "display": "",
-      "qaComment": "",
+      "qaComment": "Hi Karen\n",
       "visualType": null,
       "cfg": {},
       "updatedAt": "2026-07-13",
