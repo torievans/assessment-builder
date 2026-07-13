@@ -1341,7 +1341,7 @@ function openTool(type){
   else if(type==='bm'){document.getElementById('bm-text').value='';document.getElementById('bm-answer').value='';['bm-total','bm-seg1-val','bm-seg1-lbl','bm-seg1-brace','bm-seg2-val','bm-seg2-lbl','bm-seg2-brace'].forEach(id=>document.getElementById(id).value='');if(bmSeg3)bmToggleSeg3(false);document.getElementById('bm-preview').innerHTML='<p class="preview-empty">Fill in segment values above to preview.</p>';}
   else if(type==='text'){document.getElementById('text-q-text').value='';document.getElementById('text-answer').value='';}
   else if(type==='custom'){document.getElementById('custom-q-text').value='';document.getElementById('custom-answer').value='';customResetImage();}
-  else if(type==='nt'){document.getElementById('nt-text').value='';document.getElementById('nt-answer').value='';document.getElementById('nt-seq').value='1,2,3,?,5,6';document.getElementById('nt-preview').innerHTML='<p class="preview-empty">Fill in a sequence above to preview.</p>';ntShape='square';ntLayout='straight';ntColourMode='full';document.querySelectorAll('[data-ntshape]').forEach(b=>b.classList.toggle('active',b.dataset.ntshape==='square'));document.querySelectorAll('[data-ntlayout]').forEach(b=>b.classList.toggle('active',b.dataset.ntlayout==='straight'));document.querySelectorAll('[data-ntcolmode]').forEach(b=>b.classList.toggle('active',b.dataset.ntcolmode==='full'));}
+  else if(type==='nt'){document.getElementById('nt-text').value='';document.getElementById('nt-answer').value='';document.getElementById('nt-seq').value='1,2,3,?,5,6';ntShape='square';ntLayout='straight';ntColourMode='full';document.querySelectorAll('[data-ntshape]').forEach(b=>b.classList.toggle('active',b.dataset.ntshape==='square'));document.querySelectorAll('[data-ntlayout]').forEach(b=>b.classList.toggle('active',b.dataset.ntlayout==='straight'));document.querySelectorAll('[data-ntcolmode]').forEach(b=>b.classList.toggle('active',b.dataset.ntcolmode==='full'));autoPreviewNT();}
 }
 function closeTool(){
   if(activeTool){document.getElementById('tool-panel-'+activeTool).classList.add('hidden');}
@@ -1819,7 +1819,7 @@ function autoPreviewNT(){
   if(activeTool!=='nt')return;
   const box=document.getElementById('nt-preview');
   try{const cfg=getNTConfig();if(cfg)box.innerHTML=numberTrackSVG(cfg);else box.innerHTML='<p class="preview-empty">Fill in a sequence above to preview.</p>';}
-  catch(e){box.innerHTML='<p class="preview-empty">Preview error.</p>';}
+  catch(e){console.error('NT preview error:',e);box.innerHTML='<p class="preview-empty">Preview error: '+e.message+'</p>';}
 }
 function getNTConfig(){
   const seq=document.getElementById('nt-seq').value.trim();
