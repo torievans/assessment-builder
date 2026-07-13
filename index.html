@@ -701,7 +701,7 @@ async function loadNuggetFromFile(nid){
   }
   // 2. Fall back to fetching from the server (works on GitHub Pages for all users)
   try{
-    const r=await fetch(`question-data/${slug}/${fname}`);
+    const r=await fetch(`question-data/${slug}/${fname}`,{cache:'no-store'});
     if(r.ok)return await r.json();
   }catch(e){}
   return null;
