@@ -530,6 +530,7 @@ function numberTrackSVG(cfg) {
         const fs = CELL * 0.36;
         const ty = shape === 'balloon' ? cy - CELL*0.0556 + fs*0.35
                  : shape === 'cloud'   ? cy + CELL*(7/195) + fs*0.35
+                 : shape === 'star'    ? cy + fs*0.35 + 2
                  : cy + fs*0.35;
         parts.push(`<text x="${cx}" y="${ty}" text-anchor="middle" font-family="${SHARED_FONT}" font-size="${fs}" font-weight="900" fill="#BBBFD0">?</text>`);
       }
@@ -539,6 +540,7 @@ function numberTrackSVG(cfg) {
       const fs = CELL * 0.36;
       const ty = shape === 'balloon' ? cy - CELL*0.0556 + fs*0.35
                : shape === 'cloud'   ? cy + CELL*(7/195) + fs*0.35
+               : shape === 'star'    ? cy + fs*0.35 + 2
                : cy + fs*0.35;
       parts.push(`<text x="${cx}" y="${ty}" text-anchor="middle" font-family="${SHARED_FONT}" font-size="${fs}" font-weight="900" fill="${c.text}">${ntEsc(token)}</text>`);
     }
