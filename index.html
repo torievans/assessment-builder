@@ -1159,7 +1159,7 @@ function renderSidebar(){
   const q=document.getElementById('sb-search').value.toLowerCase();
   const el=document.getElementById('nl');let html='';
   TOPICS.forEach(topic=>{
-    let items=NUGGETS.filter(n=>{if(filter!=='all'&&nuggetState[n.id]?.status!==filter)return false;if(q&&!nuggetDisplayName(n.id).toLowerCase().includes(q)&&!n.subtopic?.toLowerCase().includes(q)&&!topic.toLowerCase().includes(q))return false;return true;});
+    let items=NUGGETS.filter(n=>{if(n.topic!==topic)return false;if(filter!=='all'&&nuggetState[n.id]?.status!==filter)return false;if(q&&!nuggetDisplayName(n.id).toLowerCase().includes(q)&&!n.subtopic?.toLowerCase().includes(q)&&!topic.toLowerCase().includes(q))return false;return true;});
     if(!items.length)return;
     const collapsed=!!collapseMap[topic];const short=topic.includes('–')?topic.split('–').slice(1).join('–').trim():topic;
     html+=`<div class="tg-hdr" onclick="toggleTopic('${esc(topic)}')">${esc(short)}<span>${collapsed?'▸':'▾'}</span></div>`;
