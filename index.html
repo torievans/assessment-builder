@@ -912,11 +912,14 @@ function updateFolderStatus(){
 function nuggetSlug(nid){
   return`nugget-${String(nid).padStart(3,'0')}`;
 }
-// Legacy slug for backwards-compatible loading (old format included the name)
+// Hardcoded map of new nugget IDs → old slug strings for backwards-compatible loading.
+// Only nuggets that had data files in the old format need entries here.
+const LEGACY_SLUG_MAP={
+  1:'nugget-001-counting-forwards-1-20',  // old "Counting forwards 1–20" → new ID 1
+  2:'nugget-013-number-line-1-10',        // old "Number line 1–10" (ID 13) → new ID 2
+};
 function legacySlug(nid){
-  const n=NUGGETS.find(n=>n.id===nid);
-  const name=(n?n.name:'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);
-  return`nugget-${String(nid).padStart(3,'0')}-${name}`;
+  return LEGACY_SLUG_MAP[nid]||null;
 }
 // Returns custom name if set, otherwise default name from NUGGETS array
 function nuggetDisplayName(nid){
@@ -955,19 +958,19 @@ function saveNuggetRename(newName){
 async function loadNuggetFromFile(nid){
   const slug=nuggetSlug(nid);
   const fname=`${slug}.json`;
-  const lSlug=legacySlug(nid);
-  const lFname=`${lSlug}.json`;
+  const lSlug=legacySlug(nid); // null if no legacy mapping
+  const lFname=lSlug?`${lSlug}.json`:null;
   // 1. Try connected local folder first (new slug, then legacy)
   if(folderHandle){
     try{
       const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:false});
       try{const nDir=await qdDir.getDirectoryHandle(slug,{create:false});const fh=await nDir.getFileHandle(fname,{create:false});return JSON.parse(await (await fh.getFile()).text());}catch(e){}
-      try{const nDir=await qdDir.getDirectoryHandle(lSlug,{create:false});const fh=await nDir.getFileHandle(lFname,{create:false});return JSON.parse(await (await fh.getFile()).text());}catch(e){}
+      if(lSlug){try{const nDir=await qdDir.getDirectoryHandle(lSlug,{create:false});const fh=await nDir.getFileHandle(lFname,{create:false});return JSON.parse(await (await fh.getFile()).text());}catch(e){}}
     }catch(e){}
   }
   // 2. Try new slug from server, then legacy slug
   try{const r=await fetch(`question-data/${slug}/${fname}`,{cache:'no-store'});if(r.ok)return await r.json();}catch(e){}
-  try{const r=await fetch(`question-data/${lSlug}/${lFname}`,{cache:'no-store'});if(r.ok)return await r.json();}catch(e){}
+  if(lSlug){try{const r=await fetch(`question-data/${lSlug}/${lFname}`,{cache:'no-store'});if(r.ok)return await r.json();}catch(e){}}
   return null;
 }
 async function saveNuggetToFile(nid){
