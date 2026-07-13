@@ -280,8 +280,8 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .q-card-actions{display:flex;align-items:center;gap:2px}
 .q-edit-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:13px;padding:3px 6px;border-radius:5px;line-height:1;transition:color .12s,background .12s;font-family:var(--font)}
 .q-edit-btn:hover{color:#3B82F6;background:rgba(59,130,246,.08)}
-.q-drag-handle{cursor:grab;color:var(--dim);font-size:17px;padding:0 8px 0 0;user-select:none;flex-shrink:0;line-height:1;opacity:.55;transition:opacity .12s}
-.q-drag-handle:hover{opacity:1}
+.q-drag-handle{cursor:grab;color:var(--dim);font-size:17px;padding:0 2px 0 6px;margin-left:4px;border-left:1px solid var(--border);user-select:none;flex-shrink:0;line-height:1;opacity:.45;transition:opacity .12s}
+.q-drag-handle:hover{opacity:.9}
 .q-drag-handle:active{cursor:grabbing}
 .q-card.dragging{opacity:0.35;pointer-events:none}
 .q-card.drop-above{border-top:2px solid #3B82F6}
@@ -900,7 +900,7 @@ function renderQuestions(){
   if(!activeId)return;const qs=nuggetState[activeId]?.questions||[];const el=document.getElementById('q-grid');
   if(!qs.length){el.innerHTML='<div class="q-empty-grid">No questions yet — use the tools above to add questions for this nugget.</div>';return;}
   el.innerHTML=qs.map((q,i)=>{
-    return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}" ondragover="dndOver(event,${q.id})" ondragleave="dndLeave(event)" ondrop="dndDrop(event,${q.id})"><div class="q-head"><div class="q-drag-handle" draggable="true" ondragstart="dndStart(event,${q.id})" ondragend="dndEnd(event)" title="Drag to reorder">⠿</div><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions"><button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
+    return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}" ondragover="dndOver(event,${q.id})" ondragleave="dndLeave(event)" ondrop="dndDrop(event,${q.id})"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions"><button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button><div class="q-drag-handle" draggable="true" ondragstart="dndStart(event,${q.id})" ondragend="dndEnd(event)" title="Drag to reorder">⠿</div></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
   }).join('');
 }
 function saveQA(qid,val){if(!activeId)return;const q=nuggetState[activeId].questions.find(q=>q.id===qid);if(q){q.qaComment=val;save();}}
