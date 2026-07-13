@@ -845,7 +845,11 @@ function saveSettings(){
   localStorage.setItem('gh-owner',ghOwner);localStorage.setItem('gh-repo',ghRepo);localStorage.setItem('gh-token',ghToken);
   showToast('✓ Settings saved');closeSettings();
 }
-async function manualSave(){if(activeId)await saveNuggetToFile(activeId);else showToast('Select a nugget first',true);}
+async function manualSave(){
+  clearTimeout(_autoSaveTimer);
+  if(activeId)await saveNuggetToFile(activeId);
+  else showToast('Select a nugget first',true);
+}
 
 /* ── State ── */
 let nuggetState={};let activeId=null;let activeTab='builder';let filter='all';let collapseMap={};let nextQId=1;
@@ -876,9 +880,13 @@ function applyState(s){
   });
   nuggetState=s.nuggetState;nextQId=Math.max(s.nextQId||1,SEED_NEXT);
 }
+let _autoSaveTimer=null;
 function save(){
   try{localStorage.setItem(STORE,JSON.stringify(getState()));}catch(e){}
-  if(activeId)saveNuggetToFile(activeId);
+  if(activeId){
+    clearTimeout(_autoSaveTimer);
+    _autoSaveTimer=setTimeout(()=>saveNuggetToFile(activeId),700);
+  }
 }
 function loadStorage(){try{const d=localStorage.getItem(STORE);if(d)applyState(JSON.parse(d));else nextQId=SEED_NEXT;}catch(e){}}
 
