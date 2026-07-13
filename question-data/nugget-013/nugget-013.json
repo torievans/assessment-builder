@@ -1,7 +1,7 @@
 {
   "nuggetId": 13,
-  "status": "in-progress",
-  "nextQId": 1023,
+  "status": "not-started",
+  "nextQId": 1025,
   "questions": [
     {
       "id": 1022,
