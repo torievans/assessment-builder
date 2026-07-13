@@ -280,9 +280,12 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .q-card-actions{display:flex;align-items:center;gap:2px}
 .q-edit-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:13px;padding:3px 6px;border-radius:5px;line-height:1;transition:color .12s,background .12s;font-family:var(--font)}
 .q-edit-btn:hover{color:#3B82F6;background:rgba(59,130,246,.08)}
-.q-move-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:11px;padding:2px 5px;border-radius:5px;line-height:1;transition:color .12s,background .12s;font-family:var(--font)}
-.q-move-btn:hover:not(:disabled){color:var(--dark);background:rgba(0,0,0,.07)}
-.q-move-btn:disabled{opacity:0.22;cursor:default}
+.q-drag-handle{cursor:grab;color:var(--dim);font-size:17px;padding:0 8px 0 0;user-select:none;flex-shrink:0;line-height:1;opacity:.55;transition:opacity .12s}
+.q-drag-handle:hover{opacity:1}
+.q-drag-handle:active{cursor:grabbing}
+.q-card.dragging{opacity:0.35;pointer-events:none}
+.q-card.drop-above{border-top:2px solid #3B82F6}
+.q-card.drop-below{border-bottom:2px solid #3B82F6}
 .q-card.editing{outline:2px solid #3B82F6;outline-offset:1px}
 </style>
 </head>
@@ -897,8 +900,7 @@ function renderQuestions(){
   if(!activeId)return;const qs=nuggetState[activeId]?.questions||[];const el=document.getElementById('q-grid');
   if(!qs.length){el.innerHTML='<div class="q-empty-grid">No questions yet — use the tools above to add questions for this nugget.</div>';return;}
   el.innerHTML=qs.map((q,i)=>{
-    const isFirst=i===0,isLast=i===qs.length-1;
-    return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions"><button class="q-move-btn" onclick="moveQuestion(${q.id},-1)" title="Move up"${isFirst?' disabled':''}>▲</button><button class="q-move-btn" onclick="moveQuestion(${q.id},1)" title="Move down"${isLast?' disabled':''}>▼</button><button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
+    return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}" ondragover="dndOver(event,${q.id})" ondragleave="dndLeave(event)" ondrop="dndDrop(event,${q.id})"><div class="q-head"><div class="q-drag-handle" draggable="true" ondragstart="dndStart(event,${q.id})" ondragend="dndEnd(event)" title="Drag to reorder">⠿</div><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions"><button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
   }).join('');
 }
 function saveQA(qid,val){if(!activeId)return;const q=nuggetState[activeId].questions.find(q=>q.id===qid);if(q){q.qaComment=val;save();}}
@@ -1295,15 +1297,45 @@ function setEditMode(editing,type){
   });
 }
 
-function moveQuestion(qid,dir){
-  if(!activeId)return;
+let dndSrcId=null;
+function dndStart(e,qid){
+  dndSrcId=qid;
+  e.dataTransfer.effectAllowed='move';
+  e.dataTransfer.setData('text/plain',String(qid));
+  setTimeout(()=>{const c=document.getElementById('q-card-'+qid);if(c)c.classList.add('dragging');},0);
+}
+function dndOver(e,qid){
+  e.preventDefault();e.stopPropagation();
+  e.dataTransfer.dropEffect='move';
+  if(dndSrcId===qid)return;
+  const card=document.getElementById('q-card-'+qid);if(!card)return;
+  const rect=card.getBoundingClientRect();
+  card.classList.remove('drop-above','drop-below');
+  card.classList.add(e.clientY<rect.top+rect.height/2?'drop-above':'drop-below');
+}
+function dndLeave(e){
+  const card=e.currentTarget;
+  // Only clear if leaving the card entirely (not entering a child)
+  if(!card.contains(e.relatedTarget))card.classList.remove('drop-above','drop-below');
+}
+function dndDrop(e,targetQId){
+  e.preventDefault();
+  const card=document.getElementById('q-card-'+targetQId);
+  const insertBefore=card?.classList.contains('drop-above');
+  card?.classList.remove('drop-above','drop-below');
+  if(dndSrcId===null||dndSrcId===targetQId||!activeId){dndSrcId=null;return;}
   const qs=nuggetState[activeId].questions;
-  const idx=qs.findIndex(q=>q.id===qid);if(idx<0)return;
-  const newIdx=idx+dir;if(newIdx<0||newIdx>=qs.length)return;
-  [qs[idx],qs[newIdx]]=[qs[newIdx],qs[idx]];
-  save();renderQuestions();
-  // Keep edited card in view if it moved
-  setTimeout(()=>{const card=document.getElementById('q-card-'+qid);if(card)card.scrollIntoView({behavior:'smooth',block:'nearest'});},40);
+  const srcIdx=qs.findIndex(q=>q.id===dndSrcId);
+  const tgtIdx=qs.findIndex(q=>q.id===targetQId);
+  if(srcIdx<0||tgtIdx<0){dndSrcId=null;return;}
+  const[moved]=qs.splice(srcIdx,1);
+  const newTgtIdx=qs.findIndex(q=>q.id===targetQId);
+  qs.splice(insertBefore?newTgtIdx:newTgtIdx+1,0,moved);
+  dndSrcId=null;save();renderQuestions();
+}
+function dndEnd(e){
+  dndSrcId=null;
+  document.querySelectorAll('.q-card').forEach(c=>c.classList.remove('dragging','drop-above','drop-below'));
 }
 
 function restoreNLConfig(cfg){
