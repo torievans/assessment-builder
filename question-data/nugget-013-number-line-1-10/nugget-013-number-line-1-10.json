@@ -1,59 +1,120 @@
 {
   "nuggetId": 13,
   "status": "in-progress",
-  "nextQId": 1015,
+  "nextQId": 1022,
   "questions": [
     {
-      "id": 1013,
-      "text": "5 + ? = 10",
+      "id": 1017,
+      "text": "What number is missing?",
+      "answer": "2",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 10,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "2",
+        "lineStyle": "terminate",
+        "colour": "grey"
+      },
+      "updatedAt": "2026-07-13",
+      "createdAt": "2026-07-13"
+    },
+    {
+      "id": 1018,
+      "text": "What number is missing?",
+      "answer": "3",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "lineStyle": "terminate",
+        "colour": "grey",
+        "valuesGivenEvery": null,
+        "jumpColour": "dark",
+        "jump2Colour": "dark",
+        "start": 0,
+        "end": 10,
+        "partitions": 10,
+        "answer": "3"
+      },
+      "updatedAt": "2026-07-13",
+      "createdAt": "2026-07-13"
+    },
+    {
+      "id": 1019,
+      "text": "What number is missing?",
       "answer": "5",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
-      "visualType": "bm",
+      "visualType": "nl",
       "cfg": {
-        "segments": [
-          {
-            "value": 5,
-            "segLabel": "5"
-          },
-          {
-            "value": 5,
-            "segLabel": "?"
-          }
-        ],
-        "total": 10,
-        "colorIdx": 5
+        "lineStyle": "terminate",
+        "colour": "grey",
+        "valuesGivenEvery": null,
+        "jumpColour": "dark",
+        "jump2Colour": "dark",
+        "start": 0,
+        "end": 10,
+        "partitions": 10,
+        "answer": "5"
       },
-      "updatedAt": "2026-07-12",
-      "createdAt": "2026-07-12"
+      "updatedAt": "2026-07-13",
+      "createdAt": "2026-07-13"
     },
     {
-      "id": 1014,
-      "text": "6 + ? = 10",
-      "answer": "4",
+      "id": 1020,
+      "text": "What number is missing?",
+      "answer": "8",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
-      "visualType": "bm",
+      "visualType": "nl",
       "cfg": {
-        "segments": [
-          {
-            "value": 6,
-            "segLabel": "6"
-          },
-          {
-            "value": 4,
-            "segLabel": "?"
-          }
-        ],
-        "total": 10,
-        "colorIdx": 0
+        "lineStyle": "terminate",
+        "colour": "grey",
+        "valuesGivenEvery": null,
+        "jumpColour": "dark",
+        "jump2Colour": "dark",
+        "start": 0,
+        "end": 10,
+        "partitions": 10,
+        "answer": "8"
       },
-      "updatedAt": "2026-07-12",
-      "createdAt": "2026-07-12"
+      "updatedAt": "2026-07-13",
+      "createdAt": "2026-07-13"
+    },
+    {
+      "id": 1021,
+      "text": "What number is missing?",
+      "answer": "9",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "lineStyle": "terminate",
+        "colour": "grey",
+        "valuesGivenEvery": null,
+        "jumpColour": "dark",
+        "jump2Colour": "dark",
+        "start": 0,
+        "end": 10,
+        "partitions": 10,
+        "answer": "9"
+      },
+      "updatedAt": "2026-07-13",
+      "createdAt": "2026-07-13"
     }
   ]
 }
