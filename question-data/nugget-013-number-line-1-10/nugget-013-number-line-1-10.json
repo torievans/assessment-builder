@@ -48,29 +48,6 @@
       "createdAt": "2026-07-13"
     },
     {
-      "id": 1019,
-      "text": "What number is missing?",
-      "answer": "5",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nl",
-      "cfg": {
-        "lineStyle": "terminate",
-        "colour": "grey",
-        "valuesGivenEvery": null,
-        "jumpColour": "dark",
-        "jump2Colour": "dark",
-        "start": 0,
-        "end": 10,
-        "partitions": 10,
-        "answer": "5"
-      },
-      "updatedAt": "2026-07-13",
-      "createdAt": "2026-07-13"
-    },
-    {
       "id": 1020,
       "text": "What number is missing?",
       "answer": "8",
@@ -89,6 +66,29 @@
         "end": 10,
         "partitions": 10,
         "answer": "8"
+      },
+      "updatedAt": "2026-07-13",
+      "createdAt": "2026-07-13"
+    },
+    {
+      "id": 1019,
+      "text": "What number is missing?",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "lineStyle": "terminate",
+        "colour": "grey",
+        "valuesGivenEvery": null,
+        "jumpColour": "dark",
+        "jump2Colour": "dark",
+        "start": 0,
+        "end": 10,
+        "partitions": 10,
+        "answer": "5"
       },
       "updatedAt": "2026-07-13",
       "createdAt": "2026-07-13"
