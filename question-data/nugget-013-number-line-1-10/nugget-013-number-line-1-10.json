@@ -10,7 +10,7 @@
       "type": "exact",
       "image": "",
       "display": "",
-      "qaComment": "",
+      "qaComment": "QA test!\n",
       "visualType": "nl",
       "cfg": {
         "start": 0,
