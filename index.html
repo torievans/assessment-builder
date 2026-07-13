@@ -277,6 +277,13 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .custom-img-clear{background:none;border:none;font-size:11px;color:#EF4444;cursor:pointer;font-family:var(--font);margin-top:6px;display:block;text-align:center;width:100%}
 .q-del-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:13px;padding:3px 6px;border-radius:5px;line-height:1;transition:color .12s,background .12s;font-family:var(--font)}
 .q-del-btn:hover{color:var(--red);background:rgba(239,68,68,.08)}
+.q-card-actions{display:flex;align-items:center;gap:2px}
+.q-edit-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:13px;padding:3px 6px;border-radius:5px;line-height:1;transition:color .12s,background .12s;font-family:var(--font)}
+.q-edit-btn:hover{color:#3B82F6;background:rgba(59,130,246,.08)}
+.q-move-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:11px;padding:2px 5px;border-radius:5px;line-height:1;transition:color .12s,background .12s;font-family:var(--font)}
+.q-move-btn:hover:not(:disabled){color:var(--dark);background:rgba(0,0,0,.07)}
+.q-move-btn:disabled{opacity:0.22;cursor:default}
+.q-card.editing{outline:2px solid #3B82F6;outline-offset:1px}
 </style>
 </head>
 <body>
@@ -381,7 +388,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
             <div class="preview-box" id="nl-preview"><p class="preview-empty">Fill in settings above to preview.</p></div>
             <div class="form-actions">
               <button class="btn-create-more" onclick="openBatchPanel()">⊞ Create more like this</button>
-              <button class="btn btn-blue" onclick="addToolQuestion('nl')">+ Add Question</button>
+              <button class="btn btn-blue" id="add-q-btn-nl" onclick="addToolQuestion('nl')">+ Add Question</button>
               <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
             </div>
           </div>
@@ -433,7 +440,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
             <button class="btn btn-ghost" id="bm-add-seg3" style="margin-bottom:4px;font-size:12px" onclick="bmToggleSeg3(true)">+ Third segment</button>
             <div class="preview-box" id="bm-preview"><p class="preview-empty">Fill in segment values above to preview.</p></div>
             <div class="form-actions">
-              <button class="btn btn-blue" onclick="addToolQuestion('bm')">+ Add Question</button>
+              <button class="btn btn-blue" id="add-q-btn-bm" onclick="addToolQuestion('bm')">+ Add Question</button>
               <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
             </div>
           </div>
@@ -448,7 +455,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
               <div class="field field-sm"><label>Answer</label><input type="text" id="text-answer" placeholder="e.g. 8"></div>
             </div>
             <div class="form-actions" style="margin-top:14px">
-              <button class="btn btn-blue" onclick="addToolQuestion('text')">+ Add Question</button>
+              <button class="btn btn-blue" id="add-q-btn-text" onclick="addToolQuestion('text')">+ Add Question</button>
               <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
             </div>
           </div>
@@ -473,7 +480,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
               <input type="file" id="custom-file-input" accept="image/*" style="display:none" onchange="customFileSelected(this)">
             </div>
             <div class="form-actions" style="margin-top:14px">
-              <button class="btn btn-blue" onclick="addToolQuestion('custom')">+ Add Question</button>
+              <button class="btn btn-blue" id="add-q-btn-custom" onclick="addToolQuestion('custom')">+ Add Question</button>
               <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
             </div>
           </div>
@@ -889,7 +896,10 @@ function renderQVisual(q){
 function renderQuestions(){
   if(!activeId)return;const qs=nuggetState[activeId]?.questions||[];const el=document.getElementById('q-grid');
   if(!qs.length){el.innerHTML='<div class="q-empty-grid">No questions yet — use the tools above to add questions for this nugget.</div>';return;}
-  el.innerHTML=qs.map((q,i)=>`<div class="q-card"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`).join('');
+  el.innerHTML=qs.map((q,i)=>{
+    const isFirst=i===0,isLast=i===qs.length-1;
+    return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions"><button class="q-move-btn" onclick="moveQuestion(${q.id},-1)" title="Move up"${isFirst?' disabled':''}>▲</button><button class="q-move-btn" onclick="moveQuestion(${q.id},1)" title="Move down"${isLast?' disabled':''}>▼</button><button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
+  }).join('');
 }
 function saveQA(qid,val){if(!activeId)return;const q=nuggetState[activeId].questions.find(q=>q.id===qid);if(q){q.qaComment=val;save();}}
 function deleteQuestion(qid){
@@ -931,7 +941,7 @@ async function deleteImageFile(imagePath){
 }
 
 /* ── Tool panel ── */
-let activeTool=null;
+let activeTool=null,editingQId=null;
 let nlStyle='through',nlColour='grey',nlJumpOpen=false,nlJump2Open=false;
 let nlArcType='single',nlArcType2='single',nlArrow=true,nlArrow2=true;
 let nlCircle='none',nlCircle2='none',nlJumpCol='dark',nlJump2Col='dark';
@@ -951,6 +961,7 @@ function openTool(type){
 }
 function closeTool(){
   if(activeTool){document.getElementById('tool-panel-'+activeTool).classList.add('hidden');}
+  if(editingQId!==null){editingQId=null;setEditMode(false);renderQuestions();}
   activeTool=null;
   document.querySelectorAll('.tool-tab').forEach(b=>b.classList.remove('active'));
 }
@@ -975,6 +986,17 @@ function addToolQuestion(type){
   else{text=document.getElementById('text-q-text').value.trim();answer=document.getElementById('text-answer').value.trim();}
   if(!text){alert('Please enter the question text.');return;}
   if(!answer){alert('Please enter the correct answer.');return;}
+  // ── Edit mode: update existing question ──────────────────────────
+  if(editingQId!==null){
+    const q=nuggetState[activeId].questions.find(q=>q.id===editingQId);
+    if(q){
+      q.text=text;q.answer=answer;
+      if(type==='nl'){const cfg=getNLConfig();if(!cfg){alert('Check number line settings (start, end, goes up in).');return;}q.cfg=cfg;}
+      else if(type==='bm'){const cfg=getBMConfig();if(!cfg){alert('Please fill in at least one segment value.');return;}q.cfg=cfg;}
+      else if(type==='custom'&&customImageDataURL){const fname=`q-${String(editingQId).padStart(4,'0')}.png`;const imagePath=`question-data/${nuggetSlug(activeId)}/${fname}`;saveImageToFile(activeId,fname,customImageDataURL);q.imagePath=imagePath;q.image='';}
+    }
+    editingQId=null;setEditMode(false,type);save();renderQuestions();renderSidebar();renderWorkflow();closeTool();return;
+  }
   const id=nextQId++;
   const q={id,text,answer,type:'exact',image:'',display:'',qaComment:'',visualType:type==='text'?'text':type,cfg:{}};
   if(type==='nl'){const cfg=getNLConfig();if(!cfg){alert('Check number line settings (start, end, goes up in).');nextQId--;return;}q.cfg=cfg;}
@@ -1223,6 +1245,144 @@ function customFileSelected(input){if(input.files[0])customSetImage(input.files[
 function customDragOver(e){e.preventDefault();document.getElementById('custom-drop-zone').classList.add('drag-over');}
 function customDragLeave(e){document.getElementById('custom-drop-zone').classList.remove('drag-over');}
 function customDrop(e){e.preventDefault();document.getElementById('custom-drop-zone').classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f&&f.type.startsWith('image/'))customSetImage(f);}
+
+
+/* ── Edit & Reorder ── */
+function editQuestion(qid){
+  if(!activeId)return;
+  const q=nuggetState[activeId].questions.find(q=>q.id===qid);if(!q)return;
+  const type=q.visualType==='text'?'text':q.visualType; // nl | bm | text | custom
+  // Open the correct tool panel without resetting fields
+  if(activeTool&&activeTool!==type)closeTool();
+  if(activeTool!==type){
+    activeTool=type;
+    document.querySelectorAll('.tool-tab').forEach(b=>b.classList.toggle('active',b.dataset.tool===type));
+    document.getElementById('tool-panel-'+type).classList.remove('hidden');
+  }
+  // Populate form fields from saved question
+  if(type==='nl'){
+    document.getElementById('nl-text').value=q.text;
+    document.getElementById('nl-answer').value=q.answer||'';
+    restoreNLConfig(q.cfg||{});
+  } else if(type==='bm'){
+    document.getElementById('bm-text').value=q.text;
+    document.getElementById('bm-answer').value=q.answer||'';
+    restoreBMConfig(q.cfg||{});
+  } else if(type==='text'){
+    document.getElementById('text-q-text').value=q.text;
+    document.getElementById('text-answer').value=q.answer||'';
+  } else if(type==='custom'){
+    document.getElementById('custom-q-text').value=q.text;
+    document.getElementById('custom-answer').value=q.answer||'';
+    customResetImage();
+    // Show a placeholder so the user knows an image already exists
+    if(q.imagePath){
+      const inner=document.getElementById('custom-drop-inner');
+      inner.innerHTML=`<div class="drop-icon">🖼</div><p style="font-size:12px;color:var(--muted)">Existing image kept — drop a new one to replace</p>`;
+    }
+  }
+  editingQId=qid;
+  setEditMode(true,type);
+  renderQuestions();
+  document.getElementById('tool-panel-'+type).scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function setEditMode(editing,type){
+  const types=type?[type]:['nl','bm','text','custom'];
+  types.forEach(t=>{
+    const btn=document.getElementById('add-q-btn-'+t);if(!btn)return;
+    btn.textContent=editing?'✓ Update Question':'+ Add Question';
+  });
+}
+
+function moveQuestion(qid,dir){
+  if(!activeId)return;
+  const qs=nuggetState[activeId].questions;
+  const idx=qs.findIndex(q=>q.id===qid);if(idx<0)return;
+  const newIdx=idx+dir;if(newIdx<0||newIdx>=qs.length)return;
+  [qs[idx],qs[newIdx]]=[qs[newIdx],qs[idx]];
+  save();renderQuestions();
+  // Keep edited card in view if it moved
+  setTimeout(()=>{const card=document.getElementById('q-card-'+qid);if(card)card.scrollIntoView({behavior:'smooth',block:'nearest'});},40);
+}
+
+function restoreNLConfig(cfg){
+  // Numeric fields
+  document.getElementById('f-start').value=cfg.start??0;
+  document.getElementById('f-end').value=cfg.end??20;
+  const step=cfg.partitions>0?Math.round(((cfg.end-cfg.start)/cfg.partitions)*10000)/10000:1;
+  document.getElementById('f-step').value=step;
+  document.getElementById('f-vge').value=cfg.valuesGivenEvery??'';
+  document.getElementById('f-hide-from').value=cfg.hideFrom??'';
+  document.getElementById('f-hide-to').value=cfg.hideTo??'';
+  // Line style toggle
+  nlStyle=cfg.lineStyle||'through';
+  document.querySelectorAll('.tog-btn[data-style]').forEach(b=>b.classList.toggle('active',b.dataset.style===nlStyle));
+  // Colour swatch
+  nlColour=cfg.colour||'grey';
+  document.querySelectorAll('#nl-swatch-row .swatch').forEach(b=>b.classList.toggle('selected',b.title===nlColour));
+  // Close any open jump sections first so we can re-open cleanly
+  if(nlJump2Open)nlToggleJump2();
+  if(nlJumpOpen)nlToggleJump();
+  // Jump 1
+  if(cfg.jumpFrom!==undefined&&cfg.jumpTo!==undefined){
+    nlToggleJump();
+    document.getElementById('f-from').value=cfg.jumpFrom;
+    document.getElementById('f-to').value=cfg.jumpTo;
+    document.getElementById('f-jump-label').value=cfg.jumpLabel||'';
+    nlArcType=cfg.jumpType||'single';
+    document.querySelectorAll('.tog-btn[data-arctype]').forEach(b=>b.classList.toggle('active',b.dataset.arctype===nlArcType));
+    nlArrow=cfg.jumpArrow!==false;
+    document.querySelectorAll('.tog-btn[data-arrow]').forEach(b=>b.classList.toggle('active',b.dataset.arrow===(nlArrow?'yes':'no')));
+    nlCircle=cfg.jumpCircle||'none';
+    document.querySelectorAll('.tog-btn[data-circle]').forEach(b=>b.classList.toggle('active',b.dataset.circle===nlCircle));
+    nlJumpCol=cfg.jumpColour||'dark';
+    document.querySelectorAll('#jump1-swatch-row .swatch').forEach(b=>b.classList.toggle('selected',b.title===nlJumpCol));
+    // Jump 2
+    if(cfg.jump2From!==undefined&&cfg.jump2To!==undefined){
+      nlToggleJump2();
+      document.getElementById('f-from2').value=cfg.jump2From;
+      document.getElementById('f-to2').value=cfg.jump2To;
+      document.getElementById('f-jump-label2').value=cfg.jump2Label||'';
+      nlArcType2=cfg.jump2Type||'single';
+      document.querySelectorAll('.tog-btn[data-arctype2]').forEach(b=>b.classList.toggle('active',b.dataset.arctype2===nlArcType2));
+      nlArrow2=cfg.jump2Arrow!==false;
+      document.querySelectorAll('.tog-btn[data-arrow2]').forEach(b=>b.classList.toggle('active',b.dataset.arrow2===(nlArrow2?'yes':'no')));
+      nlCircle2=cfg.jump2Circle||'none';
+      document.querySelectorAll('.tog-btn[data-circle2]').forEach(b=>b.classList.toggle('active',b.dataset.circle2===nlCircle2));
+      nlJump2Col=cfg.jump2Colour||'dark';
+      document.querySelectorAll('#jump2-swatch-row .swatch').forEach(b=>b.classList.toggle('selected',b.title===nlJump2Col));
+    }
+  }
+  autoPreviewNL();
+}
+
+function restoreBMConfig(cfg){
+  const segs=cfg.segments||[];
+  // Total
+  document.getElementById('bm-total').value=cfg.total??'';
+  // Colour index
+  bmColIdx=cfg.colorIdx??0;
+  document.querySelectorAll('#bm-swatch-row .swatch').forEach((b,i)=>b.classList.toggle('selected',i===bmColIdx));
+  // Colour mode
+  bmMulti=!!cfg.multi;
+  document.querySelectorAll('.tog-btn[data-colmode]').forEach(b=>b.classList.toggle('active',b.dataset.colmode===(bmMulti?'multi':'single')));
+  // Total display
+  bmTotDisp=cfg.topBar?'top bar':cfg.hideTotal?'none':'brace';
+  document.querySelectorAll('.tog-btn[data-totdisp]').forEach(b=>b.classList.toggle('active',b.dataset.totdisp===bmTotDisp));
+  // Segments
+  const fillSeg=(n,sg)=>{
+    document.getElementById(`bm-seg${n}-val`).value=sg?.value??'';
+    document.getElementById(`bm-seg${n}-lbl`).value=sg?.segLabel??'';
+    document.getElementById(`bm-seg${n}-brace`).value=sg?.braceLabel??'';
+    bmSegT[n]=sg?.blank?'blank':'fill';
+    document.querySelectorAll(`.tog-btn[data-bmseg="${n}"]`).forEach(b=>b.classList.toggle('active',b.dataset.segtype===bmSegT[n]));
+  };
+  fillSeg(1,segs[0]);fillSeg(2,segs[1]);
+  if(segs.length>=3){if(!bmSeg3)bmToggleSeg3(true);fillSeg(3,segs[2]);}
+  else{if(bmSeg3)bmToggleSeg3(false);}
+  autoPreviewBM();
+}
 
 /* ── Init ── */
 initState();loadStorage();renderSidebar();initNLPanel();initBMPanel();updateFolderStatus();
