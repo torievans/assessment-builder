@@ -329,7 +329,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
       <div id="builder-empty" class="empty"><p>Select an assessment from the sidebar to view or edit questions.</p></div>
       <div id="builder-detail" class="nd" style="display:none">
         <div class="nd-topic" id="nd-topic"></div>
-        <div class="nd-title-wrap"><div class="nd-title" id="nd-title"></div><button class="nd-rename-btn" id="nd-rename-btn" onclick="startRenameNugget()" title="Rename this nugget">✏</button></div>
+        <div class="nd-title-wrap"><div class="nd-title" id="nd-title"></div><button class="nd-rename-btn" id="nd-rename-btn" onclick="startRenameNugget()" title="Rename this nugget">✏</button><button class="nd-rename-btn" id="nd-refresh-btn" onclick="refreshNugget()" title="Reload from GitHub">↻</button></div>
         <div class="nd-obj" id="nd-obj"></div>
         <div class="wf" id="wf"></div>
 
@@ -1194,6 +1194,22 @@ async function selectNugget(id){
   document.getElementById('nd-title').textContent=nuggetDisplayName(id);
   document.getElementById('nd-obj').textContent=n.obj;
   renderWorkflow();renderQuestions();
+}
+async function refreshNugget(){
+  if(!activeId)return;
+  const btn=document.getElementById('nd-refresh-btn');
+  if(btn){btn.style.opacity='0.4';btn.style.pointerEvents='none';}
+  const fileData=await loadNuggetFromFile(activeId);
+  if(fileData){
+    nuggetState[activeId]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined};
+    if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
+    document.getElementById('nd-title').textContent=nuggetDisplayName(activeId);
+    renderWorkflow();renderQuestions();renderSidebar();
+    showToast('↻ Refreshed from GitHub');
+  }else{
+    showToast('No saved data found for this nugget',true);
+  }
+  if(btn){btn.style.opacity='';btn.style.pointerEvents='';}
 }
 function renderWorkflow(){
   if(!activeId)return;const ns=nuggetState[activeId];const st=ns.status;
