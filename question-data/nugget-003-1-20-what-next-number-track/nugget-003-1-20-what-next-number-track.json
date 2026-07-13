@@ -1,6 +1,28 @@
 {
   "nuggetId": 3,
-  "status": "not-started",
-  "nextQId": 1026,
-  "questions": []
+  "status": "in-progress",
+  "nextQId": 1027,
+  "questions": [
+    {
+      "id": 1026,
+      "text": "3taergag",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "5",
+        "lineStyle": "through",
+        "colour": "red"
+      },
+      "updatedAt": "2026-07-13",
+      "createdAt": "2026-07-13"
+    }
+  ]
 }
