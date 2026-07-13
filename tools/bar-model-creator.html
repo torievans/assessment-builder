@@ -139,7 +139,7 @@
 
   .card-header {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 8px;
   }
 
@@ -161,6 +161,8 @@
   }
 
   .bar-wrap { flex: 1; }
+  .q-del-btn { background: none; border: none; cursor: pointer; color: #9CA3AF; font-size: 13px; padding: 3px 6px; border-radius: 5px; line-height: 1; transition: color .12s, background .12s; margin-left: auto; flex-shrink: 0; }
+  .q-del-btn:hover { color: #EF4444; background: rgba(239,68,68,.08); }
 
   .card-footer {
     display: flex;
@@ -745,6 +747,7 @@ function render(questions, fileName) {
       <div class="card-header">
         <span class="q-badge">Q${q.id}</span>
         <span class="q-text">${q.text || '—'}</span>
+        <button class="q-del-btn" onclick="removeBMCard(this)" title="Remove question">✕</button>
       </div>
       <div class="bar-wrap">${barModelSVG(q.cfg)}</div>
       <div class="card-footer">
@@ -852,6 +855,18 @@ dropZone.addEventListener('drop', e => {
   handleFile(e.dataTransfer.files[0]);
 });
 
+function removeBMCard(btn) {
+  btn.closest('.card').remove();
+  const grid = document.getElementById('grid');
+  const remaining = grid.querySelectorAll('.card').length;
+  document.getElementById('manual-q-count').textContent = remaining;
+  document.getElementById('q-count').textContent = remaining;
+  if (remaining === 0) {
+    grid.style.display = 'none';
+    document.getElementById('toolbar').style.display = 'none';
+  }
+}
+
 document.getElementById('clear-btn').addEventListener('click', () => {
   document.getElementById('grid').innerHTML = '';
   document.getElementById('grid').style.display = 'none';
@@ -953,6 +968,7 @@ function addManualQuestion() {
     <div class="card-header">
       <span class="q-badge">Q${qNum}</span>
       <span class="q-text">${text || '—'}</span>
+      <button class="q-del-btn" onclick="removeBMCard(this)" title="Remove question">✕</button>
     </div>
     <div class="bar-wrap">${barModelSVG(cfg)}</div>
     <div class="card-footer">
