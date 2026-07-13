@@ -1,0 +1,28 @@
+{
+  "nuggetId": 6,
+  "status": "in-progress",
+  "nextQId": 1024,
+  "questions": [
+    {
+      "id": 1023,
+      "text": "3",
+      "answer": "7",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "7",
+        "lineStyle": "through",
+        "colour": "yellow"
+      },
+      "updatedAt": "2026-07-13",
+      "createdAt": "2026-07-13"
+    }
+  ]
+}
