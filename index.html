@@ -285,6 +285,11 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .q-card.drop-above{border-top:2px solid #3B82F6}
 .q-card.drop-below{border-bottom:2px solid #3B82F6}
 .q-card.editing{outline:2px solid #3B82F6;outline-offset:1px}
+/* Rename nugget */
+.nd-rename-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:14px;padding:2px 6px;border-radius:4px;line-height:1;transition:color .12s;vertical-align:middle;margin-left:4px}
+.nd-rename-btn:hover{color:var(--blue)}
+.nd-title-wrap{display:flex;align-items:center;gap:4px;margin-bottom:8px}
+.nd-title-input{font-size:24px;font-weight:700;color:var(--text);line-height:1.2;border:none;border-bottom:2px solid var(--blue);background:transparent;font-family:var(--font);width:100%;padding:0;outline:none}
 </style>
 </head>
 <body>
@@ -297,7 +302,6 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
   <div class="hdr-space"></div>
   <button class="hbtn" id="btn-connect" onclick="connectFolder()">📁 Connect folder</button>
   <button class="hbtn" onclick="openSettings()">⚙️ Settings</button>
-  <button class="hbtn" onclick="handleExportImport()">⇅ Export / Import</button>
   <button class="hbtn hbtn-gold" onclick="switchView('export')">🏅 QTI Downloads</button>
   <span class="upload-ctr" id="upload-ctr"><strong>0</strong> of 59 uploaded</span>
 </header>
@@ -325,7 +329,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
       <div id="builder-empty" class="empty"><p>Select an assessment from the sidebar to view or edit questions.</p></div>
       <div id="builder-detail" class="nd" style="display:none">
         <div class="nd-topic" id="nd-topic"></div>
-        <div class="nd-title" id="nd-title"></div>
+        <div class="nd-title-wrap"><div class="nd-title" id="nd-title"></div><button class="nd-rename-btn" id="nd-rename-btn" onclick="startRenameNugget()" title="Rename this nugget">✏</button></div>
         <div class="nd-obj" id="nd-obj"></div>
         <div class="wf" id="wf"></div>
 
@@ -569,6 +573,12 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
         </div>
         <button class="btn-teal" onclick="saveSettings()">Save settings</button>
       </div>
+      <div class="modal-card">
+        <div class="modal-card-title">🔄 Migrate data folders</div>
+        <div class="modal-card-desc">If you have question data from before July 2026, click below to rename the old folders on GitHub to the new ID-only format. Requires a GitHub token above.</div>
+        <button class="btn-teal" onclick="migrateOldFolders()">Migrate now</button>
+        <div id="migrate-status" style="font-size:12px;color:#6B7280;margin-top:8px"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -592,65 +602,282 @@ function resolveNLC(k){ return resolveNLColour(k); }
 
 /* ── Nuggets ── */
 const NUGGETS=[
-  {id:1, topic:'Number – Number & Place Value', name:'Counting forwards 1–20',          obj:'Count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
-  {id:2, topic:'Number – Number & Place Value', name:'Counting backwards 1–20',         obj:'Count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
-  {id:3, topic:'Number – Number & Place Value', name:'Counting forwards 20–100',         obj:'Count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
-  {id:4, topic:'Number – Number & Place Value', name:'Counting backwards 20–100',        obj:'Count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
-  {id:5, topic:'Number – Number & Place Value', name:'Count in multiples of 2',          obj:'Count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:6, topic:'Number – Number & Place Value', name:'Count in multiples of 5',          obj:'Count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:7, topic:'Number – Number & Place Value', name:'Count in multiples of 10',         obj:'Count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:8, topic:'Number – Number & Place Value', name:'One more than',                    obj:'Given a number, identify one more and one less'},
-  {id:9, topic:'Number – Number & Place Value', name:'One less than',                    obj:'Given a number, identify one more and one less'},
-  {id:10,topic:'Number – Number & Place Value', name:'Counting pictorial representations 1–10',  obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
-  {id:11,topic:'Number – Number & Place Value', name:'Counting pictorial representations 11–20', obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
-  {id:12,topic:'Number – Number & Place Value', name:'Tens and ones',                    obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
-  {id:13,topic:'Number – Number & Place Value', name:'Number line 1–10',                 obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
-  {id:14,topic:'Number – Number & Place Value', name:'Number line 11–20',                obj:'Identify and represent numbers using objects and pictorial representations including the number line'},
-  {id:15,topic:'Number – Number & Place Value', name:'Equal to, more than, less than, most, least', obj:'Use the language of: equal to, more than, less than (fewer), most, least'},
-  {id:16,topic:'Number – Number & Place Value', name:'Read and write numbers 1–20 in numerals and words', obj:'Read and write numbers from 1 to 20 in numerals and words'},
-  {id:17,topic:'Number – Addition & Subtraction', name:'Understanding + − =',            obj:'Read, write and interpret mathematical statements involving addition (+), subtraction (−) and equals (=) signs'},
-  {id:18,topic:'Number – Addition & Subtraction', name:'Number bonds to 10',             obj:'Represent and use number bonds and related subtraction facts within 20'},
-  {id:19,topic:'Number – Addition & Subtraction', name:'Number bonds to 20',             obj:'Represent and use number bonds and related subtraction facts within 20'},
-  {id:20,topic:'Number – Addition & Subtraction', name:'Adding up to 10',                obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:21,topic:'Number – Addition & Subtraction', name:'Subtracting up to 10',           obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:22,topic:'Number – Addition & Subtraction', name:'Adding up to 10 with pictorial representations',    obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:23,topic:'Number – Addition & Subtraction', name:'Subtracting up to 10 with pictorial representations',obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:24,topic:'Number – Addition & Subtraction', name:'Adding up to 10 with number lines',    obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:25,topic:'Number – Addition & Subtraction', name:'Subtracting up to 10 with number lines',obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:26,topic:'Number – Addition & Subtraction', name:'Adding up to 10 abstract',       obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:27,topic:'Number – Addition & Subtraction', name:'Subtracting up to 10 abstract',  obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:28,topic:'Number – Addition & Subtraction', name:'Adding up to 20 with pictorial representations',    obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:29,topic:'Number – Addition & Subtraction', name:'Subtracting up to 20 with pictorial representations',obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:30,topic:'Number – Addition & Subtraction', name:'Adding up to 20 with number lines',    obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:31,topic:'Number – Addition & Subtraction', name:'Subtracting up to 20 with number lines',obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:32,topic:'Number – Addition & Subtraction', name:'Adding up to 20 abstract',       obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:33,topic:'Number – Addition & Subtraction', name:'Subtracting up to 20 abstract',  obj:'Add and subtract one-digit and two-digit numbers to 20, including zero'},
-  {id:34,topic:'Number – Addition & Subtraction', name:'Addition word problems 1–20 with pictorial representations',    obj:'Solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations'},
-  {id:35,topic:'Number – Addition & Subtraction', name:'Subtraction word problems 1–20 with pictorial representations', obj:'Solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations'},
-  {id:36,topic:'Number – Addition & Subtraction', name:'Mixed word problems 1–20 with pictorial representations',       obj:'Solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations'},
-  {id:37,topic:'Number – Addition & Subtraction', name:'Missing number problems',         obj:'Solve missing number problems such as 7 = □ − 9'},
-  {id:38,topic:'Number – Multiplication & Division', name:'Multiplying by 2 with pictorial representations / arrays', obj:'Solve one-step problems involving multiplication and division, using concrete objects, pictorial representations and arrays'},
-  {id:39,topic:'Number – Multiplication & Division', name:'Multiplying by 5 with pictorial representations / arrays', obj:'Solve one-step problems involving multiplication and division, using concrete objects, pictorial representations and arrays'},
-  {id:40,topic:'Number – Multiplication & Division', name:'Multiplying by 10 with pictorial representations / arrays',obj:'Solve one-step problems involving multiplication and division, using concrete objects, pictorial representations and arrays'},
-  {id:41,topic:'Number – Fractions', name:'Recognise and find a half',    obj:'Recognise, find and name a half as one of two equal parts of an object, shape or quantity'},
-  {id:42,topic:'Number – Fractions', name:'Recognise and find a quarter', obj:'Recognise, find and name a quarter as one of four equal parts of an object, shape or quantity'},
-  {id:43,topic:'Measurement', name:'Describing and comparing length',           obj:'Compare, describe and solve practical problems for lengths and heights'},
-  {id:44,topic:'Measurement', name:'Describing and comparing mass',             obj:'Compare, describe and solve practical problems for mass/weight'},
-  {id:45,topic:'Measurement', name:'Describing and comparing volume and capacity', obj:'Compare, describe and solve practical problems for capacity and volume'},
-  {id:46,topic:'Measurement', name:'Describing and comparing time',             obj:'Compare, describe and solve practical problems for time'},
-  {id:47,topic:'Measurement', name:'Measure with blocks',                        obj:'Measure and begin to record lengths and heights'},
-  {id:48,topic:'Measurement', name:'Measure with cm up to 30 cm',               obj:'Measure and begin to record lengths and heights'},
-  {id:49,topic:'Measurement', name:'Measure mass (multiples of 10g up to 100g)',obj:'Measure and begin to record mass/weight'},
-  {id:50,topic:'Measurement', name:'Measure litres 1–10',                       obj:'Measure and begin to record capacity and volume'},
-  {id:51,topic:'Measurement', name:'Measure time (hours minutes seconds)',       obj:'Measure and begin to record time (hours, minutes, seconds)'},
-  {id:52,topic:'Measurement', name:'Recognising coins and notes',               obj:'Recognise and know the value of different denominations of coins and notes'},
-  {id:53,topic:'Measurement', name:'Sequencing events',                         obj:'Sequence events in chronological order using language'},
-  {id:54,topic:'Measurement', name:'Days of the week',                          obj:'Recognise and use language relating to dates, including days of the week, weeks, months and years'},
-  {id:55,topic:'Measurement', name:'Months of the year',                        obj:'Recognise and use language relating to dates, including days of the week, weeks, months and years'},
-  {id:56,topic:'Measurement', name:'Tell the time to the hour and half past',   obj:'Tell the time to the hour and half past the hour and draw the hands on a clock face'},
-  {id:57,topic:'Geometry – Properties of Shapes', name:'Recognise and name common 2-D shapes', obj:'Recognise and name common 2-D shapes (rectangles, squares, circles, triangles)'},
-  {id:58,topic:'Geometry – Properties of Shapes', name:'Recognise and name common 3-D shapes', obj:'Recognise and name common 3-D shapes (cuboids, cubes, pyramids, spheres)'},
-  {id:59,topic:'Geometry – Position & Direction', name:'Position and direction', obj:'Describe position, direction and movement, including whole, half, quarter and three-quarter turns'},
+  {id:1,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-10 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:2,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-10 what next? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:3,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1- 20 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:4,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1- 20 what next? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:5,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-20 whats missing? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:6,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-20 with 1 blank (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:7,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-20 with 2 blanks (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:8,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-20 mixed number of blanks (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:9,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1-10 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:10,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1-10 what next? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:11,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1- 20 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:12,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1- 20 what next? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:13,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1-20 whats missing? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:14,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1-20 with 1 blank (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:15,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1-20 with 2 blanks (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:16,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1-20 mixed number of blanks (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:17,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:18,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 what next? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:19,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 whats missing? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:20,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 whats missing? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:21,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 with 1 blank (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:22,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 with 2 blanks (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:23,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 mixed number of blanks (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:24,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:25,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 what next? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:26,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 whats missing? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:27,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 whats missing? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:28,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 with 1 blank (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:29,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 with 2 blanks (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:30,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 mixed number of blanks (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:31,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'count in 2s with pictures 0-12 - groups',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:32,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'count in 2s with pictures 0-12 - array',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:33,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'count in 2s on a number line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:34,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'count in 2s with pictures 12-24 - groups',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:35,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'count in 2s with pictures 12-24 - array',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:36,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'count in 2s on a number line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:37,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'missing numbers 0-12',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:38,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'missing numbers 12-24',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:39,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'whats next 1 blank',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:40,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'whats next 2 blanks',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:41,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'count in 5s with pictures 0-30 - groups',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:42,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'count in 5s with pictures 0-30 - array',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:43,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'count in 5s on a number line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:44,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'count in 5s with pictures 30-60 - groups',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:45,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'count in 5s with pictures 30-60 - array',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:46,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'count in 5s on a number line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:47,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'missing numbers 0-30',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:48,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'missing numbers 30-60',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:49,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'whats next 1 blank',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:50,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'whats next 2 blanks',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:51,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s with pictures 0-50 - groups',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:52,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s with pictures 0-50 - place value blocks',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:53,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s with pictures 0-50 - array',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:54,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s on a number line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:55,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s with pictures 50-100 - groups',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:56,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s with pictures 50-100 array',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:57,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s with pictures 50-100 - place value blocks',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:58,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s on a number line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:59,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'missing numbers 0-30',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:60,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'missing numbers 30-60',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:61,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'whats next 1 blank',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:62,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'whats next 2 blanks',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:63,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one more with images 0-5',obj:'given a number, identify one more and one less'},
+  {id:64,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one more with a number line 0-10',obj:'given a number, identify one more and one less'},
+  {id:65,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one more with a number line 0- 20',obj:'given a number, identify one more and one less'},
+  {id:66,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one more abstract 0-10',obj:'given a number, identify one more and one less'},
+  {id:67,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one more abstract 0-20',obj:'given a number, identify one more and one less'},
+  {id:68,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one more abstract 20-100',obj:'given a number, identify one more and one less'},
+  {id:69,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one less with images 0-5',obj:'given a number, identify one more and one less'},
+  {id:70,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one less with a number line 0-10',obj:'given a number, identify one more and one less'},
+  {id:71,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one less with a number line 0- 20',obj:'given a number, identify one more and one less'},
+  {id:72,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one less abstract 0-10',obj:'given a number, identify one more and one less'},
+  {id:73,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one less abstract 0-20',obj:'given a number, identify one more and one less'},
+  {id:74,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one less abstract 20-100',obj:'given a number, identify one more and one less'},
+  {id:75,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'mixed one more/less with images 0-5',obj:'given a number, identify one more and one less'},
+  {id:76,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'mixed one more/less with a number line 0-10',obj:'given a number, identify one more and one less'},
+  {id:77,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'mixed one more/less with a number line 0- 20',obj:'given a number, identify one more and one less'},
+  {id:78,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'mixed one more/less abstract 0-10',obj:'given a number, identify one more and one less'},
+  {id:79,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'mixed one more/less abstract 0-20',obj:'given a number, identify one more and one less'},
+  {id:80,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'mixed one more/less abstract 20-100',obj:'given a number, identify one more and one less'},
+  {id:81,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'1-5 in frame',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:82,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'1-5 in groups',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:83,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'6-10 in frame',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:84,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'6-9 in groups',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:85,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'1-10 in frame layout without frame',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:86,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'1-10 using place value blocks',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:87,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 11-20',name:'objects in a 10 frame',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:88,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 11-20',name:'beads',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:89,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 11-20',name:'numicon',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:90,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 11-20',name:'multicubes',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:91,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 11-20',name:'place value blocks',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:92,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'place value blocks - what number is represented 10-50 (tens only)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:93,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'place value blocks - what number is represented 50-100 (tens only)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:94,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'place value blocks - what number is represented 10-50 (tens and ones)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:95,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'place value blocks - what number is represented 50-100 (tens and ones)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:96,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'How many tens are there in?',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:97,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'How many ones are there in?',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:98,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'multi choice which group has more ...?',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:99,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'multi choice which group has fewer ...?',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:100,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'multi choice mixed more/fewer',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:101,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'multi choice more than/ less than/ equal to (images - 10)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:102,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'multi choice more than/ less than/ equal to (image 10-20)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:103,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'multi choice more than/ less than/ equal to (20-100 with place value blocks)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:104,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read words write numerals -1-5',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:105,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read words write numerals -6-10',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:106,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read words write numerals -11-15',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:107,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read words write numerals -16-20',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:108,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read numerals write words -1-5',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:109,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read numerals write words -6-10',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:110,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read numerals write words -11-15',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:111,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read numerals write words -16-20',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:112,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'mixed read and write 1 -10',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:113,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'mixed read and write 11-20',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:114,topic:'Number – Addition & Subtraction',subtopic:'understanding + - =',name:'What sign is missing from the calculation image _ image _ image',obj:'read, write and interpret mathematical statements involving addition (+), subtraction (–) and equals (=) signs'},
+  {id:115,topic:'Number – Addition & Subtraction',subtopic:'understanding + - =',name:'What sign is missing from the calculation image _ image _ numerical answer',obj:'read, write and interpret mathematical statements involving addition (+), subtraction (–) and equals (=) signs'},
+  {id:116,topic:'Number – Addition & Subtraction',subtopic:'understanding + - =',name:'What sign is missing from the calculation number _ number _ numerical answer',obj:'read, write and interpret mathematical statements involving addition (+), subtraction (–) and equals (=) signs'},
+  {id:117,topic:'Number – Addition & Subtraction',subtopic:'understanding + - =',name:'What sign is missing from the calculation numerical answer _ number _ number',obj:'read, write and interpret mathematical statements involving addition (+), subtraction (–) and equals (=) signs'},
+  {id:118,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'MC which numicon piece would make 5',obj:'represent and use number bonds and related subtraction facts within 20'},
+  {id:119,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'images inside frame',obj:'represent and use number bonds and related subtraction facts within 21'},
+  {id:120,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'frame layout, no frame',obj:'represent and use number bonds and related subtraction facts within 22'},
+  {id:121,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'bar model with divisions',obj:'represent and use number bonds and related subtraction facts within 23'},
+  {id:122,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'bar model without divisions',obj:'represent and use number bonds and related subtraction facts within 24'},
+  {id:123,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'Abstract a + _ = c',obj:'represent and use number bonds and related subtraction facts within 25'},
+  {id:124,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'Abstract _ + b = c',obj:'represent and use number bonds and related subtraction facts within 26'},
+  {id:125,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'bar model abstract mix of parts missing',obj:'represent and use number bonds and related subtraction facts within 27'},
+  {id:126,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'MC which numicon piece would make 10',obj:'represent and use number bonds and related subtraction facts within 28'},
+  {id:127,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'images inside frame',obj:'represent and use number bonds and related subtraction facts within 29'},
+  {id:128,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'frame layout, no frame',obj:'represent and use number bonds and related subtraction facts within 30'},
+  {id:129,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'bar model with divisions',obj:'represent and use number bonds and related subtraction facts within 31'},
+  {id:130,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'bar model without divisions',obj:'represent and use number bonds and related subtraction facts within 32'},
+  {id:131,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'Abstract a + _ = c',obj:'represent and use number bonds and related subtraction facts within 33'},
+  {id:132,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'Abstract _ + b = c',obj:'represent and use number bonds and related subtraction facts within 34'},
+  {id:133,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'bar model abstract mix of parts missing',obj:'represent and use number bonds and related subtraction facts within 35'},
+  {id:134,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'images inside frame',obj:'represent and use number bonds and related subtraction facts within 36'},
+  {id:135,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'frame layout, no frame',obj:'represent and use number bonds and related subtraction facts within 37'},
+  {id:136,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'bar model with divisions',obj:'represent and use number bonds and related subtraction facts within 38'},
+  {id:137,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'bar model without divisions',obj:'represent and use number bonds and related subtraction facts within 39'},
+  {id:138,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'Abstract a + _ = c',obj:'represent and use number bonds and related subtraction facts within 40'},
+  {id:139,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'Abstract _ + b = c',obj:'represent and use number bonds and related subtraction facts within 41'},
+  {id:140,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'bar model abstract mix of parts missing',obj:'represent and use number bonds and related subtraction facts within 42'},
+  {id:141,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 0-3 - images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:142,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'4-9 + 0-3 - images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:143,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 4-9 - images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:144,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'3-5 + 3-5 - images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:145,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 0-3 - number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:146,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'4-9 + 0-3 -number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:147,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 4-9 - number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:148,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'3-5 + 3-5 - number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:149,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 0-3 - bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:150,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'4-9 + 0-3 -bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:151,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 4-9 - bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:152,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'3-5 + 3-5 - bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:153,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 0-3 - bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:154,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'4-9 + 0-3 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:155,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 4-9 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:156,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'3-5 + 3-5 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:157,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'bar model with divisions _ + b = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:158,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'bar model with divisions a + _ = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:159,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'bar model without divisions _ + b = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:160,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'bar model without divisions a + _ = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:161,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 0-3 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:162,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'4-9 + 0-3 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:163,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 4-9 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:164,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'3-5 + 3-5 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:165,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'4-9 + 0-3 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:166,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 4-9 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:167,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'3-5 + 3-5 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:168,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'0-3 - 0-3 - images - number',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:169,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 -0-3 - images - number',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:170,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 4-9 - images - number',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:171,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'0-3 - 0-3 - bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:172,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 0-3 -bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:173,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 4-9 -bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:174,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'0-3 _ 0-3 - bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:175,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 0-3 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:176,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 4-9 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:177,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'bar model with divisions c - b = _',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:178,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'bar model with divisions c - _ = a',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:179,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'bar model without divisions c - b = _',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:180,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'bar model without divisions c - _ = a',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:181,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'0-3 - 0-3 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:182,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 -0-3 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:183,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 4-9 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:184,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'0-3 - 0-3 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:185,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 0-3 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:186,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 4-9 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:187,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'10-19 + 1 - 4 -images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:188,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'0-4 + 10-19  -images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:189,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'5-10 + 5-10  -images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:190,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'10-19 + 1 - 4 -number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:191,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'0-4 + 10-19  -number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:192,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'5-10 + 5-10  -number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:193,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'10-19 + 1 - 4 -bar models with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:194,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'0-4 + 10-19  -bar models with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:195,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'5-10 + 5-10  -bar models with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:196,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'10-19 + 1 - 4 -bar models without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:197,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'0-4 + 10-19  -bar models without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:198,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'5-10 + 5-10  -bar models without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:199,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'bar model with divisions _ + b = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:200,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'bar model with divisions a + _ = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:201,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'bar model without divisions _ + b = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:202,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'bar model without divisions a + _ = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:203,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'10-19 + 1 - 4 -abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:204,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'0-4 + 10-19  -abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:205,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'5-10 + 5-10  -abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:206,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'10-19 + 1 - 4 -abstract mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:207,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'0-4 + 10-19  -abstract mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:208,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'5-10 + 5-10  -abstract mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:209,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 0-4 - images - number',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:210,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 5-9 - images - number',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:211,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 11-19 - images - number',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:212,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 0-4 - bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:213,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 5-9 -bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:214,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 11-19 -bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:215,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 0-4  - bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:216,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 5-9 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:217,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 11-19 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:218,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'bar model with divisions c - b = _',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:219,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'bar model with divisions c - _ = a',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:220,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'bar model without divisions c - b = _',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:221,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'bar model without divisions c - _ = a',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:222,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 0-4 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:223,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'4-9 -0-3 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:224,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 11-19 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:225,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 0-4 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:226,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 5-9 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:227,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 11-19 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:228,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'0-5 + 0-5 -images',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 9'},
+  {id:229,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'11-15 + 0-5 -images',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 10'},
+  {id:230,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'7-13 + 7-13 -images',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 11'},
+  {id:231,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'0-5 + 0-5 -number line',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 12'},
+  {id:232,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'11-15 + 0-5 -number line',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 13'},
+  {id:233,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'7-13 + 7-13  -number line',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 14'},
+  {id:234,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'0-5 + 0-5 -number line - missing number problems',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 15'},
+  {id:235,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'11-15 + 0-5 -number line - missing number problems',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 16'},
+  {id:236,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'7-13 + 7-13  -number line - missing number problems',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 17'},
+  {id:237,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'5-10 - 0-4 - images',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 18'},
+  {id:238,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'14-19 - 0-4 images',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 19'},
+  {id:239,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'14-19 - 7-13 images',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 20'},
+  {id:240,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'5-10 - 0-4 - number line',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 21'},
+  {id:241,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'14-19 - 0-4 number line',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 22'},
+  {id:242,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'14-19 - 7-13 number line',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 23'},
+  {id:243,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'5-10 - 0-4 - number line - missing number problems',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 24'},
+  {id:244,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'14-19 - 0-4 number line - missing number problems',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 25'},
+  {id:245,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'14-19 - 7-13 number line - missing number problems',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 26'},
+  {id:246,topic:'Number – Addition & Subtraction',subtopic:'Mixed word problems 1-20 with pictorial representations',name:'easy',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 27'},
+  {id:247,topic:'Number – Addition & Subtraction',subtopic:'Mixed word problems 1-20 with pictorial representations',name:'medium',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 28'},
+  {id:248,topic:'Number – Addition & Subtraction',subtopic:'Mixed word problems 1-20 with pictorial representations',name:'hard',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 29'},
+  {id:249,topic:'Number – Multiplication & Division',subtopic:'multiplying by 2 with pictorial representation/ arrays',name:'2-12 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:250,topic:'Number – Multiplication & Division',subtopic:'multiplying by 2 with pictorial representation/ arrays',name:'12-24 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:251,topic:'Number – Multiplication & Division',subtopic:'multiplying by 2 with pictorial representation/ arrays',name:'2-12 arrays',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:252,topic:'Number – Multiplication & Division',subtopic:'multiplying by 2 with pictorial representation/ arrays',name:'12-24 arrays',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:253,topic:'Number – Multiplication & Division',subtopic:'multiplying by 5 with pictorial representation/ arrays',name:'5-30 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:254,topic:'Number – Multiplication & Division',subtopic:'multiplying by 5 with pictorial representation/ arrays',name:'30-60 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:255,topic:'Number – Multiplication & Division',subtopic:'multiplying by 5 with pictorial representation/ arrays',name:'5-30 arrays',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:256,topic:'Number – Multiplication & Division',subtopic:'multiplying by 5 with pictorial representation/ arrays',name:'30-60 arrays',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:257,topic:'Number – Multiplication & Division',subtopic:'multiplying by 10 with pictorial representation/ arrays',name:'10-60 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:258,topic:'Number – Multiplication & Division',subtopic:'multiplying by 10 with pictorial representation/ arrays',name:'60- 100 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:259,topic:'Number – Multiplication & Division',subtopic:'multiplying by 10 with pictorial representation/ arrays',name:'10-60 arrays',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:260,topic:'Number – Multiplication & Division',subtopic:'multiplying by 10 with pictorial representation/ arrays',name:'60- 100 arrays',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:261,topic:'Number – Multiplication & Division',subtopic:'dividing by 2',name:'2-12 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:262,topic:'Number – Multiplication & Division',subtopic:'dividing by 2',name:'12-24 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:263,topic:'Number – Multiplication & Division',subtopic:'dividing by 5',name:'5-30 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:264,topic:'Number – Multiplication & Division',subtopic:'dividing by 5',name:'30-60 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:265,topic:'Number – Multiplication & Division',subtopic:'dividing by 10',name:'10-60 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:266,topic:'Number – Multiplication & Division',subtopic:'dividing by 10',name:'60- 100 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:267,topic:'Number – Fractions',subtopic:'recognise, find and name a half as one of two equal parts of an object, shape or quantity',name:'identify half of an object',obj:'recognise, find and name a half as one of two equal parts of an object, shape or quantity'},
+  {id:268,topic:'Number – Fractions',subtopic:'recognise, find and name a half as one of two equal parts of an object, shape or quantity',name:'identifying half of a shape',obj:'recognise, find and name a half as one of two equal parts of an object, shape or quantity'},
+  {id:269,topic:'Number – Fractions',subtopic:'recognise, find and name a half as one of two equal parts of an object, shape or quantity',name:'identifying half of a quantity',obj:'recognise, find and name a half as one of two equal parts of an object, shape or quantity'},
+  {id:270,topic:'Number – Fractions',subtopic:'recognise, find and name a half as one of two equal parts of an object, shape or quantity',name:'find half of a quantity - with images (0-10)',obj:'recognise, find and name a half as one of two equal parts of an object, shape or quantity'},
+  {id:271,topic:'Number – Fractions',subtopic:'recognise, find and name a half as one of two equal parts of an object, shape or quantity',name:'find half of a quantity - with images (12-20)',obj:'recognise, find and name a half as one of two equal parts of an object, shape or quantity'},
+  {id:272,topic:'Number – Fractions',subtopic:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity',name:'identify a quarter of an object',obj:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity'},
+  {id:273,topic:'Number – Fractions',subtopic:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity',name:'identifying a quarter of a shape',obj:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity'},
+  {id:274,topic:'Number – Fractions',subtopic:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity',name:'identifying a quarter of a quantity',obj:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity'},
+  {id:275,topic:'Number – Fractions',subtopic:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity',name:'find a quarter of a quantity - with images (0-10)',obj:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity'},
+  {id:276,topic:'Number – Fractions',subtopic:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity',name:'find a quarter of a quantity - with images (12-20)',obj:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity'}
 ];
 const TOPICS=[...new Set(NUGGETS.map(n=>n.topic))];
 const STATUS_LABELS={'not-started':'Not started','in-progress':'In progress','ready-for-qa':'Ready for QA','ready-for-qti':'Ready for QTI','uploaded-to-cms':'Uploaded to CMS'};
@@ -683,34 +910,72 @@ function updateFolderStatus(){
   }
 }
 function nuggetSlug(nid){
+  return`nugget-${String(nid).padStart(3,'0')}`;
+}
+// Legacy slug for backwards-compatible loading (old format included the name)
+function legacySlug(nid){
   const n=NUGGETS.find(n=>n.id===nid);
   const name=(n?n.name:'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);
-  return`nugget-${String(nid).padStart(3,'0')}${name?'-'+name:''}`;
+  return`nugget-${String(nid).padStart(3,'0')}-${name}`;
+}
+// Returns custom name if set, otherwise default name from NUGGETS array
+function nuggetDisplayName(nid){
+  return nuggetState[nid]?.customName||NUGGETS.find(n=>n.id===nid)?.name||`Nugget ${nid}`;
+}
+// ── Rename nugget ──
+function startRenameNugget(){
+  if(!activeId)return;
+  const titleEl=document.getElementById('nd-title');
+  const renBtn=document.getElementById('nd-rename-btn');
+  const current=nuggetDisplayName(activeId);
+  const inp=document.createElement('input');
+  inp.type='text';inp.className='nd-title-input';inp.value=current;
+  inp.onblur=()=>saveNuggetRename(inp.value);
+  inp.onkeydown=e=>{if(e.key==='Enter')inp.blur();if(e.key==='Escape'){inp.value=current;inp.blur();}};
+  titleEl.parentNode.replaceChild(inp,titleEl);renBtn.style.display='none';
+  inp.focus();inp.select();
+}
+function saveNuggetRename(newName){
+  if(!activeId)return;
+  const trimmed=newName.trim();
+  if(!trimmed)return;
+  // Restore title element
+  const inp=document.querySelector('.nd-title-input');
+  const renBtn=document.getElementById('nd-rename-btn');
+  if(inp){
+    const titleEl=document.createElement('div');titleEl.className='nd-title';titleEl.id='nd-title';
+    titleEl.textContent=trimmed;inp.parentNode.replaceChild(titleEl,inp);
+  }
+  if(renBtn)renBtn.style.display='';
+  // Save custom name
+  const defaultName=NUGGETS.find(n=>n.id===activeId)?.name||'';
+  nuggetState[activeId].customName=trimmed===defaultName?undefined:trimmed;
+  save();renderSidebar();
 }
 async function loadNuggetFromFile(nid){
   const slug=nuggetSlug(nid);
   const fname=`${slug}.json`;
-  // 1. Try connected local folder first
+  const lSlug=legacySlug(nid);
+  const lFname=`${lSlug}.json`;
+  // 1. Try connected local folder first (new slug, then legacy)
   if(folderHandle){
     try{
       const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:false});
-      const nDir=await qdDir.getDirectoryHandle(slug,{create:false});
-      const fh=await nDir.getFileHandle(fname,{create:false});
-      return JSON.parse(await (await fh.getFile()).text());
+      try{const nDir=await qdDir.getDirectoryHandle(slug,{create:false});const fh=await nDir.getFileHandle(fname,{create:false});return JSON.parse(await (await fh.getFile()).text());}catch(e){}
+      try{const nDir=await qdDir.getDirectoryHandle(lSlug,{create:false});const fh=await nDir.getFileHandle(lFname,{create:false});return JSON.parse(await (await fh.getFile()).text());}catch(e){}
     }catch(e){}
   }
-  // 2. Fall back to fetching from the server (works on GitHub Pages for all users)
-  try{
-    const r=await fetch(`question-data/${slug}/${fname}`,{cache:'no-store'});
-    if(r.ok)return await r.json();
-  }catch(e){}
+  // 2. Try new slug from server, then legacy slug
+  try{const r=await fetch(`question-data/${slug}/${fname}`,{cache:'no-store'});if(r.ok)return await r.json();}catch(e){}
+  try{const r=await fetch(`question-data/${lSlug}/${lFname}`,{cache:'no-store'});if(r.ok)return await r.json();}catch(e){}
   return null;
 }
 async function saveNuggetToFile(nid){
   const ns=nuggetState[nid];if(!ns)return;
   const slug=nuggetSlug(nid);
   const today=new Date().toISOString().slice(0,10);
-  const data={nuggetId:nid,status:ns.status,nextQId,questions:ns.questions.map(q=>({...q,updatedAt:q.updatedAt||today,createdAt:q.createdAt||today}))};
+  const customName=nuggetState[nid]?.customName;
+  const data={nuggetId:nid,status:ns.status,nextQId,questions:ns.questions.map(q=>({...q,updatedAt:q.updatedAt||today,createdAt:q.createdAt||today})),...(customName&&{customName})};
   const json=JSON.stringify(data,null,2);
   const fname=`${slug}.json`;
   const ghPath=`question-data/${slug}/${fname}`;
@@ -781,6 +1046,52 @@ function saveSettings(){
   showToast('✓ Settings saved');closeSettings();
 }
 
+async function migrateOldFolders(){
+  if(!ghToken){alert('Add a GitHub token in Settings first.');return;}
+  const statusEl=document.getElementById('migrate-status');
+  statusEl.textContent='Checking…';
+  // Map: [oldNuggetId, newNuggetId, old name string for slug]
+  const migrations=[
+    {oldId:1, newId:1, oldName:'counting-forwards-1-20'},
+    {oldId:13,newId:2, oldName:'number-line-1-10'},
+  ];
+  let done=0,skipped=0;
+  for(const m of migrations){
+    const oldSlug=`nugget-${String(m.oldId).padStart(3,'0')}-${m.oldName}`;
+    const newSlug=`nugget-${String(m.newId).padStart(3,'0')}`;
+    const oldJsonPath=`question-data/${oldSlug}/${oldSlug}.json`;
+    const newJsonPath=`question-data/${newSlug}/${newSlug}.json`;
+    statusEl.textContent=`Checking ${oldSlug}…`;
+    try{
+      // Try to read old file
+      const base=`https://api.github.com/repos/${ghOwner}/${ghRepo}`;
+      const hdrs={'Authorization':`token ${ghToken}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
+      const getR=await fetch(`${base}/contents/${oldJsonPath}`,{headers:hdrs});
+      if(!getR.ok){statusEl.textContent=`${oldSlug} not found, skipping.`;skipped++;continue;}
+      const oldFile=await getR.json();
+      const oldContent=atob(oldFile.content.replace(/\n/g,''));
+      const parsed=JSON.parse(oldContent);
+      // Update nuggetId to new ID
+      parsed.nuggetId=m.newId;
+      const newContentStr=JSON.stringify(parsed,null,2);
+      const newContentB64=btoa(unescape(encodeURIComponent(newContentStr)));
+      // Check if new file already exists (get SHA)
+      let newSha=null;
+      try{const chk=await fetch(`${base}/contents/${newJsonPath}`,{headers:hdrs});if(chk.ok){const d=await chk.json();newSha=d.sha;}}catch(e){}
+      // Write new file
+      const putBody={message:`Migrate ${oldSlug} → ${newSlug}`,content:newContentB64,...(newSha&&{sha:newSha})};
+      const putR=await fetch(`${base}/contents/${newJsonPath}`,{method:'PUT',headers:hdrs,body:JSON.stringify(putBody)});
+      if(!putR.ok){statusEl.textContent=`Failed to write ${newSlug}: ${putR.status}`;continue;}
+      // Delete old file
+      await fetch(`${base}/contents/${oldJsonPath}`,{method:'DELETE',headers:hdrs,body:JSON.stringify({message:`Remove legacy ${oldSlug}`,sha:oldFile.sha})});
+      done++;
+      statusEl.textContent=`Migrated ${oldSlug} → ${newSlug}`;
+    }catch(e){statusEl.textContent=`Error migrating ${oldSlug}: ${e.message}`;}
+  }
+  const msg=`✓ Migration complete: ${done} moved, ${skipped} already done.`;
+  statusEl.textContent=msg;showToast(msg);
+}
+
 /* ── State ── */
 let nuggetState={};let activeId=null;let activeTab='builder';let filter='all';let collapseMap={};let nextQId=1;
 const STORE='maths-ab-v3';
@@ -830,11 +1141,11 @@ function renderSidebar(){
   const q=document.getElementById('sb-search').value.toLowerCase();
   const el=document.getElementById('nl');let html='';
   TOPICS.forEach(topic=>{
-    let items=NUGGETS.filter(n=>{if(filter!=='all'&&nuggetState[n.id]?.status!==filter)return false;if(q&&!n.name.toLowerCase().includes(q)&&!topic.toLowerCase().includes(q))return false;return true;});
+    let items=NUGGETS.filter(n=>{if(filter!=='all'&&nuggetState[n.id]?.status!==filter)return false;if(q&&!nuggetDisplayName(n.id).toLowerCase().includes(q)&&!n.subtopic?.toLowerCase().includes(q)&&!topic.toLowerCase().includes(q))return false;return true;});
     if(!items.length)return;
     const collapsed=!!collapseMap[topic];const short=topic.includes('–')?topic.split('–').slice(1).join('–').trim():topic;
     html+=`<div class="tg-hdr" onclick="toggleTopic('${esc(topic)}')">${esc(short)}<span>${collapsed?'▸':'▾'}</span></div>`;
-    if(!collapsed)items.forEach(n=>{const ns=nuggetState[n.id];const st=ns?.status||'not-started';const qc=ns?.questions?.length||0;html+=`<div class="ni s-${st}${n.id===activeId?' active':''}" onclick="selectNugget(${n.id})"><div class="ni-dot"></div><div class="ni-name">${esc(n.name)}</div><div class="ni-cnt">${qc||''}</div></div>`;});
+    if(!collapsed)items.forEach(n=>{const ns=nuggetState[n.id];const st=ns?.status||'not-started';const qc=ns?.questions?.length||0;html+=`<div class="ni s-${st}${n.id===activeId?' active':''}" onclick="selectNugget(${n.id})"><div class="ni-dot"></div><div class="ni-name">${esc(nuggetDisplayName(n.id))}</div><div class="ni-cnt">${qc||''}</div></div>`;});
   });
   el.innerHTML=html||'<div style="padding:14px;font-size:12px;color:rgba(255,255,255,.25);text-align:center">No nuggets match.</div>';
   updateStats();
@@ -855,14 +1166,14 @@ async function selectNugget(id){
   // Load from JSON file (local folder if connected, otherwise fetch from server)
   const fileData=await loadNuggetFromFile(id);
   if(fileData){
-    nuggetState[id]={status:fileData.status,questions:fileData.questions||[]};
+    nuggetState[id]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined};
     if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
   }
   const n=NUGGETS.find(n=>n.id===id);
   document.getElementById('builder-empty').style.display='none';
   document.getElementById('builder-detail').style.display='block';
-  document.getElementById('nd-topic').textContent=n.topic;
-  document.getElementById('nd-title').textContent=n.name;
+  document.getElementById('nd-topic').textContent=n.subtopic||n.topic;
+  document.getElementById('nd-title').textContent=nuggetDisplayName(id);
   document.getElementById('nd-obj').textContent=n.obj;
   renderWorkflow();renderQuestions();
 }
@@ -1168,9 +1479,15 @@ function bmToggleSeg3(show){bmSeg3=show;document.getElementById('bm-seg3-block')
 function renderCurriculum(){
   const el=document.getElementById('cm-wrap');let html='<div class="cm-h1">🗺 Curriculum Map</div><div class="cm-sub">National Curriculum objectives and nuggets</div>';
   TOPICS.forEach(topic=>{
-    const nuggets=NUGGETS.filter(n=>n.topic===topic);let prevObj='';
-    html+=`<div class="cm-section"><div class="cm-topic-hdr">${esc(topic)}</div><table class="cm-table"><thead><tr><th style="width:38%">NC Objective</th><th>Nugget</th><th style="width:150px">Status</th></tr></thead><tbody>`;
-    nuggets.forEach(n=>{const ns=nuggetState[n.id];const st=ns?.status||'not-started';const cm=STATUS_CM[st]||'ns';const showObj=n.obj!==prevObj;prevObj=n.obj;html+=`<tr onclick="selectNugget(${n.id})"><td class="cm-obj">${showObj?esc(n.obj):''}</td><td class="cm-name">${esc(n.name)}</td><td class="cms-${cm}"><div class="cm-st"><div class="cm-dot"></div>${STATUS_LABELS[st]}</div></td></tr>`;});
+    const topicNuggets=NUGGETS.filter(n=>n.topic===topic);if(!topicNuggets.length)return;
+    html+=`<div class="cm-section"><div class="cm-topic-hdr">${esc(topic)}</div><table class="cm-table"><thead><tr><th style="width:28%">Subtopic</th><th style="width:35%">NC Objective</th><th>Nugget</th><th style="width:130px">Status</th></tr></thead><tbody>`;
+    let prevObj='',prevSt='';
+    topicNuggets.forEach(n=>{
+      const ns=nuggetState[n.id];const st=ns?.status||'not-started';const cm=STATUS_CM[st]||'ns';
+      const showSt=n.subtopic!==prevSt;prevSt=n.subtopic;
+      const showObj=n.obj!==prevObj;prevObj=n.obj;
+      html+=`<tr onclick="selectNugget(${n.id})"><td class="cm-obj">${showSt?esc(n.subtopic):''}</td><td class="cm-obj">${showObj?esc(n.obj):''}</td><td class="cm-name">${esc(nuggetDisplayName(n.id))}</td><td class="cms-${cm}"><div class="cm-st"><div class="cm-dot"></div>${STATUS_LABELS[st]}</div></td></tr>`;
+    });
     html+='</tbody></table></div>';
   });
   el.innerHTML=html;
