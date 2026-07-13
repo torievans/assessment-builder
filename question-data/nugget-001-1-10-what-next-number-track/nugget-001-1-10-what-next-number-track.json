@@ -1,7 +1,7 @@
 {
   "nuggetId": 1,
   "status": "ready-for-qti",
-  "nextQId": 1025,
+  "nextQId": 1026,
   "questions": [
     {
       "id": 1001,
@@ -10,7 +10,7 @@
       "image": "",
       "type": "exact",
       "display": "",
-      "qaComment": "hi Karen",
+      "qaComment": "",
       "visualType": null,
       "cfg": {},
       "updatedAt": "2026-07-13",
