@@ -1,28 +1,6 @@
 {
   "nuggetId": 3,
-  "status": "in-progress",
+  "status": "not-started",
   "nextQId": 1026,
-  "questions": [
-    {
-      "id": 1025,
-      "text": "Whats missing",
-      "answer": "5",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "comment",
-      "visualType": "nl",
-      "cfg": {
-        "start": 0,
-        "end": 20,
-        "partitions": 20,
-        "valuesGivenEvery": null,
-        "answer": "5",
-        "lineStyle": "through",
-        "colour": "grey"
-      },
-      "updatedAt": "2026-07-13",
-      "createdAt": "2026-07-13"
-    }
-  ]
+  "questions": []
 }
