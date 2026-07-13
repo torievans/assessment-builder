@@ -256,8 +256,6 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 /* Header extras */
 .hbtn-green{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.12);color:#34D399}
 .hbtn-green:hover{background:rgba(16,185,129,.22)}
-.hbtn-save{border-color:rgba(74,143,224,.4);background:rgba(74,143,224,.12);color:#60A5FA}
-.hbtn-save:hover{background:rgba(74,143,224,.22)}
 /* Settings modal */
 .settings-section{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
 .settings-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#6B7280}
@@ -298,7 +296,6 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
   </div>
   <div class="hdr-space"></div>
   <button class="hbtn" id="btn-connect" onclick="connectFolder()">📁 Connect folder</button>
-  <button class="hbtn hbtn-save" id="btn-save" onclick="manualSave()" title="Save current nugget to folder + GitHub">💾 Save</button>
   <button class="hbtn" onclick="openSettings()">⚙️ Settings</button>
   <button class="hbtn" onclick="handleExportImport()">⇅ Export / Import</button>
   <button class="hbtn hbtn-gold" onclick="switchView('export')">🏅 QTI Downloads</button>
@@ -782,11 +779,6 @@ function saveSettings(){
   ghToken=document.getElementById('gh-token-input').value.trim();
   localStorage.setItem('gh-owner',ghOwner);localStorage.setItem('gh-repo',ghRepo);localStorage.setItem('gh-token',ghToken);
   showToast('✓ Settings saved');closeSettings();
-}
-async function manualSave(){
-  clearTimeout(_autoSaveTimer);
-  if(activeId)await saveNuggetToFile(activeId);
-  else showToast('Select a nugget first',true);
 }
 
 /* ── State ── */
