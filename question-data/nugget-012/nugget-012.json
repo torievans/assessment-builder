@@ -1,0 +1,28 @@
+{
+  "nuggetId": 12,
+  "status": "in-progress",
+  "nextQId": 1025,
+  "questions": [
+    {
+      "id": 1024,
+      "text": "What's missing?",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "13",
+        "lineStyle": "through",
+        "colour": "red"
+      },
+      "updatedAt": "2026-07-13",
+      "createdAt": "2026-07-13"
+    }
+  ]
+}
