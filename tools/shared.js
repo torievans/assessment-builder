@@ -446,6 +446,107 @@ function barModelSVG(config) {
   return s;
 }
 
+// ─── Number Track ─────────────────────────────────────────────────────────────
+function numberTrackSVG(cfg) {
+  const { sequence, shape = 'square', layout = 'straight', colourMode = 'full' } = cfg;
+  if (!sequence) return '';
+  const tokens = sequence.split(',').map(s => s.trim()).filter(s => s !== '');
+  if (!tokens.length) return '';
+
+  const CELL = 68, GAP = 7, PAD = 14;
+  const NT_PAL = [
+    { full:'#D46B55', light:'#F9DDD9', border:'#D46B55', textFull:'#1A1A2E', textLight:'#7A2E1E', textOutline:'#D46B55' },
+    { full:'#F5995B', light:'#FDE8D4', border:'#F5995B', textFull:'#1A1A2E', textLight:'#903F08', textOutline:'#C06010' },
+    { full:'#FECC6B', light:'#FEF5D8', border:'#FECC6B', textFull:'#1A1A2E', textLight:'#976401', textOutline:'#976401' },
+    { full:'#319377', light:'#CDE8E1', border:'#319377', textFull:'#1A1A2E', textLight:'#246E59', textOutline:'#246E59' },
+    { full:'#7898F0', light:'#DCE4FD', border:'#7898F0', textFull:'#1A1A2E', textLight:'#0F2F89', textOutline:'#3B4FD4' },
+    { full:'#847AC9', light:'#DDD9F5', border:'#847AC9', textFull:'#1A1A2E', textLight:'#342C6C', textOutline:'#342C6C' },
+    { full:'#FC7E91', light:'#FDE0E6', border:'#FC7E91', textFull:'#1A1A2E', textLight:'#7A0C26', textOutline:'#B03050' },
+  ];
+
+  function ntEsc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function cellFill(idx) {
+    const p = NT_PAL[idx % NT_PAL.length];
+    if (colourMode === 'full')    return { fill: p.full,   stroke: p.full,   strokeW: 0,          text: p.textFull };
+    if (colourMode === 'light')   return { fill: p.light,  stroke: p.border, strokeW: CELL*0.055, text: p.textLight };
+    if (colourMode === 'outline') return { fill: '#ffffff', stroke: p.border, strokeW: CELL*0.07,  text: p.textOutline };
+  }
+
+  function drawShape(sh, cx, cy, size, fill, stroke, strokeW, dashArray) {
+    const h = size / 2;
+    const sf = `fill="${fill}" stroke="${stroke}" stroke-width="${strokeW}"${dashArray ? ` stroke-dasharray="${dashArray}"` : ''}`;
+    if (sh === 'square')
+      return `<rect x="${cx-h}" y="${cy-h}" width="${size}" height="${size}" rx="${size*0.18}" ${sf}/>`;
+    if (sh === 'circle')
+      return `<circle cx="${cx}" cy="${cy}" r="${h}" ${sf}/>`;
+    if (sh === 'balloon') {
+      const sc = h / 50;
+      const t = (x, y) => `${(cx + x*sc).toFixed(2)},${(cy + y*sc).toFixed(2)}`;
+      const d = `M ${t(2.4938,38.8859)} L ${t(7.0728,50)} L ${t(-7.0725,50)} L ${t(-2.4938,38.8859)} C ${t(-16.3083,35.6907)} ${t(-38.1513,7.9808)} ${t(-38.1513,-11.8487)} C ${t(-38.1513,-32.9188)} ${t(-21.0701,-50)} ${t(0,-50)} C ${t(21.0701,-50)} ${t(38.1513,-32.9188)} ${t(38.1513,-11.8487)} C ${t(38.1513,7.9808)} ${t(16.3083,35.6907)} ${t(2.4938,38.8859)} Z`;
+      return `<path d="${d}" ${sf}/>`;
+    }
+    if (sh === 'star') {
+      const sc = h / 50;
+      const t = (x, y) => `${(cx + x*sc).toFixed(2)},${(cy + y*sc).toFixed(2)}`;
+      const d = `M ${t(49.073,-11.9)} C ${t(48.146,-14.752)} ${t(45.487,-16.684)} ${t(42.487,-16.684)} L ${t(15.061,-16.684)} L ${t(6.586,-42.768)} C ${t(5.659,-45.621)} ${t(3,-47.553)} ${t(0,-47.553)} C ${t(-3,-47.553)} ${t(-5.659,-45.621)} ${t(-6.586,-42.768)} L ${t(-15.061,-16.684)} L ${t(-42.487,-16.684)} C ${t(-45.487,-16.684)} ${t(-48.146,-14.752)} ${t(-49.073,-11.9)} C ${t(-50,-9.046)} ${t(-48.985,-5.92)} ${t(-46.557,-4.157)} L ${t(-24.369,11.963)} L ${t(-32.844,38.047)} C ${t(-33.771,40.9)} ${t(-32.756,44.026)} ${t(-30.329,45.789)} C ${t(-27.902,47.552)} ${t(-24.615,47.553)} ${t(-22.188,45.789)} L ${t(0,29.669)} L ${t(22.188,45.789)} C ${t(23.402,46.671)} ${t(24.83,47.112)} ${t(26.259,47.112)} C ${t(27.687,47.112)} ${t(29.115,46.671)} ${t(30.329,45.789)} C ${t(32.756,44.026)} ${t(33.771,40.9)} ${t(32.845,38.047)} L ${t(24.37,11.963)} L ${t(46.557,-4.157)} C ${t(48.985,-5.92)} ${t(50,-9.046)} ${t(49.073,-11.9)} Z`;
+      return `<path d="${d}" ${sf}/>`;
+    }
+    if (sh === 'cloud') {
+      const sc = size / 195;
+      const t = (x, y) => `${(cx + (x-100)*sc).toFixed(2)},${(cy + (y-68)*sc).toFixed(2)}`;
+      const d = `M ${t(175.74,63.49)} C ${t(175.75,63.18)} ${t(175.76,62.86)} ${t(175.76,62.55)} C ${t(175.76,46.8)} ${t(163,34.03)} ${t(147.25,34.03)} C ${t(144.06,34.03)} ${t(141,34.56)} ${t(138.14,35.52)} C ${t(133.48,17.4)} ${t(117.03,4)} ${t(97.45,4)} C ${t(75.18,4)} ${t(56.96,21.34)} ${t(55.55,43.25)} C ${t(53.42,42.6)} ${t(51.16,42.25)} ${t(48.82,42.25)} C ${t(36.89,42.25)} ${t(27.1,51.4)} ${t(26.07,63.06)} C ${t(13.84,65.5)} ${t(4.55,76.35)} ${t(4.55,89.27)} C ${t(4.55,103.97)} ${t(16.57,116)} ${t(31.27,116)} L ${t(168.73,116)} C ${t(183.43,116)} ${t(195.45,103.97)} ${t(195.45,89.27)} C ${t(195.45,77)} ${t(187.07,66.59)} ${t(175.74,63.49)} Z`;
+      return `<path d="${d}" ${sf}/>`;
+    }
+    return '';
+  }
+
+  const n = tokens.length;
+  const maxOffset = n > 1 ? CELL * 0.38 : 0;
+  const balloonExtra = shape === 'balloon' ? CELL * 0.38 : 0;
+
+  function yOff(i) {
+    if (layout === 'ascending')  return maxOffset - (i / Math.max(n-1,1)) * maxOffset;
+    if (layout === 'descending') return (i / Math.max(n-1,1)) * maxOffset;
+    return 0;
+  }
+
+  const totalW = PAD*2 + n*CELL + (n-1)*GAP;
+  const totalH = PAD*2 + CELL + (layout === 'ascending' ? 2*maxOffset : layout !== 'straight' ? maxOffset : 0) + balloonExtra;
+
+  let parts = [], palIdx = 0;
+
+  tokens.forEach((token, i) => {
+    const cx = PAD + i * (CELL + GAP) + CELL/2;
+    const baseY = PAD + (layout === 'ascending' ? maxOffset : 0) + CELL/2;
+    const cy = baseY + yOff(i);
+    const isAnswer = token === '?';
+    const isEmpty  = token === '_' || isAnswer;
+
+    if (isEmpty) {
+      const fill = '#F4F5F7', stroke = isAnswer ? '#BBBFD0' : '#D1D5DB';
+      parts.push(drawShape(shape, cx, cy, CELL, fill, stroke, 2, isAnswer ? '7,5' : null));
+      if (isAnswer) {
+        const fs = CELL * 0.36;
+        const ty = shape === 'balloon' ? cy - CELL*0.0556 + fs*0.35
+                 : shape === 'cloud'   ? cy + CELL*(7/195) + fs*0.35
+                 : cy + fs*0.35;
+        parts.push(`<text x="${cx}" y="${ty}" text-anchor="middle" font-family="${SHARED_FONT}" font-size="${fs}" font-weight="900" fill="#BBBFD0">?</text>`);
+      }
+    } else {
+      const c = cellFill(palIdx++);
+      parts.push(drawShape(shape, cx, cy, CELL, c.fill, c.stroke, c.strokeW, null));
+      const fs = CELL * 0.36;
+      const ty = shape === 'balloon' ? cy - CELL*0.0556 + fs*0.35
+               : shape === 'cloud'   ? cy + CELL*(7/195) + fs*0.35
+               : cy + fs*0.35;
+      parts.push(`<text x="${cx}" y="${ty}" text-anchor="middle" font-family="${SHARED_FONT}" font-size="${fs}" font-weight="900" fill="${c.text}">${ntEsc(token)}</text>`);
+    }
+  });
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalW} ${totalH}"><rect width="${totalW}" height="${totalH}" fill="white" rx="10"/>${parts.join('')}</svg>`;
+}
+
 // ─── svgToPng ─────────────────────────────────────────────────────────────────
 function svgToPng(svgStr) {
   return new Promise((res, rej) => {
