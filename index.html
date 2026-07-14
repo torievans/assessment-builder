@@ -1820,7 +1820,7 @@ function initBMPanel(){
   document.querySelectorAll('.tog-btn[data-bmseg]').forEach(b=>b.addEventListener('click',()=>{const seg=parseInt(b.dataset.bmseg);document.querySelectorAll(`.tog-btn[data-bmseg="${seg}"]`).forEach(x=>x.classList.remove('active'));b.classList.add('active');bmSegT[seg]=b.dataset.segtype;autoPreviewBM();}));
   ['bm-total','bm-seg1-val','bm-seg1-lbl','bm-seg1-brace','bm-seg2-val','bm-seg2-lbl','bm-seg2-brace','bm-seg3-val','bm-seg3-lbl','bm-seg3-brace'].forEach(id=>document.getElementById(id)?.addEventListener('input',autoPreviewBM));
 }
-function bmSetUnit(btn,val){document.querySelectorAll('[data-bmunit]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');bmDivided=(val==='on');autoPreviewBM();}
+function bmSetUnit(btn,val){document.querySelectorAll('[data-bmunit]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');bmDivided=(val==='on');['bm-seg1-lbl','bm-seg2-lbl','bm-seg3-lbl'].forEach(id=>{const el=document.getElementById(id);if(el){el.disabled=bmDivided;el.closest('.field').style.opacity=bmDivided?'0.4':'';}});autoPreviewBM();}
 function bmGetNumericSum(){const s1=parseFloat(document.getElementById('bm-seg1-val')?.value)||0;const s2=parseFloat(document.getElementById('bm-seg2-val')?.value)||0;const s3=bmSeg3?(parseFloat(document.getElementById('bm-seg3-val')?.value)||0):0;return s1+s2+s3;}
 function parseBMV(s){if(!s||s.trim()==='')return undefined;const t=s.trim();if(t==='?')return'?';const n=Number(t);return isNaN(n)?t:n;}
 function getBMConfig(){
