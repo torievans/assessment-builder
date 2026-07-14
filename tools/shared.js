@@ -130,8 +130,6 @@ function numberLineSVG(config) {
   }
 
   let s = `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">`;
-  const clipId = `bm-clip-${Math.random().toString(36).slice(2,8)}`;
-  s += `<defs><clipPath id="${clipId}"><rect x="${bx}" y="${by}" width="${BAR_W}" height="${BAR_H}" rx="3"/></clipPath></defs>`;
 
   // ── Line ──
   if (terminate) {
@@ -318,7 +316,9 @@ function barModelSVG(config) {
     return (v / fullTotal) * BAR_W;
   });
 
+  const clipId = `bm-clip-${Math.random().toString(36).slice(2,8)}`;
   let s = `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">`;
+  s += `<defs><clipPath id="${clipId}"><rect x="${bx}" y="${by}" width="${BAR_W}" height="${BAR_H}" rx="3"/></clipPath></defs>`;
 
   // Top bar — comparison bar model
   if (config.topBar) {
