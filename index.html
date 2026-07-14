@@ -1647,7 +1647,7 @@ function addAllBatchQuestions(){
 
 
 /* ── Shared batch panel (BM / NT / Text / PV) ──────────────────────────────── */
-let sharedBatchTool=null, sharedBatchStructure={}, sharedBatchRowIdx=0;
+let sharedBatchTool=null, sharedBatchStructure={}, sharedBatchRowIdx=0, sharedBatchRowColors={};
 
 function openSharedBatch(tool){
   // Validate current tool config first
@@ -1655,7 +1655,7 @@ function openSharedBatch(tool){
   else if(tool==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');return;}sharedBatchStructure=cfg;}
   else if(tool==='pv'){const cfg=getPVConfig();if(!cfg){alert('Please enter a number.');return;}sharedBatchStructure=cfg;}
   else if(tool==='text'){sharedBatchStructure={};}
-  sharedBatchTool=tool;
+  sharedBatchTool=tool;sharedBatchRowColors={};
   // Build locked-setting tags
   const tagsEl=document.getElementById('shared-batch-tags');tagsEl.innerHTML='';
   const tags=[];
@@ -1726,6 +1726,31 @@ function addSharedBatchRow(defaults={}){
   cells+=`<td>${t('answer',defaults.answer??'','batch-input-num')}</td>`;
   cells+=`<td><button class="batch-del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
   tr.innerHTML=cells;tbody.appendChild(tr);
+  // Add per-row colour swatches for Bar Model
+  if(sharedBatchTool==='bm'){
+    const defIdx=sharedBatchStructure.colorIdx??0;
+    sharedBatchRowColors[idx]={colorIdx:defIdx};
+    const cell=tr.querySelector('.batch-preview-cell');
+    if(cell){
+      const wrap=document.createElement('div');wrap.className='batch-swatch-wrap';
+      const swatchRow=document.createElement('div');swatchRow.className='batch-mini-swatch-row';
+      const lbl=document.createElement('span');lbl.className='batch-swatch-label';lbl.textContent='Col';
+      swatchRow.appendChild(lbl);
+      BM_STROKES.forEach((col,i)=>{
+        const btn=document.createElement('button');
+        btn.className='mini-swatch'+(i===defIdx?' selected':'');
+        btn.style.background=col;btn.title='Colour '+i;
+        btn.addEventListener('click',()=>{
+          swatchRow.querySelectorAll('.mini-swatch').forEach(s=>s.classList.remove('selected'));
+          btn.classList.add('selected');
+          sharedBatchRowColors[idx].colorIdx=i;
+          updateSharedPreview(idx);
+        });
+        swatchRow.appendChild(btn);
+      });
+      wrap.appendChild(swatchRow);cell.appendChild(wrap);
+    }
+  }
   setTimeout(()=>updateSharedPreview(idx),0);
 }
 
@@ -1737,7 +1762,9 @@ function getSharedBatchRowCfg(tr){
       const raw=g('seg'+i); const v=raw===''?s.value:(raw==='?'?'?':parseFloat(raw));
       return {...s, value:v};
     });
-    return {...sharedBatchStructure, segments:segs};
+    const rowIdx=parseInt(tr.dataset.rowIdx);
+    const colorIdx=sharedBatchRowColors[rowIdx]?.colorIdx??sharedBatchStructure.colorIdx??0;
+    return {...sharedBatchStructure, segments:segs, colorIdx};
   } else if(tool==='nt'){
     const seq=g('seq');if(!seq)return null;
     return {...sharedBatchStructure, sequence:seq};
