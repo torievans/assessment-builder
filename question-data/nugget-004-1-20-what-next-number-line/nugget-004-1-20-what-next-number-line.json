@@ -1,0 +1,25 @@
+{
+  "nuggetId": 4,
+  "status": "in-progress",
+  "nextQId": 1028,
+  "questions": [
+    {
+      "id": 1027,
+      "text": "What number do these place value blocks represent?",
+      "answer": "342",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 342,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "missingVals": []
+      },
+      "updatedAt": "2026-07-14",
+      "createdAt": "2026-07-14"
+    }
+  ]
+}
