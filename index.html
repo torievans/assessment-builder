@@ -429,6 +429,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
               <div class="field"><label>Colour mode</label><div class="tog-row"><button class="tog-btn active" data-colmode="single">Single</button><button class="tog-btn" data-colmode="multi">Multi</button></div></div>
               <div class="field"><label>Total display</label><div class="tog-row"><button class="tog-btn active" data-totdisp="brace">Brace</button><button class="tog-btn" data-totdisp="top bar">Top bar</button><button class="tog-btn" data-totdisp="none">None</button></div></div>
               <div class="field field-sm"><label>Total</label><input type="text" id="bm-total" placeholder="e.g. 10 or ?"></div>
+              <div class="field"><label>Unit cells <span id="bm-unit-note" style="font-size:11px;color:#9CA3AF;font-weight:400"></span></label><div class="tog-row"><button class="tog-btn active" data-bmunit="off" onclick="bmSetUnit(this,'off')">Off</button><button class="tog-btn" data-bmunit="on" onclick="bmSetUnit(this,'on')">On</button></div></div>
             </div>
             <div class="sec-hr"></div>
             <div class="seg-block">
@@ -1384,7 +1385,7 @@ let ntShape='square',ntLayout='straight',ntColourMode='full';
 let nlStyle='through',nlColour='grey',nlJumpOpen=false,nlJump2Open=false;
 let nlArcType='single',nlArcType2='single',nlArrow=true,nlArrow2=true;
 let nlCircle='none',nlCircle2='none',nlJumpCol='dark',nlJump2Col='dark';
-let bmColIdx=0,bmMulti=false,bmTotDisp='brace',bmSeg3=false,bmSegT={1:'fill',2:'fill',3:'fill'};
+let bmColIdx=0,bmMulti=false,bmTotDisp='brace',bmSeg3=false,bmSegT={1:'fill',2:'fill',3:'fill'},bmDivided=false;
 
 function openTool(type){
   if(activeTool===type){closeTool();return;}
@@ -1394,7 +1395,7 @@ function openTool(type){
   document.getElementById('tool-panel-'+type).classList.remove('hidden');
   // Reset fields
   if(type==='nl'){document.getElementById('nl-text').value='';document.getElementById('nl-answer').value='';['f-start','f-end','f-step','f-vge','f-hide-from','f-hide-to'].forEach(id=>{const el=document.getElementById(id);if(el){if(id==='f-start')el.value='0';else if(id==='f-end')el.value='20';else if(id==='f-step')el.value='1';else el.value='';}});document.getElementById('nl-preview').innerHTML='<p class="preview-empty">Fill in settings above to preview.</p>';if(nlJumpOpen)nlToggleJump();if(nlJump2Open)nlToggleJump2();}
-  else if(type==='bm'){document.getElementById('bm-text').value='';document.getElementById('bm-answer').value='';['bm-total','bm-seg1-val','bm-seg1-lbl','bm-seg1-brace','bm-seg2-val','bm-seg2-lbl','bm-seg2-brace'].forEach(id=>document.getElementById(id).value='');if(bmSeg3)bmToggleSeg3(false);document.getElementById('bm-preview').innerHTML='<p class="preview-empty">Fill in segment values above to preview.</p>';}
+  else if(type==='bm'){document.getElementById('bm-text').value='';document.getElementById('bm-answer').value='';['bm-total','bm-seg1-val','bm-seg1-lbl','bm-seg1-brace','bm-seg2-val','bm-seg2-lbl','bm-seg2-brace'].forEach(id=>document.getElementById(id).value='');if(bmSeg3)bmToggleSeg3(false);bmDivided=false;document.querySelectorAll('[data-bmunit]').forEach(b=>b.classList.toggle('active',b.dataset.bmunit==='off'));const bmN=document.getElementById('bm-unit-note');if(bmN)bmN.textContent='';document.getElementById('bm-preview').innerHTML='<p class="preview-empty">Fill in segment values above to preview.</p>';}
   else if(type==='text'){document.getElementById('text-q-text').value='';document.getElementById('text-answer').value='';}
   else if(type==='custom'){document.getElementById('custom-q-text').value='';document.getElementById('custom-answer').value='';customResetImage();}
   else if(type==='nt'){document.getElementById('nt-text').value='';document.getElementById('nt-answer').value='';document.getElementById('nt-seq').value='1,2,3,?,5,6';ntShape='square';ntLayout='straight';ntColourMode='full';document.querySelectorAll('[data-ntshape]').forEach(b=>b.classList.toggle('active',b.dataset.ntshape==='square'));document.querySelectorAll('[data-ntlayout]').forEach(b=>b.classList.toggle('active',b.dataset.ntlayout==='straight'));document.querySelectorAll('[data-ntcolmode]').forEach(b=>b.classList.toggle('active',b.dataset.ntcolmode==='full'));autoPreviewNT();}
@@ -1819,6 +1820,8 @@ function initBMPanel(){
   document.querySelectorAll('.tog-btn[data-bmseg]').forEach(b=>b.addEventListener('click',()=>{const seg=parseInt(b.dataset.bmseg);document.querySelectorAll(`.tog-btn[data-bmseg="${seg}"]`).forEach(x=>x.classList.remove('active'));b.classList.add('active');bmSegT[seg]=b.dataset.segtype;autoPreviewBM();}));
   ['bm-total','bm-seg1-val','bm-seg1-lbl','bm-seg1-brace','bm-seg2-val','bm-seg2-lbl','bm-seg2-brace','bm-seg3-val','bm-seg3-lbl','bm-seg3-brace'].forEach(id=>document.getElementById(id)?.addEventListener('input',autoPreviewBM));
 }
+function bmSetUnit(btn,val){document.querySelectorAll('[data-bmunit]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');bmDivided=(val==='on');autoPreviewBM();}
+function bmGetNumericSum(){const s1=parseFloat(document.getElementById('bm-seg1-val')?.value)||0;const s2=parseFloat(document.getElementById('bm-seg2-val')?.value)||0;const s3=bmSeg3?(parseFloat(document.getElementById('bm-seg3-val')?.value)||0):0;return s1+s2+s3;}
 function parseBMV(s){if(!s||s.trim()==='')return undefined;const t=s.trim();if(t==='?')return'?';const n=Number(t);return isNaN(n)?t:n;}
 function getBMConfig(){
   // Default total to '?' when empty — matches standalone bar-model-creator behaviour
@@ -1826,7 +1829,9 @@ function getBMConfig(){
   const total=totalRaw===''?'?':parseBMV(totalRaw);
   const mkSeg=n=>{const v=parseBMV(document.getElementById(`bm-seg${n}-val`).value);if(v===undefined)return null;const sg={value:v};const l=document.getElementById(`bm-seg${n}-lbl`).value.trim();const b=document.getElementById(`bm-seg${n}-brace`).value.trim();if(l)sg.segLabel=l;if(b)sg.braceLabel=b;if(bmSegT[n]==='blank')sg.blank=true;return sg;};
   const segs=[mkSeg(1),mkSeg(2)].filter(Boolean);if(bmSeg3){const s3=mkSeg(3);if(s3)segs.push(s3);}if(!segs.length)return null;
-  return{segments:segs,total,colorIdx:bmColIdx,multi:bmMulti||undefined,topBar:bmTotDisp==='top bar'||undefined,hideTotal:bmTotDisp==='none'||undefined};
+  const bmSum=bmGetNumericSum(),bmDivOk=bmDivided&&bmSum>0&&bmSum<=20;
+  const bmNote=document.getElementById('bm-unit-note');if(bmNote)bmNote.textContent=(bmDivided&&!bmDivOk&&bmSum>0)?'(disabled — total > 20)':'';
+  return{segments:segs,total,colorIdx:bmColIdx,multi:bmMulti||undefined,topBar:bmTotDisp==='top bar'||undefined,hideTotal:bmTotDisp==='none'||undefined,divided:bmDivOk||undefined};
 }
 function bmToggleSeg3(show){bmSeg3=show;document.getElementById('bm-seg3-block').style.display=show?'block':'none';document.getElementById('bm-add-seg3').style.display=show?'none':'inline-flex';if(!show)['bm-seg3-val','bm-seg3-lbl','bm-seg3-brace'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});autoPreviewBM();}
 
