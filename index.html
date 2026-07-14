@@ -1703,6 +1703,11 @@ function buildSharedBatchHeaders(){
 function addSharedBatchRow(defaults={}){
   const idx=sharedBatchRowIdx++;
   const tbody=document.getElementById('shared-batch-tbody');
+  // Inherit question text from the last row if not explicitly provided
+  if(defaults.text===undefined){
+    const lastRow=tbody.querySelector('tr:last-child');
+    if(lastRow)defaults.text=lastRow.querySelector('[data-field="text"]')?.value??'';
+  }
   const tr=document.createElement('tr');tr.dataset.rowIdx=idx;
   const n=(field,val,w=58)=>`<input data-field="${field}" class="batch-input batch-input-num" style="width:${w}px" type="number" value="${val??''}" step="any" oninput="updateSharedPreview(${idx})">`;
   const t=(field,val,cls='batch-input-text')=>`<input data-field="${field}" class="batch-input ${cls}" type="text" value="${esc(String(val??''))}" oninput="updateSharedPreview(${idx})">`;
