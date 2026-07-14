@@ -446,6 +446,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
             <button class="btn btn-ghost" id="bm-add-seg3" style="margin-bottom:4px;font-size:12px" onclick="bmToggleSeg3(true)">+ Third segment</button>
             <div class="preview-box" id="bm-preview"><p class="preview-empty">Fill in segment values above to preview.</p></div>
             <div class="form-actions">
+              <button class="btn-create-more" onclick="openSharedBatch('bm')">⊞ Create more like this</button>
               <button class="btn btn-blue" id="add-q-btn-bm" onclick="addToolQuestion('bm')">+ Add Question</button>
               <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
             </div>
@@ -461,6 +462,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
               <div class="field field-sm"><label>Answer</label><input type="text" id="text-answer" placeholder="e.g. 8"></div>
             </div>
             <div class="form-actions" style="margin-top:14px">
+              <button class="btn-create-more" onclick="openSharedBatch('text')">⊞ Create more like this</button>
               <button class="btn btn-blue" id="add-q-btn-text" onclick="addToolQuestion('text')">+ Add Question</button>
               <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
             </div>
@@ -527,6 +529,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
             </div>
             <div class="preview-box" id="nt-preview"><p class="preview-empty">Fill in a sequence above to preview.</p></div>
             <div class="form-actions">
+              <button class="btn-create-more" onclick="openSharedBatch('nt')">⊞ Create more like this</button>
               <button class="btn btn-blue" id="add-q-btn-nt" onclick="addToolQuestion('nt')">+ Add Question</button>
               <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
             </div>
@@ -559,8 +562,26 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
             </div>
             <canvas id="pv-preview-cv" style="display:block;max-width:100%;border-radius:8px;margin:10px 0"></canvas>
             <div class="form-actions" style="margin-top:10px">
+              <button class="btn-create-more" onclick="openSharedBatch('pv')">⊞ Create more like this</button>
               <button class="btn btn-blue" id="add-q-btn-pv" onclick="addToolQuestion('pv')">+ Add Question</button>
               <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Shared batch panel (BM / NT / Text / PV) ── -->
+        <div class="batch-panel" id="shared-batch-panel">
+          <div class="batch-card">
+            <div class="batch-header">
+              <h2>Batch variations</h2>
+              <button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="closeSharedBatch()">✕ Close</button>
+            </div>
+            <p class="batch-subtitle" id="shared-batch-subtitle"></p>
+            <div class="batch-locked-tags" id="shared-batch-tags"></div>
+            <div class="batch-table-wrap"><table class="batch-table"><thead><tr id="shared-batch-thead"></tr></thead><tbody id="shared-batch-tbody"></tbody></table></div>
+            <div class="batch-actions">
+              <button class="btn btn-ghost" style="font-size:12px" onclick="addSharedBatchRow()">＋ Add row</button>
+              <button class="btn btn-blue" onclick="addAllSharedBatch()">+ Add all as Questions</button>
             </div>
           </div>
         </div>
@@ -1622,6 +1643,139 @@ function addAllBatchQuestions(){
   if(!added){alert('No valid rows to add — each row needs Question text and Answer.');return;}
   if(nuggetState[activeId].status==='not-started')nuggetState[activeId].status='in-progress';
   save();renderQuestions();renderSidebar();renderWorkflow();closeBatchPanel();closeTool();
+}
+
+
+/* ── Shared batch panel (BM / NT / Text / PV) ──────────────────────────────── */
+let sharedBatchTool=null, sharedBatchStructure={}, sharedBatchRowIdx=0;
+
+function openSharedBatch(tool){
+  // Validate current tool config first
+  if(tool==='bm'){const cfg=getBMConfig();if(!cfg){alert('Please fill in at least one segment value.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='pv'){const cfg=getPVConfig();if(!cfg){alert('Please enter a number.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='text'){sharedBatchStructure={};}
+  sharedBatchTool=tool;
+  // Build locked-setting tags
+  const tagsEl=document.getElementById('shared-batch-tags');tagsEl.innerHTML='';
+  const tags=[];
+  if(tool==='bm'){tags.push(`${sharedBatchStructure.segments?.length} segments`,`Colour: swatch ${sharedBatchStructure.colorIdx??0}`);}
+  else if(tool==='nt'){tags.push(`Shape: ${ntShape}`,`Layout: ${ntLayout}`,`Colour: ${ntColourMode}`);}
+  else if(tool==='pv'){tags.push(`Rep: ${sharedBatchStructure.repType}`,`Display: ${sharedBatchStructure.dispMode}`);}
+  tags.forEach(t=>{const s=document.createElement('span');s.className='locked-tag';s.textContent=t;tagsEl.appendChild(s);});
+  // Subtitle
+  const subtitles={bm:'Segment structure is locked. Change segment values and answers per row.',nt:'Shape and layout are locked. Change the sequence and answer per row.',text:'No locked settings — enter question and answer for each row.',pv:'Representation and display mode are locked. Change the number per row.'};
+  document.getElementById('shared-batch-subtitle').textContent=subtitles[tool]||'';
+  // Build table headers
+  buildSharedBatchHeaders();
+  document.getElementById('shared-batch-tbody').innerHTML='';sharedBatchRowIdx=0;
+  // Seed with one row pre-filled from current tool state
+  const seed={};
+  if(tool==='bm'){(sharedBatchStructure.segments||[]).forEach((s,i)=>{seed[`seg${i}`]=s.value;});seed.answer=document.getElementById('bm-answer').value.trim();seed.text=document.getElementById('bm-text').value.trim();}
+  else if(tool==='nt'){seed.seq=document.getElementById('nt-seq').value.trim();seed.answer=document.getElementById('nt-answer').value.trim();seed.text=document.getElementById('nt-text').value.trim();}
+  else if(tool==='pv'){seed.n=sharedBatchStructure.n;seed.answer=document.getElementById('pv-answer').value.trim();seed.text=document.getElementById('pv-text').value.trim();}
+  else if(tool==='text'){seed.answer=document.getElementById('text-answer').value.trim();seed.text=document.getElementById('text-q-text').value.trim();}
+  addSharedBatchRow(seed);
+  const panel=document.getElementById('shared-batch-panel');panel.style.display='block';
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function closeSharedBatch(){document.getElementById('shared-batch-panel').style.display='none';sharedBatchTool=null;}
+
+function buildSharedBatchHeaders(){
+  const tr=document.getElementById('shared-batch-thead');
+  let cols=[];
+  if(sharedBatchTool==='bm'){
+    const n=sharedBatchStructure.segments?.length||2;
+    cols=['Preview','Question'];
+    for(let i=0;i<n;i++)cols.push(`Seg ${i+1}`);
+    cols.push('Answer','');
+  } else if(sharedBatchTool==='nt'){
+    cols=['Preview','Question','Sequence','Answer',''];
+  } else if(sharedBatchTool==='text'){
+    cols=['Question','Answer',''];
+  } else if(sharedBatchTool==='pv'){
+    cols=['Preview','Question','Number','Answer',''];
+  }
+  tr.innerHTML=cols.map(c=>`<th>${c}</th>`).join('');
+}
+
+function addSharedBatchRow(defaults={}){
+  const idx=sharedBatchRowIdx++;
+  const tbody=document.getElementById('shared-batch-tbody');
+  const tr=document.createElement('tr');tr.dataset.rowIdx=idx;
+  const n=(field,val,w=58)=>`<input data-field="${field}" class="batch-input batch-input-num" style="width:${w}px" type="number" value="${val??''}" step="any" oninput="updateSharedPreview(${idx})">`;
+  const t=(field,val,cls='batch-input-text')=>`<input data-field="${field}" class="batch-input ${cls}" type="text" value="${esc(String(val??''))}" oninput="updateSharedPreview(${idx})">`;
+  let cells='';
+  const tool=sharedBatchTool;
+  if(tool!=='text') cells+=`<td class="batch-preview-cell"><div id="sbp-${idx}"></div></td>`;
+  cells+=`<td>${t('text',defaults.text??'')}</td>`;
+  if(tool==='bm'){
+    const segs=sharedBatchStructure.segments||[];
+    segs.forEach((s,i)=>{ cells+=`<td>${n('seg'+i, defaults['seg'+i]??s.value)}</td>`; });
+  } else if(tool==='nt'){
+    cells+=`<td>${t('seq',defaults.seq??'1,2,3,?,5','batch-input-text')}</td>`;
+  } else if(tool==='pv'){
+    cells+=`<td>${n('n',defaults.n??0,72)}</td>`;
+  }
+  cells+=`<td>${t('answer',defaults.answer??'','batch-input-num')}</td>`;
+  cells+=`<td><button class="batch-del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
+  tr.innerHTML=cells;tbody.appendChild(tr);
+  setTimeout(()=>updateSharedPreview(idx),0);
+}
+
+function getSharedBatchRowCfg(tr){
+  const g=field=>tr.querySelector(`[data-field="${field}"]`)?.value.trim()??'';
+  const tool=sharedBatchTool;
+  if(tool==='bm'){
+    const segs=(sharedBatchStructure.segments||[]).map((s,i)=>{
+      const raw=g('seg'+i); const v=raw===''?s.value:(raw==='?'?'?':parseFloat(raw));
+      return {...s, value:v};
+    });
+    return {...sharedBatchStructure, segments:segs};
+  } else if(tool==='nt'){
+    const seq=g('seq');if(!seq)return null;
+    return {...sharedBatchStructure, sequence:seq};
+  } else if(tool==='pv'){
+    const num=parseFloat(g('n'));if(isNaN(num))return null;
+    return {...sharedBatchStructure, n:num, missingVals:sharedBatchStructure.missingVals||[]};
+  }
+  return {};
+}
+
+function updateSharedPreview(idx){
+  const tr=document.querySelector(`tr[data-row-idx="${idx}"]`);
+  const box=document.getElementById(`sbp-${idx}`);
+  if(!tr||!box)return;
+  const tool=sharedBatchTool;
+  try{
+    if(tool==='bm'){const cfg=getSharedBatchRowCfg(tr);if(cfg)box.innerHTML=barModelSVG(cfg);else box.innerHTML='<div class="batch-no-preview">Invalid</div>';}
+    else if(tool==='nt'){const cfg=getSharedBatchRowCfg(tr);if(cfg)box.innerHTML=numberTrackSVG(cfg);else box.innerHTML='<div class="batch-no-preview">Invalid</div>';}
+    else if(tool==='pv'){
+      const cfg=getSharedBatchRowCfg(tr);if(!cfg){box.innerHTML='<div class="batch-no-preview">Invalid</div>';return;}
+      const cv=document.createElement('canvas');pvRender(cv,Object.assign({scale:1.5},cfg));
+      const img=document.createElement('img');img.src=cv.toDataURL();img.style.cssText='max-width:100%;display:block';
+      box.innerHTML='';box.appendChild(img);
+    }
+  } catch(e){box.innerHTML='<div class="batch-no-preview">Error</div>';}
+}
+
+function addAllSharedBatch(){
+  if(!activeId)return;
+  const tool=sharedBatchTool;let added=0;
+  document.querySelectorAll('#shared-batch-tbody tr').forEach(tr=>{
+    const g=field=>tr.querySelector(`[data-field="${field}"]`)?.value.trim()??'';
+    const text=g('text'), answer=g('answer');
+    if(!text||!answer)return;
+    const cfg=getSharedBatchRowCfg(tr);if(cfg===null)return;
+    const id=nextQId++;
+    const q={id,text,answer,type:'exact',image:'',display:'',qaComment:'',
+      visualType:tool==='text'?'text':tool,cfg};
+    nuggetState[activeId].questions.push(q);added++;
+  });
+  if(!added){alert('No valid rows to add — each row needs Question text and Answer.');return;}
+  if(nuggetState[activeId].status==='not-started')nuggetState[activeId].status='in-progress';
+  save();renderQuestions();renderSidebar();renderWorkflow();closeSharedBatch();closeTool();
 }
 
 /* ── BM builder helpers ── */
