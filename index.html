@@ -1714,7 +1714,8 @@ function addSharedBatchRow(defaults={}){
   let cells='';
   const tool=sharedBatchTool;
   if(tool!=='text') cells+=`<td class="batch-preview-cell"><div id="sbp-${idx}"></div></td>`;
-  cells+=`<td>${t('text',defaults.text??'')}</td>`;
+  const textW=tool==='text'?'min(60vw,520px)':'140px';
+  cells+=`<td>${t('text',defaults.text??'','batch-input-text').replace('class="batch-input batch-input-text"',`class="batch-input batch-input-text" style="width:${textW}"`)}</td>`;
   if(tool==='bm'){
     const segs=sharedBatchStructure.segments||[];
     segs.forEach((s,i)=>{ cells+=`<td>${n('seg'+i, defaults['seg'+i]??s.value)}</td>`; });
