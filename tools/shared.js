@@ -130,6 +130,8 @@ function numberLineSVG(config) {
   }
 
   let s = `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">`;
+  const clipId = `bm-clip-${Math.random().toString(36).slice(2,8)}`;
+  s += `<defs><clipPath id="${clipId}"><rect x="${bx}" y="${by}" width="${BAR_W}" height="${BAR_H}" rx="3"/></clipPath></defs>`;
 
   // ── Line ──
   if (terminate) {
@@ -337,9 +339,11 @@ function barModelSVG(config) {
 
     if (divs > 1) {
       const divW = sw / divs;
+      s += `<g clip-path="url(#${clipId})">`;
       for (let d = 0; d < divs; d++) {
         s += `<rect x="${(cx + d * divW).toFixed(1)}" y="${by}" width="${divW.toFixed(1)}" height="${BAR_H}" fill="${segFill}" stroke="${segStroke}" stroke-width="1"/>`;
       }
+      s += `</g>`;
       if (config.multi) {
         const isFirst = i === 0, isLast = i === segments.length - 1;
         const r = 3, sx = cx, sy2 = by + BAR_H, sx2 = cx + sw;
