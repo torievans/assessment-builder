@@ -243,7 +243,7 @@ function nlPanelHTML(){
                 <div class="field"><label>Circle</label><div class="tog-row"><button class="tog-btn active" data-circle="none">None</button><button class="tog-btn" data-circle="start">Start</button><button class="tog-btn" data-circle="end">End</button></div></div>
                 <div class="field"><label>Colour</label><div class="swatch-row" id="jump1-swatch-row"></div></div>
               </div>
-              <button class="jump-toggle open" onclick="nlToggleJump()" style="margin-top:6px">✕ Remove jumps</button>
+              <button class="jump-toggle open" onclick="nlToggleJump()" style="margin-top:6px">✕ Remove jump</button>
               <button class="jump-toggle" id="jump2-toggle-btn" style="margin-top:4px" onclick="nlToggleJump2()">＋ Add second jump</button>
               <div id="jump2-section">
                 <div class="sec-hr" style="margin:10px 0"></div>
