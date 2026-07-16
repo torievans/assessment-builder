@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Year 1 Maths — Assessment Builder</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --hbg:#1C1F2E;--sbg:#1E2235;--shov:#272B40;--sact:#2C3154;
+  --mbg:#F0F2F7;--card:#fff;--border:#E5E8EF;
+  --text:#1F2937;--muted:#6B7280;--dim:#9CA3AF;
+  --blue:#4A8FE0;--green:#10B981;--amber:#F59E0B;--red:#EF4444;
+  --font:'Proxima Soft','Nunito','Arial Rounded MT Bold',-apple-system,system-ui,sans-serif;
+  --sw:228px;--hh:52px;--th:40px;
+}
+body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden;font-size:14px}
+/* Header */
+.hdr{height:var(--hh);background:var(--hbg);display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.07)}
+.hdr-info h1{font-size:14px;font-weight:700;color:#fff;line-height:1}
+.hdr-info p{font-size:11px;color:rgba(255,255,255,.38)}
+.hdr-space{flex:1}
+.hbtn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:rgba(255,255,255,.78);font-family:var(--font);white-space:nowrap;transition:background .12s}
+.hbtn:hover{background:rgba(255,255,255,.11)}
+.hbtn-gold{border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.1);color:#FBBF24}
+.hbtn-gold:hover{background:rgba(251,191,36,.18)}
+.upload-ctr{font-size:11.5px;color:rgba(255,255,255,.45);white-space:nowrap}
+.upload-ctr strong{color:rgba(255,255,255,.8)}
+/* Tabs */
+.tabs{height:var(--th);background:var(--hbg);border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:flex-end;padding:0 16px;flex-shrink:0}
+.tab{padding:8px 14px;font-size:13px;font-weight:600;color:rgba(255,255,255,.42);cursor:pointer;border-bottom:2px solid transparent;transition:color .12s;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--font)}
+.tab:hover{color:rgba(255,255,255,.75)}
+.tab.active{color:#fff;border-bottom-color:var(--blue)}
+/* Layout */
+.app{display:flex;flex:1;overflow:hidden}
+/* Sidebar */
+.sb{width:var(--sw);flex-shrink:0;background:var(--sbg);display:flex;flex-direction:column;overflow:hidden;border-right:1px solid rgba(255,255,255,.04)}
+.sb-stats{display:flex;padding:10px 8px 8px;gap:3px;border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0}
+.stat{flex:1;text-align:center;padding:6px 2px;border-radius:6px;background:rgba(0,0,0,.2);cursor:pointer;transition:background .1s}
+.stat:hover{background:rgba(255,255,255,.05)}
+.stat.af{background:rgba(255,255,255,.09)}
+.stat-n{font-size:17px;font-weight:700;line-height:1;margin-bottom:2px}
+.stat-l{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.35)}
+.s-ip .stat-n{color:#F59E0B}.s-qa .stat-n{color:#60A5FA}.s-rd .stat-n{color:#34D399}.s-up .stat-n{color:#2DD4BF}
+.sb-srch{padding:8px;border-bottom:1px solid rgba(255,255,255,.04);flex-shrink:0}
+.sb-srch input{width:100%;padding:5px 10px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.07);border-radius:6px;color:rgba(255,255,255,.8);font-size:12.5px;font-family:var(--font)}
+.sb-srch input::placeholder{color:rgba(255,255,255,.22)}
+.sb-srch input:focus{outline:none;border-color:rgba(74,143,224,.5)}
+.nl{flex:1;overflow-y:auto;padding:4px 0 16px}
+.nl::-webkit-scrollbar{width:3px}
+.nl::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px}
+.tg-hdr{padding:8px 10px 3px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.25);display:flex;justify-content:space-between;cursor:pointer;user-select:none;margin-top:8px}
+.tg-hdr:hover{color:rgba(255,255,255,.4)}
+.ni{display:flex;align-items:center;gap:7px;padding:6px 10px 6px 12px;cursor:pointer;border-left:2px solid transparent;transition:background .1s}
+.ni:hover{background:var(--shov)}
+.ni.active{background:var(--sact);border-left-color:var(--blue)}
+.ni-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:rgba(255,255,255,.18)}
+.s-in-progress .ni-dot{background:#F59E0B}
+.s-ready-for-qa .ni-dot{background:#60A5FA}
+.s-ready-for-qti .ni-dot{background:#34D399}
+.s-uploaded-to-cms .ni-dot{background:#2DD4BF}
+.ni-name{font-size:12px;color:rgba(255,255,255,.6);flex:1;line-height:1.3}
+.ni.active .ni-name{color:#fff;font-weight:600}
+.ni-cnt{font-size:10px;color:rgba(255,255,255,.22)}
+/* Main */
+.main{flex:1;background:var(--mbg);display:flex;flex-direction:column;overflow:hidden}
+.view{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.view.hidden{display:none}
+.empty{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--muted);text-align:center;padding:48px}
+.empty p{font-size:13px}
+.nd{flex:1;overflow-y:auto;padding:24px 28px 32px;max-width:860px}
+.nd-topic{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600;margin-bottom:4px}
+.nd-title{font-size:24px;font-weight:700;color:var(--text);line-height:1.2;margin-bottom:8px}
+.nd-obj{border-left:3px solid var(--blue);padding:8px 12px;background:rgba(74,143,224,.06);border-radius:0 6px 6px 0;font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:18px}
+/* Workflow */
+.wf{display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.si{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:12.5px;font-weight:600;border:1.5px solid;flex-shrink:0}
+.si-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+.si-ns{border-color:rgba(156,163,175,.35);color:#6B7280;background:#F3F4F6}
+.si-ip{border-color:rgba(245,158,11,.35);color:#D97706;background:rgba(245,158,11,.07)}
+.si-qa{border-color:rgba(96,165,250,.35);color:#2563EB;background:rgba(96,165,250,.07)}
+.si-rd{border-color:rgba(16,185,129,.35);color:#059669;background:rgba(16,185,129,.07)}
+.si-up{border-color:rgba(45,212,191,.35);color:#0D9488;background:rgba(45,212,191,.07)}
+.wfbtn{padding:6px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:opacity .12s;white-space:nowrap}
+.wfbtn:hover{opacity:.85}
+.wfbtn-dark{background:#1F2937;color:#fff}
+.wfbtn-teal{background:#0D9488;color:#fff}
+.wfbtn-green{background:#059669;color:#fff}
+.wfbtn-ghost{background:transparent;border:1.5px solid #D1D5DB;color:#6B7280}
+.wfbtn-ghost:hover{border-color:#9CA3AF;color:#374151}
+/* Question grid */
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.q-card{background:var(--card);border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 1px 8px rgba(0,0,0,.04);overflow:hidden;display:flex;flex-direction:column}
+.q-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 8px}
+.q-num{width:28px;height:28px;border-radius:50%;background:#1F2937;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.q-type{font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px}
+.qt-exact{background:#EFF6FF;color:#2563EB}
+.q-img img{max-width:100%;max-height:190px;object-fit:contain;display:block;margin:0 auto}
+.q-img-ph{display:flex;align-items:center;justify-content:center;height:56px;background:#F9FAFB;border-radius:6px;border:1.5px dashed #E5E7EB;font-size:12px;color:var(--dim);margin:0 14px 8px}
+.q-svg-wrap{padding:8px 14px 4px;overflow:hidden}
+.q-svg-wrap svg{width:100%;height:auto;display:block}
+.q-body{padding:0 14px 10px}
+.q-text{font-size:13.5px;color:var(--text);font-weight:500;line-height:1.45;margin-bottom:10px}
+.q-ans-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:2px}
+.q-ans-val{font-size:22px;font-weight:700;color:var(--green);line-height:1}
+.q-qa{border-top:1px solid #F3F4F6;padding:10px 14px 12px;background:#FAFBFC}
+.q-qa-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);margin-bottom:6px}
+.q-qa-ta{width:100%;background:#fff;border:1.5px solid #E5E7EB;border-radius:6px;padding:8px 10px;font-size:12.5px;font-family:var(--font);color:var(--text);resize:vertical;min-height:52px;line-height:1.5}
+.q-qa-ta:focus{outline:none;border-color:#93C5FD}
+.q-empty-grid{grid-column:1/-1;text-align:center;padding:32px;color:var(--muted);font-size:13px;background:var(--card);border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.06);border:2px dashed var(--border)}
+/* Curriculum map */
+.cm-wrap{flex:1;overflow-y:auto;padding:24px 28px}
+.cm-h1{font-size:22px;font-weight:700;color:var(--text);margin-bottom:3px}
+.cm-sub{font-size:13px;color:var(--muted);margin-bottom:24px}
+.cm-section{margin-bottom:24px}
+.cm-topic-hdr{background:#1F2937;color:#fff;padding:7px 14px;border-radius:6px 6px 0 0;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em}
+.cm-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:0 0 8px 8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.cm-table thead th{padding:8px 14px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);border-bottom:1px solid var(--border);text-align:left}
+.cm-table tbody tr{border-bottom:1px solid #F3F4F6;cursor:pointer;transition:background .1s}
+.cm-table tbody tr:last-child{border-bottom:none}
+.cm-table tbody tr:hover{background:#F9FAFB}
+.cm-table td{padding:10px 14px;font-size:13px;vertical-align:middle}
+.cm-obj{color:var(--muted);font-size:12.5px}
+.cm-name{font-weight:600;color:var(--text)}
+.cm-st{display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;font-weight:500}
+.cm-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cms-ns .cm-dot{background:rgba(156,163,175,.45)}.cms-ns .cm-st{color:var(--dim)}
+.cms-ip .cm-dot{background:#F59E0B}.cms-ip .cm-st{color:#D97706}
+.cms-qa .cm-dot{background:#60A5FA}.cms-qa .cm-st{color:#2563EB}
+.cms-rd .cm-dot{background:#34D399}.cms-rd .cm-st{color:#059669}
+.cms-up .cm-dot{background:#2DD4BF}.cms-up .cm-st{color:#0D9488}
+/* Export view */
+.ex-wrap{flex:1;overflow-y:auto;padding:24px 28px}
+.ex-h1{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text)}
+.ex-sub{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.6}
+.ex-actions{display:flex;gap:8px;margin-bottom:14px}
+.ex-list{display:flex;flex-direction:column;gap:5px;margin-bottom:20px}
+.ex-row{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;transition:background .1s}
+.ex-row:hover{background:#F9FAFB}
+.ex-cb{width:16px;height:16px;cursor:pointer;flex-shrink:0;accent-color:var(--blue)}
+.ex-name{flex:1;font-size:13px;font-weight:500;color:var(--text)}
+.ex-st{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;flex-shrink:0}
+.exs-ns .ex-st{background:#F3F4F6;color:var(--dim)}
+.exs-ip .ex-st{background:rgba(245,158,11,.1);color:#D97706}
+.exs-qa .ex-st{background:rgba(96,165,250,.1);color:#2563EB}
+.exs-rd .ex-st{background:rgba(16,185,129,.1);color:#059669}
+.exs-up .ex-st{background:rgba(45,212,191,.1);color:#0D9488}
+.ex-qcnt{font-size:12px;color:var(--muted);flex-shrink:0}
+.ex-footer{display:flex;gap:10px;align-items:center}
+.ex-prog{font-size:12px;color:var(--muted)}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:opacity .12s;white-space:nowrap}
+.btn:disabled{opacity:.3;cursor:default}
+.btn-blue{background:var(--blue);color:#fff}.btn-blue:hover:not(:disabled){opacity:.88}
+.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--muted);font-size:12.5px;padding:6px 14px}.btn-ghost:hover:not(:disabled){border-color:#9CA3AF;color:var(--text)}
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.hidden{display:none}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.22)}
+.modal-hdr{padding:24px 24px 18px;border-bottom:1px solid #F0F0F0;display:flex;align-items:flex-start;gap:10px}
+.modal-hdr-text{flex:1}
+.modal-hdr-text h2{font-size:20px;font-weight:800;color:#1A1A2E;margin-bottom:3px}
+.modal-hdr-text p{font-size:13.5px;color:#6B7280;line-height:1.45}
+.modal-close{width:36px;height:36px;border-radius:50%;background:#F3F4F6;border:none;cursor:pointer;font-size:16px;color:#6B7280;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .12s}
+.modal-close:hover{background:#E5E7EB;color:#1A1A2E}
+.modal-body{padding:20px 24px 24px;display:flex;flex-direction:column;gap:14px}
+.modal-card{background:#F8F9FB;border:1px solid #EAECEF;border-radius:12px;padding:20px}
+.modal-card-title{font-size:15px;font-weight:700;color:#1A1A2E;margin-bottom:8px}
+.modal-card-desc{font-size:13.5px;color:#6B7280;line-height:1.6;margin-bottom:16px}
+.btn-teal{background:#3B82A0;color:#fff;border-radius:20px;padding:10px 22px;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:var(--font)}
+.btn-teal:hover{opacity:.88}
+.btn-upload{background:#1A1A2E;color:#fff;border-radius:20px;padding:10px 22px;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:var(--font)}
+.btn-upload:hover{opacity:.85}
+
+/* ── Tool picker ── */
+.tool-picker{display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap;padding:0 0 14px;border-bottom:1px solid var(--border)}
+.tool-picker-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-right:4px;white-space:nowrap}
+.tool-tab{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--muted);transition:all .13s;white-space:nowrap}
+.tool-tab:hover{border-color:var(--blue);color:var(--blue)}
+.tool-tab.active{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* ── Tool panel — single column, preview inside form card ── */
+.tool-panel{margin-bottom:24px}
+.tool-panel.hidden{display:none}
+.tp-form{display:block}
+.tp-form.hidden{display:none}
+
+/* Form controls — matches standalone tool style */
+.form-card{background:var(--card);border-radius:8px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06);padding:16px 18px;margin-bottom:12px}
+.form-card:last-child{margin-bottom:0}
+.fc-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:11px}
+.form-row{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:9px;align-items:flex-start}
+.form-row:last-child{margin-bottom:0}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.field input[type=number],.field input[type=text]{padding:7px 13px;border-radius:18px;border:1.5px solid var(--border);font-size:13.5px;font-family:var(--font);color:var(--text);background:#FAFAFA;transition:border-color .13s;min-width:0}
+.field input:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(74,143,224,.1)}
+.field-grow{flex:1}.field-grow input{width:100%}
+.field-sm input{width:72px}
+.tog-row{display:flex;gap:3px;flex-wrap:wrap}
+.tog-btn{padding:5px 11px;border-radius:15px;border:1.5px solid var(--border);font-size:12px;font-weight:600;cursor:pointer;background:#FAFAFA;color:var(--muted);font-family:var(--font);transition:all .1s;white-space:nowrap}
+.tog-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.tog-btn:hover:not(.active){border-color:var(--blue);color:var(--blue)}
+.swatch-row{display:flex;gap:4px;flex-wrap:wrap;padding-top:2px}
+.swatch{width:19px;height:19px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform .1s,border-color .1s;flex-shrink:0;padding:0;outline:none}
+.swatch:hover{transform:scale(1.2)}.swatch.selected{border-color:#1A1A2E;transform:scale(1.12)}
+.sec-hr{border:none;border-top:1px solid var(--border);margin:12px 0}
+.sec-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:7px}
+.jump-toggle{padding:5px 12px;border-radius:15px;border:1.5px dashed var(--border);font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:var(--muted);font-family:var(--font);transition:all .1s;margin-top:6px;display:inline-flex;align-items:center;gap:4px}
+.jump-toggle:hover{border-color:var(--blue);color:var(--blue)}
+.jump-toggle.open{border-style:solid;border-color:var(--red);color:var(--red)}
+#jump-section,#jump2-section{display:none}
+.seg-block{background:#F8F9FB;border-radius:6px;border:1px solid var(--border);padding:11px 13px;margin-bottom:7px}
+.seg-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.seg-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+
+/* Preview box — below form controls, full width */
+.preview-box{background:#fff;border:1px solid var(--border);border-radius:6px;padding:16px 18px;margin-top:14px;margin-bottom:12px;min-height:90px;display:flex;align-items:center;justify-content:center}
+.preview-box svg{width:100%;height:auto;display:block;max-width:480px}
+.preview-empty{font-size:13px;color:var(--dim);text-align:center}
+.form-actions{display:flex;gap:8px;align-items:center;margin-top:4px}
+.btn-create-more{background:#F5F3FF;color:#4C46B6;border:1.5px solid #C4B5FD;font-size:12.5px;font-weight:700;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:var(--font);transition:opacity .12s}
+.btn-create-more:hover{opacity:.82}
+/* Batch panel */
+.batch-panel{display:none;margin-bottom:24px}
+.batch-card{background:var(--card);border-radius:10px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.07);padding:18px 20px}
+.batch-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.batch-header h2{font-size:14px;font-weight:700;color:var(--text)}
+.batch-subtitle{font-size:12px;color:var(--muted);margin-bottom:10px}
+.batch-locked-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.locked-tag{background:#F3F4F6;color:var(--muted);font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em}
+.batch-table-wrap{overflow-x:auto;margin-bottom:14px}
+.batch-table{border-collapse:collapse;width:100%;font-size:12.5px}
+.batch-table th{text-align:left;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:0 6px 8px;white-space:nowrap}
+.batch-table td{padding:4px 6px;vertical-align:middle}
+.batch-table tbody tr:not(:last-child) td{border-bottom:1px solid #F9FAFB}
+.batch-input{padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--font);color:var(--text);background:#fff;transition:border-color .13s}
+.batch-input:focus{outline:none;border-color:var(--blue)}
+.batch-input-num{width:58px}.batch-input-text{width:140px}.batch-input-lbl{width:60px}
+.batch-preview-cell{min-width:220px;max-width:260px;padding-right:10px}
+.batch-preview-cell svg{width:100%;height:auto;display:block}
+.batch-no-preview{font-size:11px;color:var(--dim);text-align:center;padding:8px 0}
+.batch-swatch-wrap{margin-top:6px;display:flex;flex-direction:column;gap:3px}
+.batch-mini-swatch-row{display:flex;align-items:center;gap:3px}
+.batch-swatch-label{font-size:9px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.04em;width:16px;flex-shrink:0}
+.mini-swatch{width:13px;height:13px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .1s,border-color .1s;flex-shrink:0;padding:0;outline:none}
+.mini-swatch:hover{transform:scale(1.2)}.mini-swatch.selected{border-color:#1A1A2E;transform:scale(1.1)}
+.batch-del-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:14px;padding:3px 7px;border-radius:5px;transition:color .12s}
+.batch-del-btn:hover{color:var(--red)}
+.batch-actions{display:flex;gap:8px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+/* Toast */
+#save-toast{position:fixed;bottom:24px;right:24px;padding:10px 18px;border-radius:10px;color:#fff;font-size:13px;font-weight:600;font-family:var(--font);z-index:500;display:none;box-shadow:0 4px 16px rgba(0,0,0,.18);pointer-events:none}
+/* Header extras */
+.hbtn-green{border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.12);color:#34D399}
+.hbtn-green:hover{background:rgba(16,185,129,.22)}
+/* Settings modal */
+.settings-section{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.settings-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#6B7280}
+.settings-input{padding:8px 13px;border-radius:8px;border:1.5px solid #E5E7EB;font-size:13.5px;font-family:var(--font);color:#1A1A2E;background:#F9FAFB;width:100%}
+.settings-input:focus{outline:none;border-color:#4A8FE0;background:#fff}
+.settings-hint{font-size:11.5px;color:#9CA3AF;line-height:1.5}
+.settings-row{display:flex;gap:8px}
+.settings-row .settings-input{flex:1}
+.folder-status{font-size:12px;color:#6B7280;padding:8px 12px;background:#F3F4F6;border-radius:8px;display:flex;align-items:center;gap:6px}
+.folder-status.connected{background:rgba(16,185,129,.08);color:#059669}
+/* Custom question panel */
+.custom-img-drop{border:2px dashed #D1D5DB;border-radius:10px;padding:28px 20px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;background:#FAFBFC}
+.custom-img-drop:hover,.custom-img-drop.drag-over{border-color:#4A8FE0;background:#EFF6FF}
+.custom-img-drop p{font-size:13px;color:#9CA3AF;margin-top:6px}
+.custom-img-drop .drop-icon{font-size:28px}
+.custom-img-preview{max-width:100%;max-height:220px;border-radius:8px;display:block;margin:0 auto}
+.custom-img-clear{background:none;border:none;font-size:11px;color:#EF4444;cursor:pointer;font-family:var(--font);margin-top:6px;display:block;text-align:center;width:100%}
+.q-del-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:13px;padding:3px 6px;border-radius:5px;line-height:1;transition:color .12s,background .12s;font-family:var(--font)}
+.q-del-btn:hover{color:var(--red);background:rgba(239,68,68,.08)}
+.q-card-actions{display:flex;align-items:center;gap:2px}
+.q-edit-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:13px;padding:3px 6px;border-radius:5px;line-height:1;transition:color .12s,background .12s;font-family:var(--font)}
+.q-edit-btn:hover{color:#3B82F6;background:rgba(59,130,246,.08)}
+.q-drag-handle{cursor:grab;color:var(--dim);font-size:17px;padding:0 2px 0 6px;margin-left:4px;border-left:1px solid var(--border);user-select:none;flex-shrink:0;line-height:1;opacity:.45;transition:opacity .12s}
+.q-drag-handle:hover{opacity:.9}
+.q-drag-handle:active{cursor:grabbing}
+.q-card.dragging{opacity:0.35;pointer-events:none}
+.q-card.drop-above{border-top:2px solid #3B82F6}
+.q-card.drop-below{border-bottom:2px solid #3B82F6}
+.q-card.editing{outline:2px solid #3B82F6;outline-offset:1px}
+/* Rename nugget */
+.nd-rename-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:14px;padding:2px 6px;border-radius:4px;line-height:1;transition:color .12s;vertical-align:middle;margin-left:4px}
+.nd-rename-btn:hover{color:var(--blue)}
+.nd-title-wrap{display:flex;align-items:center;gap:4px;margin-bottom:8px}
+.nd-title-input{font-size:24px;font-weight:700;color:var(--text);line-height:1.2;border:none;border-bottom:2px solid var(--blue);background:transparent;font-family:var(--font);width:100%;padding:0;outline:none}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-info">
+    <h1>📐 Year 1 Maths — Assessment Builder</h1>
+    <p>Select an assessment from the sidebar to view or edit questions</p>
+  </div>
+  <div class="hdr-space"></div>
+  <button class="hbtn" id="btn-connect" onclick="connectFolder()">📁 Connect folder</button>
+  <button class="hbtn" onclick="openSettings()">⚙️ Settings</button>
+  <button class="hbtn hbtn-gold" onclick="switchView('export')">🏅 QTI Downloads</button>
+  <span class="upload-ctr" id="upload-ctr"><strong>0</strong> of 59 uploaded</span>
+</header>
+<div id="save-toast"></div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-builder" onclick="switchTab('builder')">📓 Builder</button>
+  <button class="tab" id="tab-curriculum" onclick="switchTab('curriculum')">🗺 Curriculum mapping</button>
+</div>
+
+<div class="app">
+  <aside class="sb">
+    <div class="sb-stats">
+      <div class="stat s-ip" id="stat-ip" onclick="setFilter('in-progress')"><div class="stat-n" id="sn-ip">0</div><div class="stat-l">In Progress</div></div>
+      <div class="stat s-qa" id="stat-qa" onclick="setFilter('ready-for-qa')"><div class="stat-n" id="sn-qa">0</div><div class="stat-l">In QA</div></div>
+      <div class="stat s-rd" id="stat-rd" onclick="setFilter('ready-for-qti')"><div class="stat-n" id="sn-rd">0</div><div class="stat-l">Ready</div></div>
+      <div class="stat s-up" id="stat-up" onclick="setFilter('uploaded-to-cms')"><div class="stat-n" id="sn-up">0</div><div class="stat-l">Uploaded</div></div>
+    </div>
+    <div class="sb-srch"><input type="text" id="sb-search" placeholder="Search nuggets…" oninput="renderSidebar()"></div>
+    <div class="nl" id="nl"></div>
+  </aside>
+
+  <div class="main">
+    <div class="view" id="view-builder">
+      <div id="builder-empty" class="empty"><p>Select an assessment from the sidebar to view or edit questions.</p></div>
+      <div id="builder-detail" class="nd" style="display:none">
+        <div class="nd-topic" id="nd-topic"></div>
+        <div class="nd-title-wrap"><div class="nd-title" id="nd-title"></div><button class="nd-rename-btn" id="nd-rename-btn" onclick="startRenameNugget()" title="Rename this nugget">✏</button><button class="nd-rename-btn" id="nd-refresh-btn" onclick="refreshNugget()" title="Reload from GitHub">↻</button></div>
+        <div class="nd-obj" id="nd-obj"></div>
+        <div class="wf" id="wf"></div>
+
+        <!-- Tool picker -->
+        <div class="tool-picker">
+          <span class="tool-picker-label">Add question:</span>
+          <button class="tool-tab" data-tool="nl" onclick="openTool('nl')">📏 Number Line</button>
+          <button class="tool-tab" data-tool="bm" onclick="openTool('bm')">▭ Bar Model</button>
+          <button class="tool-tab" data-tool="text" onclick="openTool('text')">✏️ Free Text</button>
+          <button class="tool-tab" data-tool="custom" onclick="openTool('custom')">🖼 Custom Image</button>
+          <button class="tool-tab" data-tool="nt" onclick="openTool('nt')">🔢 Number Track</button>
+          <button class="tool-tab" data-tool="nr" onclick="openTool('nr')">🔷 Number Reps</button>
+          <button class="tool-tab" data-tool="pv" onclick="openTool('pv')">📊 PV Representations</button>
+        </div>
+
+        <!-- ── Number Line panel ── -->
+        <div class="tool-panel hidden" id="tool-panel-nl">
+          <div class="form-card">
+            <div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="nl-text" placeholder="e.g. What number is missing?"></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="nl-answer" placeholder="e.g. 7"></div>
+            </div>
+            <div class="form-row">
+              <div class="field field-sm"><label>Start</label><input type="number" id="f-start" value="0"></div>
+              <div class="field field-sm"><label>End</label><input type="number" id="f-end" value="20"></div>
+              <div class="field field-sm"><label>Goes up in</label><input type="number" id="f-step" value="1" min="0.001" step="any"></div>
+              <div class="field field-sm"><label>Label every</label><input type="number" id="f-vge" placeholder="all" step="any"></div>
+              <div class="field field-sm"><label>Hide from</label><input type="number" id="f-hide-from" placeholder="none" step="any"></div>
+              <div class="field field-sm"><label>Hide to</label><input type="number" id="f-hide-to" placeholder="none" step="any"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Style</label><div class="tog-row"><button class="tog-btn active" data-style="through">Through</button><button class="tog-btn" data-style="terminate">Terminate</button></div></div>
+              <div class="field"><label>Colour</label><div class="swatch-row" id="nl-swatch-row"></div></div>
+            </div>
+            <button class="jump-toggle" id="jump-toggle-btn" onclick="nlToggleJump()">＋ Add jumps</button>
+            <div id="jump-section">
+              <div class="sec-hr"></div>
+              <div class="sec-label">Jump 1</div>
+              <div class="form-row">
+                <div class="field field-sm"><label>From</label><input type="number" id="f-from" step="any"></div>
+                <div class="field field-sm"><label>To</label><input type="number" id="f-to" step="any"></div>
+                <div class="field"><label>Arc type</label><div class="tog-row"><button class="tog-btn active" data-arctype="single">Single arc</button><button class="tog-btn" data-arctype="unit">Unit arcs</button></div></div>
+                <div class="field field-sm"><label>Label</label><input type="text" id="f-jump-label" placeholder="+3"></div>
+                <div class="field"><label>Arrow</label><div class="tog-row"><button class="tog-btn active" data-arrow="yes">Yes</button><button class="tog-btn" data-arrow="no">No</button></div></div>
+                <div class="field"><label>Circle</label><div class="tog-row"><button class="tog-btn active" data-circle="none">None</button><button class="tog-btn" data-circle="start">Start</button><button class="tog-btn" data-circle="end">End</button></div></div>
+                <div class="field"><label>Colour</label><div class="swatch-row" id="jump1-swatch-row"></div></div>
+              </div>
+              <button class="jump-toggle open" onclick="nlToggleJump()" style="margin-top:6px">✕ Remove jumps</button>
+              <button class="jump-toggle" id="jump2-toggle-btn" style="margin-top:4px" onclick="nlToggleJump2()">＋ Add second jump</button>
+              <div id="jump2-section">
+                <div class="sec-hr" style="margin:10px 0"></div>
+                <div class="sec-label">Jump 2</div>
+                <div class="form-row">
+                  <div class="field field-sm"><label>From</label><input type="number" id="f-from2" step="any"></div>
+                  <div class="field field-sm"><label>To</label><input type="number" id="f-to2" step="any"></div>
+                  <div class="field"><label>Arc type</label><div class="tog-row"><button class="tog-btn active" data-arctype2="single">Single arc</button><button class="tog-btn" data-arctype2="unit">Unit arcs</button></div></div>
+                  <div class="field field-sm"><label>Label</label><input type="text" id="f-jump-label2" placeholder="+4"></div>
+                  <div class="field"><label>Arrow</label><div class="tog-row"><button class="tog-btn active" data-arrow2="yes">Yes</button><button class="tog-btn" data-arrow2="no">No</button></div></div>
+                  <div class="field"><label>Circle</label><div class="tog-row"><button class="tog-btn active" data-circle2="none">None</button><button class="tog-btn" data-circle2="start">Start</button><button class="tog-btn" data-circle2="end">End</button></div></div>
+                  <div class="field"><label>Colour</label><div class="swatch-row" id="jump2-swatch-row"></div></div>
+                </div>
+                <button class="jump-toggle open" onclick="nlToggleJump2()" style="margin-top:6px">✕ Remove second jump</button>
+              </div>
+            </div>
+            <div class="preview-box" id="nl-preview"><p class="preview-empty">Fill in settings above to preview.</p></div>
+            <div class="form-actions">
+              <button class="btn-create-more" onclick="openBatchPanel()">⊞ Create more like this</button>
+              <button class="btn btn-blue" id="add-q-btn-nl" onclick="addToolQuestion('nl')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── NL Batch panel ── -->
+        <div class="batch-panel" id="nl-batch-panel">
+          <div class="batch-card">
+            <div class="batch-header">
+              <h2>Batch variations</h2>
+              <button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="closeBatchPanel()">✕ Close</button>
+            </div>
+            <p class="batch-subtitle">Arc style is locked from the builder above. Numbers and colours can be changed per row.</p>
+            <div class="batch-locked-tags" id="batch-locked-tags"></div>
+            <div class="batch-table-wrap"><table class="batch-table"><thead><tr id="batch-thead-row"></tr></thead><tbody id="batch-tbody"></tbody></table></div>
+            <div class="batch-actions">
+              <button class="btn btn-ghost" style="font-size:12px" onclick="addBatchRow()">＋ Add row</button>
+              <button class="btn btn-blue" onclick="addAllBatchQuestions()">+ Add all as Questions</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Bar Model panel ── -->
+        <div class="tool-panel hidden" id="tool-panel-bm">
+          <div class="form-card">
+            <div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="bm-text" placeholder="e.g. What is the missing number?"></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="bm-answer" placeholder="e.g. 6"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Colour</label><div class="swatch-row" id="bm-swatch-row"></div></div>
+              <div class="field"><label>Colour mode</label><div class="tog-row"><button class="tog-btn active" data-colmode="single">Single</button><button class="tog-btn" data-colmode="multi">Multi</button></div></div>
+              <div class="field"><label>Total display</label><div class="tog-row"><button class="tog-btn active" data-totdisp="brace">Brace</button><button class="tog-btn" data-totdisp="top bar">Top bar</button><button class="tog-btn" data-totdisp="none">None</button></div></div>
+              <div class="field field-sm"><label>Total</label><input type="text" id="bm-total" placeholder="e.g. 10 or ?"></div>
+            </div>
+            <div class="sec-hr"></div>
+            <div class="seg-block">
+              <div class="seg-hdr"><span class="seg-title">Segment 1</span><div class="tog-row"><button class="tog-btn active" data-bmseg="1" data-segtype="fill">Fill</button><button class="tog-btn" data-bmseg="1" data-segtype="blank">Blank</button></div></div>
+              <div class="form-row"><div class="field field-sm"><label>Value</label><input type="text" id="bm-seg1-val" placeholder="4 or ?"></div><div class="field field-grow"><label>Bar label</label><input type="text" id="bm-seg1-lbl"></div><div class="field field-grow"><label>Brace label</label><input type="text" id="bm-seg1-brace"></div></div>
+            </div>
+            <div class="seg-block">
+              <div class="seg-hdr"><span class="seg-title">Segment 2</span><div class="tog-row"><button class="tog-btn active" data-bmseg="2" data-segtype="fill">Fill</button><button class="tog-btn" data-bmseg="2" data-segtype="blank">Blank</button></div></div>
+              <div class="form-row"><div class="field field-sm"><label>Value</label><input type="text" id="bm-seg2-val" placeholder="6 or ?"></div><div class="field field-grow"><label>Bar label</label><input type="text" id="bm-seg2-lbl"></div><div class="field field-grow"><label>Brace label</label><input type="text" id="bm-seg2-brace"></div></div>
+            </div>
+            <div class="seg-block" id="bm-seg3-block" style="display:none">
+              <div class="seg-hdr"><span class="seg-title">Segment 3</span><div style="display:flex;gap:7px;align-items:center"><div class="tog-row"><button class="tog-btn active" data-bmseg="3" data-segtype="fill">Fill</button><button class="tog-btn" data-bmseg="3" data-segtype="blank">Blank</button></div><button class="btn btn-ghost" style="padding:3px 10px;font-size:11px" onclick="bmToggleSeg3(false)">✕ Remove</button></div></div>
+              <div class="form-row"><div class="field field-sm"><label>Value</label><input type="text" id="bm-seg3-val" placeholder="3 or ?"></div><div class="field field-grow"><label>Bar label</label><input type="text" id="bm-seg3-lbl"></div><div class="field field-grow"><label>Brace label</label><input type="text" id="bm-seg3-brace"></div></div>
+            </div>
+            <button class="btn btn-ghost" id="bm-add-seg3" style="margin-bottom:4px;font-size:12px" onclick="bmToggleSeg3(true)">+ Third segment</button>
+            <div class="preview-box" id="bm-preview"><p class="preview-empty">Fill in segment values above to preview.</p></div>
+            <div class="form-actions">
+              <button class="btn-create-more" onclick="openSharedBatch('bm')">⊞ Create more like this</button>
+              <button class="btn btn-blue" id="add-q-btn-bm" onclick="addToolQuestion('bm')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Free Text panel ── -->
+        <div class="tool-panel hidden" id="tool-panel-text">
+          <div class="form-card">
+            <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px">For abstract questions with no image — e.g. <strong>4 + 4 = ?</strong> or <strong>How many more to make 10?</strong></p>
+            <div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="text-q-text" placeholder="e.g. 4 + 4 = ?"></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="text-answer" placeholder="e.g. 8"></div>
+            </div>
+            <div class="form-actions" style="margin-top:14px">
+              <button class="btn btn-blue" id="add-q-btn-text" onclick="addToolQuestion('text')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom image tool panel -->
+        <div class="tool-panel hidden" id="tool-panel-custom">
+          <div class="form-card">
+            <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px">For questions with a unique image — e.g. a photo, hand-drawn diagram, or screenshot.</p>
+            <div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="custom-q-text" placeholder="e.g. How many squares can you see?"></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="custom-answer" placeholder="e.g. 4"></div>
+            </div>
+            <div style="margin:12px 0 4px">
+              <div class="fc-title">Image</div>
+              <div class="custom-img-drop" id="custom-drop-zone" onclick="document.getElementById('custom-file-input').click()" ondragover="customDragOver(event)" ondragleave="customDragLeave(event)" ondrop="customDrop(event)">
+                <div id="custom-drop-inner">
+                  <div class="drop-icon">🖼</div>
+                  <p>Click to choose or drag an image here</p>
+                </div>
+              </div>
+              <input type="file" id="custom-file-input" accept="image/*" style="display:none" onchange="customFileSelected(this)">
+            </div>
+            <div class="form-actions" style="margin-top:14px">
+              <button class="btn btn-blue" id="add-q-btn-custom" onclick="addToolQuestion('custom')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Number Track panel ── -->
+        <div class="tool-panel hidden" id="tool-panel-nt">
+          <div class="form-card">
+            <div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="nt-text" placeholder="e.g. What number is missing?"></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="nt-answer" placeholder="e.g. 7"></div>
+            </div>
+            <div class="form-row">
+              <div class="field field-grow">
+                <label>Sequence</label>
+                <input type="text" id="nt-seq" placeholder="e.g. 1,2,3,?,5,6" value="1,2,3,?,5,6" oninput="autoPreviewNT()">
+                <div style="font-size:0.72rem;color:#9CA3AF;margin-top:3px">Separate with commas · <strong>_</strong> = blank · <strong>?</strong> = answer cell</div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Shape</label><div class="tog-row" id="nt-shape-row">
+                <button class="tog-btn active" data-ntshape="square" onclick="ntSetShape(this)"><svg width="18" height="18" viewBox="0 0 34 34"><rect x="3" y="3" width="28" height="28" rx="7" fill="currentColor"/></svg></button>
+                <button class="tog-btn" data-ntshape="circle" onclick="ntSetShape(this)"><svg width="18" height="18" viewBox="0 0 34 34"><circle cx="17" cy="17" r="13" fill="currentColor"/></svg></button>
+                <button class="tog-btn" data-ntshape="balloon" onclick="ntSetShape(this)"><svg width="18" height="22" viewBox="0 0 34 42"><path d="M 17.95,35.78 L 19.69,40.00 L 14.31,40.00 L 16.05,35.78 C 10.80,34.56 2.50,24.03 2.50,16.50 C 2.50,8.49 8.99,2.00 17.00,2.00 C 25.01,2.00 31.50,8.49 31.50,16.50 C 31.50,24.03 23.20,34.56 17.95,35.78 Z" fill="currentColor"/></svg></button>
+                <button class="tog-btn" data-ntshape="star" onclick="ntSetShape(this)"><svg width="18" height="18" viewBox="0 0 34 34"><path d="M 30.74,13.67 C 30.48,12.87 29.74,12.33 28.90,12.33 L 21.22,12.33 L 18.84,5.02 C 18.58,4.23 17.84,3.69 17.00,3.69 C 16.16,3.69 15.42,4.23 15.16,5.02 L 12.78,12.33 L 5.10,12.33 C 4.26,12.33 3.52,12.87 3.26,13.67 C 3.00,14.47 3.28,15.34 3.96,15.84 L 10.18,20.35 L 7.80,27.65 C 7.54,28.45 7.83,29.33 8.51,29.82 C 9.19,30.31 10.11,30.31 10.79,29.82 L 17.00,25.31 L 23.21,29.82 C 23.55,30.07 23.95,30.19 24.35,30.19 C 24.75,30.19 25.15,30.07 25.49,29.82 C 26.17,29.33 26.46,28.45 26.20,27.65 L 23.82,20.35 L 30.04,15.84 C 30.72,15.34 31.00,14.47 30.74,13.67 Z" fill="currentColor"/></svg></button>
+                <button class="tog-btn" data-ntshape="cloud" onclick="ntSetShape(this)"><svg width="22" height="14" viewBox="0 0 34 24"><path d="M 28.90,12.29 C 28.90,12.24 28.91,12.19 28.91,12.14 C 28.91,9.67 26.90,7.66 24.43,7.66 C 23.92,7.66 23.44,7.74 22.99,7.90 C 22.26,5.05 19.68,2.94 16.60,2.94 C 13.10,2.94 10.24,5.67 10.01,9.11 C 9.68,9.01 9.32,8.95 8.96,8.95 C 7.08,8.95 5.54,10.39 5.38,12.22 C 3.46,12.61 2.00,14.31 2.00,16.34 C 2.00,18.65 3.89,20.54 6.20,20.54 L 27.80,20.54 C 30.11,20.54 32.00,18.65 32.00,16.34 C 32.00,14.41 30.68,12.78 28.90,12.29 Z" fill="currentColor"/></svg></button>
+              </div></div>
+              <div class="field"><label>Layout</label><div class="tog-row">
+                <button class="tog-btn active" data-ntlayout="straight" onclick="ntSetLayout(this)">Straight</button>
+                <button class="tog-btn" data-ntlayout="ascending" onclick="ntSetLayout(this)">Ascending</button>
+                <button class="tog-btn" data-ntlayout="descending" onclick="ntSetLayout(this)">Descending</button>
+              </div></div>
+              <div class="field"><label>Colour mode</label><div class="tog-row">
+                <button class="tog-btn active" data-ntcolmode="full" onclick="ntSetColMode(this)">Filled</button>
+                <button class="tog-btn" data-ntcolmode="light" onclick="ntSetColMode(this)">Light</button>
+                <button class="tog-btn" data-ntcolmode="outline" onclick="ntSetColMode(this)">Outline</button>
+              </div></div>
+            </div>
+            <div class="preview-box" id="nt-preview"><p class="preview-empty">Fill in a sequence above to preview.</p></div>
+            <div class="form-actions">
+              <button class="btn-create-more" onclick="openSharedBatch('nt')">⊞ Create more like this</button>
+              <button class="btn btn-blue" id="add-q-btn-nt" onclick="addToolQuestion('nt')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Number Representations panel ── -->
+        <div class="tool-panel hidden" id="tool-panel-nr">
+          <div class="form-card">
+            <div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="nr-text" placeholder="e.g. Show 7 on a ten frame."></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="nr-answer" placeholder="e.g. 7"></div>
+            </div>
+            <div class="form-row" style="align-items:center">
+              <div class="field field-sm"><label>Number</label>
+                <div style="display:flex;align-items:center;gap:4px">
+                  <button class="tog-btn" onclick="nrChangeNum(-1)" style="width:30px;height:30px;padding:0">−</button>
+                  <input type="number" id="nr-num-in" min="1" max="20" value="5" style="width:46px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetNum(parseInt(this.value))">
+                  <button class="tog-btn" onclick="nrChangeNum(1)" style="width:30px;height:30px;padding:0">+</button>
+                </div>
+              </div>
+              <div class="field"><label>Representation</label>
+                <div class="tog-row">
+                  <button class="tog-btn active" data-nrrep="frames" onclick="nrSetRep(this)">Frames</button>
+                  <button class="tog-btn" data-nrrep="beads" onclick="nrSetRep(this)">Beads</button>
+                  <button class="tog-btn" data-nrrep="multilink" onclick="nrSetRep(this)">Multilink</button>
+                  <button class="tog-btn" data-nrrep="numicon" onclick="nrSetRep(this)">Numicon</button>
+                </div>
+              </div>
+            </div>
+            <!-- Sub-options: Frames -->
+            <div id="nr-opts-frames">
+              <div class="form-row">
+                <div class="field"><label>Frame type</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrft="5" onclick="nrSetFT(this)">5-frame</button>
+                    <button class="tog-btn" data-nrft="10" onclick="nrSetFT(this)">10-frame</button>
+                  </div>
+                </div>
+                <div class="field"><label>Colour 1</label><div class="swatch-row" id="nr-sw-fc1"></div></div>
+                <div class="field"><label>Split</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrfsp="off" onclick="nrSetFSplit(this,false)">Off</button>
+                    <button class="tog-btn" data-nrfsp="on" onclick="nrSetFSplit(this,true)">On</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-fsplit-row" class="form-row" style="display:none">
+                <div class="field"><label>Colour 2</label><div class="swatch-row" id="nr-sw-fc2"></div></div>
+                <div class="field field-sm"><label>Split at</label>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <button class="tog-btn" onclick="nrChangeFSplit(-1)" style="width:28px;height:28px;padding:0">−</button>
+                    <input type="number" id="nr-fsplit-in" min="1" max="19" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetFSplitAt(parseInt(this.value))">
+                    <button class="tog-btn" onclick="nrChangeFSplit(1)" style="width:28px;height:28px;padding:0">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Sub-options: Beads -->
+            <div id="nr-opts-beads" style="display:none">
+              <div class="form-row">
+                <div class="field"><label>Preset</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrbp="colour" onclick="nrSetBeadPreset(this)">Colour</button>
+                    <button class="tog-btn" data-nrbp="rw" onclick="nrSetBeadPreset(this)">R/W</button>
+                  </div>
+                </div>
+                <div class="field"><label>Group size</label>
+                  <div class="tog-row">
+                    <button class="tog-btn" data-nrbg="2" onclick="nrSetBG(this)">2</button>
+                    <button class="tog-btn active" data-nrbg="5" onclick="nrSetBG(this)">5</button>
+                    <button class="tog-btn" data-nrbg="10" onclick="nrSetBG(this)">10</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-bead-col-row" class="form-row">
+                <div class="field"><label>Colour A</label><div class="swatch-row" id="nr-sw-ba"></div></div>
+                <div class="field"><label>Colour B</label><div class="swatch-row" id="nr-sw-bb"></div></div>
+              </div>
+            </div>
+            <!-- Sub-options: Multilink -->
+            <div id="nr-opts-multilink" style="display:none">
+              <div class="form-row">
+                <div class="field"><label>Layout</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrml="10" onclick="nrSetML(this)">1×10</button>
+                    <button class="tog-btn" data-nrml="5" onclick="nrSetML(this)">2×5</button>
+                  </div>
+                </div>
+                <div id="nr-ml-fill-row" class="field" style="display:none"><label>Fill</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrmf="row" onclick="nrSetMLFill(this)">Row</button>
+                    <button class="tog-btn" data-nrmf="col" onclick="nrSetMLFill(this)">Col</button>
+                  </div>
+                </div>
+                <div class="field"><label>Colour</label><div class="swatch-row" id="nr-sw-mc"></div></div>
+                <div class="field"><label>Split</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrmsp="off" onclick="nrSetMLSplit(this,false)">Off</button>
+                    <button class="tog-btn" data-nrmsp="on" onclick="nrSetMLSplit(this,true)">On</button>
+                  </div>
+                </div>
+                <div id="nr-ml-sep10-row" class="field" style="display:none"><label>Separate at 10</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrmsg="off" onclick="nrSetMLGap(this,false)">Off</button>
+                    <button class="tog-btn" data-nrmsg="on" onclick="nrSetMLGap(this,true)">On</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-mlsplit-row" class="form-row" style="display:none">
+                <div class="field"><label>Colour 2</label><div class="swatch-row" id="nr-sw-mc2"></div></div>
+                <div class="field field-sm"><label>Split at</label>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <button class="tog-btn" onclick="nrChangeMLSplit(-1)" style="width:28px;height:28px;padding:0">−</button>
+                    <input type="number" id="nr-mlsplit-in" min="1" max="19" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetMLSplitAt(parseInt(this.value))">
+                    <button class="tog-btn" onclick="nrChangeMLSplit(1)" style="width:28px;height:28px;padding:0">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Sub-options: Numicon -->
+            <div id="nr-opts-numicon" style="display:none">
+              <div class="form-row">
+                <div class="field"><label>Split</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrnsp="off" onclick="nrSetNISplit(this,false)">Off</button>
+                    <button class="tog-btn" data-nrnsp="on" onclick="nrSetNISplit(this,true)">On</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-nisplit-row" class="form-row" style="display:none">
+                <div class="field field-sm"><label>Split at</label>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <button class="tog-btn" onclick="nrChangeNISplit(-1)" style="width:28px;height:28px;padding:0">−</button>
+                    <input type="number" id="nr-nisplit-in" min="1" max="10" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetNISplitAt(parseInt(this.value))">
+                    <button class="tog-btn" onclick="nrChangeNISplit(1)" style="width:28px;height:28px;padding:0">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="preview-box" id="nr-preview"><p class="preview-empty">Select a number above to preview.</p></div>
+            <div class="form-actions">
+              <button class="btn-create-more" onclick="openSharedBatch('nr')">⊞ Create more like this</button>
+              <button class="btn btn-blue" id="add-q-btn-nr" onclick="addToolQuestion('nr')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PV Representations panel -->
+        <div class="tool-panel hidden" id="tool-panel-pv">
+          <div class="form-card">
+            <div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="pv-text" placeholder="e.g. What number is shown?"></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="pv-answer" placeholder="e.g. 342"></div>
+            </div>
+            <div class="form-row" style="align-items:center">
+              <div class="field field-sm"><label>Number</label>
+                <div style="display:flex;align-items:center;gap:4px">
+                  <button class="tog-btn" onclick="pvChangeNum(-1)" style="width:30px;height:30px;padding:0">−</button>
+                  <input type="number" id="pv-num-in" min="0" step="0.001" value="24" style="width:80px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="pvSetN(parseFloat(this.value))">
+                  <button class="tog-btn" onclick="pvChangeNum(1)" style="width:30px;height:30px;padding:0">+</button>
+                </div>
+              </div>
+              <div class="field"><label>Representation</label>
+                <div class="tog-row">
+                  <button class="tog-btn active" data-pvrep="blocks"   onclick="pvSetRep(this)">PV Blocks</button>
+                  <button class="tog-btn"        data-pvrep="counters" onclick="pvSetRep(this)">PV Counters</button>
+                  <button class="tog-btn"        data-pvrep="numbers"  onclick="pvSetRep(this)">Numbers</button>
+                </div>
+              </div>
+              <div class="field"><label>Display</label>
+                <div class="tog-row">
+                  <button class="tog-btn active" data-pvmode="standalone" onclick="pvSetMode(this)">Standalone</button>
+                  <button class="tog-btn"        data-pvmode="grid"       onclick="pvSetMode(this)">PV Grid</button>
+                  <button class="tog-btn"        data-pvmode="partwhole"  onclick="pvSetMode(this)">Part-Whole</button>
+                </div>
+              </div>
+              <div class="field" id="pv-eq-field" style="display:none"><label>Equation</label>
+                <div class="tog-row">
+                  <button class="tog-btn active" data-pveq="none"   onclick="pvSetEqMode(this)">Parts only</button>
+                  <button class="tog-btn"        data-pveq="before" onclick="pvSetEqMode(this)">1234 = parts</button>
+                  <button class="tog-btn"        data-pveq="after"  onclick="pvSetEqMode(this)">Parts = 1234</button>
+                </div>
+              </div>
+            </div>
+            <div id="pv-blk-color-field" class="form-row">
+              <div class="field"><label>Block colours</label>
+                <div style="display:flex;gap:6px;margin-bottom:6px">
+                  <button class="tog-btn active" id="pv-preset-counter" onclick="pvApplyPreset('counter',this)">Match counters</button>
+                  <button class="tog-btn" id="pv-preset-paleblue" onclick="pvApplyPreset('paleblue',this)">Pale blue</button>
+                </div>
+                <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1000s</span><input type="color" id="pv-col-1000" value="#788CB4" oninput="pvSetBlkColor(1000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">100s</span><input type="color" id="pv-col-100" value="#50B4A0" oninput="pvSetBlkColor(100,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">10s</span><input type="color" id="pv-col-10" value="#F0B478" oninput="pvSetBlkColor(10,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1s</span><input type="color" id="pv-col-1" value="#C86464" oninput="pvSetBlkColor(1,this.value)"></div>
+                </div>
+              </div>
+            </div>
+            <div id="pv-ctr-color-field" class="form-row" style="display:none">
+              <div class="field"><label>Counter &amp; grid colours</label>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">M</span><input type="color" id="pv-cc-1000000" value="#288C50" oninput="pvSetPVColor(1000000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">HTh</span><input type="color" id="pv-cc-100000" value="#50B4C8" oninput="pvSetPVColor(100000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">TTh</span><input type="color" id="pv-cc-10000" value="#B478B4" oninput="pvSetPVColor(10000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">Th</span><input type="color" id="pv-cc-1000" value="#788CB4" oninput="pvSetPVColor(1000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">H</span><input type="color" id="pv-cc-100" value="#50B4A0" oninput="pvSetPVColor(100,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">T</span><input type="color" id="pv-cc-10" value="#F0B478" oninput="pvSetPVColor(10,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">O</span><input type="color" id="pv-cc-1" value="#C86464" oninput="pvSetPVColor(1,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1/10</span><input type="color" id="pv-cc-tenth" value="#C878B4" oninput="pvSetPVColor(0.1,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1/100</span><input type="color" id="pv-cc-hundredth" value="#F0B0D4" oninput="pvSetPVColor(0.01,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1/1000</span><input type="color" id="pv-cc-thousandth" value="#F0A090" oninput="pvSetPVColor(0.001,this.value)"></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Hide as ?</label><div class="tog-row" id="pv-missing-row"><span style="font-size:0.78rem;color:#9CA3AF;font-style:italic">Enter a number above</span></div></div>
+            </div>
+            <div class="preview-box" id="pv-preview" style="padding:10px;min-height:80px">
+              <canvas id="pv-canvas" style="max-width:100%;height:auto;display:block;margin:auto"></canvas>
+            </div>
+            <div class="form-actions">
+              <button class="btn-create-more" onclick="openSharedBatch('pv')">⊞ Create more like this</button>
+              <button class="btn btn-blue" id="add-q-btn-pv" onclick="addToolQuestion('pv')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ── Shared batch panel (BM / NT / NR / PV) ── -->
+        <div class="batch-panel" id="shared-batch-panel">
+          <div class="batch-card">
+            <div class="batch-header">
+              <h2>Batch variations</h2>
+              <button class="btn btn-ghost" style="padding:4px 10px;font-size:11px" onclick="closeSharedBatch()">✕ Close</button>
+            </div>
+            <p class="batch-subtitle" id="shared-batch-subtitle"></p>
+            <div class="batch-locked-tags" id="shared-batch-tags"></div>
+            <div class="batch-table-wrap"><table class="batch-table"><thead><tr id="shared-batch-thead"></tr></thead><tbody id="shared-batch-tbody"></tbody></table></div>
+            <div class="batch-actions">
+              <button class="btn btn-ghost" style="font-size:12px" onclick="addSharedBatchRow()">＋ Add row</button>
+              <button class="btn btn-blue" onclick="addAllSharedBatch()">+ Add all as Questions</button>
+            </div>
+          </div>
+        </div>
+        <div class="q-grid" id="q-grid"></div>
+      </div>
+    </div>
+
+    <div class="view hidden" id="view-curriculum">
+      <div class="cm-wrap" id="cm-wrap"></div>
+    </div>
+
+    <div class="view hidden" id="view-export">
+      <div class="ex-wrap">
+        <div class="ex-h1">QTI Downloads</div>
+        <div class="ex-sub">Select the nuggets to include. Nuggets marked <strong>Ready</strong> are pre-selected.</div>
+        <div class="ex-actions">
+          <button class="btn btn-ghost" onclick="selectAllEx(true)">Select all with questions</button>
+          <button class="btn btn-ghost" onclick="selectAllEx(false)">Deselect all</button>
+        </div>
+        <div class="ex-list" id="ex-list"></div>
+        <div class="ex-footer">
+          <button class="btn btn-blue" id="ex-btn" onclick="batchExport()">↓ Export selected ZIP</button>
+          <span class="ex-prog" id="ex-prog"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="json-file" accept=".json" style="display:none" onchange="handleJSONUpload(this)">
+
+<div class="modal-overlay hidden" id="ei-modal" onclick="closeEIModal(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-hdr-text"><h2>↕ Export / Import State</h2><p>Share statuses and comments between devices or colleagues</p></div>
+      <button class="modal-close" onclick="closeEIModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-card">
+        <div class="modal-card-title">📤 Export</div>
+        <div class="modal-card-desc">Download a JSON file with all nugget statuses, QA comments, and questions. Send this file to a colleague, or keep it as a backup.</div>
+        <button class="btn-teal" onclick="downloadJSON()">Download state.json</button>
+      </div>
+      <div class="modal-card">
+        <div class="modal-card-title">📥 Import</div>
+        <div class="modal-card-desc">Load a state.json file to apply someone else's statuses and comments. This will overwrite your current state.</div>
+        <button class="btn-upload" onclick="document.getElementById('json-file').click()">Upload state.json</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Settings modal -->
+<div class="modal-overlay hidden" id="settings-modal" onclick="closeSettings(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-hdr-text"><h2>⚙️ Settings</h2><p>Connect your project folder and GitHub repo for auto-save</p></div>
+      <button class="modal-close" onclick="closeSettings()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-card">
+        <div class="modal-card-title">📁 Project folder</div>
+        <div class="modal-card-desc">Grant access to your local project folder. Questions will be saved in <code>question-data/{nugget}/</code> — each nugget gets its own folder containing its JSON and any images.</div>
+        <div class="folder-status" id="folder-status-display">Not connected</div>
+        <div style="margin-top:10px">
+          <button class="btn-teal" onclick="connectFolder()">Connect folder</button>
+        </div>
+      </div>
+      <div class="modal-card">
+        <div class="modal-card-title">☁️ GitHub auto-commit</div>
+        <div class="modal-card-desc">Enter your GitHub details to commit question files automatically on every save. Leave blank to skip GitHub sync.</div>
+        <div class="settings-section">
+          <div class="settings-label">GitHub owner / repo</div>
+          <div class="settings-row">
+            <input class="settings-input" id="gh-owner-input" placeholder="torievans" style="flex:1">
+            <span style="align-self:center;color:#9CA3AF;font-weight:700">/</span>
+            <input class="settings-input" id="gh-repo-input" placeholder="assessment-builder" style="flex:2">
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-label">Personal access token</div>
+          <input class="settings-input" id="gh-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+          <div class="settings-hint">Needs <strong>repo</strong> scope. Stored only in this browser — never committed to the repo.</div>
+        </div>
+        <button class="btn-teal" onclick="saveSettings()">Save settings</button>
+      </div>
+      <div class="modal-card">
+        <div class="modal-card-title">🔄 Migrate data folders</div>
+        <div class="modal-card-desc">If you have question data from before July 2026, click below to rename the old folders on GitHub to the new ID-only format. Requires a GitHub token above.</div>
+        <button class="btn-teal" onclick="migrateOldFolders()">Migrate now</button>
+        <div id="migrate-status" style="font-size:12px;color:#6B7280;margin-top:8px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="tools/shared.js"></script>
+<script src="tools/nl.js"></script>
+<script src="tools/bm.js"></script>
+<script src="tools/nt.js"></script>
+<script src="tools/nr.js"></script>
+<script src="tools/pv.js"></script>
+<script>
+'use strict';
+/* ── Palette & SVG renderers (from tools/shared.js) ── */
+const FONT        = SHARED_FONT;
+const LABEL_COLOR = NL_LABEL_COLOR;
+/* ── Nuggets ── */
+const NUGGETS=[
+  {id:1,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-10 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:2,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-10 what next? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:3,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1- 20 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:4,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1- 20 what next? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:5,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-20 whats missing? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:6,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-20 with 1 blank (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:7,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-20 with 2 blanks (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:8,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-20 mixed number of blanks (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:9,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1-10 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:10,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1-10 what next? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:11,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1- 20 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:12,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1- 20 what next? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:13,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1-20 whats missing? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:14,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1-20 with 1 blank (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:15,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1-20 with 2 blanks (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:16,topic:'Number – Number & Place Value',subtopic:'counting backwards 1-20',name:'1-20 mixed number of blanks (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:17,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:18,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 what next? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:19,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 whats missing? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:20,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 whats missing? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:21,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 with 1 blank (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:22,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 with 2 blanks (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:23,topic:'Number – Number & Place Value',subtopic:'counting forwards 20-100',name:'20-100 mixed number of blanks (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:24,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:25,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 what next? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:26,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 whats missing? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:27,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 whats missing? (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:28,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 with 1 blank (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:29,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 with 2 blanks (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:30,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'20-100 mixed number of blanks (number line)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:31,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'count in 2s with pictures 0-12 - groups',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:32,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'count in 2s with pictures 0-12 - array',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:33,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'count in 2s on a number line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:34,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'count in 2s with pictures 12-24 - groups',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:35,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'count in 2s with pictures 12-24 - array',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:36,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'count in 2s on a number line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:37,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'missing numbers 0-12',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:38,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'missing numbers 12-24',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:39,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'whats next 1 blank',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:40,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'whats next 2 blanks',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:41,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'count in 5s with pictures 0-30 - groups',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:42,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'count in 5s with pictures 0-30 - array',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:43,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'count in 5s on a number line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:44,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'count in 5s with pictures 30-60 - groups',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:45,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'count in 5s with pictures 30-60 - array',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:46,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'count in 5s on a number line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:47,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'missing numbers 0-30',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:48,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'missing numbers 30-60',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:49,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'whats next 1 blank',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:50,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'whats next 2 blanks',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:51,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s with pictures 0-50 - groups',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:52,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s with pictures 0-50 - place value blocks',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:53,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s with pictures 0-50 - array',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:54,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s on a number line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:55,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s with pictures 50-100 - groups',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:56,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s with pictures 50-100 array',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:57,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s with pictures 50-100 - place value blocks',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:58,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'count in 10s on a number line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:59,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'missing numbers 0-30',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:60,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'missing numbers 30-60',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:61,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'whats next 1 blank',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:62,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'whats next 2 blanks',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:63,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one more with images 0-5',obj:'given a number, identify one more and one less'},
+  {id:64,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one more with a number line 0-10',obj:'given a number, identify one more and one less'},
+  {id:65,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one more with a number line 0- 20',obj:'given a number, identify one more and one less'},
+  {id:66,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one more abstract 0-10',obj:'given a number, identify one more and one less'},
+  {id:67,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one more abstract 0-20',obj:'given a number, identify one more and one less'},
+  {id:68,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one more abstract 20-100',obj:'given a number, identify one more and one less'},
+  {id:69,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one less with images 0-5',obj:'given a number, identify one more and one less'},
+  {id:70,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one less with a number line 0-10',obj:'given a number, identify one more and one less'},
+  {id:71,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one less with a number line 0- 20',obj:'given a number, identify one more and one less'},
+  {id:72,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one less abstract 0-10',obj:'given a number, identify one more and one less'},
+  {id:73,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one less abstract 0-20',obj:'given a number, identify one more and one less'},
+  {id:74,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'one less abstract 20-100',obj:'given a number, identify one more and one less'},
+  {id:75,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'mixed one more/less with images 0-5',obj:'given a number, identify one more and one less'},
+  {id:76,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'mixed one more/less with a number line 0-10',obj:'given a number, identify one more and one less'},
+  {id:77,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'mixed one more/less with a number line 0- 20',obj:'given a number, identify one more and one less'},
+  {id:78,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'mixed one more/less abstract 0-10',obj:'given a number, identify one more and one less'},
+  {id:79,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'mixed one more/less abstract 0-20',obj:'given a number, identify one more and one less'},
+  {id:80,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'mixed one more/less abstract 20-100',obj:'given a number, identify one more and one less'},
+  {id:81,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'1-5 in frame',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:82,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'1-5 in groups',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:83,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'6-10 in frame',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:84,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'6-9 in groups',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:85,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'1-10 in frame layout without frame',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:86,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'1-10 using place value blocks',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:87,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 11-20',name:'objects in a 10 frame',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:88,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 11-20',name:'beads',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:89,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 11-20',name:'numicon',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:90,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 11-20',name:'multicubes',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:91,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 11-20',name:'place value blocks',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:92,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'place value blocks - what number is represented 10-50 (tens only)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:93,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'place value blocks - what number is represented 50-100 (tens only)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:94,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'place value blocks - what number is represented 10-50 (tens and ones)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:95,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'place value blocks - what number is represented 50-100 (tens and ones)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:96,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'How many tens are there in?',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:97,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'How many ones are there in?',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:98,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'multi choice which group has more ...?',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:99,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'multi choice which group has fewer ...?',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:100,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'multi choice mixed more/fewer',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:101,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'multi choice more than/ less than/ equal to (images - 10)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:102,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'multi choice more than/ less than/ equal to (image 10-20)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:103,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'multi choice more than/ less than/ equal to (20-100 with place value blocks)',obj:'identify and represent numbers using objects and pictorial representations including the number line, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:104,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read words write numerals -1-5',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:105,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read words write numerals -6-10',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:106,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read words write numerals -11-15',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:107,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read words write numerals -16-20',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:108,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read numerals write words -1-5',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:109,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read numerals write words -6-10',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:110,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read numerals write words -11-15',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:111,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'read numerals write words -16-20',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:112,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'mixed read and write 1 -10',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:113,topic:'Number – Number & Place Value',subtopic:'read and write numbers from 1 to 20 in numerals and words',name:'mixed read and write 11-20',obj:'read and write numbers from 1 to 20 in numerals and words'},
+  {id:114,topic:'Number – Addition & Subtraction',subtopic:'understanding + - =',name:'What sign is missing from the calculation image _ image _ image',obj:'read, write and interpret mathematical statements involving addition (+), subtraction (–) and equals (=) signs'},
+  {id:115,topic:'Number – Addition & Subtraction',subtopic:'understanding + - =',name:'What sign is missing from the calculation image _ image _ numerical answer',obj:'read, write and interpret mathematical statements involving addition (+), subtraction (–) and equals (=) signs'},
+  {id:116,topic:'Number – Addition & Subtraction',subtopic:'understanding + - =',name:'What sign is missing from the calculation number _ number _ numerical answer',obj:'read, write and interpret mathematical statements involving addition (+), subtraction (–) and equals (=) signs'},
+  {id:117,topic:'Number – Addition & Subtraction',subtopic:'understanding + - =',name:'What sign is missing from the calculation numerical answer _ number _ number',obj:'read, write and interpret mathematical statements involving addition (+), subtraction (–) and equals (=) signs'},
+  {id:118,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'MC which numicon piece would make 5',obj:'represent and use number bonds and related subtraction facts within 20'},
+  {id:119,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'images inside frame',obj:'represent and use number bonds and related subtraction facts within 21'},
+  {id:120,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'frame layout, no frame',obj:'represent and use number bonds and related subtraction facts within 22'},
+  {id:121,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'bar model with divisions',obj:'represent and use number bonds and related subtraction facts within 23'},
+  {id:122,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'bar model without divisions',obj:'represent and use number bonds and related subtraction facts within 24'},
+  {id:123,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'Abstract a + _ = c',obj:'represent and use number bonds and related subtraction facts within 25'},
+  {id:124,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'Abstract _ + b = c',obj:'represent and use number bonds and related subtraction facts within 26'},
+  {id:125,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 5',name:'bar model abstract mix of parts missing',obj:'represent and use number bonds and related subtraction facts within 27'},
+  {id:126,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'MC which numicon piece would make 10',obj:'represent and use number bonds and related subtraction facts within 28'},
+  {id:127,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'images inside frame',obj:'represent and use number bonds and related subtraction facts within 29'},
+  {id:128,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'frame layout, no frame',obj:'represent and use number bonds and related subtraction facts within 30'},
+  {id:129,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'bar model with divisions',obj:'represent and use number bonds and related subtraction facts within 31'},
+  {id:130,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'bar model without divisions',obj:'represent and use number bonds and related subtraction facts within 32'},
+  {id:131,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'Abstract a + _ = c',obj:'represent and use number bonds and related subtraction facts within 33'},
+  {id:132,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'Abstract _ + b = c',obj:'represent and use number bonds and related subtraction facts within 34'},
+  {id:133,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 10',name:'bar model abstract mix of parts missing',obj:'represent and use number bonds and related subtraction facts within 35'},
+  {id:134,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'images inside frame',obj:'represent and use number bonds and related subtraction facts within 36'},
+  {id:135,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'frame layout, no frame',obj:'represent and use number bonds and related subtraction facts within 37'},
+  {id:136,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'bar model with divisions',obj:'represent and use number bonds and related subtraction facts within 38'},
+  {id:137,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'bar model without divisions',obj:'represent and use number bonds and related subtraction facts within 39'},
+  {id:138,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'Abstract a + _ = c',obj:'represent and use number bonds and related subtraction facts within 40'},
+  {id:139,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'Abstract _ + b = c',obj:'represent and use number bonds and related subtraction facts within 41'},
+  {id:140,topic:'Number – Addition & Subtraction',subtopic:'number bonds to 20',name:'bar model abstract mix of parts missing',obj:'represent and use number bonds and related subtraction facts within 42'},
+  {id:141,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 0-3 - images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:142,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'4-9 + 0-3 - images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:143,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 4-9 - images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:144,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'3-5 + 3-5 - images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:145,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 0-3 - number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:146,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'4-9 + 0-3 -number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:147,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 4-9 - number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:148,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'3-5 + 3-5 - number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:149,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 0-3 - bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:150,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'4-9 + 0-3 -bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:151,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 4-9 - bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:152,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'3-5 + 3-5 - bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:153,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 0-3 - bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:154,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'4-9 + 0-3 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:155,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 4-9 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:156,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'3-5 + 3-5 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:157,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'bar model with divisions _ + b = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:158,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'bar model with divisions a + _ = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:159,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'bar model without divisions _ + b = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:160,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'bar model without divisions a + _ = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:161,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 0-3 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:162,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'4-9 + 0-3 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:163,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 4-9 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:164,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'3-5 + 3-5 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:165,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'4-9 + 0-3 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:166,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'0-3 + 4-9 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:167,topic:'Number – Addition & Subtraction',subtopic:'adding up to 10',name:'3-5 + 3-5 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:168,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'0-3 - 0-3 - images - number',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:169,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 -0-3 - images - number',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:170,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 4-9 - images - number',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:171,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'0-3 - 0-3 - bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:172,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 0-3 -bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:173,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 4-9 -bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:174,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'0-3 _ 0-3 - bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:175,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 0-3 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:176,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 4-9 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:177,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'bar model with divisions c - b = _',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:178,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'bar model with divisions c - _ = a',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:179,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'bar model without divisions c - b = _',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:180,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'bar model without divisions c - _ = a',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:181,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'0-3 - 0-3 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:182,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 -0-3 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:183,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 4-9 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:184,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'0-3 - 0-3 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:185,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 0-3 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:186,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 10',name:'4-9 - 4-9 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:187,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'10-19 + 1 - 4 -images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:188,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'0-4 + 10-19  -images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:189,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'5-10 + 5-10  -images',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:190,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'10-19 + 1 - 4 -number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:191,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'0-4 + 10-19  -number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:192,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'5-10 + 5-10  -number lines',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:193,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'10-19 + 1 - 4 -bar models with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:194,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'0-4 + 10-19  -bar models with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:195,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'5-10 + 5-10  -bar models with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:196,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'10-19 + 1 - 4 -bar models without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:197,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'0-4 + 10-19  -bar models without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:198,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'5-10 + 5-10  -bar models without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:199,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'bar model with divisions _ + b = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:200,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'bar model with divisions a + _ = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:201,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'bar model without divisions _ + b = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:202,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'bar model without divisions a + _ = c',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:203,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'10-19 + 1 - 4 -abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:204,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'0-4 + 10-19  -abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:205,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'5-10 + 5-10  -abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:206,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'10-19 + 1 - 4 -abstract mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:207,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'0-4 + 10-19  -abstract mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:208,topic:'Number – Addition & Subtraction',subtopic:'adding up to 20',name:'5-10 + 5-10  -abstract mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:209,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 0-4 - images - number',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:210,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 5-9 - images - number',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:211,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 11-19 - images - number',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:212,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 0-4 - bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:213,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 5-9 -bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:214,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 11-19 -bar model with divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:215,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 0-4  - bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:216,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 5-9 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:217,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 11-19 -  bar model without divisions',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:218,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'bar model with divisions c - b = _',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:219,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'bar model with divisions c - _ = a',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:220,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'bar model without divisions c - b = _',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:221,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'bar model without divisions c - _ = a',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:222,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 0-4 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:223,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'4-9 -0-3 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:224,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 11-19 - abstract',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:225,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 0-4 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:226,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 5-9 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:227,topic:'Number – Addition & Subtraction',subtopic:'subtracting up to 20',name:'14-19 - 11-19 - abstract missing number mixed',obj:'add and subtract one-digit and two-digit numbers to 20, including zero'},
+  {id:228,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'0-5 + 0-5 -images',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 9'},
+  {id:229,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'11-15 + 0-5 -images',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 10'},
+  {id:230,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'7-13 + 7-13 -images',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 11'},
+  {id:231,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'0-5 + 0-5 -number line',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 12'},
+  {id:232,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'11-15 + 0-5 -number line',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 13'},
+  {id:233,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'7-13 + 7-13  -number line',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 14'},
+  {id:234,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'0-5 + 0-5 -number line - missing number problems',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 15'},
+  {id:235,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'11-15 + 0-5 -number line - missing number problems',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 16'},
+  {id:236,topic:'Number – Addition & Subtraction',subtopic:'Addition word problems 1-20 with pictorial representations',name:'7-13 + 7-13  -number line - missing number problems',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 17'},
+  {id:237,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'5-10 - 0-4 - images',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 18'},
+  {id:238,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'14-19 - 0-4 images',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 19'},
+  {id:239,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'14-19 - 7-13 images',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 20'},
+  {id:240,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'5-10 - 0-4 - number line',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 21'},
+  {id:241,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'14-19 - 0-4 number line',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 22'},
+  {id:242,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'14-19 - 7-13 number line',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 23'},
+  {id:243,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'5-10 - 0-4 - number line - missing number problems',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 24'},
+  {id:244,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'14-19 - 0-4 number line - missing number problems',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 25'},
+  {id:245,topic:'Number – Addition & Subtraction',subtopic:'Subtraction word problems 1-20 with pictorial representations',name:'14-19 - 7-13 number line - missing number problems',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 26'},
+  {id:246,topic:'Number – Addition & Subtraction',subtopic:'Mixed word problems 1-20 with pictorial representations',name:'easy',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 27'},
+  {id:247,topic:'Number – Addition & Subtraction',subtopic:'Mixed word problems 1-20 with pictorial representations',name:'medium',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 28'},
+  {id:248,topic:'Number – Addition & Subtraction',subtopic:'Mixed word problems 1-20 with pictorial representations',name:'hard',obj:'solve one-step problems that involve addition and subtraction, using concrete objects and pictorial representations, and missing number problems such as 7 = □ – 29'},
+  {id:249,topic:'Number – Multiplication & Division',subtopic:'multiplying by 2 with pictorial representation/ arrays',name:'2-12 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:250,topic:'Number – Multiplication & Division',subtopic:'multiplying by 2 with pictorial representation/ arrays',name:'12-24 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:251,topic:'Number – Multiplication & Division',subtopic:'multiplying by 2 with pictorial representation/ arrays',name:'2-12 arrays',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:252,topic:'Number – Multiplication & Division',subtopic:'multiplying by 2 with pictorial representation/ arrays',name:'12-24 arrays',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:253,topic:'Number – Multiplication & Division',subtopic:'multiplying by 5 with pictorial representation/ arrays',name:'5-30 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:254,topic:'Number – Multiplication & Division',subtopic:'multiplying by 5 with pictorial representation/ arrays',name:'30-60 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:255,topic:'Number – Multiplication & Division',subtopic:'multiplying by 5 with pictorial representation/ arrays',name:'5-30 arrays',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:256,topic:'Number – Multiplication & Division',subtopic:'multiplying by 5 with pictorial representation/ arrays',name:'30-60 arrays',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:257,topic:'Number – Multiplication & Division',subtopic:'multiplying by 10 with pictorial representation/ arrays',name:'10-60 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:258,topic:'Number – Multiplication & Division',subtopic:'multiplying by 10 with pictorial representation/ arrays',name:'60- 100 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:259,topic:'Number – Multiplication & Division',subtopic:'multiplying by 10 with pictorial representation/ arrays',name:'10-60 arrays',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:260,topic:'Number – Multiplication & Division',subtopic:'multiplying by 10 with pictorial representation/ arrays',name:'60- 100 arrays',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:261,topic:'Number – Multiplication & Division',subtopic:'dividing by 2',name:'2-12 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:262,topic:'Number – Multiplication & Division',subtopic:'dividing by 2',name:'12-24 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:263,topic:'Number – Multiplication & Division',subtopic:'dividing by 5',name:'5-30 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:264,topic:'Number – Multiplication & Division',subtopic:'dividing by 5',name:'30-60 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:265,topic:'Number – Multiplication & Division',subtopic:'dividing by 10',name:'10-60 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:266,topic:'Number – Multiplication & Division',subtopic:'dividing by 10',name:'60- 100 images',obj:'solve one-step problems involving multiplication and division, by calculating the answer using concrete objects, pictorial representations and arrays with the support of the teacher'},
+  {id:267,topic:'Number – Fractions',subtopic:'recognise, find and name a half as one of two equal parts of an object, shape or quantity',name:'identify half of an object',obj:'recognise, find and name a half as one of two equal parts of an object, shape or quantity'},
+  {id:268,topic:'Number – Fractions',subtopic:'recognise, find and name a half as one of two equal parts of an object, shape or quantity',name:'identifying half of a shape',obj:'recognise, find and name a half as one of two equal parts of an object, shape or quantity'},
+  {id:269,topic:'Number – Fractions',subtopic:'recognise, find and name a half as one of two equal parts of an object, shape or quantity',name:'identifying half of a quantity',obj:'recognise, find and name a half as one of two equal parts of an object, shape or quantity'},
+  {id:270,topic:'Number – Fractions',subtopic:'recognise, find and name a half as one of two equal parts of an object, shape or quantity',name:'find half of a quantity - with images (0-10)',obj:'recognise, find and name a half as one of two equal parts of an object, shape or quantity'},
+  {id:271,topic:'Number – Fractions',subtopic:'recognise, find and name a half as one of two equal parts of an object, shape or quantity',name:'find half of a quantity - with images (12-20)',obj:'recognise, find and name a half as one of two equal parts of an object, shape or quantity'},
+  {id:272,topic:'Number – Fractions',subtopic:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity',name:'identify a quarter of an object',obj:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity'},
+  {id:273,topic:'Number – Fractions',subtopic:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity',name:'identifying a quarter of a shape',obj:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity'},
+  {id:274,topic:'Number – Fractions',subtopic:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity',name:'identifying a quarter of a quantity',obj:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity'},
+  {id:275,topic:'Number – Fractions',subtopic:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity',name:'find a quarter of a quantity - with images (0-10)',obj:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity'},
+  {id:276,topic:'Number – Fractions',subtopic:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity',name:'find a quarter of a quantity - with images (12-20)',obj:'recognise, find and name a quarter as one of four equal parts of an object, shape or quantity'}
+];
+const TOPICS=[...new Set(NUGGETS.map(n=>n.topic))];
+const STATUS_LABELS={'not-started':'Not started','in-progress':'In progress','ready-for-qa':'Ready for QA','ready-for-qti':'Ready for QTI','uploaded-to-cms':'Uploaded to CMS'};
+const STATUS_CM={'not-started':'ns','in-progress':'ip','ready-for-qa':'qa','ready-for-qti':'rd','uploaded-to-cms':'up'};
+
+/* ── File System & GitHub ── */
+let folderHandle=null;
+let ghToken=localStorage.getItem('gh-token')||'';
+let ghOwner=localStorage.getItem('gh-owner')||'torievans';
+let ghRepo=localStorage.getItem('gh-repo')||'assessment-builder';
+
+async function connectFolder(){
+  if(!window.showDirectoryPicker){alert('File System Access API is not supported in this browser. Use Chrome.');return;}
+  try{
+    folderHandle=await window.showDirectoryPicker({mode:'readwrite'});
+    updateFolderStatus();
+    showToast('✓ Folder connected');
+    closeSettings();
+  }catch(e){if(e.name!=='AbortError')showToast('⚠ Could not connect: '+e.message,true);}
+}
+function updateFolderStatus(){
+  const btn=document.getElementById('btn-connect');
+  const disp=document.getElementById('folder-status-display');
+  if(folderHandle){
+    btn.textContent='📁 Connected';btn.classList.add('hbtn-green');
+    if(disp){disp.textContent='✓ Folder connected';disp.classList.add('connected');}
+  }else{
+    btn.textContent='📁 Connect folder';btn.classList.remove('hbtn-green');
+    if(disp){disp.textContent='Not connected';disp.classList.remove('connected');}
+  }
+}
+// Returns custom name if set, otherwise default name from NUGGETS array
+function nuggetDisplayName(nid){
+  return nuggetState[nid]?.customName||NUGGETS.find(n=>n.id===nid)?.name||`Nugget ${nid}`;
+}
+// Slug = ID + slugified current display name, so folders are always human-readable.
+// Renaming a nugget changes the slug; the next save writes to the new folder automatically.
+function nameToSlugPart(name){
+  return name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);
+}
+function nuggetSlug(nid){
+  return`nugget-${String(nid).padStart(3,'0')}-${nameToSlugPart(nuggetDisplayName(nid))}`;
+}
+// Fallback slugs tried during loading when the current-name slug isn't found.
+// Covers: ID-only (transitional format) and pre-July-2026 named folders.
+const LEGACY_SLUG_MAP={
+  1:'nugget-001-counting-forwards-1-20',
+  2:'nugget-013-number-line-1-10',
+};
+function legacySlug(nid){return LEGACY_SLUG_MAP[nid]||null;}
+// ── Rename nugget ──
+function startRenameNugget(){
+  if(!activeId)return;
+  const titleEl=document.getElementById('nd-title');
+  const renBtn=document.getElementById('nd-rename-btn');
+  const current=nuggetDisplayName(activeId);
+  const inp=document.createElement('input');
+  inp.type='text';inp.className='nd-title-input';inp.value=current;
+  inp.onblur=()=>saveNuggetRename(inp.value);
+  inp.onkeydown=e=>{if(e.key==='Enter')inp.blur();if(e.key==='Escape'){inp.value=current;inp.blur();}};
+  titleEl.parentNode.replaceChild(inp,titleEl);renBtn.style.display='none';
+  inp.focus();inp.select();
+}
+function saveNuggetRename(newName){
+  if(!activeId)return;
+  const trimmed=newName.trim();
+  if(!trimmed)return;
+  // Restore title element
+  const inp=document.querySelector('.nd-title-input');
+  const renBtn=document.getElementById('nd-rename-btn');
+  if(inp){
+    const titleEl=document.createElement('div');titleEl.className='nd-title';titleEl.id='nd-title';
+    titleEl.textContent=trimmed;inp.parentNode.replaceChild(titleEl,inp);
+  }
+  if(renBtn)renBtn.style.display='';
+  // Save custom name
+  const defaultName=NUGGETS.find(n=>n.id===activeId)?.name||'';
+  nuggetState[activeId].customName=trimmed===defaultName?undefined:trimmed;
+  save();renderSidebar();
+}
+async function loadNuggetFromFile(nid){
+  const slug=nuggetSlug(nid);       // current name-based slug (e.g. nugget-001-1-10-what-next-number-track)
+  const idSlug=`nugget-${String(nid).padStart(3,'0')}`;  // ID-only fallback
+  const lSlug=legacySlug(nid);     // pre-July-2026 hardcoded fallback, or null
+  // Build ordered list of slugs to try (skip duplicates / nulls)
+  const candidates=[slug,idSlug,...(lSlug?[lSlug]:[])].filter((s,i,a)=>a.indexOf(s)===i);
+  // 1. Try connected local folder
+  if(folderHandle){
+    try{
+      const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:false});
+      for(const s of candidates){
+        try{const nDir=await qdDir.getDirectoryHandle(s,{create:false});const fh=await nDir.getFileHandle(`${s}.json`,{create:false});return JSON.parse(await (await fh.getFile()).text());}catch(e){}
+      }
+    }catch(e){}
+  }
+  // 2. Fetch from server (GitHub Pages) — try each candidate slug
+  for(const s of candidates){
+    try{const r=await fetch(`question-data/${s}/${s}.json`,{cache:'no-store'});if(r.ok)return await r.json();}catch(e){}
+  }
+  return null;
+}
+async function saveNuggetToFile(nid){
+  const ns=nuggetState[nid];if(!ns)return;
+  const slug=nuggetSlug(nid);   // name-based, human-readable (e.g. nugget-001-1-10-what-next-number-track)
+  const idSlug=`nugget-${String(nid).padStart(3,'0')}`;  // ID-only canonical path
+  const today=new Date().toISOString().slice(0,10);
+  const customName=nuggetState[nid]?.customName;
+  const data={nuggetId:nid,status:ns.status,nextQId,questions:ns.questions.map(q=>({...q,updatedAt:q.updatedAt||today,createdAt:q.createdAt||today})),...(customName&&{customName})};
+  const json=JSON.stringify(data,null,2);
+  let localOk=false,ghOk=false;
+  // Save to local folder (name-based path only — readable on disk)
+  if(folderHandle){
+    try{
+      const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:true});
+      const nDir=await qdDir.getDirectoryHandle(slug,{create:true});
+      const fh=await nDir.getFileHandle(`${slug}.json`,{create:true});
+      const w=await fh.createWritable();await w.write(json);await w.close();
+      localOk=true;
+    }catch(e){showToast('⚠ Local save failed: '+e.message,true);}
+  }
+  // Save to GitHub: write BOTH the name-based path (readable) and the ID-only path (stable fallback).
+  // The ID-only path ensures any browser can find the latest data even after a rename.
+  if(ghToken){
+    try{
+      await commitToGitHub(`question-data/${slug}/${slug}.json`,json);
+      // Silently also update the ID-only canonical path (ignore errors — secondary)
+      try{
+        const idData={...data};  // same content
+        await commitToGitHub(`question-data/${idSlug}/${idSlug}.json`,JSON.stringify(idData,null,2));
+      }catch(e){}
+      ghOk=true;
+    }catch(e){showToast('⚠ GitHub save failed: '+e.message,true);}
+  }
+  if(localOk||ghOk){showToast(`✓ Saved nugget ${nid}${ghOk?' + GitHub':''}`);}
+  else if(!folderHandle&&!ghToken){showToast('⚠ No save destination — add a GitHub token in Settings',true);}
+}
+async function saveImageToFile(nid,filename,dataURL){
+  const slug=nuggetSlug(nid);
+  const ghPath=`question-data/${slug}/${filename}`;
+  const base64=dataURL.split(',')[1];
+  if(folderHandle){
+    try{
+      const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:true});
+      const nDir=await qdDir.getDirectoryHandle(slug,{create:true});
+      const bin=atob(base64);const arr=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+      const fh=await nDir.getFileHandle(filename,{create:true});
+      const w=await fh.createWritable();await w.write(arr.buffer);await w.close();
+    }catch(e){console.error('Image local save failed',e);}
+  }
+  if(ghToken){
+    try{await commitToGitHub(ghPath,base64,true);}
+    catch(e){console.error('GitHub image commit failed',e);}
+  }
+  return ghPath;
+}
+async function commitToGitHub(path,content,isBinary=false){
+  const base=`https://api.github.com/repos/${ghOwner}/${ghRepo}`;
+  const hdrs={'Authorization':`token ${ghToken}`,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};
+  let sha=null;
+  try{const r=await fetch(`${base}/contents/${path}`,{headers:hdrs});if(r.ok){const d=await r.json();sha=d.sha;}}catch(e){}
+  const encodedContent=isBinary?content:btoa(unescape(encodeURIComponent(content)));
+  const body={message:`Update ${path}`,content:encodedContent,...(sha&&{sha})};
+  const r=await fetch(`${base}/contents/${path}`,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});
+  if(!r.ok)throw new Error(`GitHub API ${r.status}`);
+}
+function showToast(msg,isError=false){
+  const t=document.getElementById('save-toast');
+  t.textContent=msg;t.style.background=isError?'#EF4444':'#10B981';t.style.display='block';
+  clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',3500);
+}
+function openSettings(){
+  document.getElementById('gh-owner-input').value=ghOwner;
+  document.getElementById('gh-repo-input').value=ghRepo;
+  document.getElementById('gh-token-input').value=ghToken;
+  updateFolderStatus();
+  document.getElementById('settings-modal').classList.remove('hidden');
+}
+function closeSettings(e){if(!e||e.target===document.getElementById('settings-modal'))document.getElementById('settings-modal').classList.add('hidden');}
+function saveSettings(){
+  ghOwner=document.getElementById('gh-owner-input').value.trim()||'torievans';
+  ghRepo=document.getElementById('gh-repo-input').value.trim()||'assessment-builder';
+  ghToken=document.getElementById('gh-token-input').value.trim();
+  localStorage.setItem('gh-owner',ghOwner);localStorage.setItem('gh-repo',ghRepo);localStorage.setItem('gh-token',ghToken);
+  showToast('✓ Settings saved');closeSettings();
+}
+
+async function migrateOldFolders(){
+  if(!ghToken){alert('Add a GitHub token in Settings first.');return;}
+  const statusEl=document.getElementById('migrate-status');
+  statusEl.textContent='Checking…';
+  // Map: [oldNuggetId, newNuggetId, old name string for slug]
+  const migrations=[
+    {oldId:1, newId:1, oldName:'counting-forwards-1-20'},
+    {oldId:13,newId:2, oldName:'number-line-1-10'},
+  ];
+  let done=0,skipped=0;
+  for(const m of migrations){
+    const oldSlug=`nugget-${String(m.oldId).padStart(3,'0')}-${m.oldName}`;
+    const newSlug=`nugget-${String(m.newId).padStart(3,'0')}`;
+    const oldJsonPath=`question-data/${oldSlug}/${oldSlug}.json`;
+    const newJsonPath=`question-data/${newSlug}/${newSlug}.json`;
+    statusEl.textContent=`Checking ${oldSlug}…`;
+    try{
+      // Try to read old file
+      const base=`https://api.github.com/repos/${ghOwner}/${ghRepo}`;
+      const hdrs={'Authorization':`token ${ghToken}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
+      const getR=await fetch(`${base}/contents/${oldJsonPath}`,{headers:hdrs});
+      if(!getR.ok){statusEl.textContent=`${oldSlug} not found, skipping.`;skipped++;continue;}
+      const oldFile=await getR.json();
+      const oldContent=atob(oldFile.content.replace(/\n/g,''));
+      const parsed=JSON.parse(oldContent);
+      // Update nuggetId to new ID
+      parsed.nuggetId=m.newId;
+      const newContentStr=JSON.stringify(parsed,null,2);
+      const newContentB64=btoa(unescape(encodeURIComponent(newContentStr)));
+      // Check if new file already exists (get SHA)
+      let newSha=null;
+      try{const chk=await fetch(`${base}/contents/${newJsonPath}`,{headers:hdrs});if(chk.ok){const d=await chk.json();newSha=d.sha;}}catch(e){}
+      // Write new file
+      const putBody={message:`Migrate ${oldSlug} → ${newSlug}`,content:newContentB64,...(newSha&&{sha:newSha})};
+      const putR=await fetch(`${base}/contents/${newJsonPath}`,{method:'PUT',headers:hdrs,body:JSON.stringify(putBody)});
+      if(!putR.ok){statusEl.textContent=`Failed to write ${newSlug}: ${putR.status}`;continue;}
+      // Delete old file
+      await fetch(`${base}/contents/${oldJsonPath}`,{method:'DELETE',headers:hdrs,body:JSON.stringify({message:`Remove legacy ${oldSlug}`,sha:oldFile.sha})});
+      done++;
+      statusEl.textContent=`Migrated ${oldSlug} → ${newSlug}`;
+    }catch(e){statusEl.textContent=`Error migrating ${oldSlug}: ${e.message}`;}
+  }
+  const msg=`✓ Migration complete: ${done} moved, ${skipped} already done.`;
+  statusEl.textContent=msg;showToast(msg);
+}
+
+/* ── State ── */
+let nuggetState={};let activeId=null;let activeTab='builder';let filter='all';let collapseMap={};let nextQId=1;
+const STORE='maths-ab-v3';
+const SEED={1:{status:'ready-for-qti',questions:[
+  {id:1001,text:'What number comes next?',answer:'6', image:'counting-forwards-1-20-qti/q01.png',type:'exact',display:'',qaComment:'',visualType:null,cfg:{}},
+  {id:1002,text:'What number comes next?',answer:'11',image:'counting-forwards-1-20-qti/q02.png',type:'exact',display:'',qaComment:'',visualType:null,cfg:{}},
+  {id:1003,text:'What number is missing?',answer:'6', image:'counting-forwards-1-20-qti/q03.png',type:'exact',display:'',qaComment:'',visualType:null,cfg:{}},
+  {id:1004,text:'What number comes next?',answer:'13',image:'counting-forwards-1-20-qti/q04.png',type:'exact',display:'',qaComment:'',visualType:null,cfg:{}},
+  {id:1005,text:'What number is missing?',answer:'12',image:'counting-forwards-1-20-qti/q05.png',type:'exact',display:'',qaComment:'',visualType:null,cfg:{}},
+  {id:1006,text:'What number comes next?',answer:'17',image:'counting-forwards-1-20-qti/q06.png',type:'exact',display:'',qaComment:'',visualType:null,cfg:{}},
+  {id:1007,text:'What number is missing?',answer:'8', image:'counting-forwards-1-20-qti/q07.png',type:'exact',display:'',qaComment:'',visualType:null,cfg:{}},
+  {id:1008,text:'What number comes next?',answer:'18',image:'counting-forwards-1-20-qti/q08.png',type:'exact',display:'',qaComment:'',visualType:null,cfg:{}},
+  {id:1009,text:'What number comes next?',answer:'20',image:'counting-forwards-1-20-qti/q09.png',type:'exact',display:'',qaComment:'',visualType:null,cfg:{}},
+  {id:1010,text:'What number is missing?',answer:'19',image:'counting-forwards-1-20-qti/q10.png',type:'exact',display:'',qaComment:'',visualType:null,cfg:{}},
+]}};
+const SEED_NEXT=1011;
+
+function initState(){NUGGETS.forEach(n=>{const s=SEED[n.id];nuggetState[n.id]=s?{status:s.status,questions:[...s.questions]}:{status:'not-started',questions:[]};});nextQId=SEED_NEXT;}
+function getState(){return{nuggetState,nextQId,version:3};}
+function applyState(s){
+  if(!s||!s.nuggetState)return;
+  Object.values(s.nuggetState).forEach(ns=>{if(ns.status==='qa-complete')ns.status='ready-for-qti';});
+  NUGGETS.forEach(n=>{
+    if(!s.nuggetState[n.id])s.nuggetState[n.id]={status:'not-started',questions:[]};
+    const seed=SEED[n.id];
+    if(seed&&(!s.nuggetState[n.id].questions||!s.nuggetState[n.id].questions.length)){s.nuggetState[n.id].questions=[...seed.questions];if(s.nuggetState[n.id].status==='not-started')s.nuggetState[n.id].status=seed.status;}
+  });
+  nuggetState=s.nuggetState;nextQId=Math.max(s.nextQId||1,SEED_NEXT);
+}
+let _autoSaveTimer=null;
+function save(){
+  try{localStorage.setItem(STORE,JSON.stringify(getState()));}catch(e){}
+  if(activeId){
+    clearTimeout(_autoSaveTimer);
+    _autoSaveTimer=setTimeout(()=>saveNuggetToFile(activeId),700);
+  }
+}
+function loadStorage(){try{const d=localStorage.getItem(STORE);if(d)applyState(JSON.parse(d));else nextQId=SEED_NEXT;}catch(e){}}
+
+/* ── Tab / view switching ── */
+function switchTab(t){activeTab=t;['builder','curriculum'].forEach(v=>{document.getElementById('view-'+v).classList.toggle('hidden',t!==v);document.getElementById('tab-'+v).classList.toggle('active',t===v);});document.getElementById('view-export').classList.add('hidden');if(t==='curriculum')renderCurriculum();}
+function switchView(v){if(v==='export'){['builder','curriculum'].forEach(vv=>document.getElementById('view-'+vv).classList.add('hidden'));document.getElementById('view-export').classList.remove('hidden');['builder','curriculum'].forEach(t=>document.getElementById('tab-'+t).classList.remove('active'));renderExportView();}}
+
+/* ── Sidebar ── */
+function setFilter(f){filter=filter===f?'all':f;renderSidebar();}
+function renderSidebar(){
+  const q=document.getElementById('sb-search').value.toLowerCase();
+  const el=document.getElementById('nl');let html='';
+  TOPICS.forEach(topic=>{
+    let items=NUGGETS.filter(n=>{if(n.topic!==topic)return false;if(filter!=='all'&&nuggetState[n.id]?.status!==filter)return false;if(q&&!nuggetDisplayName(n.id).toLowerCase().includes(q)&&!n.subtopic?.toLowerCase().includes(q)&&!topic.toLowerCase().includes(q))return false;return true;});
+    if(!items.length)return;
+    const collapsed=!!collapseMap[topic];const short=topic.includes('–')?topic.split('–').slice(1).join('–').trim():topic;
+    html+=`<div class="tg-hdr" onclick="toggleTopic('${esc(topic)}')">${esc(short)}<span>${collapsed?'▸':'▾'}</span></div>`;
+    if(!collapsed)items.forEach(n=>{const ns=nuggetState[n.id];const st=ns?.status||'not-started';const qc=ns?.questions?.length||0;html+=`<div class="ni s-${st}${n.id===activeId?' active':''}" onclick="selectNugget(${n.id})"><div class="ni-dot"></div><div class="ni-name">${esc(nuggetDisplayName(n.id))}</div><div class="ni-cnt">${qc||''}</div></div>`;});
+  });
+  el.innerHTML=html||'<div style="padding:14px;font-size:12px;color:rgba(255,255,255,.25);text-align:center">No nuggets match.</div>';
+  updateStats();
+}
+function toggleTopic(t){collapseMap[t]=!collapseMap[t];renderSidebar();}
+function updateStats(){
+  const c={'in-progress':0,'ready-for-qa':0,'ready-for-qti':0,'uploaded-to-cms':0};
+  NUGGETS.forEach(n=>{const s=nuggetState[n.id]?.status;if(c[s]!==undefined)c[s]++;});
+  document.getElementById('sn-ip').textContent=c['in-progress'];document.getElementById('sn-qa').textContent=c['ready-for-qa'];document.getElementById('sn-rd').textContent=c['ready-for-qti'];document.getElementById('sn-up').textContent=c['uploaded-to-cms'];
+  ['in-progress','ready-for-qa','ready-for-qti','uploaded-to-cms'].forEach((s,i)=>{const ids=['ip','qa','rd','up'];document.getElementById('stat-'+ids[i]).classList.toggle('af',filter===s);});
+  document.getElementById('upload-ctr').innerHTML=`<strong>${c['uploaded-to-cms']}</strong> of ${NUGGETS.length} uploaded`;
+}
+
+/* ── Nugget detail ── */
+async function selectNugget(id){
+  activeId=id;if(activeTab!=='builder')switchTab('builder');
+  closeTool();renderSidebar();
+  // Load from JSON file (local folder if connected, otherwise fetch from server)
+  const fileData=await loadNuggetFromFile(id);
+  if(fileData){
+    nuggetState[id]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined};
+    if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
+  }
+  const n=NUGGETS.find(n=>n.id===id);
+  document.getElementById('builder-empty').style.display='none';
+  document.getElementById('builder-detail').style.display='block';
+  document.getElementById('nd-topic').textContent=n.subtopic||n.topic;
+  document.getElementById('nd-title').textContent=nuggetDisplayName(id);
+  document.getElementById('nd-obj').textContent=n.obj;
+  renderWorkflow();renderQuestions();
+}
+async function refreshNugget(){
+  if(!activeId)return;
+  const btn=document.getElementById('nd-refresh-btn');
+  if(btn){btn.style.opacity='0.4';btn.style.pointerEvents='none';}
+  const fileData=await loadNuggetFromFile(activeId);
+  if(fileData){
+    nuggetState[activeId]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined};
+    if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
+    document.getElementById('nd-title').textContent=nuggetDisplayName(activeId);
+    renderWorkflow();renderQuestions();renderSidebar();
+    showToast('↻ Refreshed from GitHub');
+  }else{
+    showToast('No saved data found for this nugget',true);
+  }
+  if(btn){btn.style.opacity='';btn.style.pointerEvents='';}
+}
+function renderWorkflow(){
+  if(!activeId)return;const ns=nuggetState[activeId];const st=ns.status;
+  const siCls={'not-started':'si-ns','in-progress':'si-ip','ready-for-qa':'si-qa','ready-for-qti':'si-rd','uploaded-to-cms':'si-up'};
+  let html=`<div class="si ${siCls[st]}"><div class="si-dot"></div>${STATUS_LABELS[st]}</div>`;
+  if(st==='not-started'||st==='in-progress'){html+=`<button class="wfbtn wfbtn-dark" onclick="advanceStatus()">Ready for QA →</button>`;if(st==='in-progress')html+=`<button class="wfbtn wfbtn-ghost" onclick="setStatus('not-started')">Reset</button>`;}
+  else if(st==='ready-for-qa'){html+=`<button class="wfbtn wfbtn-teal" onclick="advanceStatus()">QA Complete ✓</button>`;html+=`<button class="wfbtn wfbtn-ghost" onclick="setStatus('in-progress')">Send Back</button>`;}
+  else if(st==='ready-for-qti'){html+=`<button class="wfbtn wfbtn-green" onclick="advanceStatus()">Mark as Uploaded ✓</button>`;html+=`<button class="wfbtn wfbtn-ghost" onclick="setStatus('ready-for-qa')">Send Back to QA</button>`;}
+  else if(st==='uploaded-to-cms'){html+=`<button class="wfbtn wfbtn-ghost" onclick="setStatus('ready-for-qti')">Send Back</button>`;}
+  document.getElementById('wf').innerHTML=html;
+}
+function advanceStatus(){const order=['not-started','in-progress','ready-for-qa','ready-for-qti','uploaded-to-cms'];const cur=nuggetState[activeId].status;const idx=order.indexOf(cur);if(idx<order.length-1)setStatus(order[idx+1]);}
+function setStatus(s){if(!activeId)return;nuggetState[activeId].status=s;save();renderWorkflow();renderSidebar();}
+
+/* ── Questions ── */
+function renderQVisual(q){
+  if(q.visualType==='nl'&&q.cfg&&Object.keys(q.cfg).length){try{return`<div class="q-svg-wrap">${numberLineSVG(q.cfg)}</div>`;}catch(e){}}
+  if(q.visualType==='bm'&&q.cfg&&Object.keys(q.cfg).length){try{return`<div class="q-svg-wrap">${barModelSVG(q.cfg)}</div>`;}catch(e){}}
+  if(q.visualType==='nt'&&q.cfg&&q.cfg.sequence){try{return`<div class="q-svg-wrap">${numberTrackSVG(q.cfg)}</div>`;}catch(e){}}
+  if(q.visualType==='nr'&&q.cfg&&q.cfg.n){try{return`<div class="q-svg-wrap">${nrRenderFromCfg(q.cfg)}</div>`;}catch(e){}}
+  if(q.visualType==='pv'&&q.cfg&&q.cfg.n!=null){try{return`<div class="q-svg-wrap"><img src="${pvGetDataURL(q.cfg)}" style="max-width:100%;height:auto;display:block"></div>`;}catch(e){}}
+  if(q.visualType==='text')return'';
+  const imgSrc=q.imagePath||q.image||'';
+  if(imgSrc)return`<div class="q-img" style="padding:0 14px 8px;text-align:center"><img src="${esc(imgSrc)}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'q-img-ph\\'>🖼 ${esc(imgSrc.split('/').pop())}</div>'"></div>`;
+  return'';
+}
+function renderQuestions(){
+  if(!activeId)return;const qs=nuggetState[activeId]?.questions||[];const el=document.getElementById('q-grid');
+  if(!qs.length){el.innerHTML='<div class="q-empty-grid">No questions yet — use the tools above to add questions for this nugget.</div>';return;}
+  el.innerHTML=qs.map((q,i)=>{
+    return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}" ondragover="dndOver(event,${q.id})" ondragleave="dndLeave(event)" ondrop="dndDrop(event,${q.id})"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions"><button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button><div class="q-drag-handle" draggable="true" ondragstart="dndStart(event,${q.id})" ondragend="dndEnd(event)" title="Drag to reorder">⠿</div></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
+  }).join('');
+}
+function saveQA(qid,val){if(!activeId)return;const q=nuggetState[activeId].questions.find(q=>q.id===qid);if(q){q.qaComment=val;save();}}
+function deleteQuestion(qid){
+  if(!activeId)return;
+  const qs=nuggetState[activeId].questions;
+  const q=qs.find(q=>q.id===qid);if(!q)return;
+  const label=q.text?`"${q.text.slice(0,50)}"`:`Q${qs.indexOf(q)+1}`;
+  if(!confirm(`Delete question ${label}?\n\nThis cannot be undone.`))return;
+  const imagePath=q.imagePath||null;
+  nuggetState[activeId].questions=qs.filter(q=>q.id!==qid);
+  save();renderQuestions();renderSidebar();renderWorkflow();
+  if(imagePath)deleteImageFile(imagePath);
+}
+async function deleteImageFile(imagePath){
+  // imagePath = "question-data/nugget-001-slug/q-1001.png"
+  const parts=imagePath.split('/');if(parts.length<3)return;
+  const filename=parts[parts.length-1];
+  const slug=parts[parts.length-2];
+  // Local deletion via File System Access API
+  if(folderHandle){
+    try{
+      const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:false});
+      const nDir=await qdDir.getDirectoryHandle(slug,{create:false});
+      await nDir.removeEntry(filename);
+    }catch(e){}
+  }
+  // GitHub deletion
+  if(ghToken){
+    try{
+      const base=`https://api.github.com/repos/${ghOwner}/${ghRepo}`;
+      const hdrs={'Authorization':`token ${ghToken}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
+      const r=await fetch(`${base}/contents/${imagePath}`,{headers:hdrs});
+      if(r.ok){
+        const d=await r.json();
+        await fetch(`${base}/contents/${imagePath}`,{method:'DELETE',headers:hdrs,body:JSON.stringify({message:`Delete image ${imagePath}`,sha:d.sha})});
+      }
+    }catch(e){console.error('GitHub image delete failed',e);}
+  }
+}
+
+/* ── Tool panel ── */
+let activeTool=null,editingQId=null;
+
+function openTool(type){
+  if(activeTool===type){closeTool();return;}
+  closeTool();
+  activeTool=type;
+  document.querySelectorAll('.tool-tab').forEach(b=>b.classList.toggle('active',b.dataset.tool===type));
+  document.getElementById('tool-panel-'+type).classList.remove('hidden');
+  // Reset fields
+  if(type==='nl'){document.getElementById('nl-text').value='';document.getElementById('nl-answer').value='';['f-start','f-end','f-step','f-vge','f-hide-from','f-hide-to'].forEach(id=>{const el=document.getElementById(id);if(el){if(id==='f-start')el.value='0';else if(id==='f-end')el.value='20';else if(id==='f-step')el.value='1';else el.value='';}});document.getElementById('nl-preview').innerHTML='<p class="preview-empty">Fill in settings above to preview.</p>';if(nlJumpOpen)nlToggleJump();if(nlJump2Open)nlToggleJump2();}
+  else if(type==='bm'){document.getElementById('bm-text').value='';document.getElementById('bm-answer').value='';['bm-total','bm-seg1-val','bm-seg1-lbl','bm-seg1-brace','bm-seg2-val','bm-seg2-lbl','bm-seg2-brace'].forEach(id=>document.getElementById(id).value='');if(bmSeg3)bmToggleSeg3(false);document.getElementById('bm-preview').innerHTML='<p class="preview-empty">Fill in segment values above to preview.</p>';}
+  else if(type==='text'){document.getElementById('text-q-text').value='';document.getElementById('text-answer').value='';}
+  else if(type==='custom'){document.getElementById('custom-q-text').value='';document.getElementById('custom-answer').value='';customResetImage();}
+  else if(type==='nt'){document.getElementById('nt-text').value='';document.getElementById('nt-answer').value='';document.getElementById('nt-seq').value='1,2,3,?,5,6';ntShape='square';ntLayout='straight';ntColourMode='full';document.querySelectorAll('[data-ntshape]').forEach(b=>b.classList.toggle('active',b.dataset.ntshape==='square'));document.querySelectorAll('[data-ntlayout]').forEach(b=>b.classList.toggle('active',b.dataset.ntlayout==='straight'));document.querySelectorAll('[data-ntcolmode]').forEach(b=>b.classList.toggle('active',b.dataset.ntcolmode==='full'));autoPreviewNT();}
+  else if(type==='nr'){document.getElementById('nr-text').value='';document.getElementById('nr-answer').value='';nrResetState();autoPreviewNR();}
+  else if(type==='pv'){document.getElementById('pv-text').value='';document.getElementById('pv-answer').value='';pvResetState();}
+}
+function closeTool(){
+  if(activeTool){document.getElementById('tool-panel-'+activeTool).classList.add('hidden');}
+  if(editingQId!==null){editingQId=null;setEditMode(false);renderQuestions();}
+  activeTool=null;
+  document.querySelectorAll('.tool-tab').forEach(b=>b.classList.remove('active'));
+}
+function addToolQuestion(type){
+  if(!activeId)return;
+  let text,answer;
+  if(type==='nl'){text=document.getElementById('nl-text').value.trim();answer=document.getElementById('nl-answer').value.trim();}
+  else if(type==='bm'){text=document.getElementById('bm-text').value.trim();answer=document.getElementById('bm-answer').value.trim();}
+  else if(type==='custom'){text=document.getElementById('custom-q-text').value.trim();answer=document.getElementById('custom-answer').value.trim();}
+  else if(type==='nt'){text=document.getElementById('nt-text').value.trim();answer=document.getElementById('nt-answer').value.trim();}
+  else if(type==='nr'){text=document.getElementById('nr-text').value.trim();answer=document.getElementById('nr-answer').value.trim();}
+  else if(type==='pv'){text=document.getElementById('pv-text').value.trim();answer=document.getElementById('pv-answer').value.trim();}
+  else{text=document.getElementById('text-q-text').value.trim();answer=document.getElementById('text-answer').value.trim();}
+  if(!text){alert('Please enter the question text.');return;}
+  if(!answer){alert('Please enter the correct answer.');return;}
+  // ── Edit mode: update existing question ──────────────────────────
+  if(editingQId!==null){
+    const q=nuggetState[activeId].questions.find(q=>q.id===editingQId);
+    if(q){
+      q.text=text;q.answer=answer;
+      if(type==='nl'){const cfg=getNLConfig();if(!cfg){alert('Check number line settings (start, end, goes up in).');return;}q.cfg=cfg;}
+      else if(type==='bm'){const cfg=getBMConfig();if(!cfg){alert('Please fill in at least one segment value.');return;}q.cfg=cfg;}
+      else if(type==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');return;}q.cfg=cfg;}
+      else if(type==='nr'){q.cfg=getNRConfig();}
+      else if(type==='pv'){q.cfg=getPVConfig();}
+      else if(type==='custom'&&customImageDataURL){const fname=`q-${String(editingQId).padStart(4,'0')}.png`;const imagePath=`question-data/${nuggetSlug(activeId)}/${fname}`;saveImageToFile(activeId,fname,customImageDataURL);q.imagePath=imagePath;q.image='';}
+    }
+    editingQId=null;setEditMode(false,type);save();renderQuestions();renderSidebar();renderWorkflow();closeTool();return;
+  }
+  const id=nextQId++;
+  const q={id,text,answer,type:'exact',image:'',display:'',qaComment:'',visualType:type==='text'?'text':type,cfg:{}};
+  if(type==='nl'){const cfg=getNLConfig();if(!cfg){alert('Check number line settings (start, end, goes up in).');nextQId--;return;}q.cfg=cfg;}
+  else if(type==='bm'){const cfg=getBMConfig();if(!cfg){alert('Please fill in at least one segment value.');nextQId--;return;}q.cfg=cfg;}
+  else if(type==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');nextQId--;return;}q.cfg=cfg;}
+  else if(type==='nr'){q.cfg=getNRConfig();}
+  else if(type==='pv'){q.cfg=getPVConfig();}
+  else if(type==='custom'){
+    if(!customImageDataURL&&!customImagePath){alert('Please add an image for this question.');nextQId--;return;}
+    q.visualType='custom';
+    if(customImageDataURL){
+      const fname=`q-${String(id).padStart(4,'0')}.png`;
+      const imagePath=`question-data/${nuggetSlug(activeId)}/${fname}`;
+      saveImageToFile(activeId,fname,customImageDataURL);
+      q.imagePath=imagePath;q.image='';
+    }
+  }
+  if(nuggetState[activeId].status==='not-started')nuggetState[activeId].status='in-progress';
+  nuggetState[activeId].questions.push(q);
+  save();renderQuestions();renderSidebar();renderWorkflow();closeTool();
+}
+
+/* ── Curriculum map ── */
+function renderCurriculum(){
+  const el=document.getElementById('cm-wrap');let html='<div class="cm-h1">🗺 Curriculum Map</div><div class="cm-sub">National Curriculum objectives and nuggets</div>';
+  TOPICS.forEach(topic=>{
+    const topicNuggets=NUGGETS.filter(n=>n.topic===topic);if(!topicNuggets.length)return;
+    html+=`<div class="cm-section"><div class="cm-topic-hdr">${esc(topic)}</div><table class="cm-table"><thead><tr><th style="width:28%">Subtopic</th><th style="width:35%">NC Objective</th><th>Nugget</th><th style="width:130px">Status</th></tr></thead><tbody>`;
+    let prevObj='',prevSt='';
+    topicNuggets.forEach(n=>{
+      const ns=nuggetState[n.id];const st=ns?.status||'not-started';const cm=STATUS_CM[st]||'ns';
+      const showSt=n.subtopic!==prevSt;prevSt=n.subtopic;
+      const showObj=n.obj!==prevObj;prevObj=n.obj;
+      html+=`<tr onclick="selectNugget(${n.id})"><td class="cm-obj">${showSt?esc(n.subtopic):''}</td><td class="cm-obj">${showObj?esc(n.obj):''}</td><td class="cm-name">${esc(nuggetDisplayName(n.id))}</td><td class="cms-${cm}"><div class="cm-st"><div class="cm-dot"></div>${STATUS_LABELS[st]}</div></td></tr>`;
+    });
+    html+='</tbody></table></div>';
+  });
+  el.innerHTML=html;
+}
+
+/* ── Export / Import ── */
+function handleExportImport(){document.getElementById('ei-modal').classList.remove('hidden');}
+function closeEIModal(e){if(!e||e.target===document.getElementById('ei-modal'))document.getElementById('ei-modal').classList.add('hidden');}
+function downloadJSON(){const blob=new Blob([JSON.stringify(getState(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`assessment-state-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href);}
+function handleJSONUpload(input){const file=input.files[0];if(!file)return;const r=new FileReader();r.onload=e=>{try{applyState(JSON.parse(e.target.result));save();renderSidebar();if(activeId)selectNugget(activeId);document.getElementById('ei-modal').classList.add('hidden');alert('State loaded.');}catch(err){alert('Failed: '+err.message);}input.value='';};r.readAsText(file);}
+
+/* ── QTI export ── */
+function renderExportView(){
+  const el=document.getElementById('ex-list');const ns=NUGGETS.filter(n=>nuggetState[n.id]?.questions?.length>0);
+  if(!ns.length){el.innerHTML='<p style="color:var(--muted);font-size:13px">No nuggets have questions yet.</p>';return;}
+  el.innerHTML=ns.map(n=>{const s=nuggetState[n.id];const st=s.status;const cm=STATUS_CM[st]||'ns';return`<div class="ex-row exs-${cm}"><input type="checkbox" class="ex-cb" id="ec-${n.id}"${st==='ready-for-qti'?' checked':''}><label class="ex-name" for="ec-${n.id}">${esc(n.name)}</label><span class="ex-st">${STATUS_LABELS[st]}</span><span class="ex-qcnt">${s.questions.length} Q</span></div>`;}).join('');
+}
+function selectAllEx(v){document.querySelectorAll('.ex-cb').forEach(c=>c.checked=v);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function qtiXML(q,imgFile){
+  const rid=`RESPONSE-${10000+q.id}`,iid=`ITEM-${String(q.id).padStart(3,'0')}`;
+  const ans=parseFloat(q.answer);const av=isNaN(ans)?q.answer:ans;
+  const imgLine=imgFile?`\n      <p><img src="${esc(imgFile)}" alt=""/></p>`:'';
+  return`<?xml version="1.0" encoding="UTF-8"?>\n<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"\n  identifier="${iid}" title="${esc(q.text.slice(0,80))}"\n  adaptive="false" timeDependent="false">\n  <responseDeclaration identifier="${rid}" cardinality="single" baseType="float">\n    <correctResponse><value>${av}</value></correctResponse>\n  </responseDeclaration>\n  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">\n    <defaultValue><value>0</value></defaultValue>\n  </outcomeDeclaration>\n  <itemBody>\n    <div>\n      <p>${esc(q.text)}</p>${imgLine}\n      <p><textEntryInteraction responseIdentifier="${rid}"/></p>\n    </div>\n    <div/>\n  </itemBody>\n  <responseProcessing>\n    <responseCondition><responseIf>\n      <match><variable identifier="${rid}"/><correct identifier="${rid}"/></match>\n      <setOutcomeValue identifier="SCORE"><baseValue baseType="float">1</baseValue></setOutcomeValue>\n    </responseIf></responseCondition>\n  </responseProcessing>\n</assessmentItem>`;
+}
+async function batchExport(){
+  const checked=[...document.querySelectorAll('.ex-cb:checked')].map(c=>parseInt(c.id.replace('ec-','')));
+  if(!checked.length){alert('Select at least one nugget.');return;}
+  const btn=document.getElementById('ex-btn'),prog=document.getElementById('ex-prog');
+  btn.disabled=true;prog.textContent='Building ZIP…';
+  try{
+    const zip=new JSZip();
+    for(const nid of checked){
+      const n=NUGGETS.find(n=>n.id===nid),ns=nuggetState[nid];
+      const folder=n.name.replace(/[^a-z0-9]+/gi,'_').slice(0,40);
+      for(let i=0;i<ns.questions.length;i++){
+        const q=ns.questions[i];const qFolder=`${folder}/q${String(i+1).padStart(2,'0')}`;
+        let imgFile=null;
+        if((q.visualType==='nl'||q.visualType==='bm'||q.visualType==='nt'||q.visualType==='nr')&&q.cfg&&Object.keys(q.cfg).length){try{const svg=q.visualType==='nl'?numberLineSVG(q.cfg):q.visualType==='bm'?barModelSVG(q.cfg):q.visualType==='nr'?nrRenderFromCfg(q.cfg):numberTrackSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${qFolder}/image.png`,png);imgFile='image.png';}catch(e){console.warn(e);}}
+        else if(q.visualType==='pv'&&q.cfg&&q.cfg.n!=null){try{const blob=await pvGetPngBlob(q.cfg);zip.file(`${qFolder}/image.png`,blob);imgFile='image.png';}catch(e){console.warn(e);}}
+        else if(q.image){imgFile=q.image.split('/').pop();}
+        zip.file(`${qFolder}/question.xml`,qtiXML(q,imgFile));
+      }
+    }
+    const blob=await zip.generateAsync({type:'blob'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`y1-maths-qti-${new Date().toISOString().slice(0,10)}.zip`;a.click();URL.revokeObjectURL(a.href);
+    prog.textContent=`✓ ${checked.length} nugget${checked.length!==1?'s':''} exported`;setTimeout(()=>prog.textContent='',4000);
+  }catch(e){prog.textContent='Error: '+e.message;}finally{btn.disabled=false;}
+}
+
+/* ── Custom image panel ── */
+let customImageDataURL=null,customImagePath=null;
+function customResetImage(){
+  customImageDataURL=null;customImagePath=null;
+  document.getElementById('custom-drop-inner').innerHTML='<div class="drop-icon">🖼</div><p>Click to choose or drag an image here</p>';
+  document.getElementById('custom-drop-zone').classList.remove('drag-over');
+}
+function customSetImage(file){
+  const reader=new FileReader();
+  reader.onload=e=>{
+    customImageDataURL=e.target.result;
+    document.getElementById('custom-drop-inner').innerHTML=
+      `<img class="custom-img-preview" src="${customImageDataURL}" alt="preview"><button class="custom-img-clear" onclick="event.stopPropagation();customResetImage()">✕ Remove image</button>`;
+  };
+  reader.readAsDataURL(file);
+}
+function customFileSelected(input){if(input.files[0])customSetImage(input.files[0]);}
+function customDragOver(e){e.preventDefault();document.getElementById('custom-drop-zone').classList.add('drag-over');}
+function customDragLeave(e){document.getElementById('custom-drop-zone').classList.remove('drag-over');}
+function customDrop(e){e.preventDefault();document.getElementById('custom-drop-zone').classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f&&f.type.startsWith('image/'))customSetImage(f);}
+
+
+/* ── Edit & Reorder ── */
+function editQuestion(qid){
+  if(!activeId)return;
+  const q=nuggetState[activeId].questions.find(q=>q.id===qid);if(!q)return;
+  const type=q.visualType==='text'?'text':q.visualType; // nl | bm | text | custom | nt
+  // Open the correct tool panel without resetting fields
+  if(activeTool&&activeTool!==type)closeTool();
+  if(activeTool!==type){
+    activeTool=type;
+    document.querySelectorAll('.tool-tab').forEach(b=>b.classList.toggle('active',b.dataset.tool===type));
+    document.getElementById('tool-panel-'+type).classList.remove('hidden');
+  }
+  // Populate form fields from saved question
+  if(type==='nl'){
+    document.getElementById('nl-text').value=q.text;
+    document.getElementById('nl-answer').value=q.answer||'';
+    restoreNLConfig(q.cfg||{});
+  } else if(type==='bm'){
+    document.getElementById('bm-text').value=q.text;
+    document.getElementById('bm-answer').value=q.answer||'';
+    restoreBMConfig(q.cfg||{});
+  } else if(type==='text'){
+    document.getElementById('text-q-text').value=q.text;
+    document.getElementById('text-answer').value=q.answer||'';
+  } else if(type==='nt'){
+    document.getElementById('nt-text').value=q.text;
+    document.getElementById('nt-answer').value=q.answer||'';
+    restoreNTConfig(q.cfg||{});
+  } else if(type==='nr'){
+    document.getElementById('nr-text').value=q.text;
+    document.getElementById('nr-answer').value=q.answer||'';
+    restoreNRConfig(q.cfg||{});
+  } else if(type==='pv'){
+    document.getElementById('pv-text').value=q.text;
+    document.getElementById('pv-answer').value=q.answer||'';
+    restorePVConfig(q.cfg||{});
+  } else if(type==='custom'){
+    document.getElementById('custom-q-text').value=q.text;
+    document.getElementById('custom-answer').value=q.answer||'';
+    customResetImage();
+    // Show a placeholder so the user knows an image already exists
+    if(q.imagePath){
+      const inner=document.getElementById('custom-drop-inner');
+      inner.innerHTML=`<div class="drop-icon">🖼</div><p style="font-size:12px;color:var(--muted)">Existing image kept — drop a new one to replace</p>`;
+    }
+  }
+  editingQId=qid;
+  setEditMode(true,type);
+  renderQuestions();
+  document.getElementById('tool-panel-'+type).scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function setEditMode(editing,type){
+  const types=type?[type]:['nl','bm','text','custom','nt','nr','pv'];
+  types.forEach(t=>{
+    const btn=document.getElementById('add-q-btn-'+t);if(!btn)return;
+    btn.textContent=editing?'✓ Update Question':'+ Add Question';
+  });
+}
+
+let dndSrcId=null;
+function dndStart(e,qid){
+  dndSrcId=qid;
+  e.dataTransfer.effectAllowed='move';
+  e.dataTransfer.setData('text/plain',String(qid));
+  setTimeout(()=>{const c=document.getElementById('q-card-'+qid);if(c)c.classList.add('dragging');},0);
+}
+function dndOver(e,qid){
+  e.preventDefault();e.stopPropagation();
+  e.dataTransfer.dropEffect='move';
+  if(dndSrcId===qid)return;
+  const card=document.getElementById('q-card-'+qid);if(!card)return;
+  const rect=card.getBoundingClientRect();
+  card.classList.remove('drop-above','drop-below');
+  card.classList.add(e.clientY<rect.top+rect.height/2?'drop-above':'drop-below');
+}
+function dndLeave(e){
+  const card=e.currentTarget;
+  // Only clear if leaving the card entirely (not entering a child)
+  if(!card.contains(e.relatedTarget))card.classList.remove('drop-above','drop-below');
+}
+function dndDrop(e,targetQId){
+  e.preventDefault();
+  const card=document.getElementById('q-card-'+targetQId);
+  const insertBefore=card?.classList.contains('drop-above');
+  card?.classList.remove('drop-above','drop-below');
+  if(dndSrcId===null||dndSrcId===targetQId||!activeId){dndSrcId=null;return;}
+  const qs=nuggetState[activeId].questions;
+  const srcIdx=qs.findIndex(q=>q.id===dndSrcId);
+  const tgtIdx=qs.findIndex(q=>q.id===targetQId);
+  if(srcIdx<0||tgtIdx<0){dndSrcId=null;return;}
+  const[moved]=qs.splice(srcIdx,1);
+  const newTgtIdx=qs.findIndex(q=>q.id===targetQId);
+  qs.splice(insertBefore?newTgtIdx:newTgtIdx+1,0,moved);
+  dndSrcId=null;save();renderQuestions();
+}
+function dndEnd(e){
+  dndSrcId=null;
+  document.querySelectorAll('.q-card').forEach(c=>c.classList.remove('dragging','drop-above','drop-below'));
+}
+
+
+/* ── Shared batch panel ── */
+let sharedBatchTool=null, sharedBatchStructure={}, sharedBatchRowIdx=0, sharedBatchRowColors={};
+
+function openSharedBatch(tool){
+  // Validate current tool config first
+  if(tool==='bm'){const cfg=getBMConfig();if(!cfg){alert('Please fill in at least one segment value.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='pv'){const cfg=getPVConfig();if(!cfg){alert('Please enter a number.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='nr'){const cfg=getNRConfig();if(!cfg){alert('Please set a number.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='text'){sharedBatchStructure={};}
+  sharedBatchTool=tool;sharedBatchRowColors={};
+  // Build locked-setting tags
+  const tagsEl=document.getElementById('shared-batch-tags');tagsEl.innerHTML='';
+  const tags=[];
+  if(tool==='bm'){tags.push(`${sharedBatchStructure.segments?.length} segments`,`Colour: swatch ${sharedBatchStructure.colorIdx??0}`);}
+  else if(tool==='nt'){tags.push(`Shape: ${ntShape}`,`Layout: ${ntLayout}`,`Colour: ${ntColourMode}`);}
+  else if(tool==='nr'){tags.push(`Rep: ${sharedBatchStructure.rep}`,`N: ${sharedBatchStructure.n}`);}
+  else if(tool==='pv'){tags.push(`Rep: ${sharedBatchStructure.repType}`,`Display: ${sharedBatchStructure.dispMode}`);}
+  tags.forEach(t=>{const s=document.createElement('span');s.className='locked-tag';s.textContent=t;tagsEl.appendChild(s);});
+  // Subtitle
+  const subtitles={nr:'Representation is locked. Change the number and answer per row.',bm:'Segment structure is locked. Change segment values and answers per row.',nt:'Shape and layout are locked. Change the sequence and answer per row.',text:'No locked settings — enter question and answer for each row.',pv:'Representation and display mode are locked. Change the number per row.'};
+  document.getElementById('shared-batch-subtitle').textContent=subtitles[tool]||'';
+  // Build table headers
+  buildSharedBatchHeaders();
+  document.getElementById('shared-batch-tbody').innerHTML='';sharedBatchRowIdx=0;
+  // Seed with one row pre-filled from current tool state
+  const seed={};
+  if(tool==='bm'){(sharedBatchStructure.segments||[]).forEach((s,i)=>{seed[`seg${i}`]=s.value;});seed.answer=document.getElementById('bm-answer').value.trim();seed.text=document.getElementById('bm-text').value.trim();}
+  else if(tool==='nt'){seed.seq=document.getElementById('nt-seq').value.trim();seed.answer=document.getElementById('nt-answer').value.trim();seed.text=document.getElementById('nt-text').value.trim();}
+  else if(tool==='nr'){seed.n=sharedBatchStructure.n;seed.answer=document.getElementById('nr-answer').value.trim();seed.text=document.getElementById('nr-text').value.trim();}
+  else if(tool==='pv'){seed.n=sharedBatchStructure.n;seed.answer=document.getElementById('pv-answer').value.trim();seed.text=document.getElementById('pv-text').value.trim();}
+  else if(tool==='text'){seed.answer=document.getElementById('text-answer').value.trim();seed.text=document.getElementById('text-q-text').value.trim();}
+  addSharedBatchRow(seed);
+  const panel=document.getElementById('shared-batch-panel');panel.style.display='block';
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function closeSharedBatch(){document.getElementById('shared-batch-panel').style.display='none';sharedBatchTool=null;}
+
+function buildSharedBatchHeaders(){
+  const tr=document.getElementById('shared-batch-thead');
+  let cols=[];
+  if(sharedBatchTool==='bm'){
+    const n=sharedBatchStructure.segments?.length||2;
+    cols=['Preview','Question'];
+    for(let i=0;i<n;i++)cols.push(`Seg ${i+1}`);
+    cols.push('Answer','');
+  } else if(sharedBatchTool==='nt'){
+    cols=['Preview','Question','Sequence','Answer',''];
+  } else if(sharedBatchTool==='text'){
+    cols=['Question','Answer',''];
+  } else if(sharedBatchTool==='pv'){
+    cols=['Preview','Question','Number','Answer',''];
+  }
+  tr.innerHTML=cols.map(c=>`<th>${c}</th>`).join('');
+}
+
+function addSharedBatchRow(defaults={}){
+  const idx=sharedBatchRowIdx++;
+  const tbody=document.getElementById('shared-batch-tbody');
+  // Inherit question text from the last row if not explicitly provided
+  if(defaults.text===undefined){
+    const lastRow=tbody.querySelector('tr:last-child');
+    if(lastRow)defaults.text=lastRow.querySelector('[data-field="text"]')?.value??'';
+  }
+  const tr=document.createElement('tr');tr.dataset.rowIdx=idx;
+  const n=(field,val,w=58)=>`<input data-field="${field}" class="batch-input batch-input-num" style="width:${w}px" type="number" value="${val??''}" step="any" oninput="updateSharedPreview(${idx})">`;
+  const t=(field,val,cls='batch-input-text')=>`<input data-field="${field}" class="batch-input ${cls}" type="text" value="${esc(String(val??''))}" oninput="updateSharedPreview(${idx})">`;
+  let cells='';
+  const tool=sharedBatchTool;
+  if(tool!=='text') cells+=`<td class="batch-preview-cell"><div id="sbp-${idx}"></div></td>`;
+  const textW=tool==='text'?'min(60vw,520px)':'140px';
+  cells+=`<td>${t('text',defaults.text??'','batch-input-text').replace('class="batch-input batch-input-text"',`class="batch-input batch-input-text" style="width:${textW}"`)}</td>`;
+  if(tool==='bm'){
+    const segs=sharedBatchStructure.segments||[];
+    segs.forEach((s,i)=>{ cells+=`<td>${n('seg'+i, defaults['seg'+i]??s.value)}</td>`; });
+  } else if(tool==='nt'){
+    cells+=`<td>${t('seq',defaults.seq??'1,2,3,?,5','batch-input-text')}</td>`;
+  } else if(tool==='nr'){
+    cells+=`<td>${n('n',defaults.n??0,72)}</td>`;
+  } else if(tool==='pv'){
+    cells+=`<td>${n('n',defaults.n??0,72)}</td>`;
+  }
+  cells+=`<td>${t('answer',defaults.answer??'','batch-input-num')}</td>`;
+  cells+=`<td><button class="batch-del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
+  tr.innerHTML=cells;tbody.appendChild(tr);
+  // Add per-row colour swatches for Bar Model
+  if(sharedBatchTool==='bm'){
+    const defIdx=sharedBatchStructure.colorIdx??0;
+    sharedBatchRowColors[idx]={colorIdx:defIdx};
+    const cell=tr.querySelector('.batch-preview-cell');
+    if(cell){
+      const wrap=document.createElement('div');wrap.className='batch-swatch-wrap';
+      const swatchRow=document.createElement('div');swatchRow.className='batch-mini-swatch-row';
+      const lbl=document.createElement('span');lbl.className='batch-swatch-label';lbl.textContent='Col';
+      swatchRow.appendChild(lbl);
+      BM_STROKES.forEach((col,i)=>{
+        const btn=document.createElement('button');
+        btn.className='mini-swatch'+(i===defIdx?' selected':'');
+        btn.style.background=col;btn.title='Colour '+i;
+        btn.addEventListener('click',()=>{
+          swatchRow.querySelectorAll('.mini-swatch').forEach(s=>s.classList.remove('selected'));
+          btn.classList.add('selected');
+          sharedBatchRowColors[idx].colorIdx=i;
+          updateSharedPreview(idx);
+        });
+        swatchRow.appendChild(btn);
+      });
+      wrap.appendChild(swatchRow);cell.appendChild(wrap);
+    }
+  }
+  setTimeout(()=>updateSharedPreview(idx),0);
+}
+
+function getSharedBatchRowCfg(tr){
+  const g=field=>tr.querySelector(`[data-field="${field}"]`)?.value.trim()??'';
+  const tool=sharedBatchTool;
+  if(tool==='bm'){
+    const segs=(sharedBatchStructure.segments||[]).map((s,i)=>{
+      const raw=g('seg'+i); const v=raw===''?s.value:(raw==='?'?'?':parseFloat(raw));
+      return {...s, value:v};
+    });
+    const rowIdx=parseInt(tr.dataset.rowIdx);
+    const colorIdx=sharedBatchRowColors[rowIdx]?.colorIdx??sharedBatchStructure.colorIdx??0;
+    return {...sharedBatchStructure, segments:segs, colorIdx};
+  } else if(tool==='nt'){
+    const seq=g('seq');if(!seq)return null;
+    return {...sharedBatchStructure, sequence:seq};
+  } else if(tool==='nr'){
+    const num=parseFloat(g('n'));if(isNaN(num))return null;
+    return {...sharedBatchStructure, n:num};
+  } else if(tool==='pv'){
+    const num=parseFloat(g('n'));if(isNaN(num))return null;
+    return {...sharedBatchStructure, n:num, missingVals:sharedBatchStructure.missingVals||[]};
+  }
+  return {};
+}
+
+function updateSharedPreview(idx){
+  const tr=document.querySelector(`tr[data-row-idx="${idx}"]`);
+  const box=document.getElementById(`sbp-${idx}`);
+  if(!tr||!box)return;
+  const tool=sharedBatchTool;
+  try{
+    if(tool==='bm'){const cfg=getSharedBatchRowCfg(tr);if(cfg)box.innerHTML=barModelSVG(cfg);else box.innerHTML='<div class="batch-no-preview">Invalid</div>';}
+    else if(tool==='nt'){const cfg=getSharedBatchRowCfg(tr);if(cfg)box.innerHTML=numberTrackSVG(cfg);else box.innerHTML='<div class="batch-no-preview">Invalid</div>';}
+    else if(tool==='nr'){const cfg=getSharedBatchRowCfg(tr);if(cfg){const svgStr=nrRenderFromCfg(cfg);box.innerHTML=svgStr||'<div class="batch-no-preview">Invalid</div>';}else box.innerHTML='<div class="batch-no-preview">Invalid</div>';}
+    else if(tool==='pv'){
+      const cfg=getSharedBatchRowCfg(tr);if(!cfg){box.innerHTML='<div class="batch-no-preview">Invalid</div>';return;}
+      const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,1.5);
+      const img=document.createElement('img');img.src=cv.toDataURL();img.style.cssText='max-width:100%;display:block';
+      box.innerHTML='';box.appendChild(img);
+    }
+  } catch(e){box.innerHTML='<div class="batch-no-preview">Error</div>';}
+}
+
+function addAllSharedBatch(){
+  if(!activeId)return;
+  const tool=sharedBatchTool;let added=0;
+  document.querySelectorAll('#shared-batch-tbody tr').forEach(tr=>{
+    const g=field=>tr.querySelector(`[data-field="${field}"]`)?.value.trim()??'';
+    const text=g('text'), answer=g('answer');
+    if(!text||!answer)return;
+    const cfg=getSharedBatchRowCfg(tr);if(cfg===null)return;
+    const id=nextQId++;
+    const q={id,text,answer,type:'exact',image:'',display:'',qaComment:'',
+      visualType:tool==='text'?'text':tool,cfg};
+    nuggetState[activeId].questions.push(q);added++;
+  });
+  if(!added){alert('No valid rows to add — each row needs Question text and Answer.');return;}
+  if(nuggetState[activeId].status==='not-started')nuggetState[activeId].status='in-progress';
+  save();renderQuestions();renderSidebar();renderWorkflow();closeSharedBatch();closeTool();
+}
+
+initState();loadStorage();renderSidebar();initNLPanel();initBMPanel();initNRPanel();updateFolderStatus();
+</script>
+</body>
+</html>
