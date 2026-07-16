@@ -341,7 +341,8 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
           <button class="tool-tab" data-tool="text" onclick="openTool('text')">✏️ Free Text</button>
           <button class="tool-tab" data-tool="custom" onclick="openTool('custom')">🖼 Custom Image</button>
           <button class="tool-tab" data-tool="nt" onclick="openTool('nt')">🔢 Number Track</button>
-          <button class="tool-tab" data-tool="pv" onclick="openTool('pv')">🧮 PV Representations</button>
+          <button class="tool-tab" data-tool="nr" onclick="openTool('nr')">🔷 Number Reps</button>
+          <button class="tool-tab" data-tool="pv" onclick="openTool('pv')">📊 PV Representations</button>
         </div>
 
         <!-- ── Number Line panel ── -->
@@ -429,7 +430,6 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
               <div class="field"><label>Colour mode</label><div class="tog-row"><button class="tog-btn active" data-colmode="single">Single</button><button class="tog-btn" data-colmode="multi">Multi</button></div></div>
               <div class="field"><label>Total display</label><div class="tog-row"><button class="tog-btn active" data-totdisp="brace">Brace</button><button class="tog-btn" data-totdisp="top bar">Top bar</button><button class="tog-btn" data-totdisp="none">None</button></div></div>
               <div class="field field-sm"><label>Total</label><input type="text" id="bm-total" placeholder="e.g. 10 or ?"></div>
-              <div class="field"><label>Unit cells <span id="bm-unit-note" style="font-size:11px;color:#9CA3AF;font-weight:400"></span></label><div class="tog-row"><button class="tog-btn active" data-bmunit="off" onclick="bmSetUnit(this,'off')">Off</button><button class="tog-btn" data-bmunit="on" onclick="bmSetUnit(this,'on')">On</button></div></div>
             </div>
             <div class="sec-hr"></div>
             <div class="seg-block">
@@ -463,7 +463,6 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
               <div class="field field-sm"><label>Answer</label><input type="text" id="text-answer" placeholder="e.g. 8"></div>
             </div>
             <div class="form-actions" style="margin-top:14px">
-              <button class="btn-create-more" onclick="openSharedBatch('text')">⊞ Create more like this</button>
               <button class="btn btn-blue" id="add-q-btn-text" onclick="addToolQuestion('text')">+ Add Question</button>
               <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
             </div>
@@ -537,32 +536,223 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
           </div>
         </div>
 
-        <!-- ── PV Representations panel ── -->
+        <!-- ── Number Representations panel ── -->
+        <div class="tool-panel hidden" id="tool-panel-nr">
+          <div class="form-card">
+            <div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="nr-text" placeholder="e.g. Show 7 on a ten frame."></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="nr-answer" placeholder="e.g. 7"></div>
+            </div>
+            <div class="form-row" style="align-items:center">
+              <div class="field field-sm"><label>Number</label>
+                <div style="display:flex;align-items:center;gap:4px">
+                  <button class="tog-btn" onclick="nrChangeNum(-1)" style="width:30px;height:30px;padding:0">−</button>
+                  <input type="number" id="nr-num-in" min="1" max="20" value="5" style="width:46px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetNum(parseInt(this.value))">
+                  <button class="tog-btn" onclick="nrChangeNum(1)" style="width:30px;height:30px;padding:0">+</button>
+                </div>
+              </div>
+              <div class="field"><label>Representation</label>
+                <div class="tog-row">
+                  <button class="tog-btn active" data-nrrep="frames" onclick="nrSetRep(this)">Frames</button>
+                  <button class="tog-btn" data-nrrep="beads" onclick="nrSetRep(this)">Beads</button>
+                  <button class="tog-btn" data-nrrep="multilink" onclick="nrSetRep(this)">Multilink</button>
+                  <button class="tog-btn" data-nrrep="numicon" onclick="nrSetRep(this)">Numicon</button>
+                </div>
+              </div>
+            </div>
+            <!-- Sub-options: Frames -->
+            <div id="nr-opts-frames">
+              <div class="form-row">
+                <div class="field"><label>Frame type</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrft="5" onclick="nrSetFT(this)">5-frame</button>
+                    <button class="tog-btn" data-nrft="10" onclick="nrSetFT(this)">10-frame</button>
+                  </div>
+                </div>
+                <div class="field"><label>Colour 1</label><div class="swatch-row" id="nr-sw-fc1"></div></div>
+                <div class="field"><label>Split</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrfsp="off" onclick="nrSetFSplit(this,false)">Off</button>
+                    <button class="tog-btn" data-nrfsp="on" onclick="nrSetFSplit(this,true)">On</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-fsplit-row" class="form-row" style="display:none">
+                <div class="field"><label>Colour 2</label><div class="swatch-row" id="nr-sw-fc2"></div></div>
+                <div class="field field-sm"><label>Split at</label>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <button class="tog-btn" onclick="nrChangeFSplit(-1)" style="width:28px;height:28px;padding:0">−</button>
+                    <input type="number" id="nr-fsplit-in" min="1" max="19" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetFSplitAt(parseInt(this.value))">
+                    <button class="tog-btn" onclick="nrChangeFSplit(1)" style="width:28px;height:28px;padding:0">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Sub-options: Beads -->
+            <div id="nr-opts-beads" style="display:none">
+              <div class="form-row">
+                <div class="field"><label>Preset</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrbp="colour" onclick="nrSetBeadPreset(this)">Colour</button>
+                    <button class="tog-btn" data-nrbp="rw" onclick="nrSetBeadPreset(this)">R/W</button>
+                  </div>
+                </div>
+                <div class="field"><label>Group size</label>
+                  <div class="tog-row">
+                    <button class="tog-btn" data-nrbg="2" onclick="nrSetBG(this)">2</button>
+                    <button class="tog-btn active" data-nrbg="5" onclick="nrSetBG(this)">5</button>
+                    <button class="tog-btn" data-nrbg="10" onclick="nrSetBG(this)">10</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-bead-col-row" class="form-row">
+                <div class="field"><label>Colour A</label><div class="swatch-row" id="nr-sw-ba"></div></div>
+                <div class="field"><label>Colour B</label><div class="swatch-row" id="nr-sw-bb"></div></div>
+              </div>
+            </div>
+            <!-- Sub-options: Multilink -->
+            <div id="nr-opts-multilink" style="display:none">
+              <div class="form-row">
+                <div class="field"><label>Layout</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrml="10" onclick="nrSetML(this)">1×10</button>
+                    <button class="tog-btn" data-nrml="5" onclick="nrSetML(this)">2×5</button>
+                  </div>
+                </div>
+                <div id="nr-ml-fill-row" class="field" style="display:none"><label>Fill</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrmf="row" onclick="nrSetMLFill(this)">Row</button>
+                    <button class="tog-btn" data-nrmf="col" onclick="nrSetMLFill(this)">Col</button>
+                  </div>
+                </div>
+                <div class="field"><label>Colour</label><div class="swatch-row" id="nr-sw-mc"></div></div>
+                <div class="field"><label>Split</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrmsp="off" onclick="nrSetMLSplit(this,false)">Off</button>
+                    <button class="tog-btn" data-nrmsp="on" onclick="nrSetMLSplit(this,true)">On</button>
+                  </div>
+                </div>
+                <div id="nr-ml-sep10-row" class="field" style="display:none"><label>Separate at 10</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrmsg="off" onclick="nrSetMLGap(this,false)">Off</button>
+                    <button class="tog-btn" data-nrmsg="on" onclick="nrSetMLGap(this,true)">On</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-mlsplit-row" class="form-row" style="display:none">
+                <div class="field"><label>Colour 2</label><div class="swatch-row" id="nr-sw-mc2"></div></div>
+                <div class="field field-sm"><label>Split at</label>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <button class="tog-btn" onclick="nrChangeMLSplit(-1)" style="width:28px;height:28px;padding:0">−</button>
+                    <input type="number" id="nr-mlsplit-in" min="1" max="19" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetMLSplitAt(parseInt(this.value))">
+                    <button class="tog-btn" onclick="nrChangeMLSplit(1)" style="width:28px;height:28px;padding:0">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Sub-options: Numicon -->
+            <div id="nr-opts-numicon" style="display:none">
+              <div class="form-row">
+                <div class="field"><label>Split</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrnsp="off" onclick="nrSetNISplit(this,false)">Off</button>
+                    <button class="tog-btn" data-nrnsp="on" onclick="nrSetNISplit(this,true)">On</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-nisplit-row" class="form-row" style="display:none">
+                <div class="field field-sm"><label>Split at</label>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <button class="tog-btn" onclick="nrChangeNISplit(-1)" style="width:28px;height:28px;padding:0">−</button>
+                    <input type="number" id="nr-nisplit-in" min="1" max="10" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetNISplitAt(parseInt(this.value))">
+                    <button class="tog-btn" onclick="nrChangeNISplit(1)" style="width:28px;height:28px;padding:0">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="preview-box" id="nr-preview"><p class="preview-empty">Select a number above to preview.</p></div>
+            <div class="form-actions">
+              <button class="btn-create-more" onclick="openSharedBatch('nr')">⊞ Create more like this</button>
+              <button class="btn btn-blue" id="add-q-btn-nr" onclick="addToolQuestion('nr')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PV Representations panel -->
         <div class="tool-panel hidden" id="tool-panel-pv">
           <div class="form-card">
             <div class="form-row">
               <div class="field field-grow"><label>Question text</label><input type="text" id="pv-text" placeholder="e.g. What number is shown?"></div>
               <div class="field field-sm"><label>Answer</label><input type="text" id="pv-answer" placeholder="e.g. 342"></div>
             </div>
+            <div class="form-row" style="align-items:center">
+              <div class="field field-sm"><label>Number</label>
+                <div style="display:flex;align-items:center;gap:4px">
+                  <button class="tog-btn" onclick="pvChangeNum(-1)" style="width:30px;height:30px;padding:0">−</button>
+                  <input type="number" id="pv-num-in" min="0" step="0.001" value="24" style="width:80px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="pvSetN(parseFloat(this.value))">
+                  <button class="tog-btn" onclick="pvChangeNum(1)" style="width:30px;height:30px;padding:0">+</button>
+                </div>
+              </div>
+              <div class="field"><label>Representation</label>
+                <div class="tog-row">
+                  <button class="tog-btn active" data-pvrep="blocks"   onclick="pvSetRep(this)">PV Blocks</button>
+                  <button class="tog-btn"        data-pvrep="counters" onclick="pvSetRep(this)">PV Counters</button>
+                  <button class="tog-btn"        data-pvrep="numbers"  onclick="pvSetRep(this)">Numbers</button>
+                </div>
+              </div>
+              <div class="field"><label>Display</label>
+                <div class="tog-row">
+                  <button class="tog-btn active" data-pvmode="standalone" onclick="pvSetMode(this)">Standalone</button>
+                  <button class="tog-btn"        data-pvmode="grid"       onclick="pvSetMode(this)">PV Grid</button>
+                  <button class="tog-btn"        data-pvmode="partwhole"  onclick="pvSetMode(this)">Part-Whole</button>
+                </div>
+              </div>
+              <div class="field" id="pv-eq-field" style="display:none"><label>Equation</label>
+                <div class="tog-row">
+                  <button class="tog-btn active" data-pveq="none"   onclick="pvSetEqMode(this)">Parts only</button>
+                  <button class="tog-btn"        data-pveq="before" onclick="pvSetEqMode(this)">1234 = parts</button>
+                  <button class="tog-btn"        data-pveq="after"  onclick="pvSetEqMode(this)">Parts = 1234</button>
+                </div>
+              </div>
+            </div>
+            <div id="pv-blk-color-field" class="form-row">
+              <div class="field"><label>Block colours</label>
+                <div style="display:flex;gap:6px;margin-bottom:6px">
+                  <button class="tog-btn active" id="pv-preset-counter" onclick="pvApplyPreset('counter',this)">Match counters</button>
+                  <button class="tog-btn" id="pv-preset-paleblue" onclick="pvApplyPreset('paleblue',this)">Pale blue</button>
+                </div>
+                <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1000s</span><input type="color" id="pv-col-1000" value="#788CB4" oninput="pvSetBlkColor(1000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">100s</span><input type="color" id="pv-col-100" value="#50B4A0" oninput="pvSetBlkColor(100,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">10s</span><input type="color" id="pv-col-10" value="#F0B478" oninput="pvSetBlkColor(10,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1s</span><input type="color" id="pv-col-1" value="#C86464" oninput="pvSetBlkColor(1,this.value)"></div>
+                </div>
+              </div>
+            </div>
+            <div id="pv-ctr-color-field" class="form-row" style="display:none">
+              <div class="field"><label>Counter &amp; grid colours</label>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">M</span><input type="color" id="pv-cc-1000000" value="#288C50" oninput="pvSetPVColor(1000000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">HTh</span><input type="color" id="pv-cc-100000" value="#50B4C8" oninput="pvSetPVColor(100000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">TTh</span><input type="color" id="pv-cc-10000" value="#B478B4" oninput="pvSetPVColor(10000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">Th</span><input type="color" id="pv-cc-1000" value="#788CB4" oninput="pvSetPVColor(1000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">H</span><input type="color" id="pv-cc-100" value="#50B4A0" oninput="pvSetPVColor(100,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">T</span><input type="color" id="pv-cc-10" value="#F0B478" oninput="pvSetPVColor(10,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">O</span><input type="color" id="pv-cc-1" value="#C86464" oninput="pvSetPVColor(1,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1/10</span><input type="color" id="pv-cc-tenth" value="#C878B4" oninput="pvSetPVColor(0.1,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1/100</span><input type="color" id="pv-cc-hundredth" value="#F0B0D4" oninput="pvSetPVColor(0.01,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1/1000</span><input type="color" id="pv-cc-thousandth" value="#F0A090" oninput="pvSetPVColor(0.001,this.value)"></div>
+                </div>
+              </div>
+            </div>
             <div class="form-row">
-              <div class="field field-sm"><label>Number</label><input type="number" id="pv-num" value="342" min="0" step="1" oninput="autoPreviewPV()"></div>
-              <div class="field"><label>Representation</label><div class="tog-row">
-                <button class="tog-btn pv-rep active" data-pvrep="blocks" onclick="pvSetRep(this)">Blocks</button>
-                <button class="tog-btn pv-rep" data-pvrep="counters" onclick="pvSetRep(this)">Counters</button>
-                <button class="tog-btn pv-rep" data-pvrep="numbers" onclick="pvSetRep(this)">Numbers</button>
-              </div></div>
-              <div class="field"><label>Display</label><div class="tog-row">
-                <button class="tog-btn pv-disp active" data-pvdisp="standalone" onclick="pvSetDisp(this)">Standalone</button>
-                <button class="tog-btn pv-disp" data-pvdisp="grid" onclick="pvSetDisp(this)">Grid</button>
-                <button class="tog-btn pv-disp" data-pvdisp="partwhole" onclick="pvSetDisp(this)">Part-Whole</button>
-              </div></div>
+              <div class="field"><label>Hide as ?</label><div class="tog-row" id="pv-missing-row"><span style="font-size:0.78rem;color:#9CA3AF;font-style:italic">Enter a number above</span></div></div>
             </div>
-            <div id="pv-missing-row" style="margin:6px 0 4px;display:none">
-              <div class="fc-title" style="margin-bottom:6px">Hide as ? (missing values)</div>
-              <div class="tog-row" id="pv-missing-btns"></div>
+            <div class="preview-box" id="pv-preview" style="padding:10px;min-height:80px">
+              <canvas id="pv-canvas" style="max-width:100%;height:auto;display:block;margin:auto"></canvas>
             </div>
-            <canvas id="pv-preview-cv" style="display:block;max-width:100%;border-radius:8px;margin:10px 0"></canvas>
-            <div class="form-actions" style="margin-top:10px">
+            <div class="form-actions">
               <button class="btn-create-more" onclick="openSharedBatch('pv')">⊞ Create more like this</button>
               <button class="btn btn-blue" id="add-q-btn-pv" onclick="addToolQuestion('pv')">+ Add Question</button>
               <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
@@ -570,7 +760,8 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
           </div>
         </div>
 
-        <!-- ── Shared batch panel (BM / NT / Text / PV) ── -->
+
+        <!-- ── Shared batch panel (BM / NT / NR / PV) ── -->
         <div class="batch-panel" id="shared-batch-panel">
           <div class="batch-card">
             <div class="batch-header">
@@ -586,7 +777,6 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
             </div>
           </div>
         </div>
-
         <div class="q-grid" id="q-grid"></div>
       </div>
     </div>
@@ -681,23 +871,16 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 </div>
 
 <script src="tools/shared.js"></script>
-<script src="tools/pv-renderer.js"></script>
+<script src="tools/nl.js"></script>
+<script src="tools/bm.js"></script>
+<script src="tools/nt.js"></script>
+<script src="tools/nr.js"></script>
+<script src="tools/pv.js"></script>
 <script>
 'use strict';
 /* ── Palette & SVG renderers (from tools/shared.js) ── */
 const FONT        = SHARED_FONT;
 const LABEL_COLOR = NL_LABEL_COLOR;
-// NL_PAL: re-export shared palette (dark updated to match NL tool)
-const NL_PAL      = NL_PALETTE;
-const NL_SWATCH   = ['grey','red','orange','yellow','green','blue','purple','pink'];
-const JP_SWATCH   = NL_JUMP_PALETTE_NAMES;
-// BM aliases
-const BM_STROKES  = BM_BOX_COLORS;
-const BM_FILLS    = BM_BAR_LIGHT_FILLS;
-const BM_TEXTS    = BM_BOX_TEXT_COLORS;
-
-function resolveNLC(k){ return resolveNLColour(k); }
-
 /* ── Nuggets ── */
 const NUGGETS=[
   {id:1,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'1-10 what next? (number track)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
@@ -1327,7 +1510,8 @@ function renderQVisual(q){
   if(q.visualType==='nl'&&q.cfg&&Object.keys(q.cfg).length){try{return`<div class="q-svg-wrap">${numberLineSVG(q.cfg)}</div>`;}catch(e){}}
   if(q.visualType==='bm'&&q.cfg&&Object.keys(q.cfg).length){try{return`<div class="q-svg-wrap">${barModelSVG(q.cfg)}</div>`;}catch(e){}}
   if(q.visualType==='nt'&&q.cfg&&q.cfg.sequence){try{return`<div class="q-svg-wrap">${numberTrackSVG(q.cfg)}</div>`;}catch(e){}}
-  if(q.visualType==='pv'&&q.cfg&&q.cfg.n!==undefined){try{const oc=document.createElement('canvas');pvRender(oc,Object.assign({scale:2},q.cfg));return`<div class="q-svg-wrap"><img src="${oc.toDataURL()}" style="max-width:100%;border-radius:6px"></div>`;}catch(e){}}
+  if(q.visualType==='nr'&&q.cfg&&q.cfg.n){try{return`<div class="q-svg-wrap">${nrRenderFromCfg(q.cfg)}</div>`;}catch(e){}}
+  if(q.visualType==='pv'&&q.cfg&&q.cfg.n!=null){try{return`<div class="q-svg-wrap"><img src="${pvGetDataURL(q.cfg)}" style="max-width:100%;height:auto;display:block"></div>`;}catch(e){}}
   if(q.visualType==='text')return'';
   const imgSrc=q.imagePath||q.image||'';
   if(imgSrc)return`<div class="q-img" style="padding:0 14px 8px;text-align:center"><img src="${esc(imgSrc)}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'q-img-ph\\'>🖼 ${esc(imgSrc.split('/').pop())}</div>'"></div>`;
@@ -1381,11 +1565,6 @@ async function deleteImageFile(imagePath){
 
 /* ── Tool panel ── */
 let activeTool=null,editingQId=null;
-let ntShape='square',ntLayout='straight',ntColourMode='full';
-let nlStyle='through',nlColour='grey',nlJumpOpen=false,nlJump2Open=false;
-let nlArcType='single',nlArcType2='single',nlArrow=true,nlArrow2=true;
-let nlCircle='none',nlCircle2='none',nlJumpCol='dark',nlJump2Col='dark';
-let bmColIdx=0,bmMulti=false,bmTotDisp='brace',bmSeg3=false,bmSegT={1:'fill',2:'fill',3:'fill'},bmDivided=false;
 
 function openTool(type){
   if(activeTool===type){closeTool();return;}
@@ -1395,76 +1574,18 @@ function openTool(type){
   document.getElementById('tool-panel-'+type).classList.remove('hidden');
   // Reset fields
   if(type==='nl'){document.getElementById('nl-text').value='';document.getElementById('nl-answer').value='';['f-start','f-end','f-step','f-vge','f-hide-from','f-hide-to'].forEach(id=>{const el=document.getElementById(id);if(el){if(id==='f-start')el.value='0';else if(id==='f-end')el.value='20';else if(id==='f-step')el.value='1';else el.value='';}});document.getElementById('nl-preview').innerHTML='<p class="preview-empty">Fill in settings above to preview.</p>';if(nlJumpOpen)nlToggleJump();if(nlJump2Open)nlToggleJump2();}
-  else if(type==='bm'){document.getElementById('bm-text').value='';document.getElementById('bm-answer').value='';['bm-total','bm-seg1-val','bm-seg1-lbl','bm-seg1-brace','bm-seg2-val','bm-seg2-lbl','bm-seg2-brace'].forEach(id=>document.getElementById(id).value='');if(bmSeg3)bmToggleSeg3(false);bmDivided=false;document.querySelectorAll('[data-bmunit]').forEach(b=>b.classList.toggle('active',b.dataset.bmunit==='off'));const bmN=document.getElementById('bm-unit-note');if(bmN)bmN.textContent='';document.getElementById('bm-preview').innerHTML='<p class="preview-empty">Fill in segment values above to preview.</p>';}
+  else if(type==='bm'){document.getElementById('bm-text').value='';document.getElementById('bm-answer').value='';['bm-total','bm-seg1-val','bm-seg1-lbl','bm-seg1-brace','bm-seg2-val','bm-seg2-lbl','bm-seg2-brace'].forEach(id=>document.getElementById(id).value='');if(bmSeg3)bmToggleSeg3(false);document.getElementById('bm-preview').innerHTML='<p class="preview-empty">Fill in segment values above to preview.</p>';}
   else if(type==='text'){document.getElementById('text-q-text').value='';document.getElementById('text-answer').value='';}
   else if(type==='custom'){document.getElementById('custom-q-text').value='';document.getElementById('custom-answer').value='';customResetImage();}
   else if(type==='nt'){document.getElementById('nt-text').value='';document.getElementById('nt-answer').value='';document.getElementById('nt-seq').value='1,2,3,?,5,6';ntShape='square';ntLayout='straight';ntColourMode='full';document.querySelectorAll('[data-ntshape]').forEach(b=>b.classList.toggle('active',b.dataset.ntshape==='square'));document.querySelectorAll('[data-ntlayout]').forEach(b=>b.classList.toggle('active',b.dataset.ntlayout==='straight'));document.querySelectorAll('[data-ntcolmode]').forEach(b=>b.classList.toggle('active',b.dataset.ntcolmode==='full'));autoPreviewNT();}
-  else if(type==='pv'){document.getElementById('pv-text').value='';document.getElementById('pv-answer').value='';document.getElementById('pv-num').value='342';pvRepType='blocks';pvDispMode='standalone';pvMissingVals=new Set();document.querySelectorAll('.pv-rep').forEach(b=>b.classList.toggle('active',b.dataset.pvrep==='blocks'));document.querySelectorAll('.pv-disp').forEach(b=>b.classList.toggle('active',b.dataset.pvdisp==='standalone'));autoPreviewPV();}
+  else if(type==='nr'){document.getElementById('nr-text').value='';document.getElementById('nr-answer').value='';nrResetState();autoPreviewNR();}
+  else if(type==='pv'){document.getElementById('pv-text').value='';document.getElementById('pv-answer').value='';pvResetState();}
 }
 function closeTool(){
   if(activeTool){document.getElementById('tool-panel-'+activeTool).classList.add('hidden');}
   if(editingQId!==null){editingQId=null;setEditMode(false);renderQuestions();}
   activeTool=null;
   document.querySelectorAll('.tool-tab').forEach(b=>b.classList.remove('active'));
-}
-function autoPreviewNL(){
-  if(activeTool!=='nl')return;
-  const box=document.getElementById('nl-preview');
-  try{const cfg=getNLConfig();if(cfg)box.innerHTML=numberLineSVG(cfg);else box.innerHTML='<p class="preview-empty">Adjust start / end / goes up in to preview.</p>';}
-  catch(e){box.innerHTML='<p class="preview-empty">Preview error.</p>';}
-}
-function autoPreviewBM(){
-  if(activeTool!=='bm')return;
-  const box=document.getElementById('bm-preview');
-  try{const cfg=getBMConfig();if(cfg)box.innerHTML=barModelSVG(cfg);else box.innerHTML='<p class="preview-empty">Fill in segment values above to preview.</p>';}
-  catch(e){box.innerHTML='<p class="preview-empty">Preview error.</p>';}
-}
-// ── PV Representations tool state ────────────────────────────────────────────
-let pvRepType='blocks', pvDispMode='standalone', pvMissingVals=new Set();
-function pvSetRep(btn){document.querySelectorAll('.pv-rep').forEach(b=>b.classList.remove('active'));btn.classList.add('active');pvRepType=btn.dataset.pvrep;autoPreviewPV();}
-function pvSetDisp(btn){document.querySelectorAll('.pv-disp').forEach(b=>b.classList.remove('active'));btn.classList.add('active');pvDispMode=btn.dataset.pvdisp;autoPreviewPV();}
-function pvToggleMissing(val){
-  const key=val==='whole'?'whole':parseFloat(val);
-  if(pvMissingVals.has(key))pvMissingVals.delete(key);else pvMissingVals.add(key);
-  document.querySelectorAll('.pv-miss-btn').forEach(b=>{const k=b.dataset.pvval==='whole'?'whole':parseFloat(b.dataset.pvval);b.classList.toggle('active',pvMissingVals.has(k));});
-  autoPreviewPV();
-}
-function autoPreviewPV(){
-  if(activeTool!=='pv')return;
-  const n=parseFloat(document.getElementById('pv-num').value);
-  if(isNaN(n)){return;}
-  // Rebuild missing-val buttons
-  const parts=pvGetParts(n,pvDispMode);
-  const active=parts.filter(p=>p.count>0);
-  const missRow=document.getElementById('pv-missing-row');
-  const missContainer=document.getElementById('pv-missing-btns');
-  if(active.length>0){
-    missRow.style.display='block';
-    const keys=pvDispMode==='partwhole'?[...active.map(p=>String(p.val)),'whole']:active.map(p=>String(p.val));
-    // Only rebuild if parts changed
-    const existing=[...missContainer.querySelectorAll('.pv-miss-btn')].map(b=>b.dataset.pvval);
-    if(JSON.stringify(existing)!==JSON.stringify(keys)){
-      missContainer.innerHTML='';
-      keys.forEach(k=>{
-        const isWhole=k==='whole';
-        const label=isWhole?'Whole':active.find(p=>String(p.val)===k)?.abbr||k;
-        const btn=document.createElement('button');
-        btn.className='tog-btn pv-miss-btn'+(pvMissingVals.has(isWhole?'whole':parseFloat(k))?' active':'');
-        btn.dataset.pvval=k; btn.textContent=label;
-        btn.onclick=()=>pvToggleMissing(k);
-        missContainer.appendChild(btn);
-      });
-    }
-  } else { missRow.style.display='none'; }
-  // Render preview
-  const cv=document.getElementById('pv-preview-cv');
-  try{pvRender(cv,{n,repType:pvRepType,dispMode:pvDispMode,missingVals:[...pvMissingVals],scale:2});}
-  catch(e){console.error('PV preview error',e);}
-}
-function getPVConfig(){
-  const n=parseFloat(document.getElementById('pv-num').value);
-  if(isNaN(n))return null;
-  return{n,repType:pvRepType,dispMode:pvDispMode,missingVals:[...pvMissingVals]};
 }
 function addToolQuestion(type){
   if(!activeId)return;
@@ -1473,6 +1594,7 @@ function addToolQuestion(type){
   else if(type==='bm'){text=document.getElementById('bm-text').value.trim();answer=document.getElementById('bm-answer').value.trim();}
   else if(type==='custom'){text=document.getElementById('custom-q-text').value.trim();answer=document.getElementById('custom-answer').value.trim();}
   else if(type==='nt'){text=document.getElementById('nt-text').value.trim();answer=document.getElementById('nt-answer').value.trim();}
+  else if(type==='nr'){text=document.getElementById('nr-text').value.trim();answer=document.getElementById('nr-answer').value.trim();}
   else if(type==='pv'){text=document.getElementById('pv-text').value.trim();answer=document.getElementById('pv-answer').value.trim();}
   else{text=document.getElementById('text-q-text').value.trim();answer=document.getElementById('text-answer').value.trim();}
   if(!text){alert('Please enter the question text.');return;}
@@ -1485,7 +1607,8 @@ function addToolQuestion(type){
       if(type==='nl'){const cfg=getNLConfig();if(!cfg){alert('Check number line settings (start, end, goes up in).');return;}q.cfg=cfg;}
       else if(type==='bm'){const cfg=getBMConfig();if(!cfg){alert('Please fill in at least one segment value.');return;}q.cfg=cfg;}
       else if(type==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');return;}q.cfg=cfg;}
-      else if(type==='pv'){const cfg=getPVConfig();if(!cfg){alert('Please enter a number.');return;}q.cfg=cfg;}
+      else if(type==='nr'){q.cfg=getNRConfig();}
+      else if(type==='pv'){q.cfg=getPVConfig();}
       else if(type==='custom'&&customImageDataURL){const fname=`q-${String(editingQId).padStart(4,'0')}.png`;const imagePath=`question-data/${nuggetSlug(activeId)}/${fname}`;saveImageToFile(activeId,fname,customImageDataURL);q.imagePath=imagePath;q.image='';}
     }
     editingQId=null;setEditMode(false,type);save();renderQuestions();renderSidebar();renderWorkflow();closeTool();return;
@@ -1495,7 +1618,8 @@ function addToolQuestion(type){
   if(type==='nl'){const cfg=getNLConfig();if(!cfg){alert('Check number line settings (start, end, goes up in).');nextQId--;return;}q.cfg=cfg;}
   else if(type==='bm'){const cfg=getBMConfig();if(!cfg){alert('Please fill in at least one segment value.');nextQId--;return;}q.cfg=cfg;}
   else if(type==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');nextQId--;return;}q.cfg=cfg;}
-  else if(type==='pv'){const cfg=getPVConfig();if(!cfg){alert('Please enter a number.');nextQId--;return;}q.cfg=cfg;}
+  else if(type==='nr'){q.cfg=getNRConfig();}
+  else if(type==='pv'){q.cfg=getPVConfig();}
   else if(type==='custom'){
     if(!customImageDataURL&&!customImagePath){alert('Please add an image for this question.');nextQId--;return;}
     q.visualType='custom';
@@ -1510,330 +1634,6 @@ function addToolQuestion(type){
   nuggetState[activeId].questions.push(q);
   save();renderQuestions();renderSidebar();renderWorkflow();closeTool();
 }
-
-/* ── NL builder helpers ── */
-function buildSwatches(rowId,names,palette,def,cb){
-  const row=document.getElementById(rowId);if(!row)return;row.innerHTML='';
-  names.forEach(n=>{const b=document.createElement('button');b.className='swatch'+(n===def?' selected':'');b.style.background=palette[n];b.title=n;b.onclick=()=>{row.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));b.classList.add('selected');cb(n);if(rowId.includes('nl')||rowId==='jump1-swatch-row'||rowId==='jump2-swatch-row')autoPreviewNL();else autoPreviewBM();};row.appendChild(b);});
-}
-function initNLPanel(){
-  buildSwatches('nl-swatch-row',NL_SWATCH,NL_PAL,'grey',n=>{nlColour=n;});
-  buildSwatches('jump1-swatch-row',JP_SWATCH,NL_PAL,'dark',n=>{nlJumpCol=n;});
-  buildSwatches('jump2-swatch-row',JP_SWATCH,NL_PAL,'dark',n=>{nlJump2Col=n;});
-  document.querySelectorAll('.tog-btn[data-style]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-style]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlStyle=b.dataset.style;autoPreviewNL();}));
-  document.querySelectorAll('.tog-btn[data-arctype]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-arctype]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlArcType=b.dataset.arctype;autoPreviewNL();}));
-  document.querySelectorAll('.tog-btn[data-arrow]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-arrow]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlArrow=b.dataset.arrow==='yes';autoPreviewNL();}));
-  document.querySelectorAll('.tog-btn[data-circle]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-circle]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlCircle=b.dataset.circle;autoPreviewNL();}));
-  document.querySelectorAll('.tog-btn[data-arctype2]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-arctype2]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlArcType2=b.dataset.arctype2;autoPreviewNL();}));
-  document.querySelectorAll('.tog-btn[data-arrow2]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-arrow2]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlArrow2=b.dataset.arrow2==='yes';autoPreviewNL();}));
-  document.querySelectorAll('.tog-btn[data-circle2]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-circle2]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlCircle2=b.dataset.circle2;autoPreviewNL();}));
-  ['nl-answer','f-start','f-end','f-step','f-vge','f-hide-from','f-hide-to'].forEach(id=>document.getElementById(id)?.addEventListener('input',autoPreviewNL));
-  setupJumpCalc('f-from','f-to','f-jump-label');
-  setupJumpCalc('f-from2','f-to2','f-jump-label2');
-}
-function parseJL(s){if(!s||!s.trim())return NaN;return parseFloat(s.trim().replace(/^\+/,''));}
-function fmtJL(d){if(!isFinite(d))return'';const n=Math.round(d*1000)/1000;return(n>=0?'+':'')+n;}
-function setupJumpCalc(fId,tId,lId){
-  const f=document.getElementById(fId),t=document.getElementById(tId),l=document.getElementById(lId);if(!f||!t||!l)return;
-  const upd=()=>{const fv=parseFloat(f.value),tv=parseFloat(t.value),lv=parseJL(l.value);if(!isNaN(fv)&&!isNaN(tv))l.value=fmtJL(tv-fv);else if(!isNaN(fv)&&!isNaN(lv))t.value=fv+lv;else if(!isNaN(tv)&&!isNaN(lv))f.value=tv-lv;autoPreviewNL();};
-  f.addEventListener('input',upd);t.addEventListener('input',upd);l.addEventListener('input',upd);
-}
-function nlToggleJump(){nlJumpOpen=!nlJumpOpen;const s=document.getElementById('jump-section'),b=document.getElementById('jump-toggle-btn');s.style.display=nlJumpOpen?'block':'none';b.textContent=nlJumpOpen?'✕ Remove jumps':'＋ Add jumps';b.classList.toggle('open',nlJumpOpen);if(!nlJumpOpen&&nlJump2Open)nlToggleJump2();autoPreviewNL();}
-function nlToggleJump2(){nlJump2Open=!nlJump2Open;const s=document.getElementById('jump2-section'),b=document.getElementById('jump2-toggle-btn');s.style.display=nlJump2Open?'block':'none';b.textContent=nlJump2Open?'✕ Remove second jump':'＋ Add second jump';b.classList.toggle('open',nlJump2Open);if(!nlJump2Open)['f-from2','f-to2','f-jump-label2'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});autoPreviewNL();}
-function getNLConfig(){
-  const start=parseFloat(document.getElementById('f-start').value),end=parseFloat(document.getElementById('f-end').value),step=parseFloat(document.getElementById('f-step').value),vge=parseFloat(document.getElementById('f-vge').value),hF=parseFloat(document.getElementById('f-hide-from').value),hT=parseFloat(document.getElementById('f-hide-to').value);
-  if(isNaN(start)||isNaN(end)||isNaN(step)||step<=0)return null;const p=Math.round((end-start)/step);if(p<=0)return null;
-  const ans=document.getElementById('nl-answer').value.trim()||undefined;
-  const cfg={start,end,partitions:p,valuesGivenEvery:vge,answer:ans,lineStyle:nlStyle,colour:nlColour,hideFrom:isNaN(hF)?undefined:hF,hideTo:isNaN(hT)?undefined:hT};
-  if(nlJumpOpen){const from=parseFloat(document.getElementById('f-from').value),to=parseFloat(document.getElementById('f-to').value),lbl=document.getElementById('f-jump-label').value.trim();if(!isNaN(from)&&!isNaN(to)&&from!==to){cfg.jumpFrom=from;cfg.jumpTo=to;cfg.jumpType=nlArcType;cfg.jumpLabel=lbl;cfg.jumpArrow=nlArrow;cfg.jumpCircle=nlCircle;cfg.jumpColour=nlJumpCol;}if(nlJump2Open){const from2=parseFloat(document.getElementById('f-from2').value),to2=parseFloat(document.getElementById('f-to2').value),lbl2=document.getElementById('f-jump-label2').value.trim();if(!isNaN(from2)&&!isNaN(to2)&&from2!==to2){cfg.jump2From=from2;cfg.jump2To=to2;cfg.jump2Type=nlArcType2;cfg.jump2Label=lbl2;cfg.jump2Arrow=nlArrow2;cfg.jump2Circle=nlCircle2;cfg.jump2Colour=nlJump2Col;}}}
-  return cfg;
-}
-
-/* ── NL Batch panel ── */
-let batchRowIdx=0,batchHasJump=false,batchHasJump2=false,batchStructure={},batchDefaultNums={start:0,end:20,step:1};
-const batchRowColours={};
-const BATCH_PALETTE=NL_PAL;
-function openBatchPanel(){
-  const cfg=getNLConfig();if(!cfg){alert('Please fill in Start, End and "Goes up in" first.');return;}
-  batchHasJump=cfg.jumpFrom!==undefined;batchHasJump2=cfg.jump2From!==undefined;
-  batchDefaultNums={start:cfg.start,end:cfg.end,step:parseFloat(document.getElementById('f-step').value)};
-  batchStructure={lineStyle:cfg.lineStyle,colour:cfg.colour,valuesGivenEvery:cfg.valuesGivenEvery,
-    jumpType:cfg.jumpType,jumpArrow:cfg.jumpArrow,jumpCircle:cfg.jumpCircle,jumpColour:cfg.jumpColour,
-    jump2Type:cfg.jump2Type,jump2Arrow:cfg.jump2Arrow,jump2Circle:cfg.jump2Circle,jump2Colour:cfg.jump2Colour};
-  const tagsEl=document.getElementById('batch-locked-tags');tagsEl.innerHTML='';
-  const tags=[`Line: ${cfg.lineStyle}`];
-  if(batchHasJump)tags.push(`Jump 1: ${cfg.jumpType} arc`);
-  if(batchHasJump2)tags.push(`Jump 2: ${cfg.jump2Type} arc`);
-  tags.forEach(t=>{const span=document.createElement('span');span.className='locked-tag';span.textContent=t;tagsEl.appendChild(span);});
-  buildBatchHeaders();
-  document.getElementById('batch-tbody').innerHTML='';batchRowIdx=0;
-  addBatchRow({text:document.getElementById('nl-text').value.trim(),start:cfg.start,end:cfg.end,
-    step:parseFloat(document.getElementById('f-step').value),answer:document.getElementById('nl-answer').value.trim(),
-    jumpFrom:cfg.jumpFrom,jumpTo:cfg.jumpTo,jumpLabel:cfg.jumpLabel,
-    jump2From:cfg.jump2From,jump2To:cfg.jump2To,jump2Label:cfg.jump2Label,
-    colour:cfg.colour,jumpColour:cfg.jumpColour,jump2Colour:cfg.jump2Colour});
-  const panel=document.getElementById('nl-batch-panel');panel.style.display='block';
-  panel.scrollIntoView({behavior:'smooth',block:'start'});
-}
-function closeBatchPanel(){document.getElementById('nl-batch-panel').style.display='none';}
-function buildBatchHeaders(){
-  const tr=document.getElementById('batch-thead-row');
-  const cols=['Preview','Question',  'Start','End','Step'];
-  if(batchHasJump)cols.push('J1 From','J1 To','J1 Label');
-  if(batchHasJump2)cols.push('J2 From','J2 To','J2 Label');
-  cols.push('Answer','');
-  tr.innerHTML=cols.map(c=>`<th>${c}</th>`).join('');
-}
-function addBatchRow(defaults={}){
-  const idx=batchRowIdx++;const tbody=document.getElementById('batch-tbody');const tr=document.createElement('tr');tr.dataset.rowIdx=idx;
-  const n=(field,val)=>`<input data-field="${field}" class="batch-input batch-input-num" type="number" value="${val??''}" step="any" oninput="updateBatchPreview(${idx})">`;
-  const t=(field,val,cls='')=>`<input data-field="${field}" class="batch-input ${cls}" type="text" value="${val??''}" oninput="updateBatchPreview(${idx})">`;
-  let cells=`<td class="batch-preview-cell"><div id="bp-${idx}"></div></td>`;
-  cells+=`<td>${t('text',defaults.text??'','batch-input-text')}</td>`;
-  cells+=`<td>${n('start',defaults.start??batchDefaultNums.start)}</td>`;
-  cells+=`<td>${n('end',defaults.end??batchDefaultNums.end)}</td>`;
-  cells+=`<td>${n('step',defaults.step??batchDefaultNums.step)}</td>`;
-  if(batchHasJump){cells+=`<td>${n('jumpFrom',defaults.jumpFrom)}</td>`;cells+=`<td>${n('jumpTo',defaults.jumpTo)}</td>`;cells+=`<td>${t('jumpLabel',defaults.jumpLabel??'','batch-input-lbl')}</td>`;}
-  if(batchHasJump2){cells+=`<td>${n('jump2From',defaults.jump2From)}</td>`;cells+=`<td>${n('jump2To',defaults.jump2To)}</td>`;cells+=`<td>${t('jump2Label',defaults.jump2Label??'','batch-input-lbl')}</td>`;}
-  cells+=`<td>${t('answer',defaults.answer??'','batch-input-num')}</td>`;
-  cells+=`<td><button class="batch-del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
-  tr.innerHTML=cells;tbody.appendChild(tr);buildBatchSwatches(idx,defaults);setTimeout(()=>updateBatchPreview(idx),0);
-}
-function buildBatchSwatches(idx,defaults){
-  batchRowColours[idx]={colour:defaults.colour??batchStructure.colour??'grey',jumpColour:defaults.jumpColour??batchStructure.jumpColour??'dark',jump2Colour:defaults.jump2Colour??batchStructure.jump2Colour??'dark'};
-  const cell=document.querySelector(`tr[data-row-idx="${idx}"] .batch-preview-cell`);
-  const wrap=document.createElement('div');wrap.className='batch-swatch-wrap';
-  wrap.appendChild(makeMiniSwatchRow(idx,'Line','colour',batchRowColours[idx].colour,NL_SWATCH));
-  if(batchHasJump)wrap.appendChild(makeMiniSwatchRow(idx,'J1','jumpColour',batchRowColours[idx].jumpColour,JP_SWATCH));
-  if(batchHasJump2)wrap.appendChild(makeMiniSwatchRow(idx,'J2','jump2Colour',batchRowColours[idx].jump2Colour,JP_SWATCH));
-  cell.appendChild(wrap);
-}
-function makeMiniSwatchRow(idx,label,field,defCol,paletteNames){
-  const row=document.createElement('div');row.className='batch-mini-swatch-row';
-  const lbl=document.createElement('span');lbl.className='batch-swatch-label';lbl.textContent=label;row.appendChild(lbl);
-  paletteNames.forEach(name=>{const btn=document.createElement('button');btn.className='mini-swatch'+(name===defCol?' selected':'');btn.style.background=NL_PAL[name];btn.title=name;btn.addEventListener('click',()=>{row.querySelectorAll('.mini-swatch').forEach(s=>s.classList.remove('selected'));btn.classList.add('selected');batchRowColours[idx][field]=name;updateBatchPreview(idx);});row.appendChild(btn);});
-  return row;
-}
-function getBatchRowData(tr){
-  const g=field=>tr.querySelector(`[data-field="${field}"]`)?.value.trim()??'';
-  const start=parseFloat(g('start')),end=parseFloat(g('end')),step=parseFloat(g('step'));
-  if(isNaN(start)||isNaN(end)||isNaN(step)||step<=0)return null;
-  const partitions=Math.round((end-start)/step);if(partitions<=0)return null;
-  const idx=parseInt(tr.dataset.rowIdx);const colours=batchRowColours[idx]||{};
-  const cfg={...batchStructure,start,end,partitions,colour:colours.colour??batchStructure?.colour,jumpColour:colours.jumpColour??batchStructure?.jumpColour,jump2Colour:colours.jump2Colour??batchStructure?.jump2Colour};
-  const ans=g('answer');if(ans)cfg.answer=ans;
-  if(batchHasJump){const from=parseFloat(g('jumpFrom')),to=parseFloat(g('jumpTo'));if(!isNaN(from)&&!isNaN(to)&&from!==to){cfg.jumpFrom=from;cfg.jumpTo=to;cfg.jumpLabel=g('jumpLabel');}}
-  if(batchHasJump2){const from2=parseFloat(g('jump2From')),to2=parseFloat(g('jump2To'));if(!isNaN(from2)&&!isNaN(to2)&&from2!==to2){cfg.jump2From=from2;cfg.jump2To=to2;cfg.jump2Label=g('jump2Label');}}
-  return{text:g('text'),answer:ans||undefined,cfg};
-}
-function updateBatchPreview(idx){
-  const tr=document.querySelector(`tr[data-row-idx="${idx}"]`);const box=document.getElementById(`bp-${idx}`);
-  if(!tr||!box)return;const data=getBatchRowData(tr);
-  if(!data){box.innerHTML='<div class="batch-no-preview">Invalid</div>';return;}
-  try{box.innerHTML=numberLineSVG(data.cfg);}catch(e){box.innerHTML='<div class="batch-no-preview">Error</div>';}
-}
-function addAllBatchQuestions(){
-  if(!activeId)return;let added=0;
-  document.querySelectorAll('#batch-tbody tr').forEach(tr=>{
-    const data=getBatchRowData(tr);if(!data)return;
-    if(!data.text){return;}
-    if(!data.answer){return;}
-    const id=nextQId++;const q={id,text:data.text,answer:data.answer,type:'exact',image:'',display:'',qaComment:'',visualType:'nl',cfg:data.cfg};
-    nuggetState[activeId].questions.push(q);added++;
-  });
-  if(!added){alert('No valid rows to add — each row needs Question text and Answer.');return;}
-  if(nuggetState[activeId].status==='not-started')nuggetState[activeId].status='in-progress';
-  save();renderQuestions();renderSidebar();renderWorkflow();closeBatchPanel();closeTool();
-}
-
-
-/* ── Shared batch panel (BM / NT / Text / PV) ──────────────────────────────── */
-let sharedBatchTool=null, sharedBatchStructure={}, sharedBatchRowIdx=0, sharedBatchRowColors={};
-
-function openSharedBatch(tool){
-  // Validate current tool config first
-  if(tool==='bm'){const cfg=getBMConfig();if(!cfg){alert('Please fill in at least one segment value.');return;}sharedBatchStructure=cfg;}
-  else if(tool==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');return;}sharedBatchStructure=cfg;}
-  else if(tool==='pv'){const cfg=getPVConfig();if(!cfg){alert('Please enter a number.');return;}sharedBatchStructure=cfg;}
-  else if(tool==='text'){sharedBatchStructure={};}
-  sharedBatchTool=tool;sharedBatchRowColors={};
-  // Build locked-setting tags
-  const tagsEl=document.getElementById('shared-batch-tags');tagsEl.innerHTML='';
-  const tags=[];
-  if(tool==='bm'){tags.push(`${sharedBatchStructure.segments?.length} segments`,`Colour: swatch ${sharedBatchStructure.colorIdx??0}`);}
-  else if(tool==='nt'){tags.push(`Shape: ${ntShape}`,`Layout: ${ntLayout}`,`Colour: ${ntColourMode}`);}
-  else if(tool==='pv'){tags.push(`Rep: ${sharedBatchStructure.repType}`,`Display: ${sharedBatchStructure.dispMode}`);}
-  tags.forEach(t=>{const s=document.createElement('span');s.className='locked-tag';s.textContent=t;tagsEl.appendChild(s);});
-  // Subtitle
-  const subtitles={bm:'Segment structure is locked. Change segment values and answers per row.',nt:'Shape and layout are locked. Change the sequence and answer per row.',text:'No locked settings — enter question and answer for each row.',pv:'Representation and display mode are locked. Change the number per row.'};
-  document.getElementById('shared-batch-subtitle').textContent=subtitles[tool]||'';
-  // Build table headers
-  buildSharedBatchHeaders();
-  document.getElementById('shared-batch-tbody').innerHTML='';sharedBatchRowIdx=0;
-  // Seed with one row pre-filled from current tool state
-  const seed={};
-  if(tool==='bm'){(sharedBatchStructure.segments||[]).forEach((s,i)=>{seed[`seg${i}`]=s.value;});seed.answer=document.getElementById('bm-answer').value.trim();seed.text=document.getElementById('bm-text').value.trim();}
-  else if(tool==='nt'){seed.seq=document.getElementById('nt-seq').value.trim();seed.answer=document.getElementById('nt-answer').value.trim();seed.text=document.getElementById('nt-text').value.trim();}
-  else if(tool==='pv'){seed.n=sharedBatchStructure.n;seed.answer=document.getElementById('pv-answer').value.trim();seed.text=document.getElementById('pv-text').value.trim();}
-  else if(tool==='text'){seed.answer=document.getElementById('text-answer').value.trim();seed.text=document.getElementById('text-q-text').value.trim();}
-  addSharedBatchRow(seed);
-  const panel=document.getElementById('shared-batch-panel');panel.style.display='block';
-  panel.scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function closeSharedBatch(){document.getElementById('shared-batch-panel').style.display='none';sharedBatchTool=null;}
-
-function buildSharedBatchHeaders(){
-  const tr=document.getElementById('shared-batch-thead');
-  let cols=[];
-  if(sharedBatchTool==='bm'){
-    const n=sharedBatchStructure.segments?.length||2;
-    cols=['Preview','Question'];
-    for(let i=0;i<n;i++)cols.push(`Seg ${i+1}`);
-    cols.push('Answer','');
-  } else if(sharedBatchTool==='nt'){
-    cols=['Preview','Question','Sequence','Answer',''];
-  } else if(sharedBatchTool==='text'){
-    cols=['Question','Answer',''];
-  } else if(sharedBatchTool==='pv'){
-    cols=['Preview','Question','Number','Answer',''];
-  }
-  tr.innerHTML=cols.map(c=>`<th>${c}</th>`).join('');
-}
-
-function addSharedBatchRow(defaults={}){
-  const idx=sharedBatchRowIdx++;
-  const tbody=document.getElementById('shared-batch-tbody');
-  // Inherit question text from the last row if not explicitly provided
-  if(defaults.text===undefined){
-    const lastRow=tbody.querySelector('tr:last-child');
-    if(lastRow)defaults.text=lastRow.querySelector('[data-field="text"]')?.value??'';
-  }
-  const tr=document.createElement('tr');tr.dataset.rowIdx=idx;
-  const n=(field,val,w=58)=>`<input data-field="${field}" class="batch-input batch-input-num" style="width:${w}px" type="number" value="${val??''}" step="any" oninput="updateSharedPreview(${idx})">`;
-  const t=(field,val,cls='batch-input-text')=>`<input data-field="${field}" class="batch-input ${cls}" type="text" value="${esc(String(val??''))}" oninput="updateSharedPreview(${idx})">`;
-  let cells='';
-  const tool=sharedBatchTool;
-  if(tool!=='text') cells+=`<td class="batch-preview-cell"><div id="sbp-${idx}"></div></td>`;
-  const textW=tool==='text'?'min(60vw,520px)':'140px';
-  cells+=`<td>${t('text',defaults.text??'','batch-input-text').replace('class="batch-input batch-input-text"',`class="batch-input batch-input-text" style="width:${textW}"`)}</td>`;
-  if(tool==='bm'){
-    const segs=sharedBatchStructure.segments||[];
-    segs.forEach((s,i)=>{ cells+=`<td>${n('seg'+i, defaults['seg'+i]??s.value)}</td>`; });
-  } else if(tool==='nt'){
-    cells+=`<td>${t('seq',defaults.seq??'1,2,3,?,5','batch-input-text')}</td>`;
-  } else if(tool==='pv'){
-    cells+=`<td>${n('n',defaults.n??0,72)}</td>`;
-  }
-  cells+=`<td>${t('answer',defaults.answer??'','batch-input-num')}</td>`;
-  cells+=`<td><button class="batch-del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
-  tr.innerHTML=cells;tbody.appendChild(tr);
-  // Add per-row colour swatches for Bar Model
-  if(sharedBatchTool==='bm'){
-    const defIdx=sharedBatchStructure.colorIdx??0;
-    sharedBatchRowColors[idx]={colorIdx:defIdx};
-    const cell=tr.querySelector('.batch-preview-cell');
-    if(cell){
-      const wrap=document.createElement('div');wrap.className='batch-swatch-wrap';
-      const swatchRow=document.createElement('div');swatchRow.className='batch-mini-swatch-row';
-      const lbl=document.createElement('span');lbl.className='batch-swatch-label';lbl.textContent='Col';
-      swatchRow.appendChild(lbl);
-      BM_STROKES.forEach((col,i)=>{
-        const btn=document.createElement('button');
-        btn.className='mini-swatch'+(i===defIdx?' selected':'');
-        btn.style.background=col;btn.title='Colour '+i;
-        btn.addEventListener('click',()=>{
-          swatchRow.querySelectorAll('.mini-swatch').forEach(s=>s.classList.remove('selected'));
-          btn.classList.add('selected');
-          sharedBatchRowColors[idx].colorIdx=i;
-          updateSharedPreview(idx);
-        });
-        swatchRow.appendChild(btn);
-      });
-      wrap.appendChild(swatchRow);cell.appendChild(wrap);
-    }
-  }
-  setTimeout(()=>updateSharedPreview(idx),0);
-}
-
-function getSharedBatchRowCfg(tr){
-  const g=field=>tr.querySelector(`[data-field="${field}"]`)?.value.trim()??'';
-  const tool=sharedBatchTool;
-  if(tool==='bm'){
-    const segs=(sharedBatchStructure.segments||[]).map((s,i)=>{
-      const raw=g('seg'+i); const v=raw===''?s.value:(raw==='?'?'?':parseFloat(raw));
-      return {...s, value:v};
-    });
-    const rowIdx=parseInt(tr.dataset.rowIdx);
-    const colorIdx=sharedBatchRowColors[rowIdx]?.colorIdx??sharedBatchStructure.colorIdx??0;
-    return {...sharedBatchStructure, segments:segs, colorIdx};
-  } else if(tool==='nt'){
-    const seq=g('seq');if(!seq)return null;
-    return {...sharedBatchStructure, sequence:seq};
-  } else if(tool==='pv'){
-    const num=parseFloat(g('n'));if(isNaN(num))return null;
-    return {...sharedBatchStructure, n:num, missingVals:sharedBatchStructure.missingVals||[]};
-  }
-  return {};
-}
-
-function updateSharedPreview(idx){
-  const tr=document.querySelector(`tr[data-row-idx="${idx}"]`);
-  const box=document.getElementById(`sbp-${idx}`);
-  if(!tr||!box)return;
-  const tool=sharedBatchTool;
-  try{
-    if(tool==='bm'){const cfg=getSharedBatchRowCfg(tr);if(cfg)box.innerHTML=barModelSVG(cfg);else box.innerHTML='<div class="batch-no-preview">Invalid</div>';}
-    else if(tool==='nt'){const cfg=getSharedBatchRowCfg(tr);if(cfg)box.innerHTML=numberTrackSVG(cfg);else box.innerHTML='<div class="batch-no-preview">Invalid</div>';}
-    else if(tool==='pv'){
-      const cfg=getSharedBatchRowCfg(tr);if(!cfg){box.innerHTML='<div class="batch-no-preview">Invalid</div>';return;}
-      const cv=document.createElement('canvas');pvRender(cv,Object.assign({scale:1.5},cfg));
-      const img=document.createElement('img');img.src=cv.toDataURL();img.style.cssText='max-width:100%;display:block';
-      box.innerHTML='';box.appendChild(img);
-    }
-  } catch(e){box.innerHTML='<div class="batch-no-preview">Error</div>';}
-}
-
-function addAllSharedBatch(){
-  if(!activeId)return;
-  const tool=sharedBatchTool;let added=0;
-  document.querySelectorAll('#shared-batch-tbody tr').forEach(tr=>{
-    const g=field=>tr.querySelector(`[data-field="${field}"]`)?.value.trim()??'';
-    const text=g('text'), answer=g('answer');
-    if(!text||!answer)return;
-    const cfg=getSharedBatchRowCfg(tr);if(cfg===null)return;
-    const id=nextQId++;
-    const q={id,text,answer,type:'exact',image:'',display:'',qaComment:'',
-      visualType:tool==='text'?'text':tool,cfg};
-    nuggetState[activeId].questions.push(q);added++;
-  });
-  if(!added){alert('No valid rows to add — each row needs Question text and Answer.');return;}
-  if(nuggetState[activeId].status==='not-started')nuggetState[activeId].status='in-progress';
-  save();renderQuestions();renderSidebar();renderWorkflow();closeSharedBatch();closeTool();
-}
-
-/* ── BM builder helpers ── */
-function initBMPanel(){
-  buildSwatches('bm-swatch-row',BM_STROKES.map((_,i)=>i),Object.fromEntries(BM_STROKES.map((c,i)=>[i,c])),0,n=>{bmColIdx=parseInt(n);});
-  document.querySelectorAll('.tog-btn[data-totdisp]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-totdisp]').forEach(x=>x.classList.remove('active'));b.classList.add('active');bmTotDisp=b.dataset.totdisp;autoPreviewBM();}));
-  document.querySelectorAll('.tog-btn[data-colmode]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-colmode]').forEach(x=>x.classList.remove('active'));b.classList.add('active');bmMulti=b.dataset.colmode==='multi';autoPreviewBM();}));
-  document.querySelectorAll('.tog-btn[data-bmseg]').forEach(b=>b.addEventListener('click',()=>{const seg=parseInt(b.dataset.bmseg);document.querySelectorAll(`.tog-btn[data-bmseg="${seg}"]`).forEach(x=>x.classList.remove('active'));b.classList.add('active');bmSegT[seg]=b.dataset.segtype;autoPreviewBM();}));
-  ['bm-total','bm-seg1-val','bm-seg1-lbl','bm-seg1-brace','bm-seg2-val','bm-seg2-lbl','bm-seg2-brace','bm-seg3-val','bm-seg3-lbl','bm-seg3-brace'].forEach(id=>document.getElementById(id)?.addEventListener('input',autoPreviewBM));
-}
-function bmSetUnit(btn,val){document.querySelectorAll('[data-bmunit]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');bmDivided=(val==='on');['bm-seg1-lbl','bm-seg2-lbl','bm-seg3-lbl'].forEach(id=>{const el=document.getElementById(id);if(el){el.disabled=bmDivided;el.closest('.field').style.opacity=bmDivided?'0.4':'';}});autoPreviewBM();}
-function bmGetNumericSum(){const s1=parseFloat(document.getElementById('bm-seg1-val')?.value)||0;const s2=parseFloat(document.getElementById('bm-seg2-val')?.value)||0;const s3=bmSeg3?(parseFloat(document.getElementById('bm-seg3-val')?.value)||0):0;return s1+s2+s3;}
-function parseBMV(s){if(!s||s.trim()==='')return undefined;const t=s.trim();if(t==='?')return'?';const n=Number(t);return isNaN(n)?t:n;}
-function getBMConfig(){
-  // Default total to '?' when empty — matches standalone bar-model-creator behaviour
-  const totalRaw=document.getElementById('bm-total').value.trim();
-  const total=totalRaw===''?'?':parseBMV(totalRaw);
-  const mkSeg=n=>{const v=parseBMV(document.getElementById(`bm-seg${n}-val`).value);if(v===undefined)return null;const sg={value:v};const l=document.getElementById(`bm-seg${n}-lbl`).value.trim();const b=document.getElementById(`bm-seg${n}-brace`).value.trim();if(l)sg.segLabel=l;if(b)sg.braceLabel=b;if(bmSegT[n]==='blank')sg.blank=true;return sg;};
-  const segs=[mkSeg(1),mkSeg(2)].filter(Boolean);if(bmSeg3){const s3=mkSeg(3);if(s3)segs.push(s3);}if(!segs.length)return null;
-  const bmSum=bmGetNumericSum(),bmDivOk=bmDivided&&bmSum>0&&bmSum<=20;
-  const bmNote=document.getElementById('bm-unit-note');if(bmNote)bmNote.textContent=(bmDivided&&!bmDivOk&&bmSum>0)?'(disabled — total > 20)':'';
-  return{segments:segs,total,colorIdx:bmColIdx,multi:bmMulti||undefined,topBar:bmTotDisp==='top bar'||undefined,hideTotal:bmTotDisp==='none'||undefined,divided:bmDivOk||undefined};
-}
-function bmToggleSeg3(show){bmSeg3=show;document.getElementById('bm-seg3-block').style.display=show?'block':'none';document.getElementById('bm-add-seg3').style.display=show?'none':'inline-flex';if(!show)['bm-seg3-val','bm-seg3-lbl','bm-seg3-brace'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});autoPreviewBM();}
 
 /* ── Curriculum map ── */
 function renderCurriculum(){
@@ -1886,7 +1686,8 @@ async function batchExport(){
       for(let i=0;i<ns.questions.length;i++){
         const q=ns.questions[i];const qFolder=`${folder}/q${String(i+1).padStart(2,'0')}`;
         let imgFile=null;
-        if((q.visualType==='nl'||q.visualType==='bm'||q.visualType==='nt')&&q.cfg&&Object.keys(q.cfg).length){try{const svg=q.visualType==='nl'?numberLineSVG(q.cfg):q.visualType==='bm'?barModelSVG(q.cfg):numberTrackSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${qFolder}/image.png`,png);imgFile='image.png';}catch(e){console.warn(e);}}
+        if((q.visualType==='nl'||q.visualType==='bm'||q.visualType==='nt'||q.visualType==='nr')&&q.cfg&&Object.keys(q.cfg).length){try{const svg=q.visualType==='nl'?numberLineSVG(q.cfg):q.visualType==='bm'?barModelSVG(q.cfg):q.visualType==='nr'?nrRenderFromCfg(q.cfg):numberTrackSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${qFolder}/image.png`,png);imgFile='image.png';}catch(e){console.warn(e);}}
+        else if(q.visualType==='pv'&&q.cfg&&q.cfg.n!=null){try{const blob=await pvGetPngBlob(q.cfg);zip.file(`${qFolder}/image.png`,blob);imgFile='image.png';}catch(e){console.warn(e);}}
         else if(q.image){imgFile=q.image.split('/').pop();}
         zip.file(`${qFolder}/question.xml`,qtiXML(q,imgFile));
       }
@@ -1946,6 +1747,14 @@ function editQuestion(qid){
     document.getElementById('nt-text').value=q.text;
     document.getElementById('nt-answer').value=q.answer||'';
     restoreNTConfig(q.cfg||{});
+  } else if(type==='nr'){
+    document.getElementById('nr-text').value=q.text;
+    document.getElementById('nr-answer').value=q.answer||'';
+    restoreNRConfig(q.cfg||{});
+  } else if(type==='pv'){
+    document.getElementById('pv-text').value=q.text;
+    document.getElementById('pv-answer').value=q.answer||'';
+    restorePVConfig(q.cfg||{});
   } else if(type==='custom'){
     document.getElementById('custom-q-text').value=q.text;
     document.getElementById('custom-answer').value=q.answer||'';
@@ -1963,7 +1772,7 @@ function editQuestion(qid){
 }
 
 function setEditMode(editing,type){
-  const types=type?[type]:['nl','bm','text','custom','nt'];
+  const types=type?[type]:['nl','bm','text','custom','nt','nr','pv'];
   types.forEach(t=>{
     const btn=document.getElementById('add-q-btn-'+t);if(!btn)return;
     btn.textContent=editing?'✓ Update Question':'+ Add Question';
@@ -2011,112 +1820,182 @@ function dndEnd(e){
   document.querySelectorAll('.q-card').forEach(c=>c.classList.remove('dragging','drop-above','drop-below'));
 }
 
-function restoreNLConfig(cfg){
-  // Numeric fields
-  document.getElementById('f-start').value=cfg.start??0;
-  document.getElementById('f-end').value=cfg.end??20;
-  const step=cfg.partitions>0?Math.round(((cfg.end-cfg.start)/cfg.partitions)*10000)/10000:1;
-  document.getElementById('f-step').value=step;
-  document.getElementById('f-vge').value=cfg.valuesGivenEvery??'';
-  document.getElementById('f-hide-from').value=cfg.hideFrom??'';
-  document.getElementById('f-hide-to').value=cfg.hideTo??'';
-  // Line style toggle
-  nlStyle=cfg.lineStyle||'through';
-  document.querySelectorAll('.tog-btn[data-style]').forEach(b=>b.classList.toggle('active',b.dataset.style===nlStyle));
-  // Colour swatch
-  nlColour=cfg.colour||'grey';
-  document.querySelectorAll('#nl-swatch-row .swatch').forEach(b=>b.classList.toggle('selected',b.title===nlColour));
-  // Close any open jump sections first so we can re-open cleanly
-  if(nlJump2Open)nlToggleJump2();
-  if(nlJumpOpen)nlToggleJump();
-  // Jump 1
-  if(cfg.jumpFrom!==undefined&&cfg.jumpTo!==undefined){
-    nlToggleJump();
-    document.getElementById('f-from').value=cfg.jumpFrom;
-    document.getElementById('f-to').value=cfg.jumpTo;
-    document.getElementById('f-jump-label').value=cfg.jumpLabel||'';
-    nlArcType=cfg.jumpType||'single';
-    document.querySelectorAll('.tog-btn[data-arctype]').forEach(b=>b.classList.toggle('active',b.dataset.arctype===nlArcType));
-    nlArrow=cfg.jumpArrow!==false;
-    document.querySelectorAll('.tog-btn[data-arrow]').forEach(b=>b.classList.toggle('active',b.dataset.arrow===(nlArrow?'yes':'no')));
-    nlCircle=cfg.jumpCircle||'none';
-    document.querySelectorAll('.tog-btn[data-circle]').forEach(b=>b.classList.toggle('active',b.dataset.circle===nlCircle));
-    nlJumpCol=cfg.jumpColour||'dark';
-    document.querySelectorAll('#jump1-swatch-row .swatch').forEach(b=>b.classList.toggle('selected',b.title===nlJumpCol));
-    // Jump 2
-    if(cfg.jump2From!==undefined&&cfg.jump2To!==undefined){
-      nlToggleJump2();
-      document.getElementById('f-from2').value=cfg.jump2From;
-      document.getElementById('f-to2').value=cfg.jump2To;
-      document.getElementById('f-jump-label2').value=cfg.jump2Label||'';
-      nlArcType2=cfg.jump2Type||'single';
-      document.querySelectorAll('.tog-btn[data-arctype2]').forEach(b=>b.classList.toggle('active',b.dataset.arctype2===nlArcType2));
-      nlArrow2=cfg.jump2Arrow!==false;
-      document.querySelectorAll('.tog-btn[data-arrow2]').forEach(b=>b.classList.toggle('active',b.dataset.arrow2===(nlArrow2?'yes':'no')));
-      nlCircle2=cfg.jump2Circle||'none';
-      document.querySelectorAll('.tog-btn[data-circle2]').forEach(b=>b.classList.toggle('active',b.dataset.circle2===nlCircle2));
-      nlJump2Col=cfg.jump2Colour||'dark';
-      document.querySelectorAll('#jump2-swatch-row .swatch').forEach(b=>b.classList.toggle('selected',b.title===nlJump2Col));
+
+/* ── Shared batch panel ── */
+let sharedBatchTool=null, sharedBatchStructure={}, sharedBatchRowIdx=0, sharedBatchRowColors={};
+
+function openSharedBatch(tool){
+  // Validate current tool config first
+  if(tool==='bm'){const cfg=getBMConfig();if(!cfg){alert('Please fill in at least one segment value.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='pv'){const cfg=getPVConfig();if(!cfg){alert('Please enter a number.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='nr'){const cfg=getNRConfig();if(!cfg){alert('Please set a number.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='text'){sharedBatchStructure={};}
+  sharedBatchTool=tool;sharedBatchRowColors={};
+  // Build locked-setting tags
+  const tagsEl=document.getElementById('shared-batch-tags');tagsEl.innerHTML='';
+  const tags=[];
+  if(tool==='bm'){tags.push(`${sharedBatchStructure.segments?.length} segments`,`Colour: swatch ${sharedBatchStructure.colorIdx??0}`);}
+  else if(tool==='nt'){tags.push(`Shape: ${ntShape}`,`Layout: ${ntLayout}`,`Colour: ${ntColourMode}`);}
+  else if(tool==='nr'){tags.push(`Rep: ${sharedBatchStructure.rep}`,`N: ${sharedBatchStructure.n}`);}
+  else if(tool==='pv'){tags.push(`Rep: ${sharedBatchStructure.repType}`,`Display: ${sharedBatchStructure.dispMode}`);}
+  tags.forEach(t=>{const s=document.createElement('span');s.className='locked-tag';s.textContent=t;tagsEl.appendChild(s);});
+  // Subtitle
+  const subtitles={nr:'Representation is locked. Change the number and answer per row.',bm:'Segment structure is locked. Change segment values and answers per row.',nt:'Shape and layout are locked. Change the sequence and answer per row.',text:'No locked settings — enter question and answer for each row.',pv:'Representation and display mode are locked. Change the number per row.'};
+  document.getElementById('shared-batch-subtitle').textContent=subtitles[tool]||'';
+  // Build table headers
+  buildSharedBatchHeaders();
+  document.getElementById('shared-batch-tbody').innerHTML='';sharedBatchRowIdx=0;
+  // Seed with one row pre-filled from current tool state
+  const seed={};
+  if(tool==='bm'){(sharedBatchStructure.segments||[]).forEach((s,i)=>{seed[`seg${i}`]=s.value;});seed.answer=document.getElementById('bm-answer').value.trim();seed.text=document.getElementById('bm-text').value.trim();}
+  else if(tool==='nt'){seed.seq=document.getElementById('nt-seq').value.trim();seed.answer=document.getElementById('nt-answer').value.trim();seed.text=document.getElementById('nt-text').value.trim();}
+  else if(tool==='nr'){seed.n=sharedBatchStructure.n;seed.answer=document.getElementById('nr-answer').value.trim();seed.text=document.getElementById('nr-text').value.trim();}
+  else if(tool==='pv'){seed.n=sharedBatchStructure.n;seed.answer=document.getElementById('pv-answer').value.trim();seed.text=document.getElementById('pv-text').value.trim();}
+  else if(tool==='text'){seed.answer=document.getElementById('text-answer').value.trim();seed.text=document.getElementById('text-q-text').value.trim();}
+  addSharedBatchRow(seed);
+  const panel=document.getElementById('shared-batch-panel');panel.style.display='block';
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function closeSharedBatch(){document.getElementById('shared-batch-panel').style.display='none';sharedBatchTool=null;}
+
+function buildSharedBatchHeaders(){
+  const tr=document.getElementById('shared-batch-thead');
+  let cols=[];
+  if(sharedBatchTool==='bm'){
+    const n=sharedBatchStructure.segments?.length||2;
+    cols=['Preview','Question'];
+    for(let i=0;i<n;i++)cols.push(`Seg ${i+1}`);
+    cols.push('Answer','');
+  } else if(sharedBatchTool==='nt'){
+    cols=['Preview','Question','Sequence','Answer',''];
+  } else if(sharedBatchTool==='text'){
+    cols=['Question','Answer',''];
+  } else if(sharedBatchTool==='pv'){
+    cols=['Preview','Question','Number','Answer',''];
+  }
+  tr.innerHTML=cols.map(c=>`<th>${c}</th>`).join('');
+}
+
+function addSharedBatchRow(defaults={}){
+  const idx=sharedBatchRowIdx++;
+  const tbody=document.getElementById('shared-batch-tbody');
+  // Inherit question text from the last row if not explicitly provided
+  if(defaults.text===undefined){
+    const lastRow=tbody.querySelector('tr:last-child');
+    if(lastRow)defaults.text=lastRow.querySelector('[data-field="text"]')?.value??'';
+  }
+  const tr=document.createElement('tr');tr.dataset.rowIdx=idx;
+  const n=(field,val,w=58)=>`<input data-field="${field}" class="batch-input batch-input-num" style="width:${w}px" type="number" value="${val??''}" step="any" oninput="updateSharedPreview(${idx})">`;
+  const t=(field,val,cls='batch-input-text')=>`<input data-field="${field}" class="batch-input ${cls}" type="text" value="${esc(String(val??''))}" oninput="updateSharedPreview(${idx})">`;
+  let cells='';
+  const tool=sharedBatchTool;
+  if(tool!=='text') cells+=`<td class="batch-preview-cell"><div id="sbp-${idx}"></div></td>`;
+  const textW=tool==='text'?'min(60vw,520px)':'140px';
+  cells+=`<td>${t('text',defaults.text??'','batch-input-text').replace('class="batch-input batch-input-text"',`class="batch-input batch-input-text" style="width:${textW}"`)}</td>`;
+  if(tool==='bm'){
+    const segs=sharedBatchStructure.segments||[];
+    segs.forEach((s,i)=>{ cells+=`<td>${n('seg'+i, defaults['seg'+i]??s.value)}</td>`; });
+  } else if(tool==='nt'){
+    cells+=`<td>${t('seq',defaults.seq??'1,2,3,?,5','batch-input-text')}</td>`;
+  } else if(tool==='nr'){
+    cells+=`<td>${n('n',defaults.n??0,72)}</td>`;
+  } else if(tool==='pv'){
+    cells+=`<td>${n('n',defaults.n??0,72)}</td>`;
+  }
+  cells+=`<td>${t('answer',defaults.answer??'','batch-input-num')}</td>`;
+  cells+=`<td><button class="batch-del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
+  tr.innerHTML=cells;tbody.appendChild(tr);
+  // Add per-row colour swatches for Bar Model
+  if(sharedBatchTool==='bm'){
+    const defIdx=sharedBatchStructure.colorIdx??0;
+    sharedBatchRowColors[idx]={colorIdx:defIdx};
+    const cell=tr.querySelector('.batch-preview-cell');
+    if(cell){
+      const wrap=document.createElement('div');wrap.className='batch-swatch-wrap';
+      const swatchRow=document.createElement('div');swatchRow.className='batch-mini-swatch-row';
+      const lbl=document.createElement('span');lbl.className='batch-swatch-label';lbl.textContent='Col';
+      swatchRow.appendChild(lbl);
+      BM_STROKES.forEach((col,i)=>{
+        const btn=document.createElement('button');
+        btn.className='mini-swatch'+(i===defIdx?' selected':'');
+        btn.style.background=col;btn.title='Colour '+i;
+        btn.addEventListener('click',()=>{
+          swatchRow.querySelectorAll('.mini-swatch').forEach(s=>s.classList.remove('selected'));
+          btn.classList.add('selected');
+          sharedBatchRowColors[idx].colorIdx=i;
+          updateSharedPreview(idx);
+        });
+        swatchRow.appendChild(btn);
+      });
+      wrap.appendChild(swatchRow);cell.appendChild(wrap);
     }
   }
-  autoPreviewNL();
+  setTimeout(()=>updateSharedPreview(idx),0);
 }
 
-function restoreBMConfig(cfg){
-  const segs=cfg.segments||[];
-  // Total
-  document.getElementById('bm-total').value=cfg.total??'';
-  // Colour index
-  bmColIdx=cfg.colorIdx??0;
-  document.querySelectorAll('#bm-swatch-row .swatch').forEach((b,i)=>b.classList.toggle('selected',i===bmColIdx));
-  // Colour mode
-  bmMulti=!!cfg.multi;
-  document.querySelectorAll('.tog-btn[data-colmode]').forEach(b=>b.classList.toggle('active',b.dataset.colmode===(bmMulti?'multi':'single')));
-  // Total display
-  bmTotDisp=cfg.topBar?'top bar':cfg.hideTotal?'none':'brace';
-  document.querySelectorAll('.tog-btn[data-totdisp]').forEach(b=>b.classList.toggle('active',b.dataset.totdisp===bmTotDisp));
-  // Segments
-  const fillSeg=(n,sg)=>{
-    document.getElementById(`bm-seg${n}-val`).value=sg?.value??'';
-    document.getElementById(`bm-seg${n}-lbl`).value=sg?.segLabel??'';
-    document.getElementById(`bm-seg${n}-brace`).value=sg?.braceLabel??'';
-    bmSegT[n]=sg?.blank?'blank':'fill';
-    document.querySelectorAll(`.tog-btn[data-bmseg="${n}"]`).forEach(b=>b.classList.toggle('active',b.dataset.segtype===bmSegT[n]));
-  };
-  fillSeg(1,segs[0]);fillSeg(2,segs[1]);
-  if(segs.length>=3){if(!bmSeg3)bmToggleSeg3(true);fillSeg(3,segs[2]);}
-  else{if(bmSeg3)bmToggleSeg3(false);}
-  autoPreviewBM();
+function getSharedBatchRowCfg(tr){
+  const g=field=>tr.querySelector(`[data-field="${field}"]`)?.value.trim()??'';
+  const tool=sharedBatchTool;
+  if(tool==='bm'){
+    const segs=(sharedBatchStructure.segments||[]).map((s,i)=>{
+      const raw=g('seg'+i); const v=raw===''?s.value:(raw==='?'?'?':parseFloat(raw));
+      return {...s, value:v};
+    });
+    const rowIdx=parseInt(tr.dataset.rowIdx);
+    const colorIdx=sharedBatchRowColors[rowIdx]?.colorIdx??sharedBatchStructure.colorIdx??0;
+    return {...sharedBatchStructure, segments:segs, colorIdx};
+  } else if(tool==='nt'){
+    const seq=g('seq');if(!seq)return null;
+    return {...sharedBatchStructure, sequence:seq};
+  } else if(tool==='nr'){
+    const num=parseFloat(g('n'));if(isNaN(num))return null;
+    return {...sharedBatchStructure, n:num};
+  } else if(tool==='pv'){
+    const num=parseFloat(g('n'));if(isNaN(num))return null;
+    return {...sharedBatchStructure, n:num, missingVals:sharedBatchStructure.missingVals||[]};
+  }
+  return {};
 }
 
-/* ── Number Track helpers ── */
-function ntSetShape(btn){document.querySelectorAll('[data-ntshape]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');ntShape=btn.dataset.ntshape;autoPreviewNT();}
-function ntSetLayout(btn){document.querySelectorAll('[data-ntlayout]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');ntLayout=btn.dataset.ntlayout;autoPreviewNT();}
-function ntSetColMode(btn){document.querySelectorAll('[data-ntcolmode]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');ntColourMode=btn.dataset.ntcolmode;autoPreviewNT();}
-function autoPreviewNT(){
-  if(activeTool!=='nt')return;
-  const box=document.getElementById('nt-preview');
-  try{const cfg=getNTConfig();if(cfg)box.innerHTML=numberTrackSVG(cfg);else box.innerHTML='<p class="preview-empty">Fill in a sequence above to preview.</p>';}
-  catch(e){console.error('NT preview error:',e);box.innerHTML='<p class="preview-empty">Preview error: '+e.message+'</p>';}
-}
-function getNTConfig(){
-  const seq=document.getElementById('nt-seq').value.trim();
-  if(!seq)return null;
-  return{sequence:seq,shape:ntShape,layout:ntLayout,colourMode:ntColourMode};
-}
-function restoreNTConfig(cfg){
-  document.getElementById('nt-seq').value=cfg.sequence||'1,2,3,?,5,6';
-  ntShape=cfg.shape||'square';
-  ntLayout=cfg.layout||'straight';
-  ntColourMode=cfg.colourMode||'full';
-  document.querySelectorAll('[data-ntshape]').forEach(b=>b.classList.toggle('active',b.dataset.ntshape===ntShape));
-  document.querySelectorAll('[data-ntlayout]').forEach(b=>b.classList.toggle('active',b.dataset.ntlayout===ntLayout));
-  document.querySelectorAll('[data-ntcolmode]').forEach(b=>b.classList.toggle('active',b.dataset.ntcolmode===ntColourMode));
-  autoPreviewNT();
+function updateSharedPreview(idx){
+  const tr=document.querySelector(`tr[data-row-idx="${idx}"]`);
+  const box=document.getElementById(`sbp-${idx}`);
+  if(!tr||!box)return;
+  const tool=sharedBatchTool;
+  try{
+    if(tool==='bm'){const cfg=getSharedBatchRowCfg(tr);if(cfg)box.innerHTML=barModelSVG(cfg);else box.innerHTML='<div class="batch-no-preview">Invalid</div>';}
+    else if(tool==='nt'){const cfg=getSharedBatchRowCfg(tr);if(cfg)box.innerHTML=numberTrackSVG(cfg);else box.innerHTML='<div class="batch-no-preview">Invalid</div>';}
+    else if(tool==='nr'){const cfg=getSharedBatchRowCfg(tr);if(cfg){const svgStr=nrRenderFromCfg(cfg);box.innerHTML=svgStr||'<div class="batch-no-preview">Invalid</div>';}else box.innerHTML='<div class="batch-no-preview">Invalid</div>';}
+    else if(tool==='pv'){
+      const cfg=getSharedBatchRowCfg(tr);if(!cfg){box.innerHTML='<div class="batch-no-preview">Invalid</div>';return;}
+      const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,1.5);
+      const img=document.createElement('img');img.src=cv.toDataURL();img.style.cssText='max-width:100%;display:block';
+      box.innerHTML='';box.appendChild(img);
+    }
+  } catch(e){box.innerHTML='<div class="batch-no-preview">Error</div>';}
 }
 
-/* ── Init ── */
-initState();loadStorage();renderSidebar();initNLPanel();initBMPanel();updateFolderStatus();
+function addAllSharedBatch(){
+  if(!activeId)return;
+  const tool=sharedBatchTool;let added=0;
+  document.querySelectorAll('#shared-batch-tbody tr').forEach(tr=>{
+    const g=field=>tr.querySelector(`[data-field="${field}"]`)?.value.trim()??'';
+    const text=g('text'), answer=g('answer');
+    if(!text||!answer)return;
+    const cfg=getSharedBatchRowCfg(tr);if(cfg===null)return;
+    const id=nextQId++;
+    const q={id,text,answer,type:'exact',image:'',display:'',qaComment:'',
+      visualType:tool==='text'?'text':tool,cfg};
+    nuggetState[activeId].questions.push(q);added++;
+  });
+  if(!added){alert('No valid rows to add — each row needs Question text and Answer.');return;}
+  if(nuggetState[activeId].status==='not-started')nuggetState[activeId].status='in-progress';
+  save();renderQuestions();renderSidebar();renderWorkflow();closeSharedBatch();closeTool();
+}
+
+initState();loadStorage();renderSidebar();initNLPanel();initBMPanel();initNRPanel();updateFolderStatus();
 </script>
 </body>
 </html>

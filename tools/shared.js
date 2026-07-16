@@ -211,7 +211,7 @@ function numberLineSVG(config) {
         s += `<polygon points="${x2.toFixed(1)},${arcY} ${(x2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(x2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${JC2}" stroke="${JC2}" stroke-width="1" stroke-linejoin="round"/>`;
       }
       if (jump2Label) {
-        s += `<text x="${((x1+x2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 2).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC2}">${jump2Label}</text>`;
+        s += `<text x="${((x1+x2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC2}">${jump2Label}</text>`;
       }
     } else {
       const direction2 = jump2To > jump2From ? 1 : -1;
@@ -230,7 +230,7 @@ function numberLineSVG(config) {
           s += `<polygon points="${ax2.toFixed(1)},${arcY} ${(ax2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(ax2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${JC2}" stroke="${JC2}" stroke-width="1" stroke-linejoin="round"/>`;
         }
         if (jump2Label) {
-          s += `<text x="${((ax1+ax2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 2).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC2}">${jump2Label}</text>`;
+          s += `<text x="${((ax1+ax2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC2}">${jump2Label}</text>`;
         }
       }
     }
@@ -263,7 +263,7 @@ function numberLineSVG(config) {
         s += `<polygon points="${x2.toFixed(1)},${arcY} ${(x2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(x2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${JC1}" stroke="${JC1}" stroke-width="1" stroke-linejoin="round"/>`;
       }
       if (jumpLabel) {
-        s += `<text x="${((x1+x2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 2).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC1}">${jumpLabel}</text>`;
+        s += `<text x="${((x1+x2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC1}">${jumpLabel}</text>`;
       }
     } else {
       const direction = jumpTo > jumpFrom ? 1 : -1;
@@ -282,7 +282,7 @@ function numberLineSVG(config) {
           s += `<polygon points="${ax2.toFixed(1)},${arcY} ${(ax2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(ax2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${JC1}" stroke="${JC1}" stroke-width="1" stroke-linejoin="round"/>`;
         }
         if (jumpLabel) {
-          s += `<text x="${((ax1+ax2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 2).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC1}">${jumpLabel}</text>`;
+          s += `<text x="${((ax1+ax2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${JC1}">${jumpLabel}</text>`;
         }
       }
     }
@@ -473,8 +473,8 @@ function numberTrackSVG(cfg) {
   function cellFill(idx) {
     const p = NT_PAL[idx % NT_PAL.length];
     if (colourMode === 'full')    return { fill: p.full,   stroke: p.full,   strokeW: 0,          text: p.textFull };
-    if (colourMode === 'light')   return { fill: p.light,  stroke: p.border, strokeW: CELL*0.055, text: p.textLight };
-    if (colourMode === 'outline') return { fill: '#ffffff', stroke: p.border, strokeW: CELL*0.07,  text: p.textOutline };
+    if (colourMode === 'light')   return { fill: p.light,  stroke: p.border, strokeW: CELL*0.022, text: p.textLight };
+    if (colourMode === 'outline') return { fill: '#ffffff', stroke: p.border, strokeW: CELL*0.029, text: p.textOutline };
   }
 
   function drawShape(sh, cx, cy, size, fill, stroke, strokeW, dashArray) {
