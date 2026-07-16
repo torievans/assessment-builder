@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Year 1 Maths — Design Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Proxima Soft';
+      src: url('proxima-soft-fonts/Proxima Soft/Proxima Soft.otf') format('opentype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'Proxima Soft';
+      src: url('proxima-soft-fonts/Proxima Soft/Proxima Soft Extrabold.otf') format('opentype');
+      font-weight: 900;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Proxima Soft', 'Nunito', sans-serif;
+      background: #F0F4F8;
+      padding: 40px;
+      color: #1A1A2E;
+      max-width: 1200px;
+    }
+    h1 { font-size: 26px; font-weight: 900; margin-bottom: 6px; }
+    .subtitle { font-size: 14px; color: #6B7280; margin-bottom: 36px; line-height: 1.5; }
+    h2 {
+      font-size: 19px; font-weight: 900; margin-top: 52px; margin-bottom: 4px;
+      padding-bottom: 8px; border-bottom: 2px solid #E5E7EB;
+    }
+    .section-desc { font-size: 13px; color: #6B7280; margin-bottom: 18px; margin-top: 6px; line-height: 1.5; }
+    .section-label {
+      font-size: 11px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.8px; color: #6B7280; margin-bottom: 12px; margin-top: 28px;
+    }
+    .row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* ── Swatches ── */
+    .swatch {
+      width: 148px; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .swatch-block {
+      height: 96px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 4px;
+    }
+    .swatch-block .name { font-size: 15px; font-weight: 900; color: #1A1A2E; }
+    .swatch-block .hex  { font-size: 11px; font-family: monospace; color: rgba(26,26,46,0.65); }
+    .swatch-info { background: white; padding: 9px 13px; }
+    .swatch-info .var   { font-size: 11px; font-family: monospace; color: #6B7280; }
+    .swatch-info .usage { font-size: 12px; color: #374151; margin-top: 3px; line-height: 1.4; }
+
+    /* ── Numicon swatches ── */
+    .ni-swatch {
+      width: 100px; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .ni-block {
+      height: 72px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 3px;
+    }
+    .ni-num { font-size: 26px; font-weight: 900; color: #1A1A2E; }
+    .ni-hex { font-size: 10px; font-family: monospace; color: rgba(26,26,46,0.6); }
+    .ni-info { background: white; padding: 7px 10px; }
+    .ni-info .ni-name { font-size: 11px; font-weight: 700; color: #374151; }
+
+    /* ── PV swatches ── */
+    .pv-swatch {
+      width: 130px; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .pv-block {
+      height: 60px; display: flex; align-items: center; justify-content: center;
+    }
+    .pv-block .pv-abbr { font-size: 22px; font-weight: 900; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+    .pv-info { background: white; padding: 8px 11px; }
+    .pv-info .pv-label { font-size: 12px; font-weight: 700; color: #374151; }
+    .pv-info .pv-hex   { font-size: 11px; font-family: monospace; color: #6B7280; margin-top: 2px; }
+
+    /* ── Light fills ── */
+    .fill-swatch {
+      width: 168px; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .fill-block {
+      height: 80px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 14px;
+    }
+    .fill-dots { display: flex; gap: 7px; align-items: center; }
+    .dot { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; }
+    .fill-text-preview { font-size: 26px; font-weight: 900; line-height: 1; }
+    .fill-info { background: white; padding: 9px 13px; }
+    .fill-info .fname  { font-size: 13px; font-weight: 700; color: #374151; }
+    .fill-info .fhexes { font-size: 11px; font-family: monospace; color: #6B7280; margin-top: 3px; line-height: 1.7; }
+    .fill-info .fhex-label { color: #9CA3AF; font-size: 10px; }
+    .text-colour-row { display: flex; align-items: center; gap: 6px; margin-top: 5px; padding-top: 5px; border-top: 1px solid #F3F4F6; }
+    .text-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .text-colour-label { font-size: 11px; color: #6B7280; font-family: monospace; }
+
+    /* ── Number track demo ── */
+    .track { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 6px; }
+    .track-box {
+      width: 46px; height: 46px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900; color: #1A1A2E;
+    }
+    .track-box.blank {
+      background: #EBEBEB; border: 2px dashed #CACACA; color: #CACACA;
+    }
+
+    /* ── Stroke guide ── */
+    .stroke-table {
+      width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px;
+      background: white; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .stroke-table th {
+      background: #F9FAFB; font-weight: 800; font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.5px; color: #6B7280; padding: 10px 14px; text-align: left;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    .stroke-table td {
+      padding: 9px 14px; border-bottom: 1px solid #F3F4F6; color: #374151; vertical-align: middle;
+    }
+    .stroke-table tr:last-child td { border-bottom: none; }
+    .stroke-table tr:hover td { background: #FAFAFA; }
+    .tool-tag {
+      display: inline-block; padding: 2px 8px; border-radius: 20px;
+      font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px;
+    }
+    .tag-nl { background: #EEF2FF; color: #3730A3; }
+    .tag-bm { background: #FEF3C7; color: #92400E; }
+    .tag-nt { background: #ECFDF5; color: #065F46; }
+    .tag-nr { background: #FFF7ED; color: #9A3412; }
+    .tag-pv { background: #F0F9FF; color: #075985; }
+    .weight-pill {
+      display: inline-block; padding: 2px 8px; border-radius: 20px;
+      font-family: monospace; font-size: 12px; font-weight: 700;
+      background: #F3F4F6; color: #1A1A2E;
+    }
+    .weight-pill.dynamic { background: #FEF9C3; color: #713F12; }
+    .colour-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: monospace; font-size: 12px; color: #374151;
+    }
+    .chip-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── Inconsistency callouts ── */
+    .callout {
+      border-radius: 12px; padding: 14px 18px; margin-top: 10px; margin-bottom: 6px;
+      font-size: 13px; line-height: 1.6;
+    }
+    .callout-warn { background: #FEF3C7; border-left: 4px solid #F59E0B; color: #78350F; }
+    .callout-info { background: #EFF6FF; border-left: 4px solid #3B82F6; color: #1E3A5F; }
+    .callout strong { font-weight: 800; }
+
+    /* ── Stroke preview SVGs ── */
+    .stroke-preview-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 12px; }
+    .stroke-preview {
+      background: white; border-radius: 10px; padding: 14px 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; flex-direction: column; gap: 8px;
+    }
+    .stroke-preview-label { font-size: 11px; font-weight: 800; color: #6B7280; text-transform: uppercase; letter-spacing: 0.5px; }
+  </style>
+</head>
+<body>
+
+  <h1>Year 1 Maths — Design Guide</h1>
+  <p class="subtitle">Colours, fills, and stroke guidelines for all maths tools.<br>
+  All SVG tools share rendering via <code>tools/shared.js</code>. Place Value uses its own canvas renderer in <code>tools/pv.js</code>.</p>
+
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <h2>Primary Palette</h2>
+  <p class="section-desc">Seven colours derived from question asset images. Used across number tracks, bar models, number representations, and numicon. <code>NR_STROKES</code> and <code>BM_BOX_COLORS</code> are identical — the same palette serves both tools.</p>
+
+  <div class="row">
+    <div class="swatch">
+      <div class="swatch-block" style="background:#D46B55">
+        <span class="name">Terracotta</span><span class="hex">#D46B55</span>
+      </div>
+      <div class="swatch-info">
+        <div class="var">BOX_COLORS[0] · NR_STROKES[0]</div>
+        <div class="usage">Red-toned assets: bears, armadillos, starfish.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#F5995B">
+        <span class="name">Orange</span><span class="hex">#F5995B</span>
+      </div>
+      <div class="swatch-info">
+        <div class="var">BOX_COLORS[1] · NR_STROKES[1]</div>
+        <div class="usage">Orange assets: camels, lions, bees, carrots.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#FECC6B">
+        <span class="name">Yellow</span><span class="hex">#FECC6B</span>
+      </div>
+      <div class="swatch-info">
+        <div class="var">BOX_COLORS[2] · NR_STROKES[2]</div>
+        <div class="usage">Yellow assets: lemons, shooting stars, suns.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#319377">
+        <span class="name">Forest</span><span class="hex">#319377</span>
+      </div>
+      <div class="swatch-info">
+        <div class="var">BOX_COLORS[3] · NR_STROKES[3]</div>
+        <div class="usage">Green assets: plants, crocodiles, frogs.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#7898F0">
+        <span class="name">Blue</span><span class="hex">#7898F0</span>
+      </div>
+      <div class="swatch-info">
+        <div class="var">BOX_COLORS[4] · NR_STROKES[4]</div>
+        <div class="usage">Blue assets: monsters, seahorses, planets.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#847AC9">
+        <span class="name">Indigo</span><span class="hex">#847AC9</span>
+      </div>
+      <div class="swatch-info">
+        <div class="var">BOX_COLORS[5] · NR_STROKES[5]</div>
+        <div class="usage">Purple assets: hippos, penguins, drums.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-block" style="background:#FC7E91">
+        <span class="name">Pink</span><span class="hex">#FC7E91</span>
+      </div>
+      <div class="swatch-info">
+        <div class="var">BOX_COLORS[6] · NR_STROKES[6]</div>
+        <div class="usage">Pink assets: flamingos, hamsters, alpacas.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Bar model light fills ── -->
+  <div class="section-label">Bar model — light fills, borders &amp; text colours</div>
+  <p class="section-desc" style="margin-top:-8px">Text colours pass WCAG AA 4.5:1 on their paired light fill.</p>
+  <div class="row">
+    <div class="fill-swatch">
+      <div class="fill-block" style="background:#F9DDD9">
+        <div class="fill-dots">
+          <div class="dot" style="background:#D46B55"></div>
+          <div class="dot" style="background:#F9DDD9;border:2px solid #D46B55"></div>
+        </div>
+        <div class="fill-text-preview" style="color:#7A2E1E">7</div>
+      </div>
+      <div class="fill-info">
+        <div class="fname">Terracotta light</div>
+        <div class="fhexes">
+          <span class="fhex-label">fill&nbsp;&nbsp;&nbsp;</span> #F9DDD9<br>
+          <span class="fhex-label">border</span> #D46B55
+        </div>
+        <div class="text-colour-row">
+          <div class="text-dot" style="background:#7A2E1E"></div>
+          <span class="text-colour-label">text #7A2E1E</span>
+        </div>
+      </div>
+    </div>
+    <div class="fill-swatch">
+      <div class="fill-block" style="background:#FDE8D4">
+        <div class="fill-dots">
+          <div class="dot" style="background:#F5995B"></div>
+          <div class="dot" style="background:#FDE8D4;border:2px solid #F5995B"></div>
+        </div>
+        <div class="fill-text-preview" style="color:#903F08">7</div>
+      </div>
+      <div class="fill-info">
+        <div class="fname">Orange light</div>
+        <div class="fhexes">
+          <span class="fhex-label">fill&nbsp;&nbsp;&nbsp;</span> #FDE8D4<br>
+          <span class="fhex-label">border</span> #F5995B
+        </div>
+        <div class="text-colour-row">
+          <div class="text-dot" style="background:#903F08"></div>
+          <span class="text-colour-label">text #903F08</span>
+        </div>
+      </div>
+    </div>
+    <div class="fill-swatch">
+      <div class="fill-block" style="background:#FEF5D8">
+        <div class="fill-dots">
+          <div class="dot" style="background:#FECC6B"></div>
+          <div class="dot" style="background:#FEF5D8;border:2px solid #FECC6B"></div>
+        </div>
+        <div class="fill-text-preview" style="color:#976401">7</div>
+      </div>
+      <div class="fill-info">
+        <div class="fname">Yellow light</div>
+        <div class="fhexes">
+          <span class="fhex-label">fill&nbsp;&nbsp;&nbsp;</span> #FEF5D8<br>
+          <span class="fhex-label">border</span> #FECC6B
+        </div>
+        <div class="text-colour-row">
+          <div class="text-dot" style="background:#976401"></div>
+          <span class="text-colour-label">text #976401</span>
+        </div>
+      </div>
+    </div>
+    <div class="fill-swatch">
+      <div class="fill-block" style="background:#CDE8E1">
+        <div class="fill-dots">
+          <div class="dot" style="background:#319377"></div>
+          <div class="dot" style="background:#CDE8E1;border:2px solid #319377"></div>
+        </div>
+        <div class="fill-text-preview" style="color:#246E59">7</div>
+      </div>
+      <div class="fill-info">
+        <div class="fname">Forest light</div>
+        <div class="fhexes">
+          <span class="fhex-label">fill&nbsp;&nbsp;&nbsp;</span> #CDE8E1<br>
+          <span class="fhex-label">border</span> #319377
+        </div>
+        <div class="text-colour-row">
+          <div class="text-dot" style="background:#246E59"></div>
+          <span class="text-colour-label">text #246E59</span>
+        </div>
+      </div>
+    </div>
+    <div class="fill-swatch">
+      <div class="fill-block" style="background:#DCE4FD">
+        <div class="fill-dots">
+          <div class="dot" style="background:#7898F0"></div>
+          <div class="dot" style="background:#DCE4FD;border:2px solid #7898F0"></div>
+        </div>
+        <div class="fill-text-preview" style="color:#0F2F89">7</div>
+      </div>
+      <div class="fill-info">
+        <div class="fname">Blue light</div>
+        <div class="fhexes">
+          <span class="fhex-label">fill&nbsp;&nbsp;&nbsp;</span> #DCE4FD<br>
+          <span class="fhex-label">border</span> #7898F0
+        </div>
+        <div class="text-colour-row">
+          <div class="text-dot" style="background:#0F2F89"></div>
+          <span class="text-colour-label">text #0F2F89</span>
+        </div>
+      </div>
+    </div>
+    <div class="fill-swatch">
+      <div class="fill-block" style="background:#DDD9F5">
+        <div class="fill-dots">
+          <div class="dot" style="background:#847AC9"></div>
+          <div class="dot" style="background:#DDD9F5;border:2px solid #847AC9"></div>
+        </div>
+        <div class="fill-text-preview" style="color:#342C6C">7</div>
+      </div>
+      <div class="fill-info">
+        <div class="fname">Indigo light</div>
+        <div class="fhexes">
+          <span class="fhex-label">fill&nbsp;&nbsp;&nbsp;</span> #DDD9F5<br>
+          <span class="fhex-label">border</span> #847AC9
+        </div>
+        <div class="text-colour-row">
+          <div class="text-dot" style="background:#342C6C"></div>
+          <span class="text-colour-label">text #342C6C</span>
+        </div>
+      </div>
+    </div>
+    <div class="fill-swatch">
+      <div class="fill-block" style="background:#FEDDEA">
+        <div class="fill-dots">
+          <div class="dot" style="background:#FC7E91"></div>
+          <div class="dot" style="background:#FEDDEA;border:2px solid #FC7E91"></div>
+        </div>
+        <div class="fill-text-preview" style="color:#950319">7</div>
+      </div>
+      <div class="fill-info">
+        <div class="fname">Pink light</div>
+        <div class="fhexes">
+          <span class="fhex-label">fill&nbsp;&nbsp;&nbsp;</span> #FEDDEA<br>
+          <span class="fhex-label">border</span> #FC7E91
+        </div>
+        <div class="text-colour-row">
+          <div class="text-dot" style="background:#950319"></div>
+          <span class="text-colour-label">text #950319</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Number track demo ── -->
+  <div class="section-label">Number track — colours cycle by position index</div>
+  <div class="track">
+    <div class="track-box" style="background:#D46B55">1</div>
+    <div class="track-box" style="background:#F5995B">2</div>
+    <div class="track-box" style="background:#FECC6B">3</div>
+    <div class="track-box" style="background:#319377">4</div>
+    <div class="track-box" style="background:#7898F0">5</div>
+    <div class="track-box" style="background:#847AC9">6</div>
+    <div class="track-box" style="background:#FC7E91">7</div>
+    <div class="track-box" style="background:#D46B55">8</div>
+    <div class="track-box" style="background:#F5995B">9</div>
+    <div class="track-box" style="background:#FECC6B">10</div>
+    <div class="track-box blank">?</div>
+    <div class="track-box" style="background:#847AC9">12</div>
+    <div class="track-box" style="background:#FC7E91">13</div>
+    <div class="track-box" style="background:#D46B55">14</div>
+    <div class="track-box" style="background:#F5995B">15</div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <h2>Numicon Colours</h2>
+  <p class="section-desc">One colour per number 1–10. These are intentionally distinct from the primary palette — they follow the established Numicon visual convention. Defined as <code>NR_NUMICON_COLOURS</code> in <code>tools/shared.js</code>. Outlines use <code>nrDarkenHex(colour, 0.6)</code>.</p>
+
+  <div class="row">
+    <div class="ni-swatch">
+      <div class="ni-block" style="background:#F5995B">
+        <span class="ni-num">1</span><span class="ni-hex">#F5995B</span>
+      </div>
+      <div class="ni-info"><div class="ni-name">Orange</div></div>
+    </div>
+    <div class="ni-swatch">
+      <div class="ni-block" style="background:#9B92D4">
+        <span class="ni-num">2</span><span class="ni-hex">#9B92D4</span>
+      </div>
+      <div class="ni-info"><div class="ni-name">Light Purple</div></div>
+    </div>
+    <div class="ni-swatch">
+      <div class="ni-block" style="background:#FECC6B">
+        <span class="ni-num">3</span><span class="ni-hex">#FECC6B</span>
+      </div>
+      <div class="ni-info"><div class="ni-name">Yellow</div></div>
+    </div>
+    <div class="ni-swatch">
+      <div class="ni-block" style="background:#5DAD80">
+        <span class="ni-num">4</span><span class="ni-hex">#5DAD80</span>
+      </div>
+      <div class="ni-info"><div class="ni-name">Sage Green</div></div>
+    </div>
+    <div class="ni-swatch">
+      <div class="ni-block" style="background:#D46B55">
+        <span class="ni-num">5</span><span class="ni-hex">#D46B55</span>
+      </div>
+      <div class="ni-info"><div class="ni-name">Terracotta</div></div>
+    </div>
+    <div class="ni-swatch">
+      <div class="ni-block" style="background:#68A8E8">
+        <span class="ni-num">6</span><span class="ni-hex">#68A8E8</span>
+      </div>
+      <div class="ni-info"><div class="ni-name">Sky Blue</div></div>
+    </div>
+    <div class="ni-swatch">
+      <div class="ni-block" style="background:#FC7E91">
+        <span class="ni-num">7</span><span class="ni-hex">#FC7E91</span>
+      </div>
+      <div class="ni-info"><div class="ni-name">Pink</div></div>
+    </div>
+    <div class="ni-swatch">
+      <div class="ni-block" style="background:#319377">
+        <span class="ni-num">8</span><span class="ni-hex">#319377</span>
+      </div>
+      <div class="ni-info"><div class="ni-name">Forest</div></div>
+    </div>
+    <div class="ni-swatch">
+      <div class="ni-block" style="background:#847AC9">
+        <span class="ni-num">9</span><span class="ni-hex">#847AC9</span>
+      </div>
+      <div class="ni-info"><div class="ni-name">Indigo</div></div>
+    </div>
+    <div class="ni-swatch">
+      <div class="ni-block" style="background:#5878D8">
+        <span class="ni-num" style="color:white">10</span><span class="ni-hex" style="color:rgba(255,255,255,0.7)">#5878D8</span>
+      </div>
+      <div class="ni-info"><div class="ni-name">Royal Blue</div></div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <h2>Place Value Colours</h2>
+  <p class="section-desc">PV uses its own muted colour set, intentionally separate from the primary palette. These colours represent real-world place value manipulative conventions. Defined in <code>tools/pv.js</code> as <code>PV_FULL_PARTS</code> default colours. Block colours can be customised per question; counter/grid colours are fixed to place value.</p>
+
+  <div class="section-label">Blocks — default colours (Ones through Thousands)</div>
+  <div class="row">
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#788CB4">
+        <span class="pv-abbr">Th</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Thousands</div>
+        <div class="pv-hex">#788CB4</div>
+      </div>
+    </div>
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#50B4A0">
+        <span class="pv-abbr">H</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Hundreds</div>
+        <div class="pv-hex">#50B4A0</div>
+      </div>
+    </div>
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#F0B478">
+        <span class="pv-abbr">T</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Tens</div>
+        <div class="pv-hex">#F0B478</div>
+      </div>
+    </div>
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#C86464">
+        <span class="pv-abbr">O</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Ones</div>
+        <div class="pv-hex">#C86464</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Full place value spectrum — counters &amp; grid headers (Millions → Thousandths)</div>
+  <div class="row">
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#288C50">
+        <span class="pv-abbr">M</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Millions</div>
+        <div class="pv-hex">#288C50</div>
+      </div>
+    </div>
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#50B4C8">
+        <span class="pv-abbr">HTh</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Hundred Thousands</div>
+        <div class="pv-hex">#50B4C8</div>
+      </div>
+    </div>
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#B478B4">
+        <span class="pv-abbr">TTh</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Ten Thousands</div>
+        <div class="pv-hex">#B478B4</div>
+      </div>
+    </div>
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#788CB4">
+        <span class="pv-abbr">Th</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Thousands</div>
+        <div class="pv-hex">#788CB4</div>
+      </div>
+    </div>
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#50B4A0">
+        <span class="pv-abbr">H</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Hundreds</div>
+        <div class="pv-hex">#50B4A0</div>
+      </div>
+    </div>
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#F0B478">
+        <span class="pv-abbr">T</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Tens</div>
+        <div class="pv-hex">#F0B478</div>
+      </div>
+    </div>
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#C86464">
+        <span class="pv-abbr">O</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Ones</div>
+        <div class="pv-hex">#C86464</div>
+      </div>
+    </div>
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#C878B4">
+        <span class="pv-abbr">t</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Tenths</div>
+        <div class="pv-hex">#C878B4</div>
+      </div>
+    </div>
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#F0B0D4">
+        <span class="pv-abbr" style="color:#1A1A2E">h</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Hundredths</div>
+        <div class="pv-hex">#F0B0D4</div>
+      </div>
+    </div>
+    <div class="pv-swatch">
+      <div class="pv-block" style="background:#F0A090">
+        <span class="pv-abbr">th</span>
+      </div>
+      <div class="pv-info">
+        <div class="pv-label">Thousandths</div>
+        <div class="pv-hex">#F0A090</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-info" style="margin-top:16px">
+    <strong>Block rendering note:</strong> 3D blocks are drawn with three faces using <code>pvAdjustColor(base, 1.30)</code> for the top face (lighter) and <code>pvAdjustColor(base, 0.70)</code> for the side face (darker). Inner grid lines use <code>#111</code> at <code>0.55px</code>; outer block outline uses <code>#111</code> at <code>1.0px</code>. Counter circle outlines use <code>pvAdjustColor(color, 0.65)</code> at <code>1.5px</code>.
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <h2>Stroke &amp; Outline Guide</h2>
+  <p class="section-desc">Stroke widths are in SVG user units (px at 1:1 scale) for SVG tools, and canvas <code>lineWidth</code> logical pixels for PV. PV renders at scale ×2 (preview) and ×3 (QTI export), so its lineWidths appear proportionally heavier in the final output.</p>
+
+  <!-- Visual weight reference -->
+  <div class="section-label">Visual weight reference</div>
+  <div class="stroke-preview-row">
+    <div class="stroke-preview">
+      <div class="stroke-preview-label">SVG stroke-width</div>
+      <svg width="220" height="110" xmlns="http://www.w3.org/2000/svg">
+        <line x1="10" y1="18" x2="210" y2="18" stroke="#319377" stroke-width="1" stroke-linecap="round"/>
+        <text x="10" y="34" font-size="10" fill="#6B7280" font-family="monospace">1.0 — BM cell dividers, bead circles</text>
+        <line x1="10" y1="48" x2="210" y2="48" stroke="#319377" stroke-width="1.5" stroke-linecap="round"/>
+        <text x="10" y="64" font-size="10" fill="#6B7280" font-family="monospace">1.5 — BM braces, NR multilink/numicon holes</text>
+        <line x1="10" y1="78" x2="210" y2="78" stroke="#319377" stroke-width="2" stroke-linecap="round"/>
+        <text x="10" y="94" font-size="10" fill="#6B7280" font-family="monospace">2.0 — NL ticks, NR frame counters, NR numicon</text>
+      </svg>
+    </div>
+    <div class="stroke-preview">
+      <div class="stroke-preview-label">SVG stroke-width (heavier)</div>
+      <svg width="220" height="50" xmlns="http://www.w3.org/2000/svg">
+        <line x1="10" y1="18" x2="210" y2="18" stroke="#7898F0" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="10" y="34" font-size="10" fill="#6B7280" font-family="monospace">2.5 — NL main line</text>
+      </svg>
+    </div>
+    <div class="stroke-preview">
+      <div class="stroke-preview-label">PV canvas lineWidth (×2 render scale)</div>
+      <svg width="200" height="80" xmlns="http://www.w3.org/2000/svg">
+        <line x1="10" y1="18" x2="190" y2="18" stroke="#788CB4" stroke-width="0.55" stroke-linecap="round"/>
+        <text x="10" y="34" font-size="10" fill="#6B7280" font-family="monospace">0.55 — PV block inner grid</text>
+        <line x1="10" y1="48" x2="190" y2="48" stroke="#788CB4" stroke-width="1" stroke-linecap="round"/>
+        <text x="10" y="64" font-size="10" fill="#6B7280" font-family="monospace">1.0 — PV block outer outline</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Full table -->
+  <div class="section-label" style="margin-top:28px">Per-element stroke reference</div>
+  <table class="stroke-table">
+    <thead>
+      <tr>
+        <th>Tool</th>
+        <th>Element</th>
+        <th>Weight</th>
+        <th>Colour</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Number Line -->
+      <tr>
+        <td><span class="tool-tag tag-nl">NL</span></td>
+        <td>Main line</td>
+        <td><span class="weight-pill">2.5</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#AAAAAA;border:1px solid #ccc"></span> Palette colour</span></td>
+        <td>Through-line and terminate style</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nl">NL</span></td>
+        <td>Normal ticks</td>
+        <td><span class="weight-pill">2.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#AAAAAA;border:1px solid #ccc"></span> Palette colour</span></td>
+        <td>Reduced to 0.3 opacity for off-grid ticks</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nl">NL</span></td>
+        <td>Endpoint ticks</td>
+        <td><span class="weight-pill">2.5</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#AAAAAA;border:1px solid #ccc"></span> Palette colour</span></td>
+        <td>Terminate style only, slightly taller</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nl">NL</span></td>
+        <td>Arrow heads</td>
+        <td><span class="weight-pill">1.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#AAAAAA;border:1px solid #ccc"></span> Palette colour</span></td>
+        <td>Filled polygon, stroke for anti-alias</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nl">NL</span></td>
+        <td>Jump arc</td>
+        <td><span class="weight-pill dynamic">dynamic</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Jump colour</span></td>
+        <td>Scales with span: <code>arrowSize(span).sw</code>, range ~1–2.2</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nl">NL</span></td>
+        <td>Jump circle</td>
+        <td><span class="weight-pill">2.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Jump colour</span></td>
+        <td>Circle around a labelled tick value</td>
+      </tr>
+      <!-- Bar Model -->
+      <tr>
+        <td><span class="tool-tag tag-bm">BM</span></td>
+        <td>Bar outer outline</td>
+        <td><span class="weight-pill">2.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Palette colour</span></td>
+        <td>Rounded rect wrapping the whole bar</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-bm">BM</span></td>
+        <td>Segment dividers</td>
+        <td><span class="weight-pill">2.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Palette colour</span></td>
+        <td>Between segments. Matches outer outline weight</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-bm">BM</span></td>
+        <td>Cell dividers</td>
+        <td><span class="weight-pill">1.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Palette colour</span></td>
+        <td>Within a divided segment (e.g. unit cells)</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-bm">BM</span></td>
+        <td>Braces (labelled)</td>
+        <td><span class="weight-pill">1.8</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Palette colour</span></td>
+        <td>Below or above labelled segments</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-bm">BM</span></td>
+        <td>Braces (blank)</td>
+        <td><span class="weight-pill">1.8</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#AAAAAA;border:1px solid #ccc"></span> #AAAAAA</span></td>
+        <td>Blank/missing segments use grey</td>
+      </tr>
+      <!-- Number Track -->
+      <tr>
+        <td><span class="tool-tag tag-nt">NT</span></td>
+        <td>Full mode</td>
+        <td><span class="weight-pill">0</span></td>
+        <td>—</td>
+        <td>No outline; fill colour is the shape colour</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nt">NT</span></td>
+        <td>Light mode</td>
+        <td><span class="weight-pill dynamic">CELL×0.022</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Palette colour</span></td>
+        <td>≈1.5px at default 68px cell. Relative to cell size</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nt">NT</span></td>
+        <td>Outline mode</td>
+        <td><span class="weight-pill dynamic">CELL×0.029</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Palette colour</span></td>
+        <td>≈2.0px at default 68px cell. White fill with coloured border</td>
+      </tr>
+      <!-- NR Frames -->
+      <tr>
+        <td><span class="tool-tag tag-nr">NR</span></td>
+        <td>Frame counters</td>
+        <td><span class="weight-pill">2.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Palette colour</span></td>
+        <td>Circles inside ten-frames and five-frames</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nr">NR</span></td>
+        <td>Frame grid lines</td>
+        <td><span class="weight-pill">1.5</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#333333"></span> #333</span></td>
+        <td>Cell dividers inside the frame</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nr">NR</span></td>
+        <td>Bead string</td>
+        <td><span class="weight-pill">2.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#888888;border:1px solid #ccc"></span> #888</span></td>
+        <td>Wire/abacus string</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nr">NR</span></td>
+        <td>Bead circles</td>
+        <td><span class="weight-pill">2.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Darkened fill (×0.6)</span></td>
+        <td>Matches frame counters and numicon piece outlines</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nr">NR</span></td>
+        <td>Multilink all pieces</td>
+        <td><span class="weight-pill">1.5</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Darkened fill (×0.6)</span></td>
+        <td>Rect, circle hole, and connector all identical weight</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nr">NR</span></td>
+        <td>Numicon piece outline</td>
+        <td><span class="weight-pill">2.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Darkened fill (×0.6)</span></td>
+        <td>Outer blob shape</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-nr">NR</span></td>
+        <td>Numicon holes</td>
+        <td><span class="weight-pill">1.5</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#D46B55"></span> Darkened fill (×0.6)</span></td>
+        <td>White circles punched into the piece</td>
+      </tr>
+      <!-- Place Value -->
+      <tr>
+        <td><span class="tool-tag tag-pv">PV</span></td>
+        <td>Block inner grid</td>
+        <td><span class="weight-pill">0.55</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#111111"></span> #111</span></td>
+        <td>Canvas lineWidth. Appears ~1.1px at ×2 render scale</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-pv">PV</span></td>
+        <td>Block outer outline</td>
+        <td><span class="weight-pill">1.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#111111"></span> #111</span></td>
+        <td>Canvas lineWidth. Appears ~2px at ×2 render scale</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-pv">PV</span></td>
+        <td>Counter circle</td>
+        <td><span class="weight-pill">1.5</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#788CB4"></span> Darkened fill (×0.65)</span></td>
+        <td>Canvas lineWidth</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-pv">PV</span></td>
+        <td>Part-whole circles</td>
+        <td><span class="weight-pill">2.5</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#374151"></span> #374151</span></td>
+        <td>Canvas lineWidth. Whole circle and part circles</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-pv">PV</span></td>
+        <td>Part-whole lines</td>
+        <td><span class="weight-pill">2.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#374151"></span> #374151</span></td>
+        <td>Canvas lineWidth. Lines connecting circles</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-pv">PV</span></td>
+        <td>Grid column dividers</td>
+        <td><span class="weight-pill">1.0</span> / <span class="weight-pill">1.5</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#E5E7EB;border:1px solid #ccc"></span> #E5E7EB / #6B7280</span></td>
+        <td>Normal divider / decimal boundary (heavier + darker)</td>
+      </tr>
+      <tr>
+        <td><span class="tool-tag tag-pv">PV</span></td>
+        <td>Q-mark border</td>
+        <td><span class="weight-pill">2.0</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#9CA3AF;border:1px solid #ccc"></span> #9CA3AF</span></td>
+        <td>Dashed [5,4]. Applies in all display modes</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ── Inconsistency callouts ── -->
+  <div class="section-label" style="margin-top:28px">Inconsistencies found in current code</div>
+
+  <div class="callout callout-info">
+    <strong>Previously resolved inconsistencies.</strong>
+    BM segment dividers were <code>2.5</code> (heavier than the outer outline); fixed to <code>2.0</code>. NR bead string was <code>2.2</code> (non-standard); fixed to <code>2.0</code>. NR bead circle outlines were <code>1.0</code> (lighter than all other NR shapes); fixed to <code>2.0</code>. All changes are in <code>tools/shared.js</code>.
+  </div>
+
+  <div class="callout callout-info">
+    <strong>Number Track — relative stroke widths.</strong>
+    NT stroke widths scale with cell size (<code>CELL×0.022</code> / <code>CELL×0.029</code>) rather than using fixed values like all other SVG tools. This is intentional — shapes look proportional at any size — but the approach differs from NL, BM, and NR which use fixed px. No action needed; worth knowing when adding new tools.
+  </div>
+
+  <div class="callout callout-info">
+    <strong>Place Value — canvas uses #111 for structural outlines.</strong>
+    PV uses near-black (<code>#111</code>) for block grid and outlines rather than colour-matched or palette strokes. This is consistent with physical manipulative aesthetics (pencil-line grid on coloured blocks) and is intentional. PV is also the only canvas-rendered tool, so direct weight comparison with SVG tools is not straightforward.
+  </div>
+
+</body>
+</html>

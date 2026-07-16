@@ -388,7 +388,7 @@ function barModelSVG(config) {
     }
 
     if (i > 0 && !config.multi && !segments[i - 1]?.blank) {
-      s += `<line x1="${cx.toFixed(1)}" y1="${by}" x2="${cx.toFixed(1)}" y2="${by + BAR_H}" stroke="${STROKE}" stroke-width="2.5"/>`;
+      s += `<line x1="${cx.toFixed(1)}" y1="${by}" x2="${cx.toFixed(1)}" y2="${by + BAR_H}" stroke="${STROKE}" stroke-width="2"/>`;
     }
 
     if (divs > 1) {
@@ -609,8 +609,8 @@ function nrRenderBeads(cfg) {
   const STEPS=300; let pathD=`M 0,${baseCY.toFixed(1)}`;
   for(let i=1;i<=STEPS;i++){const x=(i/STEPS)*SVG_W; pathD+=` L ${x.toFixed(1)},${(baseCY+A*Math.sin(2*Math.PI*x/WL)).toFixed(1)}`;}
   let s=`<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg" style="width:${SVG_W}px;max-width:100%">`;
-  s+=`<path d="${pathD}" fill="none" stroke="#888" stroke-width="2.2" stroke-linecap="round"/>`;
-  for(let i=0;i<N;i++){const{fill,stroke}=beadCol(i); s+=`<circle cx="${beads[i].x.toFixed(1)}" cy="${beads[i].y.toFixed(1)}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="1"/>`;}
+  s+=`<path d="${pathD}" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round"/>`;
+  for(let i=0;i<N;i++){const{fill,stroke}=beadCol(i); s+=`<circle cx="${beads[i].x.toFixed(1)}" cy="${beads[i].y.toFixed(1)}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;}
   s+=`</svg>`; return s;
 }
 
