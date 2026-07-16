@@ -260,4 +260,83 @@ function pvResetState(){
   autoPreviewPV();
 }
 
+// ── Panel HTML ─────────────────────────────────────────────────
+function pvPanelHTML(){
+  return `<div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="pv-text" placeholder="e.g. What number is shown?"></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="pv-answer" placeholder="e.g. 342"></div>
+            </div>
+            <div class="form-row" style="align-items:center">
+              <div class="field field-sm"><label>Number</label>
+                <div style="display:flex;align-items:center;gap:4px">
+                  <button class="tog-btn" onclick="pvChangeNum(-1)" style="width:30px;height:30px;padding:0">−</button>
+                  <input type="number" id="pv-num-in" min="0" step="0.001" value="24" style="width:80px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="pvSetN(parseFloat(this.value))">
+                  <button class="tog-btn" onclick="pvChangeNum(1)" style="width:30px;height:30px;padding:0">+</button>
+                </div>
+              </div>
+              <div class="field"><label>Representation</label>
+                <div class="tog-row">
+                  <button class="tog-btn active" data-pvrep="blocks"   onclick="pvSetRep(this)">PV Blocks</button>
+                  <button class="tog-btn"        data-pvrep="counters" onclick="pvSetRep(this)">PV Counters</button>
+                  <button class="tog-btn"        data-pvrep="numbers"  onclick="pvSetRep(this)">Numbers</button>
+                </div>
+              </div>
+              <div class="field"><label>Display</label>
+                <div class="tog-row">
+                  <button class="tog-btn active" data-pvmode="standalone" onclick="pvSetMode(this)">Standalone</button>
+                  <button class="tog-btn"        data-pvmode="grid"       onclick="pvSetMode(this)">PV Grid</button>
+                  <button class="tog-btn"        data-pvmode="partwhole"  onclick="pvSetMode(this)">Part-Whole</button>
+                </div>
+              </div>
+              <div class="field" id="pv-eq-field" style="display:none"><label>Equation</label>
+                <div class="tog-row">
+                  <button class="tog-btn active" data-pveq="none"   onclick="pvSetEqMode(this)">Parts only</button>
+                  <button class="tog-btn"        data-pveq="before" onclick="pvSetEqMode(this)">1234 = parts</button>
+                  <button class="tog-btn"        data-pveq="after"  onclick="pvSetEqMode(this)">Parts = 1234</button>
+                </div>
+              </div>
+            </div>
+            <div id="pv-blk-color-field" class="form-row">
+              <div class="field"><label>Block colours</label>
+                <div style="display:flex;gap:6px;margin-bottom:6px">
+                  <button class="tog-btn active" id="pv-preset-counter" onclick="pvApplyPreset('counter',this)">Match counters</button>
+                  <button class="tog-btn" id="pv-preset-paleblue" onclick="pvApplyPreset('paleblue',this)">Pale blue</button>
+                </div>
+                <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1000s</span><input type="color" id="pv-col-1000" value="#788CB4" oninput="pvSetBlkColor(1000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">100s</span><input type="color" id="pv-col-100" value="#50B4A0" oninput="pvSetBlkColor(100,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">10s</span><input type="color" id="pv-col-10" value="#F0B478" oninput="pvSetBlkColor(10,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1s</span><input type="color" id="pv-col-1" value="#C86464" oninput="pvSetBlkColor(1,this.value)"></div>
+                </div>
+              </div>
+            </div>
+            <div id="pv-ctr-color-field" class="form-row" style="display:none">
+              <div class="field"><label>Counter &amp; grid colours</label>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">M</span><input type="color" id="pv-cc-1000000" value="#288C50" oninput="pvSetPVColor(1000000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">HTh</span><input type="color" id="pv-cc-100000" value="#50B4C8" oninput="pvSetPVColor(100000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">TTh</span><input type="color" id="pv-cc-10000" value="#B478B4" oninput="pvSetPVColor(10000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">Th</span><input type="color" id="pv-cc-1000" value="#788CB4" oninput="pvSetPVColor(1000,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">H</span><input type="color" id="pv-cc-100" value="#50B4A0" oninput="pvSetPVColor(100,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">T</span><input type="color" id="pv-cc-10" value="#F0B478" oninput="pvSetPVColor(10,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">O</span><input type="color" id="pv-cc-1" value="#C86464" oninput="pvSetPVColor(1,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1/10</span><input type="color" id="pv-cc-tenth" value="#C878B4" oninput="pvSetPVColor(0.1,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1/100</span><input type="color" id="pv-cc-hundredth" value="#F0B0D4" oninput="pvSetPVColor(0.01,this.value)"></div>
+                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1/1000</span><input type="color" id="pv-cc-thousandth" value="#F0A090" oninput="pvSetPVColor(0.001,this.value)"></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Hide as ?</label><div class="tog-row" id="pv-missing-row"><span style="font-size:0.78rem;color:#9CA3AF;font-style:italic">Enter a number above</span></div></div>
+            </div>
+            <div class="preview-box" id="pv-preview" style="padding:10px;min-height:80px">
+              <canvas id="pv-canvas" style="max-width:100%;height:auto;display:block;margin:auto"></canvas>
+            </div>
+            <div class="form-actions">
+              <button class="btn-create-more" onclick="openSharedBatch('pv')">⊞ Create more like this</button>
+              <button class="btn btn-blue" id="add-q-btn-pv" onclick="addToolQuestion('pv')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>`;
+}
+
 

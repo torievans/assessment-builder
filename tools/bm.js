@@ -70,3 +70,37 @@ function restoreBMConfig(cfg){
   autoPreviewBM();
 }
 
+// ── Panel HTML ─────────────────────────────────────────────────
+function bmPanelHTML(){
+  return `<div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="bm-text" placeholder="e.g. What is the missing number?"></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="bm-answer" placeholder="e.g. 6"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Colour</label><div class="swatch-row" id="bm-swatch-row"></div></div>
+              <div class="field"><label>Colour mode</label><div class="tog-row"><button class="tog-btn active" data-colmode="single">Single</button><button class="tog-btn" data-colmode="multi">Multi</button></div></div>
+              <div class="field"><label>Total display</label><div class="tog-row"><button class="tog-btn active" data-totdisp="brace">Brace</button><button class="tog-btn" data-totdisp="top bar">Top bar</button><button class="tog-btn" data-totdisp="none">None</button></div></div>
+              <div class="field field-sm"><label>Total</label><input type="text" id="bm-total" placeholder="e.g. 10 or ?"></div>
+            </div>
+            <div class="sec-hr"></div>
+            <div class="seg-block">
+              <div class="seg-hdr"><span class="seg-title">Segment 1</span><div class="tog-row"><button class="tog-btn active" data-bmseg="1" data-segtype="fill">Fill</button><button class="tog-btn" data-bmseg="1" data-segtype="blank">Blank</button></div></div>
+              <div class="form-row"><div class="field field-sm"><label>Value</label><input type="text" id="bm-seg1-val" placeholder="4 or ?"></div><div class="field field-grow"><label>Bar label</label><input type="text" id="bm-seg1-lbl"></div><div class="field field-grow"><label>Brace label</label><input type="text" id="bm-seg1-brace"></div></div>
+            </div>
+            <div class="seg-block">
+              <div class="seg-hdr"><span class="seg-title">Segment 2</span><div class="tog-row"><button class="tog-btn active" data-bmseg="2" data-segtype="fill">Fill</button><button class="tog-btn" data-bmseg="2" data-segtype="blank">Blank</button></div></div>
+              <div class="form-row"><div class="field field-sm"><label>Value</label><input type="text" id="bm-seg2-val" placeholder="6 or ?"></div><div class="field field-grow"><label>Bar label</label><input type="text" id="bm-seg2-lbl"></div><div class="field field-grow"><label>Brace label</label><input type="text" id="bm-seg2-brace"></div></div>
+            </div>
+            <div class="seg-block" id="bm-seg3-block" style="display:none">
+              <div class="seg-hdr"><span class="seg-title">Segment 3</span><div style="display:flex;gap:7px;align-items:center"><div class="tog-row"><button class="tog-btn active" data-bmseg="3" data-segtype="fill">Fill</button><button class="tog-btn" data-bmseg="3" data-segtype="blank">Blank</button></div><button class="btn btn-ghost" style="padding:3px 10px;font-size:11px" onclick="bmToggleSeg3(false)">✕ Remove</button></div></div>
+              <div class="form-row"><div class="field field-sm"><label>Value</label><input type="text" id="bm-seg3-val" placeholder="3 or ?"></div><div class="field field-grow"><label>Bar label</label><input type="text" id="bm-seg3-lbl"></div><div class="field field-grow"><label>Brace label</label><input type="text" id="bm-seg3-brace"></div></div>
+            </div>
+            <button class="btn btn-ghost" id="bm-add-seg3" style="margin-bottom:4px;font-size:12px" onclick="bmToggleSeg3(true)">+ Third segment</button>
+            <div class="preview-box" id="bm-preview"><p class="preview-empty">Fill in segment values above to preview.</p></div>
+            <div class="form-actions">
+              <button class="btn-create-more" onclick="openSharedBatch('bm')">⊞ Create more like this</button>
+              <button class="btn btn-blue" id="add-q-btn-bm" onclick="addToolQuestion('bm')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>`;
+}
+

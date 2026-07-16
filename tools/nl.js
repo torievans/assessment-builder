@@ -212,3 +212,59 @@ function restoreNLConfig(cfg){
   autoPreviewNL();
 }
 
+// ── Panel HTML ─────────────────────────────────────────────────
+function nlPanelHTML(){
+  return `<div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="nl-text" placeholder="e.g. What number is missing?"></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="nl-answer" placeholder="e.g. 7"></div>
+            </div>
+            <div class="form-row">
+              <div class="field field-sm"><label>Start</label><input type="number" id="f-start" value="0"></div>
+              <div class="field field-sm"><label>End</label><input type="number" id="f-end" value="20"></div>
+              <div class="field field-sm"><label>Goes up in</label><input type="number" id="f-step" value="1" min="0.001" step="any"></div>
+              <div class="field field-sm"><label>Label every</label><input type="number" id="f-vge" placeholder="all" step="any"></div>
+              <div class="field field-sm"><label>Hide from</label><input type="number" id="f-hide-from" placeholder="none" step="any"></div>
+              <div class="field field-sm"><label>Hide to</label><input type="number" id="f-hide-to" placeholder="none" step="any"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Style</label><div class="tog-row"><button class="tog-btn active" data-style="through">Through</button><button class="tog-btn" data-style="terminate">Terminate</button></div></div>
+              <div class="field"><label>Colour</label><div class="swatch-row" id="nl-swatch-row"></div></div>
+            </div>
+            <button class="jump-toggle" id="jump-toggle-btn" onclick="nlToggleJump()">＋ Add jumps</button>
+            <div id="jump-section">
+              <div class="sec-hr"></div>
+              <div class="sec-label">Jump 1</div>
+              <div class="form-row">
+                <div class="field field-sm"><label>From</label><input type="number" id="f-from" step="any"></div>
+                <div class="field field-sm"><label>To</label><input type="number" id="f-to" step="any"></div>
+                <div class="field"><label>Arc type</label><div class="tog-row"><button class="tog-btn active" data-arctype="single">Single arc</button><button class="tog-btn" data-arctype="unit">Unit arcs</button></div></div>
+                <div class="field field-sm"><label>Label</label><input type="text" id="f-jump-label" placeholder="+3"></div>
+                <div class="field"><label>Arrow</label><div class="tog-row"><button class="tog-btn active" data-arrow="yes">Yes</button><button class="tog-btn" data-arrow="no">No</button></div></div>
+                <div class="field"><label>Circle</label><div class="tog-row"><button class="tog-btn active" data-circle="none">None</button><button class="tog-btn" data-circle="start">Start</button><button class="tog-btn" data-circle="end">End</button></div></div>
+                <div class="field"><label>Colour</label><div class="swatch-row" id="jump1-swatch-row"></div></div>
+              </div>
+              <button class="jump-toggle open" onclick="nlToggleJump()" style="margin-top:6px">✕ Remove jumps</button>
+              <button class="jump-toggle" id="jump2-toggle-btn" style="margin-top:4px" onclick="nlToggleJump2()">＋ Add second jump</button>
+              <div id="jump2-section">
+                <div class="sec-hr" style="margin:10px 0"></div>
+                <div class="sec-label">Jump 2</div>
+                <div class="form-row">
+                  <div class="field field-sm"><label>From</label><input type="number" id="f-from2" step="any"></div>
+                  <div class="field field-sm"><label>To</label><input type="number" id="f-to2" step="any"></div>
+                  <div class="field"><label>Arc type</label><div class="tog-row"><button class="tog-btn active" data-arctype2="single">Single arc</button><button class="tog-btn" data-arctype2="unit">Unit arcs</button></div></div>
+                  <div class="field field-sm"><label>Label</label><input type="text" id="f-jump-label2" placeholder="+4"></div>
+                  <div class="field"><label>Arrow</label><div class="tog-row"><button class="tog-btn active" data-arrow2="yes">Yes</button><button class="tog-btn" data-arrow2="no">No</button></div></div>
+                  <div class="field"><label>Circle</label><div class="tog-row"><button class="tog-btn active" data-circle2="none">None</button><button class="tog-btn" data-circle2="start">Start</button><button class="tog-btn" data-circle2="end">End</button></div></div>
+                  <div class="field"><label>Colour</label><div class="swatch-row" id="jump2-swatch-row"></div></div>
+                </div>
+                <button class="jump-toggle open" onclick="nlToggleJump2()" style="margin-top:6px">✕ Remove second jump</button>
+              </div>
+            </div>
+            <div class="preview-box" id="nl-preview"><p class="preview-empty">Fill in settings above to preview.</p></div>
+            <div class="form-actions">
+              <button class="btn-create-more" onclick="openBatchPanel()">⊞ Create more like this</button>
+              <button class="btn btn-blue" id="add-q-btn-nl" onclick="addToolQuestion('nl')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>`;
+}
+

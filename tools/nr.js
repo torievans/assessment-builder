@@ -138,4 +138,145 @@ function restoreNRConfig(cfg){
   autoPreviewNR();
 }
 
+// ── Panel HTML ─────────────────────────────────────────────────
+function nrPanelHTML(){
+  return `<div class="form-row">
+              <div class="field field-grow"><label>Question text</label><input type="text" id="nr-text" placeholder="e.g. Show 7 on a ten frame."></div>
+              <div class="field field-sm"><label>Answer</label><input type="text" id="nr-answer" placeholder="e.g. 7"></div>
+            </div>
+            <div class="form-row" style="align-items:center">
+              <div class="field field-sm"><label>Number</label>
+                <div style="display:flex;align-items:center;gap:4px">
+                  <button class="tog-btn" onclick="nrChangeNum(-1)" style="width:30px;height:30px;padding:0">−</button>
+                  <input type="number" id="nr-num-in" min="1" max="20" value="5" style="width:46px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetNum(parseInt(this.value))">
+                  <button class="tog-btn" onclick="nrChangeNum(1)" style="width:30px;height:30px;padding:0">+</button>
+                </div>
+              </div>
+              <div class="field"><label>Representation</label>
+                <div class="tog-row">
+                  <button class="tog-btn active" data-nrrep="frames" onclick="nrSetRep(this)">Frames</button>
+                  <button class="tog-btn" data-nrrep="beads" onclick="nrSetRep(this)">Beads</button>
+                  <button class="tog-btn" data-nrrep="multilink" onclick="nrSetRep(this)">Multilink</button>
+                  <button class="tog-btn" data-nrrep="numicon" onclick="nrSetRep(this)">Numicon</button>
+                </div>
+              </div>
+            </div>
+            <!-- Sub-options: Frames -->
+            <div id="nr-opts-frames">
+              <div class="form-row">
+                <div class="field"><label>Frame type</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrft="5" onclick="nrSetFT(this)">5-frame</button>
+                    <button class="tog-btn" data-nrft="10" onclick="nrSetFT(this)">10-frame</button>
+                  </div>
+                </div>
+                <div class="field"><label>Colour 1</label><div class="swatch-row" id="nr-sw-fc1"></div></div>
+                <div class="field"><label>Split</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrfsp="off" onclick="nrSetFSplit(this,false)">Off</button>
+                    <button class="tog-btn" data-nrfsp="on" onclick="nrSetFSplit(this,true)">On</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-fsplit-row" class="form-row" style="display:none">
+                <div class="field"><label>Colour 2</label><div class="swatch-row" id="nr-sw-fc2"></div></div>
+                <div class="field field-sm"><label>Split at</label>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <button class="tog-btn" onclick="nrChangeFSplit(-1)" style="width:28px;height:28px;padding:0">−</button>
+                    <input type="number" id="nr-fsplit-in" min="1" max="19" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetFSplitAt(parseInt(this.value))">
+                    <button class="tog-btn" onclick="nrChangeFSplit(1)" style="width:28px;height:28px;padding:0">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Sub-options: Beads -->
+            <div id="nr-opts-beads" style="display:none">
+              <div class="form-row">
+                <div class="field"><label>Preset</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrbp="colour" onclick="nrSetBeadPreset(this)">Colour</button>
+                    <button class="tog-btn" data-nrbp="rw" onclick="nrSetBeadPreset(this)">R/W</button>
+                  </div>
+                </div>
+                <div class="field"><label>Group size</label>
+                  <div class="tog-row">
+                    <button class="tog-btn" data-nrbg="2" onclick="nrSetBG(this)">2</button>
+                    <button class="tog-btn active" data-nrbg="5" onclick="nrSetBG(this)">5</button>
+                    <button class="tog-btn" data-nrbg="10" onclick="nrSetBG(this)">10</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-bead-col-row" class="form-row">
+                <div class="field"><label>Colour A</label><div class="swatch-row" id="nr-sw-ba"></div></div>
+                <div class="field"><label>Colour B</label><div class="swatch-row" id="nr-sw-bb"></div></div>
+              </div>
+            </div>
+            <!-- Sub-options: Multilink -->
+            <div id="nr-opts-multilink" style="display:none">
+              <div class="form-row">
+                <div class="field"><label>Layout</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrml="10" onclick="nrSetML(this)">1×10</button>
+                    <button class="tog-btn" data-nrml="5" onclick="nrSetML(this)">2×5</button>
+                  </div>
+                </div>
+                <div id="nr-ml-fill-row" class="field" style="display:none"><label>Fill</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrmf="row" onclick="nrSetMLFill(this)">Row</button>
+                    <button class="tog-btn" data-nrmf="col" onclick="nrSetMLFill(this)">Col</button>
+                  </div>
+                </div>
+                <div class="field"><label>Colour</label><div class="swatch-row" id="nr-sw-mc"></div></div>
+                <div class="field"><label>Split</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrmsp="off" onclick="nrSetMLSplit(this,false)">Off</button>
+                    <button class="tog-btn" data-nrmsp="on" onclick="nrSetMLSplit(this,true)">On</button>
+                  </div>
+                </div>
+                <div id="nr-ml-sep10-row" class="field" style="display:none"><label>Separate at 10</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrmsg="off" onclick="nrSetMLGap(this,false)">Off</button>
+                    <button class="tog-btn" data-nrmsg="on" onclick="nrSetMLGap(this,true)">On</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-mlsplit-row" class="form-row" style="display:none">
+                <div class="field"><label>Colour 2</label><div class="swatch-row" id="nr-sw-mc2"></div></div>
+                <div class="field field-sm"><label>Split at</label>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <button class="tog-btn" onclick="nrChangeMLSplit(-1)" style="width:28px;height:28px;padding:0">−</button>
+                    <input type="number" id="nr-mlsplit-in" min="1" max="19" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetMLSplitAt(parseInt(this.value))">
+                    <button class="tog-btn" onclick="nrChangeMLSplit(1)" style="width:28px;height:28px;padding:0">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Sub-options: Numicon -->
+            <div id="nr-opts-numicon" style="display:none">
+              <div class="form-row">
+                <div class="field"><label>Split</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrnsp="off" onclick="nrSetNISplit(this,false)">Off</button>
+                    <button class="tog-btn" data-nrnsp="on" onclick="nrSetNISplit(this,true)">On</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-nisplit-row" class="form-row" style="display:none">
+                <div class="field field-sm"><label>Split at</label>
+                  <div style="display:flex;align-items:center;gap:4px">
+                    <button class="tog-btn" onclick="nrChangeNISplit(-1)" style="width:28px;height:28px;padding:0">−</button>
+                    <input type="number" id="nr-nisplit-in" min="1" max="10" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetNISplitAt(parseInt(this.value))">
+                    <button class="tog-btn" onclick="nrChangeNISplit(1)" style="width:28px;height:28px;padding:0">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="preview-box" id="nr-preview"><p class="preview-empty">Select a number above to preview.</p></div>
+            <div class="form-actions">
+              <button class="btn-create-more" onclick="openSharedBatch('nr')">⊞ Create more like this</button>
+              <button class="btn btn-blue" id="add-q-btn-nr" onclick="addToolQuestion('nr')">+ Add Question</button>
+              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
+            </div>`;
+}
+
 
