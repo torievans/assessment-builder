@@ -347,58 +347,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 
         <!-- ── Number Line panel ── -->
         <div class="tool-panel hidden" id="tool-panel-nl">
-          <div class="form-card">
-            <div class="form-row">
-              <div class="field field-grow"><label>Question text</label><input type="text" id="nl-text" placeholder="e.g. What number is missing?"></div>
-              <div class="field field-sm"><label>Answer</label><input type="text" id="nl-answer" placeholder="e.g. 7"></div>
-            </div>
-            <div class="form-row">
-              <div class="field field-sm"><label>Start</label><input type="number" id="f-start" value="0"></div>
-              <div class="field field-sm"><label>End</label><input type="number" id="f-end" value="20"></div>
-              <div class="field field-sm"><label>Goes up in</label><input type="number" id="f-step" value="1" min="0.001" step="any"></div>
-              <div class="field field-sm"><label>Label every</label><input type="number" id="f-vge" placeholder="all" step="any"></div>
-              <div class="field field-sm"><label>Hide from</label><input type="number" id="f-hide-from" placeholder="none" step="any"></div>
-              <div class="field field-sm"><label>Hide to</label><input type="number" id="f-hide-to" placeholder="none" step="any"></div>
-            </div>
-            <div class="form-row">
-              <div class="field"><label>Style</label><div class="tog-row"><button class="tog-btn active" data-style="through">Through</button><button class="tog-btn" data-style="terminate">Terminate</button></div></div>
-              <div class="field"><label>Colour</label><div class="swatch-row" id="nl-swatch-row"></div></div>
-            </div>
-            <button class="jump-toggle" id="jump-toggle-btn" onclick="nlToggleJump()">＋ Add jumps</button>
-            <div id="jump-section">
-              <div class="sec-hr"></div>
-              <div class="sec-label">Jump 1</div>
-              <div class="form-row">
-                <div class="field field-sm"><label>From</label><input type="number" id="f-from" step="any"></div>
-                <div class="field field-sm"><label>To</label><input type="number" id="f-to" step="any"></div>
-                <div class="field"><label>Arc type</label><div class="tog-row"><button class="tog-btn active" data-arctype="single">Single arc</button><button class="tog-btn" data-arctype="unit">Unit arcs</button></div></div>
-                <div class="field field-sm"><label>Label</label><input type="text" id="f-jump-label" placeholder="+3"></div>
-                <div class="field"><label>Arrow</label><div class="tog-row"><button class="tog-btn active" data-arrow="yes">Yes</button><button class="tog-btn" data-arrow="no">No</button></div></div>
-                <div class="field"><label>Circle</label><div class="tog-row"><button class="tog-btn active" data-circle="none">None</button><button class="tog-btn" data-circle="start">Start</button><button class="tog-btn" data-circle="end">End</button></div></div>
-                <div class="field"><label>Colour</label><div class="swatch-row" id="jump1-swatch-row"></div></div>
-              </div>
-              <button class="jump-toggle" id="jump2-toggle-btn" style="margin-top:4px" onclick="nlToggleJump2()">＋ Add second jump</button>
-              <div id="jump2-section">
-                <div class="sec-hr" style="margin:10px 0"></div>
-                <div class="sec-label">Jump 2</div>
-                <div class="form-row">
-                  <div class="field field-sm"><label>From</label><input type="number" id="f-from2" step="any"></div>
-                  <div class="field field-sm"><label>To</label><input type="number" id="f-to2" step="any"></div>
-                  <div class="field"><label>Arc type</label><div class="tog-row"><button class="tog-btn active" data-arctype2="single">Single arc</button><button class="tog-btn" data-arctype2="unit">Unit arcs</button></div></div>
-                  <div class="field field-sm"><label>Label</label><input type="text" id="f-jump-label2" placeholder="+4"></div>
-                  <div class="field"><label>Arrow</label><div class="tog-row"><button class="tog-btn active" data-arrow2="yes">Yes</button><button class="tog-btn" data-arrow2="no">No</button></div></div>
-                  <div class="field"><label>Circle</label><div class="tog-row"><button class="tog-btn active" data-circle2="none">None</button><button class="tog-btn" data-circle2="start">Start</button><button class="tog-btn" data-circle2="end">End</button></div></div>
-                  <div class="field"><label>Colour</label><div class="swatch-row" id="jump2-swatch-row"></div></div>
-                </div>
-              </div>
-            </div>
-            <div class="preview-box" id="nl-preview"><p class="preview-empty">Fill in settings above to preview.</p></div>
-            <div class="form-actions">
-              <button class="btn-create-more" onclick="openBatchPanel()">⊞ Create more like this</button>
-              <button class="btn btn-blue" id="add-q-btn-nl" onclick="addToolQuestion('nl')">+ Add Question</button>
-              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
-            </div>
-          </div>
+          <div class="form-card"></div>
         </div>
 
         <!-- ── NL Batch panel ── -->
@@ -420,38 +369,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 
         <!-- ── Bar Model panel ── -->
         <div class="tool-panel hidden" id="tool-panel-bm">
-          <div class="form-card">
-            <div class="form-row">
-              <div class="field field-grow"><label>Question text</label><input type="text" id="bm-text" placeholder="e.g. What is the missing number?"></div>
-              <div class="field field-sm"><label>Answer</label><input type="text" id="bm-answer" placeholder="e.g. 6"></div>
-            </div>
-            <div class="form-row">
-              <div class="field"><label>Colour</label><div class="swatch-row" id="bm-swatch-row"></div></div>
-              <div class="field"><label>Colour mode</label><div class="tog-row"><button class="tog-btn active" data-colmode="single">Single</button><button class="tog-btn" data-colmode="multi">Multi</button></div></div>
-              <div class="field"><label>Total display</label><div class="tog-row"><button class="tog-btn active" data-totdisp="brace">Brace</button><button class="tog-btn" data-totdisp="top bar">Top bar</button><button class="tog-btn" data-totdisp="none">None</button></div></div>
-              <div class="field field-sm"><label>Total</label><input type="text" id="bm-total" placeholder="e.g. 10 or ?"></div>
-            </div>
-            <div class="sec-hr"></div>
-            <div class="seg-block">
-              <div class="seg-hdr"><span class="seg-title">Segment 1</span><div class="tog-row"><button class="tog-btn active" data-bmseg="1" data-segtype="fill">Fill</button><button class="tog-btn" data-bmseg="1" data-segtype="blank">Blank</button></div></div>
-              <div class="form-row"><div class="field field-sm"><label>Value</label><input type="text" id="bm-seg1-val" placeholder="4 or ?"></div><div class="field field-grow"><label>Bar label</label><input type="text" id="bm-seg1-lbl"></div><div class="field field-grow"><label>Brace label</label><input type="text" id="bm-seg1-brace"></div></div>
-            </div>
-            <div class="seg-block">
-              <div class="seg-hdr"><span class="seg-title">Segment 2</span><div class="tog-row"><button class="tog-btn active" data-bmseg="2" data-segtype="fill">Fill</button><button class="tog-btn" data-bmseg="2" data-segtype="blank">Blank</button></div></div>
-              <div class="form-row"><div class="field field-sm"><label>Value</label><input type="text" id="bm-seg2-val" placeholder="6 or ?"></div><div class="field field-grow"><label>Bar label</label><input type="text" id="bm-seg2-lbl"></div><div class="field field-grow"><label>Brace label</label><input type="text" id="bm-seg2-brace"></div></div>
-            </div>
-            <div class="seg-block" id="bm-seg3-block" style="display:none">
-              <div class="seg-hdr"><span class="seg-title">Segment 3</span><div style="display:flex;gap:7px;align-items:center"><div class="tog-row"><button class="tog-btn active" data-bmseg="3" data-segtype="fill">Fill</button><button class="tog-btn" data-bmseg="3" data-segtype="blank">Blank</button></div><button class="btn btn-ghost" style="padding:3px 10px;font-size:11px" onclick="bmToggleSeg3(false)">✕ Remove</button></div></div>
-              <div class="form-row"><div class="field field-sm"><label>Value</label><input type="text" id="bm-seg3-val" placeholder="3 or ?"></div><div class="field field-grow"><label>Bar label</label><input type="text" id="bm-seg3-lbl"></div><div class="field field-grow"><label>Brace label</label><input type="text" id="bm-seg3-brace"></div></div>
-            </div>
-            <button class="btn btn-ghost" id="bm-add-seg3" style="margin-bottom:4px;font-size:12px" onclick="bmToggleSeg3(true)">+ Third segment</button>
-            <div class="preview-box" id="bm-preview"><p class="preview-empty">Fill in segment values above to preview.</p></div>
-            <div class="form-actions">
-              <button class="btn-create-more" onclick="openSharedBatch('bm')">⊞ Create more like this</button>
-              <button class="btn btn-blue" id="add-q-btn-bm" onclick="addToolQuestion('bm')">+ Add Question</button>
-              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
-            </div>
-          </div>
+          <div class="form-card"></div>
         </div>
 
         <!-- ── Free Text panel ── -->
@@ -496,268 +414,17 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 
         <!-- ── Number Track panel ── -->
         <div class="tool-panel hidden" id="tool-panel-nt">
-          <div class="form-card">
-            <div class="form-row">
-              <div class="field field-grow"><label>Question text</label><input type="text" id="nt-text" placeholder="e.g. What number is missing?"></div>
-              <div class="field field-sm"><label>Answer</label><input type="text" id="nt-answer" placeholder="e.g. 7"></div>
-            </div>
-            <div class="form-row">
-              <div class="field field-grow">
-                <label>Sequence</label>
-                <input type="text" id="nt-seq" placeholder="e.g. 1,2,3,?,5,6" value="1,2,3,?,5,6" oninput="autoPreviewNT()">
-                <div style="font-size:0.72rem;color:#9CA3AF;margin-top:3px">Separate with commas · <strong>_</strong> = blank · <strong>?</strong> = answer cell</div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="field"><label>Shape</label><div class="tog-row" id="nt-shape-row">
-                <button class="tog-btn active" data-ntshape="square" onclick="ntSetShape(this)"><svg width="18" height="18" viewBox="0 0 34 34"><rect x="3" y="3" width="28" height="28" rx="7" fill="currentColor"/></svg></button>
-                <button class="tog-btn" data-ntshape="circle" onclick="ntSetShape(this)"><svg width="18" height="18" viewBox="0 0 34 34"><circle cx="17" cy="17" r="13" fill="currentColor"/></svg></button>
-                <button class="tog-btn" data-ntshape="balloon" onclick="ntSetShape(this)"><svg width="18" height="22" viewBox="0 0 34 42"><path d="M 17.95,35.78 L 19.69,40.00 L 14.31,40.00 L 16.05,35.78 C 10.80,34.56 2.50,24.03 2.50,16.50 C 2.50,8.49 8.99,2.00 17.00,2.00 C 25.01,2.00 31.50,8.49 31.50,16.50 C 31.50,24.03 23.20,34.56 17.95,35.78 Z" fill="currentColor"/></svg></button>
-                <button class="tog-btn" data-ntshape="star" onclick="ntSetShape(this)"><svg width="18" height="18" viewBox="0 0 34 34"><path d="M 30.74,13.67 C 30.48,12.87 29.74,12.33 28.90,12.33 L 21.22,12.33 L 18.84,5.02 C 18.58,4.23 17.84,3.69 17.00,3.69 C 16.16,3.69 15.42,4.23 15.16,5.02 L 12.78,12.33 L 5.10,12.33 C 4.26,12.33 3.52,12.87 3.26,13.67 C 3.00,14.47 3.28,15.34 3.96,15.84 L 10.18,20.35 L 7.80,27.65 C 7.54,28.45 7.83,29.33 8.51,29.82 C 9.19,30.31 10.11,30.31 10.79,29.82 L 17.00,25.31 L 23.21,29.82 C 23.55,30.07 23.95,30.19 24.35,30.19 C 24.75,30.19 25.15,30.07 25.49,29.82 C 26.17,29.33 26.46,28.45 26.20,27.65 L 23.82,20.35 L 30.04,15.84 C 30.72,15.34 31.00,14.47 30.74,13.67 Z" fill="currentColor"/></svg></button>
-                <button class="tog-btn" data-ntshape="cloud" onclick="ntSetShape(this)"><svg width="22" height="14" viewBox="0 0 34 24"><path d="M 28.90,12.29 C 28.90,12.24 28.91,12.19 28.91,12.14 C 28.91,9.67 26.90,7.66 24.43,7.66 C 23.92,7.66 23.44,7.74 22.99,7.90 C 22.26,5.05 19.68,2.94 16.60,2.94 C 13.10,2.94 10.24,5.67 10.01,9.11 C 9.68,9.01 9.32,8.95 8.96,8.95 C 7.08,8.95 5.54,10.39 5.38,12.22 C 3.46,12.61 2.00,14.31 2.00,16.34 C 2.00,18.65 3.89,20.54 6.20,20.54 L 27.80,20.54 C 30.11,20.54 32.00,18.65 32.00,16.34 C 32.00,14.41 30.68,12.78 28.90,12.29 Z" fill="currentColor"/></svg></button>
-              </div></div>
-              <div class="field"><label>Layout</label><div class="tog-row">
-                <button class="tog-btn active" data-ntlayout="straight" onclick="ntSetLayout(this)">Straight</button>
-                <button class="tog-btn" data-ntlayout="ascending" onclick="ntSetLayout(this)">Ascending</button>
-                <button class="tog-btn" data-ntlayout="descending" onclick="ntSetLayout(this)">Descending</button>
-              </div></div>
-              <div class="field"><label>Colour mode</label><div class="tog-row">
-                <button class="tog-btn active" data-ntcolmode="full" onclick="ntSetColMode(this)">Filled</button>
-                <button class="tog-btn" data-ntcolmode="light" onclick="ntSetColMode(this)">Light</button>
-                <button class="tog-btn" data-ntcolmode="outline" onclick="ntSetColMode(this)">Outline</button>
-              </div></div>
-            </div>
-            <div class="preview-box" id="nt-preview"><p class="preview-empty">Fill in a sequence above to preview.</p></div>
-            <div class="form-actions">
-              <button class="btn-create-more" onclick="openSharedBatch('nt')">⊞ Create more like this</button>
-              <button class="btn btn-blue" id="add-q-btn-nt" onclick="addToolQuestion('nt')">+ Add Question</button>
-              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
-            </div>
-          </div>
+          <div class="form-card"></div>
         </div>
 
         <!-- ── Number Representations panel ── -->
         <div class="tool-panel hidden" id="tool-panel-nr">
-          <div class="form-card">
-            <div class="form-row">
-              <div class="field field-grow"><label>Question text</label><input type="text" id="nr-text" placeholder="e.g. Show 7 on a ten frame."></div>
-              <div class="field field-sm"><label>Answer</label><input type="text" id="nr-answer" placeholder="e.g. 7"></div>
-            </div>
-            <div class="form-row" style="align-items:center">
-              <div class="field field-sm"><label>Number</label>
-                <div style="display:flex;align-items:center;gap:4px">
-                  <button class="tog-btn" onclick="nrChangeNum(-1)" style="width:30px;height:30px;padding:0">−</button>
-                  <input type="number" id="nr-num-in" min="1" max="20" value="5" style="width:46px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetNum(parseInt(this.value))">
-                  <button class="tog-btn" onclick="nrChangeNum(1)" style="width:30px;height:30px;padding:0">+</button>
-                </div>
-              </div>
-              <div class="field"><label>Representation</label>
-                <div class="tog-row">
-                  <button class="tog-btn active" data-nrrep="frames" onclick="nrSetRep(this)">Frames</button>
-                  <button class="tog-btn" data-nrrep="beads" onclick="nrSetRep(this)">Beads</button>
-                  <button class="tog-btn" data-nrrep="multilink" onclick="nrSetRep(this)">Multilink</button>
-                  <button class="tog-btn" data-nrrep="numicon" onclick="nrSetRep(this)">Numicon</button>
-                </div>
-              </div>
-            </div>
-            <!-- Sub-options: Frames -->
-            <div id="nr-opts-frames">
-              <div class="form-row">
-                <div class="field"><label>Frame type</label>
-                  <div class="tog-row">
-                    <button class="tog-btn active" data-nrft="5" onclick="nrSetFT(this)">5-frame</button>
-                    <button class="tog-btn" data-nrft="10" onclick="nrSetFT(this)">10-frame</button>
-                  </div>
-                </div>
-                <div class="field"><label>Colour 1</label><div class="swatch-row" id="nr-sw-fc1"></div></div>
-                <div class="field"><label>Split</label>
-                  <div class="tog-row">
-                    <button class="tog-btn active" data-nrfsp="off" onclick="nrSetFSplit(this,false)">Off</button>
-                    <button class="tog-btn" data-nrfsp="on" onclick="nrSetFSplit(this,true)">On</button>
-                  </div>
-                </div>
-              </div>
-              <div id="nr-fsplit-row" class="form-row" style="display:none">
-                <div class="field"><label>Colour 2</label><div class="swatch-row" id="nr-sw-fc2"></div></div>
-                <div class="field field-sm"><label>Split at</label>
-                  <div style="display:flex;align-items:center;gap:4px">
-                    <button class="tog-btn" onclick="nrChangeFSplit(-1)" style="width:28px;height:28px;padding:0">−</button>
-                    <input type="number" id="nr-fsplit-in" min="1" max="19" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetFSplitAt(parseInt(this.value))">
-                    <button class="tog-btn" onclick="nrChangeFSplit(1)" style="width:28px;height:28px;padding:0">+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Sub-options: Beads -->
-            <div id="nr-opts-beads" style="display:none">
-              <div class="form-row">
-                <div class="field"><label>Preset</label>
-                  <div class="tog-row">
-                    <button class="tog-btn active" data-nrbp="colour" onclick="nrSetBeadPreset(this)">Colour</button>
-                    <button class="tog-btn" data-nrbp="rw" onclick="nrSetBeadPreset(this)">R/W</button>
-                  </div>
-                </div>
-                <div class="field"><label>Group size</label>
-                  <div class="tog-row">
-                    <button class="tog-btn" data-nrbg="2" onclick="nrSetBG(this)">2</button>
-                    <button class="tog-btn active" data-nrbg="5" onclick="nrSetBG(this)">5</button>
-                    <button class="tog-btn" data-nrbg="10" onclick="nrSetBG(this)">10</button>
-                  </div>
-                </div>
-              </div>
-              <div id="nr-bead-col-row" class="form-row">
-                <div class="field"><label>Colour A</label><div class="swatch-row" id="nr-sw-ba"></div></div>
-                <div class="field"><label>Colour B</label><div class="swatch-row" id="nr-sw-bb"></div></div>
-              </div>
-            </div>
-            <!-- Sub-options: Multilink -->
-            <div id="nr-opts-multilink" style="display:none">
-              <div class="form-row">
-                <div class="field"><label>Layout</label>
-                  <div class="tog-row">
-                    <button class="tog-btn active" data-nrml="10" onclick="nrSetML(this)">1×10</button>
-                    <button class="tog-btn" data-nrml="5" onclick="nrSetML(this)">2×5</button>
-                  </div>
-                </div>
-                <div id="nr-ml-fill-row" class="field" style="display:none"><label>Fill</label>
-                  <div class="tog-row">
-                    <button class="tog-btn active" data-nrmf="row" onclick="nrSetMLFill(this)">Row</button>
-                    <button class="tog-btn" data-nrmf="col" onclick="nrSetMLFill(this)">Col</button>
-                  </div>
-                </div>
-                <div class="field"><label>Colour</label><div class="swatch-row" id="nr-sw-mc"></div></div>
-                <div class="field"><label>Split</label>
-                  <div class="tog-row">
-                    <button class="tog-btn active" data-nrmsp="off" onclick="nrSetMLSplit(this,false)">Off</button>
-                    <button class="tog-btn" data-nrmsp="on" onclick="nrSetMLSplit(this,true)">On</button>
-                  </div>
-                </div>
-                <div id="nr-ml-sep10-row" class="field" style="display:none"><label>Separate at 10</label>
-                  <div class="tog-row">
-                    <button class="tog-btn active" data-nrmsg="off" onclick="nrSetMLGap(this,false)">Off</button>
-                    <button class="tog-btn" data-nrmsg="on" onclick="nrSetMLGap(this,true)">On</button>
-                  </div>
-                </div>
-              </div>
-              <div id="nr-mlsplit-row" class="form-row" style="display:none">
-                <div class="field"><label>Colour 2</label><div class="swatch-row" id="nr-sw-mc2"></div></div>
-                <div class="field field-sm"><label>Split at</label>
-                  <div style="display:flex;align-items:center;gap:4px">
-                    <button class="tog-btn" onclick="nrChangeMLSplit(-1)" style="width:28px;height:28px;padding:0">−</button>
-                    <input type="number" id="nr-mlsplit-in" min="1" max="19" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetMLSplitAt(parseInt(this.value))">
-                    <button class="tog-btn" onclick="nrChangeMLSplit(1)" style="width:28px;height:28px;padding:0">+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Sub-options: Numicon -->
-            <div id="nr-opts-numicon" style="display:none">
-              <div class="form-row">
-                <div class="field"><label>Split</label>
-                  <div class="tog-row">
-                    <button class="tog-btn active" data-nrnsp="off" onclick="nrSetNISplit(this,false)">Off</button>
-                    <button class="tog-btn" data-nrnsp="on" onclick="nrSetNISplit(this,true)">On</button>
-                  </div>
-                </div>
-              </div>
-              <div id="nr-nisplit-row" class="form-row" style="display:none">
-                <div class="field field-sm"><label>Split at</label>
-                  <div style="display:flex;align-items:center;gap:4px">
-                    <button class="tog-btn" onclick="nrChangeNISplit(-1)" style="width:28px;height:28px;padding:0">−</button>
-                    <input type="number" id="nr-nisplit-in" min="1" max="10" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetNISplitAt(parseInt(this.value))">
-                    <button class="tog-btn" onclick="nrChangeNISplit(1)" style="width:28px;height:28px;padding:0">+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="preview-box" id="nr-preview"><p class="preview-empty">Select a number above to preview.</p></div>
-            <div class="form-actions">
-              <button class="btn-create-more" onclick="openSharedBatch('nr')">⊞ Create more like this</button>
-              <button class="btn btn-blue" id="add-q-btn-nr" onclick="addToolQuestion('nr')">+ Add Question</button>
-              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
-            </div>
-          </div>
+          <div class="form-card"></div>
         </div>
 
         <!-- PV Representations panel -->
         <div class="tool-panel hidden" id="tool-panel-pv">
-          <div class="form-card">
-            <div class="form-row">
-              <div class="field field-grow"><label>Question text</label><input type="text" id="pv-text" placeholder="e.g. What number is shown?"></div>
-              <div class="field field-sm"><label>Answer</label><input type="text" id="pv-answer" placeholder="e.g. 342"></div>
-            </div>
-            <div class="form-row" style="align-items:center">
-              <div class="field field-sm"><label>Number</label>
-                <div style="display:flex;align-items:center;gap:4px">
-                  <button class="tog-btn" onclick="pvChangeNum(-1)" style="width:30px;height:30px;padding:0">−</button>
-                  <input type="number" id="pv-num-in" min="0" step="0.001" value="24" style="width:80px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="pvSetN(parseFloat(this.value))">
-                  <button class="tog-btn" onclick="pvChangeNum(1)" style="width:30px;height:30px;padding:0">+</button>
-                </div>
-              </div>
-              <div class="field"><label>Representation</label>
-                <div class="tog-row">
-                  <button class="tog-btn active" data-pvrep="blocks"   onclick="pvSetRep(this)">PV Blocks</button>
-                  <button class="tog-btn"        data-pvrep="counters" onclick="pvSetRep(this)">PV Counters</button>
-                  <button class="tog-btn"        data-pvrep="numbers"  onclick="pvSetRep(this)">Numbers</button>
-                </div>
-              </div>
-              <div class="field"><label>Display</label>
-                <div class="tog-row">
-                  <button class="tog-btn active" data-pvmode="standalone" onclick="pvSetMode(this)">Standalone</button>
-                  <button class="tog-btn"        data-pvmode="grid"       onclick="pvSetMode(this)">PV Grid</button>
-                  <button class="tog-btn"        data-pvmode="partwhole"  onclick="pvSetMode(this)">Part-Whole</button>
-                </div>
-              </div>
-              <div class="field" id="pv-eq-field" style="display:none"><label>Equation</label>
-                <div class="tog-row">
-                  <button class="tog-btn active" data-pveq="none"   onclick="pvSetEqMode(this)">Parts only</button>
-                  <button class="tog-btn"        data-pveq="before" onclick="pvSetEqMode(this)">1234 = parts</button>
-                  <button class="tog-btn"        data-pveq="after"  onclick="pvSetEqMode(this)">Parts = 1234</button>
-                </div>
-              </div>
-            </div>
-            <div id="pv-blk-color-field" class="form-row">
-              <div class="field"><label>Block colours</label>
-                <div style="display:flex;gap:6px;margin-bottom:6px">
-                  <button class="tog-btn active" id="pv-preset-counter" onclick="pvApplyPreset('counter',this)">Match counters</button>
-                  <button class="tog-btn" id="pv-preset-paleblue" onclick="pvApplyPreset('paleblue',this)">Pale blue</button>
-                </div>
-                <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1000s</span><input type="color" id="pv-col-1000" value="#788CB4" oninput="pvSetBlkColor(1000,this.value)"></div>
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">100s</span><input type="color" id="pv-col-100" value="#50B4A0" oninput="pvSetBlkColor(100,this.value)"></div>
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">10s</span><input type="color" id="pv-col-10" value="#F0B478" oninput="pvSetBlkColor(10,this.value)"></div>
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1s</span><input type="color" id="pv-col-1" value="#C86464" oninput="pvSetBlkColor(1,this.value)"></div>
-                </div>
-              </div>
-            </div>
-            <div id="pv-ctr-color-field" class="form-row" style="display:none">
-              <div class="field"><label>Counter &amp; grid colours</label>
-                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">M</span><input type="color" id="pv-cc-1000000" value="#288C50" oninput="pvSetPVColor(1000000,this.value)"></div>
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">HTh</span><input type="color" id="pv-cc-100000" value="#50B4C8" oninput="pvSetPVColor(100000,this.value)"></div>
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">TTh</span><input type="color" id="pv-cc-10000" value="#B478B4" oninput="pvSetPVColor(10000,this.value)"></div>
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">Th</span><input type="color" id="pv-cc-1000" value="#788CB4" oninput="pvSetPVColor(1000,this.value)"></div>
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">H</span><input type="color" id="pv-cc-100" value="#50B4A0" oninput="pvSetPVColor(100,this.value)"></div>
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">T</span><input type="color" id="pv-cc-10" value="#F0B478" oninput="pvSetPVColor(10,this.value)"></div>
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">O</span><input type="color" id="pv-cc-1" value="#C86464" oninput="pvSetPVColor(1,this.value)"></div>
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1/10</span><input type="color" id="pv-cc-tenth" value="#C878B4" oninput="pvSetPVColor(0.1,this.value)"></div>
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1/100</span><input type="color" id="pv-cc-hundredth" value="#F0B0D4" oninput="pvSetPVColor(0.01,this.value)"></div>
-                  <div style="display:flex;align-items:center;gap:4px"><span style="font-size:.72rem;font-weight:700;color:#6B7280">1/1000</span><input type="color" id="pv-cc-thousandth" value="#F0A090" oninput="pvSetPVColor(0.001,this.value)"></div>
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="field"><label>Hide as ?</label><div class="tog-row" id="pv-missing-row"><span style="font-size:0.78rem;color:#9CA3AF;font-style:italic">Enter a number above</span></div></div>
-            </div>
-            <div class="preview-box" id="pv-preview" style="padding:10px;min-height:80px">
-              <canvas id="pv-canvas" style="max-width:100%;height:auto;display:block;margin:auto"></canvas>
-            </div>
-            <div class="form-actions">
-              <button class="btn-create-more" onclick="openSharedBatch('pv')">⊞ Create more like this</button>
-              <button class="btn btn-blue" id="add-q-btn-pv" onclick="addToolQuestion('pv')">+ Add Question</button>
-              <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
-            </div>
-          </div>
+          <div class="form-card"></div>
         </div>
 
 
@@ -871,11 +538,11 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 </div>
 
 <script src="tools/shared.js"></script>
-<script src="tools/nl.js"></script>
-<script src="tools/bm.js"></script>
-<script src="tools/nt.js"></script>
-<script src="tools/nr.js"></script>
-<script src="tools/pv.js"></script>
+<script src="tools/nl/nl.js"></script>
+<script src="tools/bm/bm.js"></script>
+<script src="tools/nt/nt.js"></script>
+<script src="tools/nr/nr.js"></script>
+<script src="tools/pv/pv.js"></script>
 <script>
 'use strict';
 /* ── Palette & SVG renderers (from tools/shared.js) ── */
@@ -1995,6 +1662,11 @@ function addAllSharedBatch(){
   save();renderQuestions();renderSidebar();renderWorkflow();closeSharedBatch();closeTool();
 }
 
+document.querySelector('#tool-panel-nl .form-card').innerHTML = nlPanelHTML();
+document.querySelector('#tool-panel-bm .form-card').innerHTML = bmPanelHTML();
+document.querySelector('#tool-panel-nt .form-card').innerHTML = ntPanelHTML();
+document.querySelector('#tool-panel-nr .form-card').innerHTML = nrPanelHTML();
+document.querySelector('#tool-panel-pv .form-card').innerHTML = pvPanelHTML();
 initState();loadStorage();renderSidebar();initNLPanel();initBMPanel();initNRPanel();updateFolderStatus();
 </script>
 </body>
