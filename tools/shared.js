@@ -569,7 +569,7 @@ function nrRenderFrames(cfg) {
   const N=cfg.n, fType=cfg.fType||'5', fc1=cfg.fc1??0, fc2=cfg.fc2??4, fSplitOn=cfg.fSplitOn||false, fSplit=cfg.fSplit||5;
   function counterCol(ci) { return { fill:NR_STROKES[ci], stroke:NR_STROKES[ci] }; }
   function frameGroup(n, ox, oy, placedSoFar) {
-    const CELL=60, cols=5, rows=fType==='5'?1:2, FW=cols*CELL, FH=rows*CELL, GL=1.5, GC='#333', h=GL/2;
+    const CELL=60, cols=5, rows=fType==='5'?1:2, FW=cols*CELL, FH=rows*CELL, GL=1.5, GC='#374151', h=GL/2;
     let placed=0, s=`<g transform="translate(${ox},${oy})">`;
     s += `<rect x="0" y="0" width="${FW}" height="${FH}" fill="white"/>`;
     for (let row=0; row<rows; row++) {

@@ -616,7 +616,7 @@
   </div>
 
   <div class="callout callout-info" style="margin-top:16px">
-    <strong>Block rendering note:</strong> 3D blocks are drawn with three faces using <code>pvAdjustColor(base, 1.30)</code> for the top face (lighter) and <code>pvAdjustColor(base, 0.70)</code> for the side face (darker). Inner grid lines use <code>#111</code> at <code>0.55px</code>; outer block outline uses <code>#111</code> at <code>1.0px</code>. Counter circle outlines use <code>pvAdjustColor(color, 0.65)</code> at <code>1.5px</code>.
+    <strong>Block rendering note:</strong> 3D blocks are drawn with three faces using <code>pvAdjustColor(base, 1.30)</code> for the top face (lighter) and <code>pvAdjustColor(base, 0.70)</code> for the side face (darker). Inner grid lines use <code>#374151</code> at <code>0.55px</code>; outer block outline uses <code>#374151</code> at <code>1.0px</code>. Counter circle outlines use <code>pvAdjustColor(color, 0.65)</code> at <code>1.5px</code>.
   </div>
 
 
@@ -782,7 +782,7 @@
         <td><span class="tool-tag tag-nr">NR</span></td>
         <td>Frame grid lines</td>
         <td><span class="weight-pill">1.5</span></td>
-        <td><span class="colour-chip"><span class="chip-dot" style="background:#333333"></span> #333</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#374151"></span> #374151</span></td>
         <td>Cell dividers inside the frame</td>
       </tr>
       <tr>
@@ -825,14 +825,14 @@
         <td><span class="tool-tag tag-pv">PV</span></td>
         <td>Block inner grid</td>
         <td><span class="weight-pill">0.55</span></td>
-        <td><span class="colour-chip"><span class="chip-dot" style="background:#111111"></span> #111</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#374151"></span> #374151</span></td>
         <td>Canvas lineWidth. Appears ~1.1px at ×2 render scale</td>
       </tr>
       <tr>
         <td><span class="tool-tag tag-pv">PV</span></td>
         <td>Block outer outline</td>
         <td><span class="weight-pill">1.0</span></td>
-        <td><span class="colour-chip"><span class="chip-dot" style="background:#111111"></span> #111</span></td>
+        <td><span class="colour-chip"><span class="chip-dot" style="background:#374151"></span> #374151</span></td>
         <td>Canvas lineWidth. Appears ~2px at ×2 render scale</td>
       </tr>
       <tr>
@@ -887,8 +887,8 @@
   </div>
 
   <div class="callout callout-info">
-    <strong>Place Value — canvas uses #111 for structural outlines.</strong>
-    PV uses near-black (<code>#111</code>) for block grid and outlines rather than colour-matched or palette strokes. This is consistent with physical manipulative aesthetics (pencil-line grid on coloured blocks) and is intentional. PV is also the only canvas-rendered tool, so direct weight comparison with SVG tools is not straightforward.
+    <strong>Standard dark colour — <code>#374151</code> across all tools.</strong>
+    All structural outlines use the same blue-grey dark: NR frame grid lines, PV block grid and outer outlines, and PV part-whole circles and lines. This is the single source-of-truth dark value — do not introduce <code>#111</code> or <code>#333</code> in new tools.
   </div>
 
 </body>

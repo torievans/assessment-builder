@@ -41,13 +41,13 @@ function pvDrawBlock(ctx,bx,by,val,blkColors){
   ctx.fillStyle=sideC;ctx.beginPath();ctx.moveTo(fx+W,fy);ctx.lineTo(fx+W+D,fy-D);ctx.lineTo(fx+W+D,fy-D+H);ctx.lineTo(fx+W,fy+H);ctx.closePath();ctx.fill();
   ctx.fillStyle=topC;ctx.beginPath();ctx.moveTo(fx,fy);ctx.lineTo(fx+W,fy);ctx.lineTo(fx+W+D,fy-D);ctx.lineTo(fx+D,fy-D);ctx.closePath();ctx.fill();
   ctx.fillStyle=base;ctx.fillRect(fx,fy,W,H);
-  ctx.strokeStyle='#111';ctx.lineWidth=0.55;
+  ctx.strokeStyle='#374151';ctx.lineWidth=0.55;
   for(let r=1;r<rows;r++){const ly=fy+r*PV_CELL;ctx.beginPath();ctx.moveTo(fx,ly);ctx.lineTo(fx+W,ly);ctx.stroke();}
   for(let c=1;c<cols;c++){const lx=fx+c*PV_CELL;ctx.beginPath();ctx.moveTo(lx,fy);ctx.lineTo(lx,fy+H);ctx.stroke();ctx.beginPath();ctx.moveTo(lx,fy);ctx.lineTo(lx+D,fy-D);ctx.stroke();}
   for(let d=1;d<depth;d++){const ox=d*PV_DEP,oy=-d*PV_DEP;ctx.beginPath();ctx.moveTo(fx+ox,fy+oy);ctx.lineTo(fx+W+ox,fy+oy);ctx.stroke();}
   for(let r=1;r<rows;r++){const ly=fy+r*PV_CELL;ctx.beginPath();ctx.moveTo(fx+W,ly);ctx.lineTo(fx+W+D,ly-D);ctx.stroke();}
   for(let d=1;d<depth;d++){const ox=d*PV_DEP,oy=-d*PV_DEP;ctx.beginPath();ctx.moveTo(fx+W+ox,fy+oy);ctx.lineTo(fx+W+ox,fy+oy+H);ctx.stroke();}
-  ctx.strokeStyle='#111';ctx.lineWidth=1.0;
+  ctx.strokeStyle='#374151';ctx.lineWidth=1.0;
   ctx.beginPath();ctx.moveTo(fx+D,fy-D);ctx.lineTo(fx+W+D,fy-D);ctx.lineTo(fx+W+D,fy-D+H);ctx.lineTo(fx+W,fy+H);ctx.lineTo(fx,fy+H);ctx.lineTo(fx,fy);ctx.closePath();ctx.stroke();
   ctx.beginPath();ctx.moveTo(fx,fy);ctx.lineTo(fx+W,fy);ctx.stroke();
   ctx.beginPath();ctx.moveTo(fx+W,fy);ctx.lineTo(fx+W,fy+H);ctx.stroke();
