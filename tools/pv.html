@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Place Value Creator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <div class="page-title">📊 Place Value</div>
+  <div id="tool-wrap"><div class="form-card"></div></div>
+</div>
+<script src="shared.js"></script>
+<script src="pv.js"></script>
+<script>
+  /* ── Standalone globals ── */
+  let activeTool = 'pv';
+  function closeTool() {}
+  function openBatchPanel() {}
+  function openSharedBatch() {}
+  function addToolQuestion() {}
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('#tool-wrap .form-card').innerHTML = pvPanelHTML();
+    // pv.js has no initPVPanel — trigger the initial preview directly
+    autoPreviewPV();
+    // Replace builder actions with download button
+    const actions = document.querySelector('.form-actions');
+    if (actions) actions.innerHTML = `<button class="btn btn-blue" onclick="downloadImage()">⬇ Download PNG</button>`;
+  });
+
+  function downloadImage() {
+    const cfg = getPVConfig();
+    if (!cfg) { alert('Enter a number first.'); return; }
+    pvGetPngBlob(cfg).then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'place-value.png'; a.click();
+      URL.revokeObjectURL(url);
+    }).catch(e => alert('Download failed: ' + e.message));
+  }
+</script>
+</body>
+</html>

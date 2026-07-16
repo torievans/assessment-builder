@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Number Track Creator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <div class="page-title">🔢 Number Track</div>
+  <div id="tool-wrap"><div class="form-card"></div></div>
+</div>
+<script src="shared.js"></script>
+<script src="nt.js"></script>
+<script>
+  /* ── Standalone globals ── */
+  let activeTool = 'nt';
+  function closeTool() {}
+  function openBatchPanel() {}
+  function openSharedBatch() {}
+  function addToolQuestion() {}
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('#tool-wrap .form-card').innerHTML = ntPanelHTML();
+    // nt.js has no initNTPanel — trigger the initial preview directly
+    autoPreviewNT();
+    // Replace builder actions with download button
+    const actions = document.querySelector('.form-actions');
+    if (actions) actions.innerHTML = `<button class="btn btn-blue" onclick="downloadImage()">⬇ Download PNG</button>`;
+  });
+
+  function downloadImage() {
+    const cfg = getNTConfig();
+    if (!cfg) { alert('Fill in a sequence first.'); return; }
+    svgToPng(numberTrackSVG(cfg)).then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'number-track.png'; a.click();
+      URL.revokeObjectURL(url);
+    }).catch(e => alert('Download failed: ' + e.message));
+  }
+</script>
+</body>
+</html>
