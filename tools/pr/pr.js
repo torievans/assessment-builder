@@ -534,6 +534,12 @@ function prSetMode(btn) {
   pr_mode = btn.dataset.prmode;
   document.querySelectorAll('[data-prmode]').forEach(b =>
     b.classList.toggle('active', b.dataset.prmode === pr_mode));
+  // Seed Group B from Group A when first entering addsub (B still at default 'apple')
+  if (pr_mode === 'addsub' && pr_imageB === 'apple') {
+    pr_imageB   = pr_imageA;
+    pr_bankB    = pr_bankA;
+    pr_counterB = {...pr_counterA};
+  }
   pr_bankGroupSel = 'A';
   document.querySelectorAll('[data-grp]').forEach(b =>
     b.classList.toggle('active', b.dataset.grp === 'A'));
@@ -782,15 +788,20 @@ function pictorialSVG(cfg) {
       s += '</g>';
 
     } else if (img.type === 'illus') {
-      // Illustration PNG inside a circle
+      // Illustration PNG inside a circle (or as a plain rectangle if outline is off)
       const url = `${ILLUS_BASE}/${img.id}.png`;
       if (illusOutline) {
         s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="#F8F9FB" stroke="#D1D5DB" stroke-width="2"/>`;
+        const id = uid();
+        defs.push(`<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath>`);
+        // 1.5× box with meet: whole illustration scales to fill 1.5× the circle diameter,
+        // so the circle clips only the outer padding/whitespace rather than the subject
+        const scl = 1.5;
+        s += `<image x="${cx - R*scl}" y="${cy - R*scl}" width="${R*2*scl}" height="${R*2*scl}" href="${url}" clip-path="url(#${id})" preserveAspectRatio="xMidYMid meet"/>`;
+      } else {
+        // No outline, no clip — show as a plain square PNG
+        s += `<image x="${cx - R}" y="${cy - R}" width="${R * 2}" height="${R * 2}" href="${url}" preserveAspectRatio="xMidYMid meet"/>`;
       }
-      const id = uid();
-      defs.push(`<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath>`);
-      // Use full R for the image box so it fills the circle; meet = show whole image without distortion
-      s += `<image x="${cx - R}" y="${cy - R}" width="${R * 2}" height="${R * 2}" href="${url}" clip-path="url(#${id})" preserveAspectRatio="xMidYMid slice"/>`;
 
     } else {
       // Emoji
