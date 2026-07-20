@@ -842,7 +842,8 @@ function pictorialSVG(cfg) {
     } else if (img.type === 'illus') {
       const url = `${ILLUS_BASE}/${img.id}.png`;
       const ar  = img.ar || 1;
-      const T    = 0.88;
+      // Without the circle clip there's nothing to trim corners, so scale up a bit
+      const T    = illusOutline ? 0.88 : 1.1;
       const ISCL = ar >= 1
         ? T / Math.sqrt(1 + 1 / (ar * ar))
         : T / Math.sqrt(ar * ar + 1);
