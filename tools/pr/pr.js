@@ -1080,9 +1080,10 @@ function pictorialSVG(cfg) {
   }
 
   const defsBlock = defs.length ? `<defs>${defs.join('')}</defs>` : '';
-  // Frame mode: render at natural size like the NR tool (no scale-up). Other modes: fill canvas.
-  const svgStyle = display === 'frame'
-    ? `display:block;width:${Math.ceil(svgW)}px;max-width:100%;background:#fff;border-radius:4px`
+  // count+array|clustered: fill canvas width (user requested). Everything else: natural size.
+  const useNaturalSize = display === 'frame' || mode !== 'count';
+  const svgStyle = useNaturalSize
+    ? `display:block;${align !== 'left' ? 'margin:0 auto;' : ''}width:${Math.ceil(svgW)}px;max-width:100%;background:#fff;border-radius:4px`
     : 'display:block;min-width:100%;background:#fff;border-radius:4px';
   return `<svg viewBox="0 0 ${Math.ceil(svgW)} ${Math.ceil(svgH)}" xmlns="http://www.w3.org/2000/svg" style="${svgStyle}">${defsBlock}${parts.join('')}</svg>`;
 }
