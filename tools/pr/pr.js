@@ -395,18 +395,20 @@ function prPanelHTML() {
         </div>
       </div>
       <!-- Bank type tabs -->
-      <div class="tog-row" style="flex-wrap:wrap;gap:4px">
-        <button class="tog-btn active" data-banktab="emoji"   onclick="prBankSetTab(this)">🐯 Emojis</button>
-        <button class="tog-btn"        data-banktab="counter" onclick="prBankSetTab(this)">😊 Friendly Counters</button>
-        <button class="tog-btn"        data-banktab="illus"   onclick="prBankSetTab(this)">🦒 Illustrations</button>
-      </div>
-      <!-- Illustration outline toggle (only visible in illus mode) -->
-      <div id="pr-illus-opts" style="display:none;margin-top:6px">
-        <label style="font-size:11px;cursor:pointer;display:flex;align-items:center;gap:5px">
-          <input type="checkbox" id="pr-illus-outline" checked
-            onchange="pr_illusOutline=this.checked;autoPreviewPR()">
-          Show circle outline
-        </label>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <div class="tog-row" style="flex-wrap:wrap;gap:4px">
+          <button class="tog-btn active" data-banktab="emoji"   onclick="prBankSetTab(this)">🐯 Emojis</button>
+          <button class="tog-btn"        data-banktab="counter" onclick="prBankSetTab(this)">😊 Friendly Counters</button>
+          <button class="tog-btn"        data-banktab="illus"   onclick="prBankSetTab(this)">🦒 Illustrations</button>
+        </div>
+        <!-- Circle outline toggle — shown inline next to tabs when illustrations are active -->
+        <div id="pr-illus-opts" style="display:none">
+          <label style="font-size:11px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;color:var(--muted)">
+            <input type="checkbox" id="pr-illus-outline" checked
+              onchange="pr_illusOutline=this.checked;autoPreviewPR()">
+            Circle outline
+          </label>
+        </div>
       </div>
       <!-- Bank content -->
       <div id="pr-bank-content" class="pr-bank" style="margin-top:8px;max-height:280px;overflow-y:auto"></div>
@@ -839,12 +841,14 @@ function pictorialSVG(cfg) {
       // for very wide/tall images those corners are well within the circle anyway.
       const url = `${ILLUS_BASE}/${img.id}.png`;
       const ar  = img.ar || 1;           // width / height from ILLUSTRATION_BANK
-      const iw  = ar >= 1 ? R*2 : R*2*ar;   // landscape: full width; portrait: proportional
-      const ih  = ar >= 1 ? R*2/ar : R*2;   // landscape: proportional; portrait: full height
+      // 85% scale keeps the animal away from the circle edge; corners always inside the clip
+      const ISCL = 0.85;
+      const iw  = (ar >= 1 ? R*2 : R*2*ar) * ISCL;
+      const ih  = (ar >= 1 ? R*2/ar : R*2) * ISCL;
       const ix  = cx - iw / 2;
       const iy  = cy - ih / 2;
       if (illusOutline) {
-        s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="#F8F9FB" stroke="#D1D5DB" stroke-width="2"/>`;
+        s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="#fff" stroke="#D1D5DB" stroke-width="2"/>`;
         const id = uid();
         defs.push(`<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath>`);
         s += `<image x="${ix}" y="${iy}" width="${iw}" height="${ih}" href="${url}" clip-path="url(#${id})" preserveAspectRatio="none"/>`;
