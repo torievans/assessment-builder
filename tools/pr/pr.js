@@ -843,11 +843,16 @@ function pictorialSVG(cfg) {
       // for very wide/tall images those corners are well within the circle anyway.
       const url = `${ILLUS_BASE}/${img.id}.png`;
       const ar  = img.ar || 1;           // width / height from ILLUSTRATION_BANK
-      // 78% scale: leaves clear breathing room so no illustration touches the circle edge,
-      // even for extreme aspect ratios.  The alpha-weighted centroid offset (dx/dy) shifts
-      // the image so the visual centre of mass sits at the circle centre rather than the
-      // PNG bounding-box centre — fixes illustrations that look off-centre.
-      const ISCL = 0.78;
+      // Per-image scale: size each illustration so its bounding-box corners land at
+      // exactly 88% of R, regardless of aspect ratio.  This guarantees clear breathing
+      // room from the circle edge for every image (square images need the smallest ISCL
+      // ~0.62; extreme landscapes/portraits can go up to ~0.83).
+      // Formula: corner_dist = R·ISCL·√(1+1/ar²) for landscape, R·ISCL·√(ar²+1) for portrait.
+      // Setting corner_dist = 0.88·R → ISCL = 0.88/√(…).
+      const T    = 0.88;
+      const ISCL = ar >= 1
+        ? T / Math.sqrt(1 + 1 / (ar * ar))
+        : T / Math.sqrt(ar * ar + 1);
       const iw  = (ar >= 1 ? R*2 : R*2*ar) * ISCL;
       const ih  = (ar >= 1 ? R*2/ar : R*2) * ISCL;
       const idx = img.dx || 0;          // centroid x-offset (fraction of PNG width)
