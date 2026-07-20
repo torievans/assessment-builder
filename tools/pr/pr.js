@@ -151,10 +151,9 @@ function counterSVG(shapeIdx, faceIdx, colourIdx, size) {
   const colour = COUNTER_COLOURS[colourIdx] || COUNTER_COLOURS[0];
   const sp = shape.paths.map(p => `<path d="${p}" fill="${colour}"/>`).join('');
   const fp = face.map(p => `<path d="${p.d}" fill="${p.f}"/>`).join('');
-  // Expanded viewBox (-15 to 115) lets features that poke slightly outside the
-  // circle boundary exist in the coordinate space; the circle clipPath then
-  // clips them with a smooth round edge rather than a hard rectangular crop.
-  return `<svg viewBox="-15 -15 130 130" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="tc"><circle cx="50" cy="50" r="50"/></clipPath></defs><g clip-path="url(#tc)">${sp}${fp}</g></svg>`;
+  // Expanded viewBox gives breathing room for faces/shapes that exceed the
+  // 0-100 box (hair, star tips). No clip — shapes are their own silhouette.
+  return `<svg viewBox="-15 -15 130 130" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">${sp}${fp}</svg>`;
 }
 
 // ── Image Bank UI ─────────────────────────────────────────────────────────────
@@ -718,21 +717,18 @@ function pictorialSVG(cfg) {
     let s = '';
 
     if (img.type === 'counter') {
-      // Dynamic inline SVG counter: shape paths + face paths scaled into a circle
+      // Shapes are their own silhouette — no circle clip.
+      // Scale 100×100 normalised space → 2R×2R, centred at (cx, cy).
+      // Face paths overlay the shape without clipping so nothing is cropped.
       const {shapeIdx, faceIdx, colourIdx} = img;
       const shape  = COUNTER_SHAPES[shapeIdx] || COUNTER_SHAPES[0];
       const face   = COUNTER_FACES[faceIdx]   || COUNTER_FACES[0];
       const colour = COUNTER_COLOURS[colourIdx] || COUNTER_COLOURS[0];
-      const id = uid();
-      // Clip circle in SVG (parent) space
-      defs.push(`<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath>`);
-      // Scale 100×100 viewBox → 2R×2R, translate top-left to (cx-R, cy-R)
       const sc = (R * 2) / 100;
-      s += `<g clip-path="url(#${id})">`;
       s += `<g transform="translate(${cx - R},${cy - R}) scale(${sc})">`;
       shape.paths.forEach(p => { s += `<path d="${p}" fill="${colour}"/>`; });
       face.forEach(p => { s += `<path d="${p.d}" fill="${p.f}"/>`; });
-      s += '</g></g>';
+      s += '</g>';
 
     } else if (img.type === 'illus') {
       // Illustration PNG inside a circle
