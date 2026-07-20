@@ -5,7 +5,73 @@
 //
 // Standalone PNG export: svgToPng(pictorialSVG(cfg))  [svgToPng from shared.js]
 
-// ── Image Bank ────────────────────────────────────────────────────────────────
+// ── Asset URLs (GitHub Pages) ─────────────────────────────────────────────────
+const SMILEY_URL = 'https://torievans.github.io/assessment-builder/Question%20assets/smiley%20faces.svg';
+const ILLUS_BASE = 'https://torievans.github.io/assessment-builder/Question%20assets';
+
+// ── Counter Sprite Data ───────────────────────────────────────────────────────
+// Crop coords (cropX,cropY,cropW,cropH) are in the 3755×2000 SVG viewBox space.
+const COUNTER_SPRITES = [
+  // Row 1 — unique blob silhouettes
+  {id:'c0',  label:'Green Blob',      cropX:155,  cropY:90,   cropW:395, cropH:430, colour:'#319377'},
+  {id:'c1',  label:'Pink Blob',       cropX:615,  cropY:140,  cropW:380, cropH:360, colour:'#fc7e91'},
+  {id:'c2',  label:'Orange Blob',     cropX:1030, cropY:125,  cropW:380, cropH:365, colour:'#f5995b'},
+  {id:'c3',  label:'Yellow Blob',     cropX:1530, cropY:135,  cropW:360, cropH:395, colour:'#fecc6b'},
+  {id:'c4',  label:'Purple Blob',     cropX:1965, cropY:140,  cropW:360, cropH:360, colour:'#847ac9'},
+  {id:'c5',  label:'Blue Blob',       cropX:2380, cropY:160,  cropW:385, cropH:370, colour:'#7898f0'},
+  {id:'c6',  label:'Red Blob',        cropX:2835, cropY:135,  cropW:380, cropH:375, colour:'#d46b55'},
+  // Row 2 — alternate blob faces
+  {id:'c7',  label:'Orange Blob 2',   cropX:180,  cropY:640,  cropW:390, cropH:310, colour:'#f5995b'},
+  {id:'c8',  label:'Yellow Blob 2',   cropX:610,  cropY:650,  cropW:380, cropH:310, colour:'#fecc6b'},
+  {id:'c9',  label:'Blue Blob 2',     cropX:1080, cropY:615,  cropW:375, cropH:335, colour:'#7898f0'},
+  // Row 3 — simple circles with faces
+  {id:'c10', label:'Green Circle',    cropX:130,  cropY:1065, cropW:400, cropH:375, colour:'#319377'},
+  {id:'c11', label:'Pink Circle',     cropX:575,  cropY:1065, cropW:400, cropH:375, colour:'#fc7e91'},
+  {id:'c12', label:'Orange Circle',   cropX:1055, cropY:1057, cropW:395, cropH:375, colour:'#f5995b'},
+  {id:'c13', label:'Yellow Circle',   cropX:1513, cropY:1028, cropW:395, cropH:375, colour:'#fecc6b'},
+  {id:'c14', label:'Purple Circle',   cropX:1945, cropY:1028, cropW:395, cropH:375, colour:'#847ac9'},
+  {id:'c15', label:'Blue Circle',     cropX:2399, cropY:1028, cropW:395, cropH:375, colour:'#7898f0'},
+  {id:'c16', label:'Red Circle',      cropX:2884, cropY:1001, cropW:395, cropH:375, colour:'#d46b55'},
+  // Row 4 — more circle faces
+  {id:'c17', label:'Orange Circle 2', cropX:130,  cropY:1499, cropW:400, cropH:375, colour:'#f5995b'},
+  {id:'c18', label:'Yellow Circle 2', cropX:585,  cropY:1499, cropW:400, cropH:375, colour:'#fecc6b'},
+  {id:'c19', label:'Blue Circle 2',   cropX:1070, cropY:1472, cropW:400, cropH:375, colour:'#7898f0'},
+  {id:'c20', label:'Purple Circle 2', cropX:1532, cropY:1477, cropW:400, cropH:375, colour:'#847ac9'},
+];
+
+// ── Illustration Bank ─────────────────────────────────────────────────────────
+const ILLUSTRATION_BANK = [
+  {id:'space/crescent_moon_yellow',         label:'Moon'},
+  {id:'space/planet_purple',                label:'Planet'},
+  {id:'animals/flamingo_pink',              label:'Flamingo'},
+  {id:'animals/giraffe_orange',             label:'Giraffe'},
+  {id:'animals/crocodile_green',            label:'Crocodile'},
+  {id:'animals/elephant_grey',              label:'Elephant'},
+  {id:'animals/rhinoceros_grey',            label:'Rhino'},
+  {id:'animals/tiger_orange',               label:'Tiger'},
+  {id:'animals/toucan_black',               label:'Toucan'},
+  {id:'animals/hippo_purple',               label:'Hippo'},
+  {id:'sports/ball_football_teal',          label:'Football'},
+  {id:'sports/ball_basketball_orange',      label:'Basketball'},
+  {id:'plants/palm_tree_green',             label:'Palm Tree'},
+  {id:'food/fruit/apple_green',             label:'Apple'},
+  {id:'food/fruit/apple_orange',            label:'Orange Apple'},
+  {id:'food/fruit/lemon_yellow',            label:'Lemon'},
+  {id:'food/fruit/peach_orange',            label:'Peach'},
+  {id:'food/fruit/watermelon_green',        label:'Watermelon'},
+  {id:'food/fruit/tomato_red',              label:'Tomato'},
+  {id:'food/veg/carrot_orange',             label:'Carrot'},
+  {id:'food/veg/bell_pepper_orange',        label:'Pepper'},
+  {id:'food/veg/broccoli_green',            label:'Broccoli'},
+  {id:'food/veg/pumpkin_orange',            label:'Pumpkin'},
+  {id:'food/bakery/bagel_orange',           label:'Bagel'},
+  {id:'food/bakery/muffin_brown',           label:'Muffin'},
+  {id:'food/bakery/pretzel_brown',          label:'Pretzel'},
+  {id:'food/sweets/soft_serve_cone_orange', label:'Ice Cream'},
+  {id:'food/sweets/popsicle_pink',          label:'Popsicle'},
+];
+
+// ── Emoji Bank ────────────────────────────────────────────────────────────────
 const PR_IMAGE_BANK = [
   {id:'tiger',     label:'Tiger',     emoji:'🐯', bg:'#FDE8C8', stroke:'#D97706'},
   {id:'dog',       label:'Dog',       emoji:'🐶', bg:'#EDD9C0', stroke:'#92400E'},
@@ -26,54 +92,124 @@ const PR_IMAGE_BANK = [
 ];
 
 // ── State ─────────────────────────────────────────────────────────────────────
-let pr_mode    = 'count';
-let pr_display = 'array';    // 'array' | 'frame' | 'clustered'
-let pr_align   = 'left';     // 'left' | 'centre'  (array only — applies to partial last rows)
-let pr_countA  = 7;          // default 7 so partial row is immediately visible
-let pr_imageA  = 'tiger';
-let pr_countB  = 3;
-let pr_imageB  = 'apple';
-let pr_op      = 'add';
-let pr_subMode = 'crossed';  // 'total' | 'separate' | 'crossed'  (op=sub only)
-let pr_cols    = 5;
-let pr_mrows   = 2;
-let pr_mcols   = 5;
+let pr_mode         = 'count';
+let pr_display      = 'array';    // 'array' | 'frame' | 'clustered'
+let pr_align        = 'left';     // 'left' | 'centre'  (array only)
+let pr_countA       = 7;
+let pr_imageA       = 'tiger';    // imageId: plain string (emoji), 'counter:N', 'illus:path'
+let pr_countB       = 3;
+let pr_imageB       = 'apple';
+let pr_op           = 'add';
+let pr_subMode      = 'crossed';  // 'total' | 'separate' | 'crossed'
+let pr_cols         = 5;
+let pr_mrows        = 2;
+let pr_mcols        = 5;
+// Image bank UI state
+let pr_bankA        = 'emoji';    // 'emoji' | 'counter' | 'illus'
+let pr_bankB        = 'emoji';
+let pr_bankGroupSel = 'A';        // which group's bank is displayed
 
 function prClamp(v, mn, mx) { return Math.max(mn, Math.min(mx, Math.round(+v) || mn)); }
 
-// ── Image Bank Builder ────────────────────────────────────────────────────────
-function prBuildBank(containerId, selectedId, fnName, small) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  const sz = small ? 38 : 46;
-  const fs = small ? 15 : 20;
-  el.innerHTML = PR_IMAGE_BANK.map(img => {
-    const sel = img.id === selectedId;
-    return `<button class="pr-img-btn${sel ? ' selected' : ''}"
-      title="${img.label}" onclick="${fnName}('${img.id}')"
-      style="width:${sz}px;height:${sz + 6}px;background:${img.bg};border-color:${sel ? img.stroke : 'transparent'}">
-      <span style="font-size:${fs}px;line-height:1;display:block">${img.emoji}</span>
-      <span style="font-size:8px;display:block;margin-top:1px;color:#555;font-weight:700;overflow:hidden;white-space:nowrap;max-width:${sz - 4}px;text-overflow:ellipsis">${img.label}</span>
-    </button>`;
-  }).join('');
+// ── Image Lookup ──────────────────────────────────────────────────────────────
+// Returns {type:'emoji'|'counter'|'illus', ...properties}
+function lookupImg(imageId) {
+  if (!imageId) return {type:'emoji', ...PR_IMAGE_BANK[0]};
+  if (imageId.startsWith('counter:')) {
+    const idx = parseInt(imageId.split(':')[1]);
+    const c = COUNTER_SPRITES[idx];
+    return c ? {type:'counter', ...c} : {type:'emoji', ...PR_IMAGE_BANK[0]};
+  }
+  if (imageId.startsWith('illus:')) {
+    const id = imageId.slice(6);
+    const item = ILLUSTRATION_BANK.find(x => x.id === id);
+    return item ? {type:'illus', ...item} : {type:'emoji', ...PR_IMAGE_BANK[0]};
+  }
+  const item = PR_IMAGE_BANK.find(x => x.id === imageId);
+  return item ? {type:'emoji', ...item} : {type:'emoji', ...PR_IMAGE_BANK[0]};
 }
 
-function prSelA(id) {
+// ── Image Bank UI ─────────────────────────────────────────────────────────────
+
+function prBankSetGroup(btn) {
+  pr_bankGroupSel = btn.dataset.grp;
+  document.querySelectorAll('[data-grp]').forEach(b =>
+    b.classList.toggle('active', b.dataset.grp === pr_bankGroupSel));
+  // Sync tab highlight to the selected group's current bank
+  const tab = pr_bankGroupSel === 'A' ? pr_bankA : pr_bankB;
+  document.querySelectorAll('[data-banktab]').forEach(b =>
+    b.classList.toggle('active', b.dataset.banktab === tab));
+  prBankRender();
+}
+
+function prBankSetTab(btn) {
+  const tab = btn.dataset.banktab;
+  if (pr_bankGroupSel === 'A') pr_bankA = tab;
+  else pr_bankB = tab;
+  document.querySelectorAll('[data-banktab]').forEach(b =>
+    b.classList.toggle('active', b.dataset.banktab === tab));
+  prBankRender();
+}
+
+function prBankRender() {
+  const el = document.getElementById('pr-bank-content');
+  if (!el) return;
+  const isB   = pr_bankGroupSel === 'B';
+  const tab   = isB ? pr_bankB : pr_bankA;
+  const selId = isB ? pr_imageB : pr_imageA;
+  const fn    = isB ? 'prBankSelB' : 'prBankSelA';
+
+  if (tab === 'emoji') {
+    el.innerHTML = PR_IMAGE_BANK.map(img => {
+      const sel = selId === img.id;
+      return `<button class="pr-img-btn${sel ? ' selected' : ''}"
+        title="${img.label}" onclick="${fn}('${img.id}')"
+        style="width:46px;height:52px;background:${img.bg};border-color:${sel ? img.stroke : 'transparent'}">
+        <span style="font-size:20px;line-height:1;display:block">${img.emoji}</span>
+        <span style="font-size:8px;display:block;margin-top:1px;color:#555;font-weight:700;overflow:hidden;white-space:nowrap;max-width:42px;text-overflow:ellipsis">${img.label}</span>
+      </button>`;
+    }).join('');
+
+  } else if (tab === 'counter') {
+    el.innerHTML = COUNTER_SPRITES.map((c, i) => {
+      const cid = `counter:${i}`;
+      const sel = selId === cid;
+      return `<button class="pr-img-btn${sel ? ' selected' : ''}"
+        title="${c.label}" onclick="${fn}('counter:${i}')"
+        style="width:52px;height:58px;padding:2px;background:#f4f5f6;border-color:${sel ? c.colour : 'transparent'};border-width:${sel ? 2 : 1}px;border-style:solid">
+        <svg viewBox="${c.cropX} ${c.cropY} ${c.cropW} ${c.cropH}" width="46" height="46"
+             xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto;border-radius:3px">
+          <image href="${SMILEY_URL}" width="3755" height="2000"/>
+        </svg>
+        <span style="font-size:7px;display:block;color:#666;overflow:hidden;white-space:nowrap;max-width:50px;text-overflow:ellipsis;margin-top:1px">${c.label}</span>
+      </button>`;
+    }).join('');
+
+  } else {
+    // Illustrations
+    el.innerHTML = ILLUSTRATION_BANK.map(img => {
+      const iid = `illus:${img.id}`;
+      const sel = selId === iid;
+      const url = `${ILLUS_BASE}/${img.id}.png`;
+      return `<button class="pr-img-btn${sel ? ' selected' : ''}"
+        title="${img.label}" onclick="${fn}('illus:${img.id}')"
+        style="width:52px;height:58px;padding:2px;background:#f4f5f6;border-color:${sel ? '#555' : 'transparent'};border-width:${sel ? 2 : 1}px;border-style:solid">
+        <img src="${url}" width="46" height="46"
+             style="object-fit:contain;display:block;margin:0 auto">
+        <span style="font-size:7px;display:block;color:#666;overflow:hidden;white-space:nowrap;max-width:50px;text-overflow:ellipsis;margin-top:1px">${img.label}</span>
+      </button>`;
+    }).join('');
+  }
+}
+
+function prBankSelA(id) {
   pr_imageA = id;
-  prBuildBank('pr-bank-a',        id, 'prSelA');
-  prBuildBank('pr-bank-addsub-a', id, 'prSelA',   true);
-  prBuildBank('pr-bank-mul',      id, 'prSelMul');
+  if (pr_bankGroupSel === 'A') prBankRender();
   autoPreviewPR();
 }
-function prSelB(id) {
+function prBankSelB(id) {
   pr_imageB = id;
-  prBuildBank('pr-bank-addsub-b', id, 'prSelB', true);
-  autoPreviewPR();
-}
-function prSelMul(id) {
-  pr_imageA = id;
-  prBuildBank('pr-bank-mul', id, 'prSelMul');
-  prBuildBank('pr-bank-a',   id, 'prSelA');
+  if (pr_bankGroupSel === 'B') prBankRender();
   autoPreviewPR();
 }
 
@@ -99,13 +235,34 @@ function prPanelHTML() {
         <input type="text" id="pr-answer" placeholder="5">
       </div>
     </div>
+
+    <div class="sec-hr"></div>
+
+    <!-- IMAGE BANK ─────────────────────────────────────────────────────────── -->
+    <div id="pr-bank-panel">
+      <!-- Group selector — only visible in addsub mode -->
+      <div id="pr-bank-group-sel" style="display:none;margin-bottom:8px;display:none">
+        <span style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;vertical-align:middle">Image for</span>
+        <div class="tog-row" style="display:inline-flex;margin-left:6px;vertical-align:middle">
+          <button class="tog-btn active" data-grp="A" onclick="prBankSetGroup(this)">Group A</button>
+          <button class="tog-btn"        data-grp="B" onclick="prBankSetGroup(this)">Group B</button>
+        </div>
+      </div>
+      <!-- Bank type tabs -->
+      <div class="tog-row" style="flex-wrap:wrap;gap:4px">
+        <button class="tog-btn active" data-banktab="emoji"   onclick="prBankSetTab(this)">🐯 Emojis</button>
+        <button class="tog-btn"        data-banktab="counter" onclick="prBankSetTab(this)">😊 Friendly Counters</button>
+        <button class="tog-btn"        data-banktab="illus"   onclick="prBankSetTab(this)">🦒 Illustrations</button>
+      </div>
+      <!-- Bank content -->
+      <div id="pr-bank-content" class="pr-bank" style="margin-top:8px;max-height:200px;overflow-y:auto"></div>
+    </div>
+
     <div class="sec-hr"></div>
 
     <!-- COUNT ─────────────────────────────────────────────────────────────── -->
     <div id="pr-count-wrap">
-      <div class="sec-label">Image</div>
-      <div id="pr-bank-a" class="pr-bank"></div>
-      <div class="form-row" style="margin-top:10px">
+      <div class="form-row" style="margin-top:0">
         <div class="field"><label>Count</label>
           <div style="display:flex;align-items:center;gap:4px">
             <button class="tog-btn" onclick="prDelta('A',-1)" style="width:30px;height:30px;padding:0">−</button>
@@ -121,12 +278,10 @@ function prPanelHTML() {
     <!-- ADD / SUB ──────────────────────────────────────────────────────────── -->
     <div id="pr-addsub-wrap" style="display:none">
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start">
-
-        <!-- Group A -->
-        <div style="flex:1;min-width:165px">
+        <!-- Group A quantity -->
+        <div style="flex:1;min-width:120px">
           <div class="sec-label" id="pr-label-a">Group A</div>
-          <div id="pr-bank-addsub-a" class="pr-bank pr-bank-sm"></div>
-          <div style="display:flex;align-items:center;gap:4px;margin-top:8px">
+          <div style="display:flex;align-items:center;gap:4px">
             <button class="tog-btn" onclick="prDelta('A',-1)" style="width:27px;height:27px;padding:0;font-size:13px">−</button>
             <input type="number" id="pr-addsub-ca" min="1" max="20" value="7"
               style="width:44px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:3px;font-size:13px;font-family:var(--font)"
@@ -134,7 +289,6 @@ function prPanelHTML() {
             <button class="tog-btn" onclick="prDelta('A',1)"  style="width:27px;height:27px;padding:0;font-size:13px">+</button>
           </div>
         </div>
-
         <!-- Operator -->
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:20px;gap:4px">
           <div class="tog-row">
@@ -142,12 +296,10 @@ function prPanelHTML() {
             <button class="tog-btn"        data-prop="sub" onclick="prSetOp(this)" style="font-size:16px;padding:4px 10px">−</button>
           </div>
         </div>
-
-        <!-- Group B -->
-        <div id="pr-groupb-wrap" style="flex:1;min-width:165px">
+        <!-- Group B quantity -->
+        <div id="pr-groupb-wrap" style="flex:1;min-width:120px">
           <div class="sec-label" id="pr-label-b">Group B</div>
-          <div id="pr-bank-addsub-b" class="pr-bank pr-bank-sm"></div>
-          <div style="display:flex;align-items:center;gap:4px;margin-top:8px">
+          <div style="display:flex;align-items:center;gap:4px">
             <button class="tog-btn" onclick="prDelta('B',-1)" style="width:27px;height:27px;padding:0;font-size:13px">−</button>
             <input type="number" id="pr-addsub-cb" min="1" max="20" value="3"
               style="width:44px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:3px;font-size:13px;font-family:var(--font)"
@@ -156,8 +308,7 @@ function prPanelHTML() {
           </div>
         </div>
       </div>
-
-      <!-- Subtraction display mode — always visible; greyed when op=add -->
+      <!-- Subtraction display mode -->
       <div id="pr-submode-row" style="margin-top:12px;opacity:0.4;pointer-events:none">
         <div class="field">
           <label>Subtraction shows</label>
@@ -172,9 +323,7 @@ function prPanelHTML() {
 
     <!-- MULTIPLY ───────────────────────────────────────────────────────────── -->
     <div id="pr-multiply-wrap" style="display:none">
-      <div class="sec-label">Image</div>
-      <div id="pr-bank-mul" class="pr-bank"></div>
-      <div class="form-row" style="margin-top:10px;align-items:center">
+      <div class="form-row" style="margin-top:0;align-items:center">
         <div class="field"><label>Rows</label>
           <div style="display:flex;align-items:center;gap:4px">
             <button class="tog-btn" onclick="prDeltaMul('rows',-1)" style="width:30px;height:30px;padding:0">−</button>
@@ -238,38 +387,46 @@ function prPanelHTML() {
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 function initPRPanel() {
-  prBuildBank('pr-bank-a',        pr_imageA, 'prSelA');
-  prBuildBank('pr-bank-addsub-a', pr_imageA, 'prSelA',   true);
-  prBuildBank('pr-bank-addsub-b', pr_imageB, 'prSelB',   true);
-  prBuildBank('pr-bank-mul',      pr_imageA, 'prSelMul');
+  prBankRender();
   prUpdateMode();
   autoPreviewPR();
 }
 
 function prSetMode(btn) {
   pr_mode = btn.dataset.prmode;
-  document.querySelectorAll('[data-prmode]').forEach(b => b.classList.toggle('active', b.dataset.prmode === pr_mode));
+  document.querySelectorAll('[data-prmode]').forEach(b =>
+    b.classList.toggle('active', b.dataset.prmode === pr_mode));
+  // Reset group selector to A when switching modes
+  pr_bankGroupSel = 'A';
+  document.querySelectorAll('[data-grp]').forEach(b =>
+    b.classList.toggle('active', b.dataset.grp === 'A'));
+  const tab = pr_bankA;
+  document.querySelectorAll('[data-banktab]').forEach(b =>
+    b.classList.toggle('active', b.dataset.banktab === tab));
+  prBankRender();
   prUpdateMode();
   autoPreviewPR();
 }
 
 function prUpdateMode() {
   const isMultiply = pr_mode === 'multiply';
+  const isAddSub   = pr_mode === 'addsub';
   const show = (id, v) => { const e = document.getElementById(id); if (e) e.style.display = v ? '' : 'none'; };
-  show('pr-count-wrap',    pr_mode === 'count');
-  show('pr-addsub-wrap',   pr_mode === 'addsub');
-  show('pr-multiply-wrap', isMultiply);
-  show('pr-layout-row',    !isMultiply);
+  show('pr-count-wrap',     pr_mode === 'count');
+  show('pr-addsub-wrap',    isAddSub);
+  show('pr-multiply-wrap',  isMultiply);
+  show('pr-layout-row',     !isMultiply);
+  show('pr-bank-group-sel', isAddSub);
   const isArray = pr_display === 'array' && !isMultiply;
   show('pr-cols-field',  isArray);
   show('pr-align-field', isArray);
-  // Sync sub UI when switching to addsub mode
-  if (pr_mode === 'addsub') prUpdateSubUI();
+  if (isAddSub) prUpdateSubUI();
 }
 
 function prSetDisplay(btn) {
   pr_display = btn.dataset.prd;
-  document.querySelectorAll('[data-prd]').forEach(b => b.classList.toggle('active', b.dataset.prd === pr_display));
+  document.querySelectorAll('[data-prd]').forEach(b =>
+    b.classList.toggle('active', b.dataset.prd === pr_display));
   const isArray = pr_display === 'array' && pr_mode !== 'multiply';
   const showEl = (id, v) => { const e = document.getElementById(id); if (e) e.style.display = v ? '' : 'none'; };
   showEl('pr-cols-field',  isArray);
@@ -279,43 +436,45 @@ function prSetDisplay(btn) {
 
 function prSetAlign(btn) {
   pr_align = btn.dataset.pralign;
-  document.querySelectorAll('[data-pralign]').forEach(b => b.classList.toggle('active', b.dataset.pralign === pr_align));
+  document.querySelectorAll('[data-pralign]').forEach(b =>
+    b.classList.toggle('active', b.dataset.pralign === pr_align));
   autoPreviewPR();
 }
 
 function prSetOp(btn) {
   pr_op = btn.dataset.prop;
-  document.querySelectorAll('[data-prop]').forEach(b => b.classList.toggle('active', b.dataset.prop === pr_op));
+  document.querySelectorAll('[data-prop]').forEach(b =>
+    b.classList.toggle('active', b.dataset.prop === pr_op));
   prUpdateSubUI();
   autoPreviewPR();
 }
 
 function prSetSubMode(btn) {
   pr_subMode = btn.dataset.prsub;
-  document.querySelectorAll('[data-prsub]').forEach(b => b.classList.toggle('active', b.dataset.prsub === pr_subMode));
+  document.querySelectorAll('[data-prsub]').forEach(b =>
+    b.classList.toggle('active', b.dataset.prsub === pr_subMode));
   prUpdateSubUI();
   autoPreviewPR();
 }
 
 function prUpdateSubUI() {
   const isSub = pr_op === 'sub';
-  // Sub mode row: always present in addsub section; greyed when op=add
   const subRow = document.getElementById('pr-submode-row');
   if (subRow) {
     subRow.style.opacity = isSub ? '1' : '0.4';
     subRow.style.pointerEvents = isSub ? '' : 'none';
   }
-  // Dim Group B image bank when it won't appear separately in output
   const showBankB = !isSub || pr_subMode === 'separate';
-  const bankB = document.getElementById('pr-bank-addsub-b');
-  if (bankB) { bankB.style.opacity = showBankB ? '1' : '0.3'; bankB.style.pointerEvents = showBankB ? '' : 'none'; }
+  // Visual feedback for group B quantity availability
+  const grpB = document.getElementById('pr-groupb-wrap');
+  if (grpB) { grpB.style.opacity = showBankB ? '1' : '0.4'; grpB.style.pointerEvents = showBankB ? '' : 'none'; }
   // Contextual labels
   const lblA = document.getElementById('pr-label-a');
   const lblB = document.getElementById('pr-label-b');
   if (isSub) {
     if (lblA) lblA.textContent = 'Total (minuend)';
-    if (lblB) lblB.textContent = pr_subMode === 'total'    ? 'Take away (not shown)' :
-                                 pr_subMode === 'crossed'  ? 'Cross out — how many'  : 'Take away';
+    if (lblB) lblB.textContent = pr_subMode === 'total'   ? 'Take away (not shown)' :
+                                 pr_subMode === 'crossed' ? 'Cross out — how many'  : 'Take away';
   } else {
     if (lblA) lblA.textContent = 'Group A';
     if (lblB) lblB.textContent = 'Group B';
@@ -387,6 +546,11 @@ function restorePRConfig(cfg) {
   pr_cols    = cfg.cols    || 5;
   pr_mrows   = cfg.mrows   || 2;
   pr_mcols   = cfg.mcols   || 5;
+  // Restore bank tab to match image type
+  const typeA = pr_imageA.startsWith('counter:') ? 'counter' : pr_imageA.startsWith('illus:') ? 'illus' : 'emoji';
+  const typeB = pr_imageB.startsWith('counter:') ? 'counter' : pr_imageB.startsWith('illus:') ? 'illus' : 'emoji';
+  pr_bankA = typeA; pr_bankB = typeB;
+  pr_bankGroupSel = 'A';
   const sv = (id, v) => { const e = document.getElementById(id); if (e) e.value = v; };
   sv('pr-ca', pr_countA);       sv('pr-addsub-ca', pr_countA);
   sv('pr-addsub-cb', pr_countB);
@@ -397,10 +561,9 @@ function restorePRConfig(cfg) {
   document.querySelectorAll('[data-pralign]').forEach(b => b.classList.toggle('active', b.dataset.pralign === pr_align));
   document.querySelectorAll('[data-prop]').forEach(b => b.classList.toggle('active', b.dataset.prop === pr_op));
   document.querySelectorAll('[data-prsub]').forEach(b => b.classList.toggle('active', b.dataset.prsub === pr_subMode));
-  prBuildBank('pr-bank-a',        pr_imageA, 'prSelA');
-  prBuildBank('pr-bank-addsub-a', pr_imageA, 'prSelA',   true);
-  prBuildBank('pr-bank-addsub-b', pr_imageB, 'prSelB',   true);
-  prBuildBank('pr-bank-mul',      pr_imageA, 'prSelMul');
+  document.querySelectorAll('[data-banktab]').forEach(b => b.classList.toggle('active', b.dataset.banktab === pr_bankA));
+  document.querySelectorAll('[data-grp]').forEach(b => b.classList.toggle('active', b.dataset.grp === 'A'));
+  prBankRender();
   prUpdateMode();
   prUpdateSubUI();
   autoPreviewPR();
@@ -412,6 +575,7 @@ function prResetState() {
   pr_countB = 3; pr_imageB = 'apple';
   pr_op = 'add'; pr_subMode = 'crossed';
   pr_cols = 5; pr_mrows = 2; pr_mcols = 5;
+  pr_bankA = 'emoji'; pr_bankB = 'emoji'; pr_bankGroupSel = 'A';
 }
 
 // ── SVG Renderer ──────────────────────────────────────────────────────────────
@@ -447,16 +611,46 @@ function pictorialSVG(cfg) {
   const HY   = HX * (Math.sqrt(3) / 2);    // cluster vertical step ≈ 46.8
   const FONT = "'Proxima Soft','Nunito',sans-serif";
 
-  const imgA = PR_IMAGE_BANK.find(i => i.id === imageIdA) || PR_IMAGE_BANK[0];
-  const imgB = PR_IMAGE_BANK.find(i => i.id === imageIdB) || PR_IMAGE_BANK[1];
+  const imgA = lookupImg(imageIdA);
+  const imgB = lookupImg(imageIdB);
 
   const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-  // ── Single item ───────────────────────────────────────────────────────────
+  // Collect <defs> content (clipPaths) separately so they go in a <defs> block
+  const defs = [];
+
+  // ── Single item renderer ──────────────────────────────────────────────────
   function renderItem(img, cx, cy, crossed) {
-    const fs = Math.round(R * 1.05);
-    let s = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="${img.bg}" stroke="${img.stroke}" stroke-width="2.5"/>`;
-    s += `<text x="${cx}" y="${cy}" dominant-baseline="central" text-anchor="middle" font-size="${fs}" font-family="sans-serif">${esc(img.emoji)}</text>`;
+    const uid = `cp${Math.round(cx)}_${Math.round(cy)}`;
+    let s = '';
+
+    if (img.type === 'counter') {
+      // Render counter from sprite sheet with circular clip
+      const {cropX, cropY, cropW, cropH} = img;
+      const scaleX = (R * 2) / cropW;
+      const scaleY = (R * 2) / cropH;
+      const imgX   = (cx - R) - cropX * scaleX;
+      const imgY   = (cy - R) - cropY * scaleY;
+      const imgW   = 3755 * scaleX;
+      const imgH   = 2000 * scaleY;
+      defs.push(`<clipPath id="${uid}"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath>`);
+      s += `<image x="${imgX.toFixed(1)}" y="${imgY.toFixed(1)}" width="${imgW.toFixed(1)}" height="${imgH.toFixed(1)}" href="${SMILEY_URL}" clip-path="url(#${uid})" preserveAspectRatio="none"/>`;
+
+    } else if (img.type === 'illus') {
+      // Illustration PNG inside a circle
+      const inner = R - 2;
+      const url   = `${ILLUS_BASE}/${img.id}.png`;
+      s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="#F8F9FB" stroke="#D1D5DB" stroke-width="2"/>`;
+      defs.push(`<clipPath id="${uid}"><circle cx="${cx}" cy="${cy}" r="${inner}"/></clipPath>`);
+      s += `<image x="${cx - inner}" y="${cy - inner}" width="${inner * 2}" height="${inner * 2}" href="${url}" clip-path="url(#${uid})" preserveAspectRatio="xMidYMid meet"/>`;
+
+    } else {
+      // Emoji (original rendering)
+      const fs = Math.round(R * 1.05);
+      s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="${img.bg}" stroke="${img.stroke}" stroke-width="2.5"/>`;
+      s += `<text x="${cx}" y="${cy}" dominant-baseline="central" text-anchor="middle" font-size="${fs}" font-family="sans-serif">${esc(img.emoji)}</text>`;
+    }
+
     if (crossed) {
       const d = R * 0.60, sw = Math.max(2.5, R * 0.12);
       s += `<line x1="${cx - d}" y1="${cy - d}" x2="${cx + d}" y2="${cy + d}" stroke="#DC2626" stroke-width="${sw}" stroke-linecap="round"/>`;
@@ -466,7 +660,6 @@ function pictorialSVG(cfg) {
   }
 
   // ── Array positions (with optional last-row centering) ────────────────────
-  // align='centre' shifts the partial last row so it centres under full rows.
   function arrayPts(count, perRow, ox, oy) {
     const partial = count % perRow;
     const lastRowLen = partial === 0 ? perRow : partial;
@@ -482,16 +675,12 @@ function pictorialSVG(cfg) {
 
   function arrayBox(count, perRow) {
     return {
-      w: perRow * S - GAP,                     // fixed canvas width based on perRow
-      h: Math.ceil(count / perRow) * S - GAP,  // exact height based on count
+      w: perRow * S - GAP,
+      h: Math.ceil(count / perRow) * S - GAP,
     };
   }
 
   // ── Clustered: hexagonal close-packing ───────────────────────────────────
-  // All nearest neighbours at distance HX = S (same as array mode).
-  // Row count is kept small (≤2 for counts ≤10, ≤3 for counts 11-20) so the
-  // cluster is wide and short — matching the landscape profile of the 10-frame
-  // and never taller than it.
   function clusterPts(count, ox, oy) {
     if (count === 0) return [];
     const maxRows = count <= 10 ? 2 : 3;
@@ -499,7 +688,7 @@ function pictorialSVG(cfg) {
     return Array.from({length: count}, (_, i) => {
       const row = Math.floor(i / cols_c);
       const col = i % cols_c;
-      const rowOffset = (row % 2) * (HX / 2);  // alternate-row hex stagger
+      const rowOffset = (row % 2) * (HX / 2);
       return {
         x: col * HX + rowOffset + ox + R,
         y: row * HY + oy + R,
@@ -558,8 +747,6 @@ function pictorialSVG(cfg) {
     const {h: hA} = arrayBox(countA, cols);
     const {h: hB} = arrayBox(countB, cols);
 
-    // Width: clustered uses dry-run bounds; array uses FULL perRow width so that
-    // centred partial rows (which shift items right) never overflow the SVG boundary.
     let realWA, realHA = hA, realWB, realHB = hB;
     if (display === 'clustered') {
       const ptA = clusterPts(countA, 0, 0);
@@ -569,7 +756,7 @@ function pictorialSVG(cfg) {
       realWB = ptB.length ? Math.max(...ptB.map(p => p.x + R)) : S;
       realHB = ptB.length ? Math.max(...ptB.map(p => p.y + R)) : S;
     } else {
-      realWA = cols * S - GAP;   // full column width — room for centred items
+      realWA = cols * S - GAP;
       realWB = cols * S - GAP;
     }
 
@@ -604,14 +791,12 @@ function pictorialSVG(cfg) {
   } else if (mode === 'addsub') {
 
     if (op === 'sub' && subMode === 'total') {
-      // Minuend only — show countA items, no crossing
       const p2 = [];
       const {w, h} = renderGroup(countA, imgA, PAD, PAD, p2);
       parts.push(...p2);
       svgW = w + PAD * 2; svgH = h + PAD * 2;
 
     } else if (op === 'sub' && subMode === 'crossed') {
-      // All countA items; last countB items crossed out
       const crossFrom = Math.max(0, countA - countB);
       const p2 = [];
       const {w, h} = renderGroup(countA, imgA, PAD, PAD, p2, crossFrom);
@@ -619,7 +804,6 @@ function pictorialSVG(cfg) {
       svgW = w + PAD * 2; svgH = h + PAD * 2;
 
     } else if (display === 'frame') {
-      // Addition or sub-separate with frame: both groups fill one combined frame
       const total = countA + countB;
       const FC = 5, FR = 2, FP = 8;
       const perFrame = FC * FR;
@@ -648,24 +832,22 @@ function pictorialSVG(cfg) {
       }
 
     } else {
-      // Addition or sub-separate: two groups side by side, no crossing
-      // (crossing is only used in subMode='crossed' which is handled above)
       const {svgW: w2, svgH: h2} = renderTwoGroups(parts, false);
       svgW = w2; svgH = h2;
     }
 
   } else if (mode === 'multiply') {
-    // Clean array only — no labels or annotations
     const count = mrows * mcols;
     const {w, h} = arrayBox(count, mcols);
     svgW = w + PAD * 2; svgH = h + PAD * 2;
     arrayPts(count, mcols, PAD, PAD).forEach(({x, y}) => parts.push(renderItem(imgA, x, y)));
   }
 
-  // For left alignment, push SVG to the left of its flex container (preview box).
-  // For centre, the preview box default (justify-content:center) centres it.
+  // Inject defs block if we have any clipPaths
+  const defsBlock = defs.length ? `<defs>${defs.join('')}</defs>` : '';
+
   const svgStyle = align === 'left'
     ? 'background:#fff;border-radius:4px;margin-right:auto;margin-left:0'
     : 'background:#fff;border-radius:4px';
-  return `<svg viewBox="0 0 ${Math.ceil(svgW)} ${Math.ceil(svgH)}" xmlns="http://www.w3.org/2000/svg" style="${svgStyle}">${parts.join('')}</svg>`;
+  return `<svg viewBox="0 0 ${Math.ceil(svgW)} ${Math.ceil(svgH)}" xmlns="http://www.w3.org/2000/svg" style="${svgStyle}">${defsBlock}${parts.join('')}</svg>`;
 }
