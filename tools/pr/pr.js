@@ -170,6 +170,7 @@ function prBankSetGroup(btn) {
   document.querySelectorAll('[data-banktab]').forEach(b =>
     b.classList.toggle('active', b.dataset.banktab === tab));
   prBankRender();
+  autoPreviewPR();
 }
 
 function prBankSetTab(btn) {
@@ -293,18 +294,49 @@ function prCounterPick(grp, part, idx) {
   const id = `counter:${cs.s}:${cs.f}:${cs.c}`;
   if (isB) pr_imageB = id; else pr_imageA = id;
   prBankRender();
+  prUpdateGroupThumbs();
   autoPreviewPR();
 }
 
 function prBankSelA(id) {
   pr_imageA = id;
   if (pr_bankGroupSel === 'A') prBankRender();
+  prUpdateGroupThumbs();
   autoPreviewPR();
 }
 function prBankSelB(id) {
   pr_imageB = id;
   if (pr_bankGroupSel === 'B') prBankRender();
+  prUpdateGroupThumbs();
   autoPreviewPR();
+}
+
+// Render mini image thumbnails next to Group A / B labels in addsub area
+function prUpdateGroupThumbs() {
+  function thumbHTML(id) {
+    if (id && id.startsWith('counter:')) {
+      const p = id.split(':');
+      return counterSVG(+p[1]||0, +p[2]||0, +p[3]||0, 30);
+    } else if (id && id.startsWith('illus:')) {
+      const url = `${ILLUS_BASE}/${id.slice(6)}.png`;
+      return `<div style="width:30px;height:30px;border-radius:50%;overflow:hidden;background:#f0f0f0"><img src="${url}" width="30" height="30" style="object-fit:cover;width:100%;height:100%"></div>`;
+    } else {
+      const img = PR_IMAGE_BANK.find(x => x.id === id) || PR_IMAGE_BANK[0];
+      return `<div style="width:30px;height:30px;border-radius:50%;background:${img.bg};border:2px solid ${img.stroke};display:flex;align-items:center;justify-content:center;font-size:17px;line-height:1">${img.emoji}</div>`;
+    }
+  }
+  const ta = document.getElementById('pr-thumb-a');
+  if (ta) ta.innerHTML = thumbHTML(pr_imageA);
+  const tb = document.getElementById('pr-thumb-b');
+  if (tb) tb.innerHTML = thumbHTML(pr_imageB);
+}
+
+// Click a thumbnail to switch the bank panel to that group
+function prBankActivateGroup(grp) {
+  const btn = document.querySelector(`[data-grp="${grp}"]`);
+  if (btn) prBankSetGroup(btn);
+  const bp = document.getElementById('pr-bank-panel');
+  if (bp) bp.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 // ── Panel HTML ────────────────────────────────────────────────────────────────
@@ -381,7 +413,11 @@ function prPanelHTML() {
     <div id="pr-addsub-wrap" style="display:none">
       <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start">
         <div style="flex:1;min-width:120px">
-          <div class="sec-label" id="pr-label-a">Group A</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+            <div id="pr-thumb-a" onclick="prBankActivateGroup('A')" title="Click to change image"
+              style="cursor:pointer;flex-shrink:0"></div>
+            <div class="sec-label" id="pr-label-a" style="margin-bottom:0">Group A</div>
+          </div>
           <div style="display:flex;align-items:center;gap:4px">
             <button class="tog-btn" onclick="prDelta('A',-1)" style="width:27px;height:27px;padding:0;font-size:13px">−</button>
             <input type="number" id="pr-addsub-ca" min="1" max="20" value="7"
@@ -397,7 +433,11 @@ function prPanelHTML() {
           </div>
         </div>
         <div id="pr-groupb-wrap" style="flex:1;min-width:120px">
-          <div class="sec-label" id="pr-label-b">Group B</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+            <div id="pr-thumb-b" onclick="prBankActivateGroup('B')" title="Click to change image"
+              style="cursor:pointer;flex-shrink:0"></div>
+            <div class="sec-label" id="pr-label-b" style="margin-bottom:0">Group B</div>
+          </div>
           <div style="display:flex;align-items:center;gap:4px">
             <button class="tog-btn" onclick="prDelta('B',-1)" style="width:27px;height:27px;padding:0;font-size:13px">−</button>
             <input type="number" id="pr-addsub-cb" min="1" max="20" value="3"
@@ -517,9 +557,10 @@ function prUpdateMode() {
   const isArray = pr_display === 'array' && !isMultiply;
   show('pr-cols-field',  isArray);
   show('pr-align-field', isArray);
-  // Show illus outline toggle only on illus tab
-  const curTab = pr_bankGroupSel === 'B' ? pr_bankB : pr_bankA;
-  show('pr-illus-opts', curTab === 'illus');
+  // Show outline toggle whenever any illustration is in use or selected in bank
+  const hasIllus = pr_imageA.startsWith('illus:') || pr_imageB.startsWith('illus:')
+                || pr_bankA === 'illus' || pr_bankB === 'illus';
+  show('pr-illus-opts', hasIllus);
   if (isAddSub) prUpdateSubUI();
 }
 
@@ -605,10 +646,12 @@ function prDeltaCols(d) {
 function autoPreviewPR() {
   const box = document.getElementById('pr-preview');
   if (!box) return;
-  // Show/hide illus outline toggle based on current tab
-  const curTab = pr_bankGroupSel === 'B' ? pr_bankB : pr_bankA;
+  // Show outline toggle whenever any illustration is in use or selected in the bank
+  const hasIllus = pr_imageA.startsWith('illus:') || pr_imageB.startsWith('illus:')
+                || pr_bankA === 'illus' || pr_bankB === 'illus';
   const optsEl = document.getElementById('pr-illus-opts');
-  if (optsEl) optsEl.style.display = curTab === 'illus' ? '' : 'none';
+  if (optsEl) optsEl.style.display = hasIllus ? '' : 'none';
+  prUpdateGroupThumbs();
   try {
     box.innerHTML = pictorialSVG(getPRConfig());
   } catch (err) {
@@ -747,7 +790,7 @@ function pictorialSVG(cfg) {
       const id = uid();
       defs.push(`<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath>`);
       // Use full R for the image box so it fills the circle; meet = show whole image without distortion
-      s += `<image x="${cx - R}" y="${cy - R}" width="${R * 2}" height="${R * 2}" href="${url}" clip-path="url(#${id})" preserveAspectRatio="xMidYMid meet"/>`;
+      s += `<image x="${cx - R}" y="${cy - R}" width="${R * 2}" height="${R * 2}" href="${url}" clip-path="url(#${id})" preserveAspectRatio="xMidYMid slice"/>`;
 
     } else {
       // Emoji
