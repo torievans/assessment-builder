@@ -885,14 +885,16 @@ function pictorialSVG(cfg) {
   }
 
   // ── Array positions ───────────────────────────────────────────────────────
-  function arrayPts(count, perRow, ox, oy) {
+  // forceLeft: skip the centering offset (used inside renderTwoGroups where the
+  // group occupies only part of the canvas and centring would push items into the operator)
+  function arrayPts(count, perRow, ox, oy, forceLeft) {
     const partial = count % perRow;
     const lastRowLen = partial === 0 ? perRow : partial;
     const lastRow = Math.floor((count - 1) / perRow);
     return Array.from({length: count}, (_, i) => {
       const col = i % perRow, row = Math.floor(i / perRow);
       const isFinalRow = row === lastRow && lastRowLen < perRow;
-      const xOff = (align === 'centre' && isFinalRow) ? (perRow - lastRowLen) * S / 2 : 0;
+      const xOff = (!forceLeft && align === 'centre' && isFinalRow) ? (perRow - lastRowLen) * S / 2 : 0;
       return { x: ox + col * S + R + xOff, y: oy + row * S + R };
     });
   }
@@ -946,7 +948,8 @@ function pictorialSVG(cfg) {
   }
 
   // ── Render a single group ─────────────────────────────────────────────────
-  function renderGroup(count, img, ox, oy, parts, crossFrom) {
+  // forceLeft: passed through to arrayPts to suppress centering offset
+  function renderGroup(count, img, ox, oy, parts, crossFrom, forceLeft) {
     if (display === 'frame') {
       return renderFrames(count, img, ox, oy, parts, crossFrom);
     } else if (display === 'clustered') {
@@ -957,7 +960,7 @@ function pictorialSVG(cfg) {
       return { w: maxX - ox, h: maxY - oy };
     } else {
       const {w, h} = arrayBox(count, cols);
-      arrayPts(count, cols, ox, oy).forEach(({x, y}, i) =>
+      arrayPts(count, cols, ox, oy, forceLeft).forEach(({x, y}, i) =>
         parts.push(renderItem(img, x, y, crossFrom !== undefined && i >= crossFrom)));
       return { w, h };
     }
@@ -1005,7 +1008,7 @@ function pictorialSVG(cfg) {
       const fs = Math.min(72, maxH * 0.85);
       parts.push(`<text x="${PAD + realWA / 2}" y="${svgH / 2}" dominant-baseline="central" text-anchor="middle" font-size="${fs}" font-weight="700" font-family="${FONT}" fill="#1F2937">${countA}</text>`);
     } else {
-      renderGroup(countA, imgA, PAD, PAD + (maxH - realHA) / 2, parts);
+      renderGroup(countA, imgA, PAD, PAD + (maxH - realHA) / 2, parts, undefined, true);
     }
 
     // Operator
@@ -1017,7 +1020,7 @@ function pictorialSVG(cfg) {
       const fs = Math.min(72, maxH * 0.85);
       parts.push(`<text x="${PAD + realWA + OP_W}" y="${svgH / 2}" dominant-baseline="central" text-anchor="start" font-size="${fs}" font-weight="700" font-family="${FONT}" fill="#1F2937">${countB}</text>`);
     } else {
-      renderGroup(countB, imgB, PAD + realWA + OP_W, PAD + (maxH - realHB) / 2, parts, crossedB ? 0 : undefined);
+      renderGroup(countB, imgB, PAD + realWA + OP_W, PAD + (maxH - realHB) / 2, parts, crossedB ? 0 : undefined, true);
     }
 
     // Optional = ? (= at operator size, ? at numeral size)
