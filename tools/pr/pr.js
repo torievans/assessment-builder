@@ -966,7 +966,7 @@ function pictorialSVG(cfg) {
   // ── Render two groups side by side ────────────────────────────────────────
   function renderTwoGroups(parts, crossedB) {
     const OP_W = 54;
-    const EQ_W = 80;
+    const EQ_W = 90;
     const {h: hA} = arrayBox(countA, cols);
     const {h: hB} = arrayBox(countB, cols);
     // Estimate numeral rendered width (px at ≈72px font) so = sits OP_W/2 after numeral
@@ -1020,9 +1020,12 @@ function pictorialSVG(cfg) {
       renderGroup(countB, imgB, PAD + realWA + OP_W, PAD + (maxH - realHB) / 2, parts, crossedB ? 0 : undefined);
     }
 
-    // Optional = sign
+    // Optional = ? (= at operator size, ? at numeral size)
     if (showEq) {
-      parts.push(`<text x="${PAD + realWA + OP_W + realWB + EQ_W / 2}" y="${svgH / 2}" dominant-baseline="central" text-anchor="middle" font-size="30" font-weight="700" font-family="${FONT}" fill="#374151">= ?</text>`);
+      const qfs = Math.min(72, maxH * 0.85);
+      const eqX = PAD + realWA + OP_W + realWB;
+      parts.push(`<text x="${eqX + 22}" y="${svgH / 2}" dominant-baseline="central" text-anchor="middle" font-size="30" font-weight="700" font-family="${FONT}" fill="#374151">=</text>`);
+      parts.push(`<text x="${eqX + 65}" y="${svgH / 2}" dominant-baseline="central" text-anchor="middle" font-size="${qfs}" font-weight="700" font-family="${FONT}" fill="#1F2937">?</text>`);
     }
 
     return { svgW, svgH };
@@ -1077,6 +1080,9 @@ function pictorialSVG(cfg) {
   }
 
   const defsBlock = defs.length ? `<defs>${defs.join('')}</defs>` : '';
-  const svgStyle = 'display:block;min-width:100%;background:#fff;border-radius:4px';
+  // Frame mode: render at natural size like the NR tool (no scale-up). Other modes: fill canvas.
+  const svgStyle = display === 'frame'
+    ? `display:block;width:${Math.ceil(svgW)}px;max-width:100%;background:#fff;border-radius:4px`
+    : 'display:block;min-width:100%;background:#fff;border-radius:4px';
   return `<svg viewBox="0 0 ${Math.ceil(svgW)} ${Math.ceil(svgH)}" xmlns="http://www.w3.org/2000/svg" style="${svgStyle}">${defsBlock}${parts.join('')}</svg>`;
 }
