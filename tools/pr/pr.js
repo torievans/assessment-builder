@@ -156,10 +156,10 @@ function lookupImg(imageId) {
 // Returns an inline SVG string showing a counter at size×size pixels.
 function counterSVG(shapeIdx, faceIdx, colourIdx, size) {
   const shape  = COUNTER_SHAPES[shapeIdx] || COUNTER_SHAPES[0];
-  const face   = COUNTER_FACES[faceIdx]   || COUNTER_FACES[0];
+  const face   = faceIdx >= 0 ? (COUNTER_FACES[faceIdx] || COUNTER_FACES[0]) : [];
   const colour = COUNTER_COLOURS[colourIdx] || COUNTER_COLOURS[0];
   const sp = shape.paths.map(p => `<path d="${p}" fill="${colour}"/>`).join('');
-  const yOff = COUNTER_FACE_OFFSETS[faceIdx] || 0;
+  const yOff = faceIdx >= 0 ? (COUNTER_FACE_OFFSETS[faceIdx] || 0) : 0;
   const facePaths = face.map(p => `<path d="${p.d}" fill="${p.f}"/>`).join('');
   const fp = yOff ? `<g transform="translate(0,${yOff})">${facePaths}</g>` : facePaths;
   // Expanded viewBox gives breathing room for faces/shapes that exceed the
@@ -265,7 +265,13 @@ function prBankRender() {
     }).join('');
 
     // ── Face row ──────────────────────────────────────────────────────────
-    const faceHTML = COUNTER_FACES.map((_, i) => {
+    const noFaceSel = cs.f === -1;
+    const noFaceBtn = `<button class="pr-img-btn${noFaceSel?' selected':''}" title="No expression"
+      onclick="prCounterPick('${isB?'B':'A'}','f',-1)"
+      style="width:50px;height:50px;padding:2px;border-color:${noFaceSel?'#333':'transparent'}">
+      ${counterSVG(cs.s, -1, cs.c, 44)}
+    </button>`;
+    const faceHTML = noFaceBtn + COUNTER_FACES.map((_, i) => {
       const sel = cs.f === i;
       const svg = counterSVG(cs.s, i, cs.c, 44);
       return `<button class="pr-img-btn${sel?' selected':''}" title="Expression ${i+1}"
@@ -828,15 +834,17 @@ function pictorialSVG(cfg) {
       // Scale 100×100 normalised space → 2IR×2IR, centred at (cx, cy).
       const {shapeIdx, faceIdx, colourIdx} = img;
       const shape  = COUNTER_SHAPES[shapeIdx] || COUNTER_SHAPES[0];
-      const face   = COUNTER_FACES[faceIdx]   || COUNTER_FACES[0];
+      const face   = faceIdx >= 0 ? (COUNTER_FACES[faceIdx] || COUNTER_FACES[0]) : [];
       const colour = COUNTER_COLOURS[colourIdx] || COUNTER_COLOURS[0];
       const sc = (IR * 2) / 100;
       s += `<g transform="translate(${cx - IR},${cy - IR}) scale(${sc})">`;
       shape.paths.forEach(p => { s += `<path d="${p}" fill="${colour}"/>`; });
-      const faceYOff = COUNTER_FACE_OFFSETS[faceIdx] || 0;
-      if (faceYOff) s += `<g transform="translate(0,${faceYOff})">`;
-      face.forEach(p => { s += `<path d="${p.d}" fill="${p.f}"/>`; });
-      if (faceYOff) s += '</g>';
+      if (face.length) {
+        const faceYOff = COUNTER_FACE_OFFSETS[faceIdx] || 0;
+        if (faceYOff) s += `<g transform="translate(0,${faceYOff})">`;
+        face.forEach(p => { s += `<path d="${p.d}" fill="${p.f}"/>`; });
+        if (faceYOff) s += '</g>';
+      }
       s += '</g>';
 
     } else if (img.type === 'illus') {
