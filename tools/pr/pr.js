@@ -1066,8 +1066,6 @@ function pictorialSVG(cfg) {
   }
 
   const defsBlock = defs.length ? `<defs>${defs.join('')}</defs>` : '';
-  const svgStyle = align === 'left'
-    ? 'background:#fff;border-radius:4px;margin-right:auto;margin-left:0'
-    : 'background:#fff;border-radius:4px';
-  return `<svg viewBox="0 0 ${Math.ceil(svgW)} ${Math.ceil(svgH)}" width="100%" xmlns="http://www.w3.org/2000/svg" style="${svgStyle}">${defsBlock}${parts.join('')}</svg>`;
+  const svgStyle = 'display:block;min-width:100%;background:#fff;border-radius:4px';
+  return `<svg viewBox="0 0 ${Math.ceil(svgW)} ${Math.ceil(svgH)}" xmlns="http://www.w3.org/2000/svg" style="${svgStyle}">${defsBlock}${parts.join('')}</svg>`;
 }
