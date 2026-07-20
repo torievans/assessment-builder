@@ -27,13 +27,14 @@ const PR_IMAGE_BANK = [
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let pr_mode    = 'count';
-let pr_display = 'array';
+let pr_display = 'array';    // 'array' | 'frame' | 'clustered'
+let pr_align   = 'left';     // 'left' | 'centre'  (array only)
 let pr_countA  = 5;
 let pr_imageA  = 'tiger';
 let pr_countB  = 3;
 let pr_imageB  = 'apple';
 let pr_op      = 'add';
-let pr_subMode = 'crossed';   // 'total' | 'separate' | 'crossed'  (only used when op=sub)
+let pr_subMode = 'crossed';  // 'total' | 'separate' | 'crossed'  (op=sub only)
 let pr_cols    = 5;
 let pr_mrows   = 2;
 let pr_mcols   = 5;
@@ -154,10 +155,9 @@ function prPanelHTML() {
             <button class="tog-btn" onclick="prDelta('B',1)"  style="width:27px;height:27px;padding:0;font-size:13px">+</button>
           </div>
         </div>
-
       </div>
 
-      <!-- Subtraction display mode (shown only when op=sub) -->
+      <!-- Subtraction display mode -->
       <div id="pr-submode-row" style="display:none;margin-top:12px">
         <div class="field">
           <label>Subtraction shows</label>
@@ -204,9 +204,9 @@ function prPanelHTML() {
       <div class="field">
         <label>Layout</label>
         <div class="tog-row">
-          <button class="tog-btn active" data-prd="array"       onclick="prSetDisplay(this)">Array</button>
-          <button class="tog-btn"        data-prd="frame"       onclick="prSetDisplay(this)">10-frame</button>
-          <button class="tog-btn"        data-prd="distributed" onclick="prSetDisplay(this)">Distributed</button>
+          <button class="tog-btn active" data-prd="array"     onclick="prSetDisplay(this)">Array</button>
+          <button class="tog-btn"        data-prd="frame"     onclick="prSetDisplay(this)">10-frame</button>
+          <button class="tog-btn"        data-prd="clustered" onclick="prSetDisplay(this)">Clustered</button>
         </div>
       </div>
       <div class="field field-sm" id="pr-cols-field">
@@ -217,6 +217,13 @@ function prPanelHTML() {
             style="width:42px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:3px;font-size:13px;font-family:var(--font)"
             oninput="pr_cols=prClamp(+this.value,1,10);autoPreviewPR()">
           <button class="tog-btn" onclick="prDeltaCols(1)"  style="width:27px;height:27px;padding:0;font-size:13px">+</button>
+        </div>
+      </div>
+      <div class="field" id="pr-align-field" style="display:none">
+        <label>Align</label>
+        <div class="tog-row">
+          <button class="tog-btn active" data-pralign="left"   onclick="prSetAlign(this)">Left</button>
+          <button class="tog-btn"        data-pralign="centre" onclick="prSetAlign(this)">Centre</button>
         </div>
       </div>
     </div>
@@ -253,14 +260,25 @@ function prUpdateMode() {
   show('pr-addsub-wrap',   pr_mode === 'addsub');
   show('pr-multiply-wrap', isMultiply);
   show('pr-layout-row',    !isMultiply);
-  show('pr-cols-field',    pr_display === 'array' && !isMultiply);
+  // Cols and align only for array display, not multiply
+  const isArray = pr_display === 'array' && !isMultiply;
+  show('pr-cols-field',  isArray);
+  show('pr-align-field', isArray);
 }
 
 function prSetDisplay(btn) {
   pr_display = btn.dataset.prd;
   document.querySelectorAll('[data-prd]').forEach(b => b.classList.toggle('active', b.dataset.prd === pr_display));
-  const e = document.getElementById('pr-cols-field');
-  if (e) e.style.display = (pr_display === 'array' && pr_mode !== 'multiply') ? '' : 'none';
+  const isArray = pr_display === 'array' && pr_mode !== 'multiply';
+  const showEl = (id, v) => { const e = document.getElementById(id); if (e) e.style.display = v ? '' : 'none'; };
+  showEl('pr-cols-field',  isArray);
+  showEl('pr-align-field', isArray);
+  autoPreviewPR();
+}
+
+function prSetAlign(btn) {
+  pr_align = btn.dataset.pralign;
+  document.querySelectorAll('[data-pralign]').forEach(b => b.classList.toggle('active', b.dataset.pralign === pr_align));
   autoPreviewPR();
 }
 
@@ -278,26 +296,21 @@ function prSetSubMode(btn) {
   autoPreviewPR();
 }
 
-// Show/hide sub mode controls and update Group B label
 function prUpdateSubUI() {
   const isSub = pr_op === 'sub';
-  // Sub mode toggle only shows for subtraction
-  const row = document.getElementById('pr-submode-row');
-  if (row) row.style.display = isSub ? '' : 'none';
-  // Group B image bank: visible for add OR sub-separate
+  const show = (id, v) => { const e = document.getElementById(id); if (e) e.style.display = v ? '' : 'none'; };
+  show('pr-submode-row', isSub);
+  // Dim Group B image bank when it won't appear in output
   const showBankB = !isSub || pr_subMode === 'separate';
   const bankB = document.getElementById('pr-bank-addsub-b');
-  if (bankB) bankB.style.opacity = showBankB ? '1' : '0.35';
-  if (bankB) bankB.style.pointerEvents = showBankB ? '' : 'none';
-  // Update labels
+  if (bankB) { bankB.style.opacity = showBankB ? '1' : '0.3'; bankB.style.pointerEvents = showBankB ? '' : 'none'; }
+  // Contextual labels
   const lblA = document.getElementById('pr-label-a');
   const lblB = document.getElementById('pr-label-b');
   if (isSub) {
     if (lblA) lblA.textContent = 'Total (minuend)';
-    if (lblB) {
-      lblB.textContent = pr_subMode === 'total' ? 'Take away (unused)' :
-                         pr_subMode === 'crossed' ? 'Cross out (how many)' : 'Take away';
-    }
+    if (lblB) lblB.textContent = pr_subMode === 'total' ? 'Take away (not shown)' :
+                                 pr_subMode === 'crossed' ? 'Cross out — how many' : 'Take away';
   } else {
     if (lblA) lblA.textContent = 'Group A';
     if (lblB) lblB.textContent = 'Group B';
@@ -342,6 +355,7 @@ function getPRConfig() {
   return {
     mode:     pr_mode,
     display:  pr_display,
+    align:    pr_align,
     countA:   pr_countA,
     imageIdA: pr_imageA,
     countB:   pr_countB,
@@ -358,6 +372,7 @@ function restorePRConfig(cfg) {
   if (!cfg) return;
   pr_mode    = cfg.mode    || 'count';
   pr_display = cfg.display || 'array';
+  pr_align   = cfg.align   || 'left';
   pr_countA  = cfg.countA  || 5;
   pr_imageA  = cfg.imageIdA|| 'tiger';
   pr_countB  = cfg.countB  || 3;
@@ -374,6 +389,7 @@ function restorePRConfig(cfg) {
   sv('pr-cols-in', pr_cols);
   document.querySelectorAll('[data-prmode]').forEach(b => b.classList.toggle('active', b.dataset.prmode === pr_mode));
   document.querySelectorAll('[data-prd]').forEach(b => b.classList.toggle('active', b.dataset.prd === pr_display));
+  document.querySelectorAll('[data-pralign]').forEach(b => b.classList.toggle('active', b.dataset.pralign === pr_align));
   document.querySelectorAll('[data-prop]').forEach(b => b.classList.toggle('active', b.dataset.prop === pr_op));
   document.querySelectorAll('[data-prsub]').forEach(b => b.classList.toggle('active', b.dataset.prsub === pr_subMode));
   prBuildBank('pr-bank-a',        pr_imageA, 'prSelA');
@@ -386,7 +402,7 @@ function restorePRConfig(cfg) {
 }
 
 function prResetState() {
-  pr_mode = 'count'; pr_display = 'array';
+  pr_mode = 'count'; pr_display = 'array'; pr_align = 'left';
   pr_countA = 5; pr_imageA = 'tiger';
   pr_countB = 3; pr_imageB = 'apple';
   pr_op = 'add'; pr_subMode = 'crossed';
@@ -397,14 +413,15 @@ function prResetState() {
 //
 // pictorialSVG(cfg) → SVG string
 //
-// Distributed layout guarantee: items are placed on a grid with step DS = R*2+26.
-// The JITTER table has max component ≤ 10px in each axis.
-// Minimum adjacent item distance = DS - 2*10 = DS - 20 = R*2+6 > 2*R (no overlap).
+// Clustered layout uses the Vogel/sunflower golden-angle spiral:
+//   r_i = C * sqrt(i),  theta_i = i * golden_angle
+//   C = R*2 + 5  →  minimum item-to-item distance = C > 2*R  (no overlap guaranteed)
 //
 function pictorialSVG(cfg) {
   const {
     mode    = 'count',
     display = 'array',
+    align   = 'left',
     countA  = 5,  imageIdA = 'tiger',
     countB  = 3,  imageIdB = 'apple',
     op      = 'add',
@@ -413,11 +430,10 @@ function pictorialSVG(cfg) {
     mrows   = 2, mcols = 5,
   } = cfg;
 
-  const R   = 22;           // item circle radius (px)
-  const GAP = 10;           // gap between items in array/frame
-  const PAD = 22;           // outer SVG padding
-  const S   = R * 2 + GAP; // array grid step = 54
-  const DS  = R * 2 + 26;  // distributed grid step = 70 — wider to absorb jitter safely
+  const R    = 22;           // item circle radius (px)
+  const GAP  = 10;           // gap between items in array/frame
+  const PAD  = 22;           // outer SVG padding
+  const S    = R * 2 + GAP;  // array grid step = 54
   const FONT = "'Proxima Soft','Nunito',sans-serif";
 
   const imgA = PR_IMAGE_BANK.find(i => i.id === imageIdA) || PR_IMAGE_BANK[0];
@@ -438,12 +454,18 @@ function pictorialSVG(cfg) {
     return s;
   }
 
-  // ── Array position helpers ────────────────────────────────────────────────
+  // ── Array positions (with optional last-row centering) ────────────────────
   function arrayPts(count, perRow, ox, oy) {
-    return Array.from({ length: count }, (_, i) => ({
-      x: ox + (i % perRow) * S + R,
-      y: oy + Math.floor(i / perRow) * S + R,
-    }));
+    const partial = count % perRow;
+    const lastRowLen = partial === 0 ? perRow : partial;
+    const lastRow = Math.floor((count - 1) / perRow);
+    return Array.from({length: count}, (_, i) => {
+      const col = i % perRow;
+      const row = Math.floor(i / perRow);
+      const isFinalRow = row === lastRow && lastRowLen < perRow;
+      const xOff = (align === 'centre' && isFinalRow) ? (perRow - lastRowLen) * S / 2 : 0;
+      return { x: ox + col * S + R + xOff, y: oy + row * S + R };
+    });
   }
 
   function arrayBox(count, perRow) {
@@ -453,197 +475,174 @@ function pictorialSVG(cfg) {
     };
   }
 
-  // ── Distributed scatter ───────────────────────────────────────────────────
-  // All jitter components ≤ 10. With DS=70, min adjacent distance = 70-20 = 50 > 2*R+4.
-  const JITTER = [
-    [ 0,  0], [ 9, -6], [-5,  8], [ 7,  4], [-8, -5],
-    [ 5, 10], [-9,  3], [ 6, -8], [-4,  6], [ 8, -7],
-    [-5, -9], [ 4,  8], [-9, -2], [ 8,  6], [-6,  9],
-    [ 3, -5], [-8,  7], [ 5,-10], [-3,  4], [ 7, -3],
-  ];
-
-  function scatterPts(count, perRow, ox, oy) {
-    return Array.from({ length: count }, (_, i) => {
-      const [jx, jy] = JITTER[i % JITTER.length];
-      return { x: ox + (i % perRow) * DS + R + jx, y: oy + Math.floor(i / perRow) * DS + R + jy };
+  // ── Clustered: Vogel / sunflower golden-angle spiral ─────────────────────
+  // Proved minimum pairwise distance = C (between items 0 and 1).
+  // C = R*2 + 5 ensures items never overlap (gap = 5px).
+  function clusterPts(count, ox, oy) {
+    if (count === 0) return [];
+    const C = R * 2 + 5;         // spiral scale constant
+    const GOLDEN = 2.399963229;  // golden angle (radians) = 2π/φ²
+    const raw = Array.from({length: count}, (_, i) => {
+      if (i === 0) return { x: 0, y: 0 };
+      const r = C * Math.sqrt(i);
+      return { x: r * Math.cos(i * GOLDEN), y: r * Math.sin(i * GOLDEN) };
     });
+    const minX = Math.min(...raw.map(p => p.x));
+    const minY = Math.min(...raw.map(p => p.y));
+    return raw.map(p => ({ x: p.x - minX + ox + R, y: p.y - minY + oy + R }));
   }
 
   // ── 10-frame renderer ─────────────────────────────────────────────────────
-  // Renders one or more stacked 5×2 frames. Items with index ≥ crossFrom are crossed.
   function renderFrames(count, img, ox, oy, parts, crossFrom) {
     const FC = 5, FR = 2, FP = 8;
     const perFrame = FC * FR;
     const numFrames = Math.ceil(Math.max(1, count) / perFrame);
     const innerW = FC * S - GAP + FP * 2;
     const innerH = FR * S - GAP + FP * 2;
-    const frameGap = 12;
-
+    const fGap = 12;
     for (let f = 0; f < numFrames; f++) {
-      const fy = oy + f * (innerH + frameGap);
+      const fy = oy + f * (innerH + fGap);
       parts.push(`<rect x="${ox}" y="${fy}" width="${innerW}" height="${innerH}" rx="7" fill="#F8F9FB" stroke="#C8CDD4" stroke-width="2"/>`);
       for (let r = 0; r < FR; r++) for (let c = 0; c < FC; c++) {
         const cx = ox + FP + c * S + R, cy = fy + FP + r * S + R;
         parts.push(`<circle cx="${cx}" cy="${cy}" r="${R}" fill="#EAECF0" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4,3"/>`);
       }
-      const frameStart = f * perFrame;
-      const frameCount = Math.min(count - frameStart, perFrame);
-      for (let i = 0; i < frameCount; i++) {
-        const globalIdx = frameStart + i;
+      const fs2 = f * perFrame;
+      const fc2 = Math.min(count - fs2, perFrame);
+      for (let i = 0; i < fc2; i++) {
+        const gi = fs2 + i;
         const col = i % FC, row = Math.floor(i / FC);
-        const cx = ox + FP + col * S + R, cy = fy + FP + row * S + R;
-        parts.push(renderItem(img, cx, cy, crossFrom !== undefined && globalIdx >= crossFrom));
+        parts.push(renderItem(img, ox + FP + col * S + R, fy + FP + row * S + R, crossFrom !== undefined && gi >= crossFrom));
       }
     }
-    const FC2 = 5, FR2 = 2, FP2 = 8; // reuse for return value calculation
-    const innerH2 = FR2 * S - GAP + FP2 * 2;
-    const innerW2 = FC2 * S - GAP + FP2 * 2;
-    return { w: innerW2, h: numFrames * (innerH2 + frameGap) - frameGap };
+    return { w: FC * S - GAP + FP * 2, h: numFrames * (FR * S - GAP + FP * 2 + fGap) - fGap };
   }
 
-  // ── Render a single group (used by count and by sub modes) ────────────────
-  function renderSingleGroup(count, img, crossFrom) {
-    const parts2 = [];
-    let w2, h2;
+  // ── Helpers ───────────────────────────────────────────────────────────────
+
+  // Render a single group of items using the current display mode
+  function renderGroup(count, img, ox, oy, parts, crossFrom) {
     if (display === 'frame') {
-      const {w, h} = renderFrames(count, img, PAD, PAD, parts2, crossFrom);
-      w2 = w + PAD * 2; h2 = h + PAD * 2;
-    } else if (display === 'distributed') {
-      const perRow = Math.max(3, Math.ceil(Math.sqrt(count * 1.5)));
-      const pts = scatterPts(count, perRow, PAD, PAD);
-      w2 = Math.max(...pts.map(p => p.x + R + 10)) + PAD;
-      h2 = Math.max(...pts.map(p => p.y + R + 10)) + PAD;
-      pts.forEach(({ x, y }, i) => parts2.push(renderItem(img, x, y, crossFrom !== undefined && i >= crossFrom)));
+      return renderFrames(count, img, ox, oy, parts, crossFrom);
+    } else if (display === 'clustered') {
+      const pts = clusterPts(count, ox, oy);
+      const maxX = Math.max(...pts.map(p => p.x + R));
+      const maxY = Math.max(...pts.map(p => p.y + R));
+      pts.forEach(({x, y}, i) => parts.push(renderItem(img, x, y, crossFrom !== undefined && i >= crossFrom)));
+      return { w: maxX - ox, h: maxY - oy };
     } else {
-      const { w, h } = arrayBox(count, cols);
-      w2 = w + PAD * 2; h2 = h + PAD * 2;
-      arrayPts(count, cols, PAD, PAD).forEach(({ x, y }, i) =>
-        parts2.push(renderItem(img, x, y, crossFrom !== undefined && i >= crossFrom)));
+      // array
+      const {w, h} = arrayBox(count, cols);
+      arrayPts(count, cols, ox, oy).forEach(({x, y}, i) =>
+        parts.push(renderItem(img, x, y, crossFrom !== undefined && i >= crossFrom)));
+      return { w, h };
     }
-    return { parts: parts2, svgW: w2, svgH: h2 };
   }
 
-  // ── Render two groups side by side (add, or sub-separate) ─────────────────
-  function renderTwoGroups(crossed) {
-    const parts2 = [];
-    const makePts = display === 'distributed' ? scatterPts : arrayPts;
-    const boxA = arrayBox(countA, cols);
-    const boxB = arrayBox(countB, cols);
+  // Render two groups side by side with operator between them
+  function renderTwoGroups(parts, crossedB) {
     const OP_W = 54;
-    const maxH = Math.max(boxA.h, boxB.h);
-    const w2 = PAD + boxA.w + OP_W + boxB.w + PAD;
-    const h2 = maxH + PAD * 2;
+    const {w: wA, h: hA} = arrayBox(countA, cols);
+    const {w: wB, h: hB} = arrayBox(countB, cols);
 
-    const aOff = PAD + (maxH - boxA.h) / 2;
-    makePts(countA, cols, PAD, aOff).forEach(({ x, y }) => parts2.push(renderItem(imgA, x, y)));
+    // For clustered, get real bounds by dry-running
+    let realWA = wA, realHA = hA, realWB = wB, realHB = hB;
+    if (display === 'clustered') {
+      const ptA = clusterPts(countA, 0, 0);
+      realWA = Math.max(...ptA.map(p => p.x + R));
+      realHA = Math.max(...ptA.map(p => p.y + R));
+      const ptB = clusterPts(countB, 0, 0);
+      realWB = Math.max(...ptB.map(p => p.x + R));
+      realHB = Math.max(...ptB.map(p => p.y + R));
+    }
+
+    const maxH = Math.max(realHA, realHB);
+    const svgW = PAD + realWA + OP_W + realWB + PAD;
+    const svgH = maxH + PAD * 2;
+
+    const aOff = PAD + (maxH - realHA) / 2;
+    renderGroup(countA, imgA, PAD, aOff, parts);
 
     const sym = op === 'add' ? '+' : '−';
-    const opX = PAD + boxA.w + OP_W / 2;
-    parts2.push(`<text x="${opX}" y="${h2 / 2}" dominant-baseline="central" text-anchor="middle" font-size="30" font-weight="700" font-family="${FONT}" fill="#374151">${sym}</text>`);
+    const opX = PAD + realWA + OP_W / 2;
+    parts.push(`<text x="${opX}" y="${svgH / 2}" dominant-baseline="central" text-anchor="middle" font-size="30" font-weight="700" font-family="${FONT}" fill="#374151">${sym}</text>`);
 
-    const bxStart = PAD + boxA.w + OP_W;
-    const bOff = PAD + (maxH - boxB.h) / 2;
-    makePts(countB, cols, bxStart, bOff).forEach(({ x, y }) => parts2.push(renderItem(imgB, x, y, crossed)));
+    const bxStart = PAD + realWA + OP_W;
+    const bOff = PAD + (maxH - realHB) / 2;
+    renderGroup(countB, imgB, bxStart, bOff, parts, crossedB ? 0 : undefined);
 
-    return { parts: parts2, svgW: w2, svgH: h2 };
+    return { svgW, svgH };
   }
 
   // ── Build SVG ─────────────────────────────────────────────────────────────
-  let result;
+  const parts = [];
+  let svgW, svgH;
 
   if (mode === 'count') {
-    result = renderSingleGroup(countA, imgA);
+    const p2 = [];
+    const {w, h} = renderGroup(countA, imgA, PAD, PAD, p2);
+    parts.push(...p2);
+    svgW = w + PAD * 2; svgH = h + PAD * 2;
 
   } else if (mode === 'addsub') {
-    if (op === 'sub') {
-      if (subMode === 'total') {
-        // Just show the minuend (countA items), nothing else
-        result = renderSingleGroup(countA, imgA);
-      } else if (subMode === 'crossed') {
-        // All countA items; the last countB are crossed
-        const crossFrom = Math.max(0, countA - countB);
-        result = renderSingleGroup(countA, imgA, crossFrom);
-      } else {
-        // 'separate' — two groups side by side, Group B crossed (with red X)
-        if (display === 'frame') {
-          // Combined frame: Group A first, then Group B crossed
-          const total = countA + countB;
-          const FC = 5, FR = 2, FP = 8;
-          const perFrame = FC * FR;
-          const numFrames = Math.ceil(Math.max(1, total) / perFrame);
-          const innerW = FC * S - GAP + FP * 2;
-          const innerH = FR * S - GAP + FP * 2;
-          const frameGap = 12;
-          const parts2 = [];
-          const w2 = innerW + PAD * 2;
-          const h2 = numFrames * (innerH + frameGap) - frameGap + PAD * 2;
-          for (let f = 0; f < numFrames; f++) {
-            const fy = PAD + f * (innerH + frameGap);
-            parts2.push(`<rect x="${PAD}" y="${fy}" width="${innerW}" height="${innerH}" rx="7" fill="#F8F9FB" stroke="#C8CDD4" stroke-width="2"/>`);
-            for (let r = 0; r < FR; r++) for (let c = 0; c < FC; c++) {
-              const cx = PAD + FP + c * S + R, cy = fy + FP + r * S + R;
-              parts2.push(`<circle cx="${cx}" cy="${cy}" r="${R}" fill="#EAECF0" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4,3"/>`);
-            }
-            const fs2 = f * perFrame;
-            const fc2 = Math.min(total - fs2, perFrame);
-            for (let i = 0; i < fc2; i++) {
-              const gi = fs2 + i;
-              const col = i % FC, row = Math.floor(i / FC);
-              const cx = PAD + FP + col * S + R, cy = fy + FP + row * S + R;
-              const isA = gi < countA;
-              parts2.push(renderItem(isA ? imgA : imgB, cx, cy, !isA));
-            }
-          }
-          result = { parts: parts2, svgW: w2, svgH: h2 };
-        } else {
-          result = renderTwoGroups(true); // Group B crossed
+
+    if (op === 'sub' && subMode === 'total') {
+      // Minuend only
+      const p2 = [];
+      const {w, h} = renderGroup(countA, imgA, PAD, PAD, p2);
+      parts.push(...p2);
+      svgW = w + PAD * 2; svgH = h + PAD * 2;
+
+    } else if (op === 'sub' && subMode === 'crossed') {
+      // All countA items; last countB crossed
+      const crossFrom = Math.max(0, countA - countB);
+      const p2 = [];
+      const {w, h} = renderGroup(countA, imgA, PAD, PAD, p2, crossFrom);
+      parts.push(...p2);
+      svgW = w + PAD * 2; svgH = h + PAD * 2;
+
+    } else if (display === 'frame') {
+      // Addition or sub-separate with frame: both groups in one combined frame
+      const total = op === 'add' ? countA + countB : countA + countB;
+      const FC = 5, FR = 2, FP = 8;
+      const perFrame = FC * FR;
+      const numFrames = Math.ceil(Math.max(1, total) / perFrame);
+      const innerW = FC * S - GAP + FP * 2;
+      const innerH = FR * S - GAP + FP * 2;
+      const fGap = 12;
+      svgW = innerW + PAD * 2;
+      svgH = numFrames * (innerH + fGap) - fGap + PAD * 2;
+      for (let f = 0; f < numFrames; f++) {
+        const fy = PAD + f * (innerH + fGap);
+        parts.push(`<rect x="${PAD}" y="${fy}" width="${innerW}" height="${innerH}" rx="7" fill="#F8F9FB" stroke="#C8CDD4" stroke-width="2"/>`);
+        for (let r = 0; r < FR; r++) for (let c = 0; c < FC; c++) {
+          const cx = PAD + FP + c * S + R, cy = fy + FP + r * S + R;
+          parts.push(`<circle cx="${cx}" cy="${cy}" r="${R}" fill="#EAECF0" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4,3"/>`);
+        }
+        const fs2 = f * perFrame;
+        const fc2 = Math.min(total - fs2, perFrame);
+        for (let i = 0; i < fc2; i++) {
+          const gi = fs2 + i;
+          const col = i % FC, row = Math.floor(i / FC);
+          const cx = PAD + FP + col * S + R, cy = fy + FP + row * S + R;
+          const isA = gi < countA;
+          parts.push(renderItem(isA ? imgA : imgB, cx, cy, !isA && op === 'sub'));
         }
       }
+
     } else {
-      // add — two groups side by side, no crossing
-      if (display === 'frame') {
-        // Combined frame: Group A then Group B
-        const total = countA + countB;
-        const FC = 5, FR = 2, FP = 8;
-        const perFrame = FC * FR;
-        const numFrames = Math.ceil(Math.max(1, total) / perFrame);
-        const innerW = FC * S - GAP + FP * 2;
-        const innerH = FR * S - GAP + FP * 2;
-        const frameGap = 12;
-        const parts2 = [];
-        const w2 = innerW + PAD * 2;
-        const h2 = numFrames * (innerH + frameGap) - frameGap + PAD * 2;
-        for (let f = 0; f < numFrames; f++) {
-          const fy = PAD + f * (innerH + frameGap);
-          parts2.push(`<rect x="${PAD}" y="${fy}" width="${innerW}" height="${innerH}" rx="7" fill="#F8F9FB" stroke="#C8CDD4" stroke-width="2"/>`);
-          for (let r = 0; r < FR; r++) for (let c = 0; c < FC; c++) {
-            const cx = PAD + FP + c * S + R, cy = fy + FP + r * S + R;
-            parts2.push(`<circle cx="${cx}" cy="${cy}" r="${R}" fill="#EAECF0" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4,3"/>`);
-          }
-          const fs2 = f * perFrame;
-          const fc2 = Math.min(total - fs2, perFrame);
-          for (let i = 0; i < fc2; i++) {
-            const gi = fs2 + i;
-            const col = i % FC, row = Math.floor(i / FC);
-            const cx = PAD + FP + col * S + R, cy = fy + FP + row * S + R;
-            parts2.push(renderItem(gi < countA ? imgA : imgB, cx, cy));
-          }
-        }
-        result = { parts: parts2, svgW: w2, svgH: h2 };
-      } else {
-        result = renderTwoGroups(false);
-      }
+      // Addition or sub-separate: two groups side by side
+      const {svgW: w2, svgH: h2} = renderTwoGroups(parts, op === 'sub');
+      svgW = w2; svgH = h2;
     }
 
   } else if (mode === 'multiply') {
-    // Clean array of items — no labels or annotations
+    // Clean array only — no labels
     const count = mrows * mcols;
-    const { w, h } = arrayBox(count, mcols);
-    const parts2 = [];
-    arrayPts(count, mcols, PAD, PAD).forEach(({ x, y }) => parts2.push(renderItem(imgA, x, y)));
-    result = { parts: parts2, svgW: w + PAD * 2, svgH: h + PAD * 2 };
+    const {w, h} = arrayBox(count, mcols);
+    svgW = w + PAD * 2; svgH = h + PAD * 2;
+    arrayPts(count, mcols, PAD, PAD).forEach(({x, y}) => parts.push(renderItem(imgA, x, y)));
   }
 
-  const { parts, svgW, svgH } = result || { parts: [], svgW: 100, svgH: 100 };
   return `<svg viewBox="0 0 ${Math.ceil(svgW)} ${Math.ceil(svgH)}" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border-radius:4px">${parts.join('')}</svg>`;
 }
