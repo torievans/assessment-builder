@@ -46,34 +46,35 @@ const COUNTER_FACE_OFFSETS = [0,10,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 // ── Illustration Bank ─────────────────────────────────────────────────────────
 const ILLUSTRATION_BANK = [
-  {id:'space/crescent_moon_yellow',         label:'Moon'},
-  {id:'space/planet_purple',                label:'Planet'},
-  {id:'animals/flamingo_pink',              label:'Flamingo'},
-  {id:'animals/giraffe_orange',             label:'Giraffe'},
-  {id:'animals/crocodile_green',            label:'Crocodile'},
-  {id:'animals/elephant_grey',              label:'Elephant'},
-  {id:'animals/rhinoceros_grey',            label:'Rhino'},
-  {id:'animals/tiger_orange',               label:'Tiger'},
-  {id:'animals/toucan_black',               label:'Toucan'},
-  {id:'animals/hippo_purple',               label:'Hippo'},
-  {id:'sports/ball_football_teal',          label:'Football'},
-  {id:'sports/ball_basketball_orange',      label:'Basketball'},
-  {id:'plants/palm_tree_green',             label:'Palm Tree'},
-  {id:'food/fruit/apple_green',             label:'Apple'},
-  {id:'food/fruit/apple_orange',            label:'Orange Apple'},
-  {id:'food/fruit/lemon_yellow',            label:'Lemon'},
-  {id:'food/fruit/peach_orange',            label:'Peach'},
-  {id:'food/fruit/watermelon_green',        label:'Watermelon'},
-  {id:'food/fruit/tomato_red',              label:'Tomato'},
-  {id:'food/veg/carrot_orange',             label:'Carrot'},
-  {id:'food/veg/bell_pepper_orange',        label:'Pepper'},
-  {id:'food/veg/broccoli_green',            label:'Broccoli'},
-  {id:'food/veg/pumpkin_orange',            label:'Pumpkin'},
-  {id:'food/bakery/bagel_orange',           label:'Bagel'},
-  {id:'food/bakery/muffin_brown',           label:'Muffin'},
-  {id:'food/bakery/pretzel_brown',          label:'Pretzel'},
-  {id:'food/sweets/soft_serve_cone_orange', label:'Ice Cream'},
-  {id:'food/sweets/popsicle_pink',          label:'Popsicle'},
+  // ar = width/height (measured from actual PNG files)
+  {id:'space/crescent_moon_yellow',         label:'Moon',        ar:0.883},
+  {id:'space/planet_purple',                label:'Planet',      ar:1.626},
+  {id:'animals/flamingo_pink',              label:'Flamingo',    ar:0.586},
+  {id:'animals/giraffe_orange',             label:'Giraffe',     ar:0.499},
+  {id:'animals/crocodile_green',            label:'Crocodile',   ar:2.789},
+  {id:'animals/elephant_grey',              label:'Elephant',    ar:1.463},
+  {id:'animals/rhinoceros_grey',            label:'Rhino',       ar:1.929},
+  {id:'animals/tiger_orange',               label:'Tiger',       ar:1.955},
+  {id:'animals/toucan_black',               label:'Toucan',      ar:1.494},
+  {id:'animals/hippo_purple',               label:'Hippo',       ar:1.613},
+  {id:'sports/ball_football_teal',          label:'Football',    ar:1.016},
+  {id:'sports/ball_basketball_orange',      label:'Basketball',  ar:1.000},
+  {id:'plants/palm_tree_green',             label:'Palm Tree',   ar:0.592},
+  {id:'food/fruit/apple_green',             label:'Apple',       ar:0.873},
+  {id:'food/fruit/apple_orange',            label:'Orange Apple',ar:0.900},
+  {id:'food/fruit/lemon_yellow',            label:'Lemon',       ar:0.912},
+  {id:'food/fruit/peach_orange',            label:'Peach',       ar:0.810},
+  {id:'food/fruit/watermelon_green',        label:'Watermelon',  ar:0.996},
+  {id:'food/fruit/tomato_red',              label:'Tomato',      ar:0.902},
+  {id:'food/veg/carrot_orange',             label:'Carrot',      ar:1.002},
+  {id:'food/veg/bell_pepper_orange',        label:'Pepper',      ar:0.850},
+  {id:'food/veg/broccoli_green',            label:'Broccoli',    ar:0.970},
+  {id:'food/veg/pumpkin_orange',            label:'Pumpkin',     ar:1.202},
+  {id:'food/bakery/bagel_orange',           label:'Bagel',       ar:1.103},
+  {id:'food/bakery/muffin_brown',           label:'Muffin',      ar:0.900},
+  {id:'food/bakery/pretzel_brown',          label:'Pretzel',     ar:1.064},
+  {id:'food/sweets/soft_serve_cone_orange', label:'Ice Cream',   ar:0.605},
+  {id:'food/sweets/popsicle_pink',          label:'Popsicle',    ar:0.748},
 ];
 
 // ── Emoji Bank ────────────────────────────────────────────────────────────────
@@ -832,20 +833,24 @@ function pictorialSVG(cfg) {
       s += '</g>';
 
     } else if (img.type === 'illus') {
-      // Illustration PNG inside a circle (or as a plain rectangle if outline is off)
+      // Illustration PNG, sized to exactly fill 2R in its longest dimension and
+      // scaled proportionally in the other — so the full animal is always visible.
+      // The circle clip only trims the extreme corners of the image rectangle;
+      // for very wide/tall images those corners are well within the circle anyway.
       const url = `${ILLUS_BASE}/${img.id}.png`;
+      const ar  = img.ar || 1;           // width / height from ILLUSTRATION_BANK
+      const iw  = ar >= 1 ? R*2 : R*2*ar;   // landscape: full width; portrait: proportional
+      const ih  = ar >= 1 ? R*2/ar : R*2;   // landscape: proportional; portrait: full height
+      const ix  = cx - iw / 2;
+      const iy  = cy - ih / 2;
       if (illusOutline) {
         s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="#F8F9FB" stroke="#D1D5DB" stroke-width="2"/>`;
         const id = uid();
         defs.push(`<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath>`);
-        // 2.5× box with meet: illustration is scaled so its HEIGHT nearly fills the circle
-        // even for wide landscape PNGs (e.g. crocodile 2.79:1 → ~90% fill), while
-        // still showing a proportional view rather than a zoomed-in centre blob (slice).
-        const scl = 2.5;
-        s += `<image x="${cx - R*scl}" y="${cy - R*scl}" width="${R*2*scl}" height="${R*2*scl}" href="${url}" clip-path="url(#${id})" preserveAspectRatio="xMidYMid meet"/>`;
+        s += `<image x="${ix}" y="${iy}" width="${iw}" height="${ih}" href="${url}" clip-path="url(#${id})" preserveAspectRatio="none"/>`;
       } else {
-        // No outline, no clip — show as a plain square PNG
-        s += `<image x="${cx - R}" y="${cy - R}" width="${R * 2}" height="${R * 2}" href="${url}" preserveAspectRatio="xMidYMid meet"/>`;
+        // No outline, no clip — full image as a rectangle
+        s += `<image x="${ix}" y="${iy}" width="${iw}" height="${ih}" href="${url}" preserveAspectRatio="none"/>`;
       }
 
     } else {
