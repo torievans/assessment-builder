@@ -694,6 +694,8 @@ function autoPreviewPR() {
   const optsEl = document.getElementById('pr-illus-opts');
   if (optsEl) optsEl.style.display = hasIllus ? '' : 'none';
   prUpdateGroupThumbs();
+  // Reflect alignment in the preview container so left vs centre is visible
+  box.style.justifyContent = (pr_align === 'left') ? 'flex-start' : 'center';
   try {
     box.innerHTML = pictorialSVG(getPRConfig());
   } catch (err) {
