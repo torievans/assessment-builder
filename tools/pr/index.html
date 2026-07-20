@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>🖼 Pictorial Representations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="page">
+  <div class="page-title">🖼 Pictorial Representations</div>
+  <div id="tool-wrap"><div class="form-card"></div></div>
+</div>
+<script src="../shared.js"></script>
+<script src="pr.js"></script>
+<script>
+  /* ── Standalone stubs ── */
+  let activeTool = 'pr';
+  function closeTool() {}
+  function openBatchPanel() {}
+  function openSharedBatch() {}
+  function addToolQuestion() {}
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('#tool-wrap .form-card').innerHTML = prPanelHTML();
+    initPRPanel();
+    // Replace builder actions with a Download PNG button
+    const actions = document.querySelector('.form-actions');
+    if (actions) {
+      actions.innerHTML = `<button class="btn btn-blue" onclick="prDownload()">⬇ Download PNG</button>`;
+    }
+  });
+
+  function prDownload() {
+    const cfg = getPRConfig();
+    const svg = pictorialSVG(cfg);
+    svgToPng(svg).then(blob => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `pictorial-${cfg.mode}-${cfg.imageIdA}${cfg.mode === 'addsub' ? '-' + cfg.imageIdB : ''}.png`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }).catch(e => alert('Download failed: ' + e.message));
+  }
+</script>
+</body>
+</html>
