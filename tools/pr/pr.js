@@ -967,22 +967,33 @@ function pictorialSVG(cfg) {
   function renderTwoGroups(parts, crossedB) {
     const OP_W = 54;
     const EQ_W = 54;
-    // Number-as-group uses fixed width (comfortable for 2 digits) and 1-row height
-    const NUM_W = S * 2.5;
     const {h: hA} = arrayBox(countA, cols);
     const {h: hB} = arrayBox(countB, cols);
+    // Estimate numeral rendered width (px at ≈72px font) so = sits OP_W/2 after numeral
+    const numWA = String(countA).length === 1 ? 42 : 75;
+    const numWB = String(countB).length === 1 ? 42 : 75;
     let realWA, realHA, realWB, realHB;
     if (display === 'clustered') {
       const ptA = clusterPts(countA, 0, 0);
-      realWA = numA ? NUM_W : (ptA.length ? Math.max(...ptA.map(p => p.x + R)) : S);
+      realWA = numA ? numWA : (ptA.length ? Math.max(...ptA.map(p => p.x + R)) : S);
       realHA = numA ? S     : (ptA.length ? Math.max(...ptA.map(p => p.y + R)) : S);
       const ptB = clusterPts(countB, 0, 0);
-      realWB = numB ? NUM_W : (ptB.length ? Math.max(...ptB.map(p => p.x + R)) : S);
+      realWB = numB ? numWB : (ptB.length ? Math.max(...ptB.map(p => p.x + R)) : S);
       realHB = numB ? S     : (ptB.length ? Math.max(...ptB.map(p => p.y + R)) : S);
+    } else if (display === 'frame') {
+      const FC = 5, FR = 2, fGap = 16;
+      const FW = FC * S, FH = FR * S;
+      const numFA = Math.ceil(Math.max(1, countA) / (FC * FR));
+      const numFB = Math.ceil(Math.max(1, countB) / (FC * FR));
+      realWA = numA ? numWA : FW;
+      realHA = numA ? S     : numFA * (FH + fGap) - fGap;
+      realWB = numB ? numWB : FW;
+      realHB = numB ? S     : numFB * (FH + fGap) - fGap;
     } else {
-      realWA = numA ? NUM_W : cols * S - GAP;
+      // array: use actual rendered width — min(count, cols) items per row, not the full cols
+      realWA = numA ? numWA : Math.min(Math.max(1, countA), cols) * S - GAP;
       realHA = numA ? S     : hA;
-      realWB = numB ? NUM_W : cols * S - GAP;
+      realWB = numB ? numWB : Math.min(Math.max(1, countB), cols) * S - GAP;
       realHB = numB ? S     : hB;
     }
     const maxH = Math.max(realHA, realHB);
