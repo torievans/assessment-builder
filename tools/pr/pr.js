@@ -694,8 +694,8 @@ function autoPreviewPR() {
   const optsEl = document.getElementById('pr-illus-opts');
   if (optsEl) optsEl.style.display = hasIllus ? '' : 'none';
   prUpdateGroupThumbs();
-  // Reflect alignment in the preview container so left vs centre is visible
-  box.style.justifyContent = (pr_align === 'left') ? 'flex-start' : 'center';
+  // Reflect alignment in the preview container — frame mode always centres
+  box.style.justifyContent = (pr_align === 'left' && pr_display !== 'frame') ? 'flex-start' : 'center';
   try {
     box.innerHTML = pictorialSVG(getPRConfig());
   } catch (err) {
@@ -1093,10 +1093,12 @@ function pictorialSVG(cfg) {
   }
 
   const defsBlock = defs.length ? `<defs>${defs.join('')}</defs>` : '';
-  // count+array|clustered: fill canvas width (user requested). Everything else: natural size.
+  // count+array|clustered: fill canvas width. Everything else: natural size, centred.
+  // Frame mode always centres (align setting doesn't apply to discrete frames).
   const useNaturalSize = display === 'frame' || mode !== 'count';
+  const centre = display === 'frame' || align !== 'left';
   const svgStyle = useNaturalSize
-    ? `display:block;${align !== 'left' ? 'margin:0 auto;' : ''}width:${Math.ceil(svgW)}px;max-width:100%;background:#fff;border-radius:4px`
+    ? `display:block;${centre ? 'margin:0 auto;' : ''}width:${Math.ceil(svgW)}px;max-width:100%;background:#fff;border-radius:4px`
     : 'display:block;min-width:100%;background:#fff;border-radius:4px';
   return `<svg viewBox="0 0 ${Math.ceil(svgW)} ${Math.ceil(svgH)}" xmlns="http://www.w3.org/2000/svg" style="${svgStyle}">${defsBlock}${parts.join('')}</svg>`;
 }
