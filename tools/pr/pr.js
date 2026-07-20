@@ -28,8 +28,8 @@ const PR_IMAGE_BANK = [
 // ── State ─────────────────────────────────────────────────────────────────────
 let pr_mode    = 'count';
 let pr_display = 'array';    // 'array' | 'frame' | 'clustered'
-let pr_align   = 'left';     // 'left' | 'centre'  (array only)
-let pr_countA  = 5;
+let pr_align   = 'left';     // 'left' | 'centre'  (array only — applies to partial last rows)
+let pr_countA  = 7;          // default 7 so partial row is immediately visible
 let pr_imageA  = 'tiger';
 let pr_countB  = 3;
 let pr_imageB  = 'apple';
@@ -109,7 +109,7 @@ function prPanelHTML() {
         <div class="field"><label>Count</label>
           <div style="display:flex;align-items:center;gap:4px">
             <button class="tog-btn" onclick="prDelta('A',-1)" style="width:30px;height:30px;padding:0">−</button>
-            <input type="number" id="pr-ca" min="1" max="20" value="5"
+            <input type="number" id="pr-ca" min="1" max="20" value="7"
               style="width:52px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:4px;font-size:14px;font-family:var(--font)"
               oninput="pr_countA=prClamp(+this.value,1,20);autoPreviewPR()">
             <button class="tog-btn" onclick="prDelta('A',1)"  style="width:30px;height:30px;padding:0">+</button>
@@ -128,7 +128,7 @@ function prPanelHTML() {
           <div id="pr-bank-addsub-a" class="pr-bank pr-bank-sm"></div>
           <div style="display:flex;align-items:center;gap:4px;margin-top:8px">
             <button class="tog-btn" onclick="prDelta('A',-1)" style="width:27px;height:27px;padding:0;font-size:13px">−</button>
-            <input type="number" id="pr-addsub-ca" min="1" max="20" value="5"
+            <input type="number" id="pr-addsub-ca" min="1" max="20" value="7"
               style="width:44px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:3px;font-size:13px;font-family:var(--font)"
               oninput="pr_countA=prClamp(+this.value,1,20);autoPreviewPR()">
             <button class="tog-btn" onclick="prDelta('A',1)"  style="width:27px;height:27px;padding:0;font-size:13px">+</button>
@@ -157,8 +157,8 @@ function prPanelHTML() {
         </div>
       </div>
 
-      <!-- Subtraction display mode -->
-      <div id="pr-submode-row" style="display:none;margin-top:12px">
+      <!-- Subtraction display mode — always visible; greyed when op=add -->
+      <div id="pr-submode-row" style="margin-top:12px;opacity:0.4;pointer-events:none">
         <div class="field">
           <label>Subtraction shows</label>
           <div class="tog-row">
@@ -220,7 +220,7 @@ function prPanelHTML() {
         </div>
       </div>
       <div class="field" id="pr-align-field" style="display:none">
-        <label>Align</label>
+        <label>Align last row</label>
         <div class="tog-row">
           <button class="tog-btn active" data-pralign="left"   onclick="prSetAlign(this)">Left</button>
           <button class="tog-btn"        data-pralign="centre" onclick="prSetAlign(this)">Centre</button>
@@ -260,10 +260,11 @@ function prUpdateMode() {
   show('pr-addsub-wrap',   pr_mode === 'addsub');
   show('pr-multiply-wrap', isMultiply);
   show('pr-layout-row',    !isMultiply);
-  // Cols and align only for array display, not multiply
   const isArray = pr_display === 'array' && !isMultiply;
   show('pr-cols-field',  isArray);
   show('pr-align-field', isArray);
+  // Sync sub UI when switching to addsub mode
+  if (pr_mode === 'addsub') prUpdateSubUI();
 }
 
 function prSetDisplay(btn) {
@@ -298,9 +299,13 @@ function prSetSubMode(btn) {
 
 function prUpdateSubUI() {
   const isSub = pr_op === 'sub';
-  const show = (id, v) => { const e = document.getElementById(id); if (e) e.style.display = v ? '' : 'none'; };
-  show('pr-submode-row', isSub);
-  // Dim Group B image bank when it won't appear in output
+  // Sub mode row: always present in addsub section; greyed when op=add
+  const subRow = document.getElementById('pr-submode-row');
+  if (subRow) {
+    subRow.style.opacity = isSub ? '1' : '0.4';
+    subRow.style.pointerEvents = isSub ? '' : 'none';
+  }
+  // Dim Group B image bank when it won't appear separately in output
   const showBankB = !isSub || pr_subMode === 'separate';
   const bankB = document.getElementById('pr-bank-addsub-b');
   if (bankB) { bankB.style.opacity = showBankB ? '1' : '0.3'; bankB.style.pointerEvents = showBankB ? '' : 'none'; }
@@ -309,8 +314,8 @@ function prUpdateSubUI() {
   const lblB = document.getElementById('pr-label-b');
   if (isSub) {
     if (lblA) lblA.textContent = 'Total (minuend)';
-    if (lblB) lblB.textContent = pr_subMode === 'total' ? 'Take away (not shown)' :
-                                 pr_subMode === 'crossed' ? 'Cross out — how many' : 'Take away';
+    if (lblB) lblB.textContent = pr_subMode === 'total'    ? 'Take away (not shown)' :
+                                 pr_subMode === 'crossed'  ? 'Cross out — how many'  : 'Take away';
   } else {
     if (lblA) lblA.textContent = 'Group A';
     if (lblB) lblB.textContent = 'Group B';
@@ -373,7 +378,7 @@ function restorePRConfig(cfg) {
   pr_mode    = cfg.mode    || 'count';
   pr_display = cfg.display || 'array';
   pr_align   = cfg.align   || 'left';
-  pr_countA  = cfg.countA  || 5;
+  pr_countA  = cfg.countA  || 7;
   pr_imageA  = cfg.imageIdA|| 'tiger';
   pr_countB  = cfg.countB  || 3;
   pr_imageB  = cfg.imageIdB|| 'apple';
@@ -403,7 +408,7 @@ function restorePRConfig(cfg) {
 
 function prResetState() {
   pr_mode = 'count'; pr_display = 'array'; pr_align = 'left';
-  pr_countA = 5; pr_imageA = 'tiger';
+  pr_countA = 7; pr_imageA = 'tiger';
   pr_countB = 3; pr_imageB = 'apple';
   pr_op = 'add'; pr_subMode = 'crossed';
   pr_cols = 5; pr_mrows = 2; pr_mcols = 5;
@@ -413,16 +418,20 @@ function prResetState() {
 //
 // pictorialSVG(cfg) → SVG string
 //
-// Clustered layout uses the Vogel/sunflower golden-angle spiral:
-//   r_i = C * sqrt(i),  theta_i = i * golden_angle
-//   C = R*2 + 5  →  minimum item-to-item distance = C > 2*R  (no overlap guaranteed)
+// Clustered layout: hexagonal close-packing with step HX = S (same as array).
+//   Even rows:  x = col * HX
+//   Odd rows:   x = col * HX + HX/2   (offset by half a step)
+//   Vertical:   y = row * HY  where HY = HX * √3/2 ≈ 0.866 * HX
+//
+//   Nearest-neighbour distance = HX = S = R*2+GAP in all 6 directions.
+//   Identical spacing to array mode — no overlap, guaranteed.
 //
 function pictorialSVG(cfg) {
   const {
     mode    = 'count',
     display = 'array',
     align   = 'left',
-    countA  = 5,  imageIdA = 'tiger',
+    countA  = 7,  imageIdA = 'tiger',
     countB  = 3,  imageIdB = 'apple',
     op      = 'add',
     subMode = 'crossed',
@@ -434,6 +443,8 @@ function pictorialSVG(cfg) {
   const GAP  = 10;           // gap between items in array/frame
   const PAD  = 22;           // outer SVG padding
   const S    = R * 2 + GAP;  // array grid step = 54
+  const HX   = S;                           // cluster horizontal step (= array step)
+  const HY   = HX * (Math.sqrt(3) / 2);    // cluster vertical step ≈ 46.8
   const FONT = "'Proxima Soft','Nunito',sans-serif";
 
   const imgA = PR_IMAGE_BANK.find(i => i.id === imageIdA) || PR_IMAGE_BANK[0];
@@ -455,6 +466,7 @@ function pictorialSVG(cfg) {
   }
 
   // ── Array positions (with optional last-row centering) ────────────────────
+  // align='centre' shifts the partial last row so it centres under full rows.
   function arrayPts(count, perRow, ox, oy) {
     const partial = count % perRow;
     const lastRowLen = partial === 0 ? perRow : partial;
@@ -475,21 +487,22 @@ function pictorialSVG(cfg) {
     };
   }
 
-  // ── Clustered: Vogel / sunflower golden-angle spiral ─────────────────────
-  // Proved minimum pairwise distance = C (between items 0 and 1).
-  // C = R*2 + 5 ensures items never overlap (gap = 5px).
+  // ── Clustered: hexagonal close-packing ───────────────────────────────────
+  // All nearest neighbours at distance HX = S (same as array mode).
+  // cols_c chosen to give a roughly square bounding box.
   function clusterPts(count, ox, oy) {
     if (count === 0) return [];
-    const C = R * 2 + 5;         // spiral scale constant
-    const GOLDEN = 2.399963229;  // golden angle (radians) = 2π/φ²
-    const raw = Array.from({length: count}, (_, i) => {
-      if (i === 0) return { x: 0, y: 0 };
-      const r = C * Math.sqrt(i);
-      return { x: r * Math.cos(i * GOLDEN), y: r * Math.sin(i * GOLDEN) };
+    // Choose columns for a compact, roughly-square arrangement
+    const cols_c = count <= 1 ? 1 : Math.max(2, Math.round(Math.sqrt(count * 0.866)));
+    return Array.from({length: count}, (_, i) => {
+      const row = Math.floor(i / cols_c);
+      const col = i % cols_c;
+      const rowOffset = (row % 2) * (HX / 2);  // offset alternate rows for hex packing
+      return {
+        x: col * HX + rowOffset + ox + R,
+        y: row * HY + oy + R,
+      };
     });
-    const minX = Math.min(...raw.map(p => p.x));
-    const minY = Math.min(...raw.map(p => p.y));
-    return raw.map(p => ({ x: p.x - minX + ox + R, y: p.y - minY + oy + R }));
   }
 
   // ── 10-frame renderer ─────────────────────────────────────────────────────
@@ -518,16 +531,14 @@ function pictorialSVG(cfg) {
     return { w: FC * S - GAP + FP * 2, h: numFrames * (FR * S - GAP + FP * 2 + fGap) - fGap };
   }
 
-  // ── Helpers ───────────────────────────────────────────────────────────────
-
-  // Render a single group of items using the current display mode
+  // ── Render a single group using the current display mode ──────────────────
   function renderGroup(count, img, ox, oy, parts, crossFrom) {
     if (display === 'frame') {
       return renderFrames(count, img, ox, oy, parts, crossFrom);
     } else if (display === 'clustered') {
       const pts = clusterPts(count, ox, oy);
-      const maxX = Math.max(...pts.map(p => p.x + R));
-      const maxY = Math.max(...pts.map(p => p.y + R));
+      const maxX = pts.length ? Math.max(...pts.map(p => p.x + R)) : ox;
+      const maxY = pts.length ? Math.max(...pts.map(p => p.y + R)) : oy;
       pts.forEach(({x, y}, i) => parts.push(renderItem(img, x, y, crossFrom !== undefined && i >= crossFrom)));
       return { w: maxX - ox, h: maxY - oy };
     } else {
@@ -539,21 +550,19 @@ function pictorialSVG(cfg) {
     }
   }
 
-  // Render two groups side by side with operator between them
+  // ── Render two groups side by side with operator between them ─────────────
   function renderTwoGroups(parts, crossedB) {
     const OP_W = 54;
     const {w: wA, h: hA} = arrayBox(countA, cols);
     const {w: wB, h: hB} = arrayBox(countB, cols);
 
-    // For clustered, get real bounds by dry-running
+    // For clustered, get real bounds by dry-running with ox=oy=0
     let realWA = wA, realHA = hA, realWB = wB, realHB = hB;
     if (display === 'clustered') {
       const ptA = clusterPts(countA, 0, 0);
-      realWA = Math.max(...ptA.map(p => p.x + R));
-      realHA = Math.max(...ptA.map(p => p.y + R));
+      if (ptA.length) { realWA = Math.max(...ptA.map(p => p.x + R)); realHA = Math.max(...ptA.map(p => p.y + R)); }
       const ptB = clusterPts(countB, 0, 0);
-      realWB = Math.max(...ptB.map(p => p.x + R));
-      realHB = Math.max(...ptB.map(p => p.y + R));
+      if (ptB.length) { realWB = Math.max(...ptB.map(p => p.x + R)); realHB = Math.max(...ptB.map(p => p.y + R)); }
     }
 
     const maxH = Math.max(realHA, realHB);
@@ -587,14 +596,14 @@ function pictorialSVG(cfg) {
   } else if (mode === 'addsub') {
 
     if (op === 'sub' && subMode === 'total') {
-      // Minuend only
+      // Minuend only — show countA items, no crossing
       const p2 = [];
       const {w, h} = renderGroup(countA, imgA, PAD, PAD, p2);
       parts.push(...p2);
       svgW = w + PAD * 2; svgH = h + PAD * 2;
 
     } else if (op === 'sub' && subMode === 'crossed') {
-      // All countA items; last countB crossed
+      // All countA items; last countB items crossed out
       const crossFrom = Math.max(0, countA - countB);
       const p2 = [];
       const {w, h} = renderGroup(countA, imgA, PAD, PAD, p2, crossFrom);
@@ -602,8 +611,8 @@ function pictorialSVG(cfg) {
       svgW = w + PAD * 2; svgH = h + PAD * 2;
 
     } else if (display === 'frame') {
-      // Addition or sub-separate with frame: both groups in one combined frame
-      const total = op === 'add' ? countA + countB : countA + countB;
+      // Addition or sub-separate with frame: both groups fill one combined frame
+      const total = countA + countB;
       const FC = 5, FR = 2, FP = 8;
       const perFrame = FC * FR;
       const numFrames = Math.ceil(Math.max(1, total) / perFrame);
@@ -637,7 +646,7 @@ function pictorialSVG(cfg) {
     }
 
   } else if (mode === 'multiply') {
-    // Clean array only — no labels
+    // Clean array only — no labels or annotations
     const count = mrows * mcols;
     const {w, h} = arrayBox(count, mcols);
     svgW = w + PAD * 2; svgH = h + PAD * 2;
