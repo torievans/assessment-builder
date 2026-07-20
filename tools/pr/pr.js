@@ -489,15 +489,17 @@ function pictorialSVG(cfg) {
 
   // ── Clustered: hexagonal close-packing ───────────────────────────────────
   // All nearest neighbours at distance HX = S (same as array mode).
-  // cols_c chosen to give a roughly square bounding box.
+  // Row count is kept small (≤2 for counts ≤10, ≤3 for counts 11-20) so the
+  // cluster is wide and short — matching the landscape profile of the 10-frame
+  // and never taller than it.
   function clusterPts(count, ox, oy) {
     if (count === 0) return [];
-    // Choose columns for a compact, roughly-square arrangement
-    const cols_c = count <= 1 ? 1 : Math.max(2, Math.round(Math.sqrt(count * 0.866)));
+    const maxRows = count <= 10 ? 2 : 3;
+    const cols_c = Math.max(2, Math.ceil(count / maxRows));
     return Array.from({length: count}, (_, i) => {
       const row = Math.floor(i / cols_c);
       const col = i % cols_c;
-      const rowOffset = (row % 2) * (HX / 2);  // offset alternate rows for hex packing
+      const rowOffset = (row % 2) * (HX / 2);  // alternate-row hex stagger
       return {
         x: col * HX + rowOffset + ox + R,
         y: row * HY + oy + R,
