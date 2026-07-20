@@ -47,34 +47,36 @@ const COUNTER_FACE_OFFSETS = [0,10,0,0,0,0,0,0,0,0,0,0,0,0,0];
 // ── Illustration Bank ─────────────────────────────────────────────────────────
 const ILLUSTRATION_BANK = [
   // ar = width/height (measured from actual PNG files)
-  {id:'space/crescent_moon_yellow',         label:'Moon',        ar:0.883},
-  {id:'space/planet_purple',                label:'Planet',      ar:1.626},
-  {id:'animals/flamingo_pink',              label:'Flamingo',    ar:0.586},
-  {id:'animals/giraffe_orange',             label:'Giraffe',     ar:0.499},
-  {id:'animals/crocodile_green',            label:'Crocodile',   ar:2.789},
-  {id:'animals/elephant_grey',              label:'Elephant',    ar:1.463},
-  {id:'animals/rhinoceros_grey',            label:'Rhino',       ar:1.929},
-  {id:'animals/tiger_orange',               label:'Tiger',       ar:1.955},
-  {id:'animals/toucan_black',               label:'Toucan',      ar:1.494},
-  {id:'animals/hippo_purple',               label:'Hippo',       ar:1.613},
-  {id:'sports/ball_football_teal',          label:'Football',    ar:1.016},
-  {id:'sports/ball_basketball_orange',      label:'Basketball',  ar:1.000},
-  {id:'plants/palm_tree_green',             label:'Palm Tree',   ar:0.592},
-  {id:'food/fruit/apple_green',             label:'Apple',       ar:0.873},
-  {id:'food/fruit/apple_orange',            label:'Orange Apple',ar:0.900},
-  {id:'food/fruit/lemon_yellow',            label:'Lemon',       ar:0.912},
-  {id:'food/fruit/peach_orange',            label:'Peach',       ar:0.810},
-  {id:'food/fruit/watermelon_green',        label:'Watermelon',  ar:0.996},
-  {id:'food/fruit/tomato_red',              label:'Tomato',      ar:0.902},
-  {id:'food/veg/carrot_orange',             label:'Carrot',      ar:1.002},
-  {id:'food/veg/bell_pepper_orange',        label:'Pepper',      ar:0.850},
-  {id:'food/veg/broccoli_green',            label:'Broccoli',    ar:0.970},
-  {id:'food/veg/pumpkin_orange',            label:'Pumpkin',     ar:1.202},
-  {id:'food/bakery/bagel_orange',           label:'Bagel',       ar:1.103},
-  {id:'food/bakery/muffin_brown',           label:'Muffin',      ar:0.900},
-  {id:'food/bakery/pretzel_brown',          label:'Pretzel',     ar:1.064},
-  {id:'food/sweets/soft_serve_cone_orange', label:'Ice Cream',   ar:0.605},
-  {id:'food/sweets/popsicle_pink',          label:'Popsicle',    ar:0.748},
+  // dx/dy = alpha-weighted centroid offset from PNG centre, as fraction of PNG size.
+  //         Shifts the image so the visual centre of mass aligns with the circle centre.
+  {id:'space/crescent_moon_yellow',         label:'Moon',         ar:0.883, dx: 0.142, dy: 0.087},
+  {id:'space/planet_purple',                label:'Planet',       ar:1.626, dx: 0.003, dy:-0.005},
+  {id:'animals/flamingo_pink',              label:'Flamingo',     ar:0.586, dx: 0.019, dy:-0.069},
+  {id:'animals/giraffe_orange',             label:'Giraffe',      ar:0.499, dx: 0.022, dy: 0.045},
+  {id:'animals/crocodile_green',            label:'Crocodile',    ar:2.789, dx: 0.047, dy:-0.092},
+  {id:'animals/elephant_grey',              label:'Elephant',     ar:1.463, dx: 0.003, dy:-0.018},
+  {id:'animals/rhinoceros_grey',            label:'Rhino',        ar:1.929, dx: 0.093, dy:-0.015},
+  {id:'animals/tiger_orange',               label:'Tiger',        ar:1.955, dx: 0.005, dy: 0.106},
+  {id:'animals/toucan_black',               label:'Toucan',       ar:1.494, dx: 0.018, dy:-0.081},
+  {id:'animals/hippo_purple',               label:'Hippo',        ar:1.613, dx: 0.059, dy:-0.005},
+  {id:'sports/ball_football_teal',          label:'Football',     ar:1.016, dx: 0.000, dy: 0.000},
+  {id:'sports/ball_basketball_orange',      label:'Basketball',   ar:1.000, dx: 0.000, dy: 0.000},
+  {id:'plants/palm_tree_green',             label:'Palm Tree',    ar:0.592, dx:-0.058, dy:-0.050},
+  {id:'food/fruit/apple_green',             label:'Apple',        ar:0.873, dx:-0.015, dy: 0.047},
+  {id:'food/fruit/apple_orange',            label:'Orange Apple', ar:0.900, dx: 0.022, dy: 0.076},
+  {id:'food/fruit/lemon_yellow',            label:'Lemon',        ar:0.912, dx: 0.005, dy: 0.009},
+  {id:'food/fruit/peach_orange',            label:'Peach',        ar:0.810, dx: 0.006, dy: 0.039},
+  {id:'food/fruit/watermelon_green',        label:'Watermelon',   ar:0.996, dx: 0.001, dy:-0.004},
+  {id:'food/fruit/tomato_red',              label:'Tomato',       ar:0.902, dx:-0.002, dy: 0.075},
+  {id:'food/veg/carrot_orange',             label:'Carrot',       ar:1.002, dx: 0.068, dy: 0.008},
+  {id:'food/veg/bell_pepper_orange',        label:'Pepper',       ar:0.850, dx:-0.020, dy: 0.012},
+  {id:'food/veg/broccoli_green',            label:'Broccoli',     ar:0.970, dx: 0.000, dy:-0.092},
+  {id:'food/veg/pumpkin_orange',            label:'Pumpkin',      ar:1.202, dx: 0.002, dy: 0.062},
+  {id:'food/bakery/bagel_orange',           label:'Bagel',        ar:1.103, dx:-0.002, dy: 0.002},
+  {id:'food/bakery/muffin_brown',           label:'Muffin',       ar:0.900, dx: 0.006, dy:-0.009},
+  {id:'food/bakery/pretzel_brown',          label:'Pretzel',      ar:1.064, dx:-0.015, dy: 0.017},
+  {id:'food/sweets/soft_serve_cone_orange', label:'Ice Cream',    ar:0.605, dx:-0.032, dy:-0.008},
+  {id:'food/sweets/popsicle_pink',          label:'Popsicle',     ar:0.748, dx: 0.000, dy:-0.042},
 ];
 
 // ── Emoji Bank ────────────────────────────────────────────────────────────────
@@ -841,12 +843,17 @@ function pictorialSVG(cfg) {
       // for very wide/tall images those corners are well within the circle anyway.
       const url = `${ILLUS_BASE}/${img.id}.png`;
       const ar  = img.ar || 1;           // width / height from ILLUSTRATION_BANK
-      // 85% scale keeps the animal away from the circle edge; corners always inside the clip
-      const ISCL = 0.85;
+      // 78% scale: leaves clear breathing room so no illustration touches the circle edge,
+      // even for extreme aspect ratios.  The alpha-weighted centroid offset (dx/dy) shifts
+      // the image so the visual centre of mass sits at the circle centre rather than the
+      // PNG bounding-box centre — fixes illustrations that look off-centre.
+      const ISCL = 0.78;
       const iw  = (ar >= 1 ? R*2 : R*2*ar) * ISCL;
       const ih  = (ar >= 1 ? R*2/ar : R*2) * ISCL;
-      const ix  = cx - iw / 2;
-      const iy  = cy - ih / 2;
+      const idx = img.dx || 0;          // centroid x-offset (fraction of PNG width)
+      const idy = img.dy || 0;          // centroid y-offset (fraction of PNG height)
+      const ix  = cx - (0.5 + idx) * iw;
+      const iy  = cy - (0.5 + idy) * ih;
       if (illusOutline) {
         s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="#fff" stroke="#D1D5DB" stroke-width="2"/>`;
         const id = uid();
