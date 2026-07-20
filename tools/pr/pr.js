@@ -296,7 +296,6 @@ function prBankRender() {
       </div>
       <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Shape</div>
       <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">${shapeHTML}</div>
-      <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Expression</div>
       <div style="display:flex;flex-wrap:wrap;gap:4px">${faceHTML}</div>`;
 
   } else {
