@@ -818,19 +818,20 @@ function pictorialSVG(cfg) {
   const uid = () => `u${_uid++}`;
 
   // ── Single item renderer ──────────────────────────────────────────────────
-  function renderItem(img, cx, cy, crossed) {
+  // r: optional radius override (used by renderFrames for larger frame cells)
+  function renderItem(img, cx, cy, crossed, r) {
+    const IR = (r !== undefined) ? r : R;
     let s = '';
 
     if (img.type === 'counter') {
       // Shapes are their own silhouette — no circle clip.
-      // Scale 100×100 normalised space → 2R×2R, centred at (cx, cy).
-      // Face paths overlay the shape without clipping so nothing is cropped.
+      // Scale 100×100 normalised space → 2IR×2IR, centred at (cx, cy).
       const {shapeIdx, faceIdx, colourIdx} = img;
       const shape  = COUNTER_SHAPES[shapeIdx] || COUNTER_SHAPES[0];
       const face   = COUNTER_FACES[faceIdx]   || COUNTER_FACES[0];
       const colour = COUNTER_COLOURS[colourIdx] || COUNTER_COLOURS[0];
-      const sc = (R * 2) / 100;
-      s += `<g transform="translate(${cx - R},${cy - R}) scale(${sc})">`;
+      const sc = (IR * 2) / 100;
+      s += `<g transform="translate(${cx - IR},${cy - IR}) scale(${sc})">`;
       shape.paths.forEach(p => { s += `<path d="${p}" fill="${colour}"/>`; });
       const faceYOff = COUNTER_FACE_OFFSETS[faceIdx] || 0;
       if (faceYOff) s += `<g transform="translate(0,${faceYOff})">`;
@@ -839,47 +840,36 @@ function pictorialSVG(cfg) {
       s += '</g>';
 
     } else if (img.type === 'illus') {
-      // Illustration PNG, sized to exactly fill 2R in its longest dimension and
-      // scaled proportionally in the other — so the full animal is always visible.
-      // The circle clip only trims the extreme corners of the image rectangle;
-      // for very wide/tall images those corners are well within the circle anyway.
       const url = `${ILLUS_BASE}/${img.id}.png`;
-      const ar  = img.ar || 1;           // width / height from ILLUSTRATION_BANK
-      // Per-image scale: size each illustration so its bounding-box corners land at
-      // exactly 88% of R, regardless of aspect ratio.  This guarantees clear breathing
-      // room from the circle edge for every image (square images need the smallest ISCL
-      // ~0.62; extreme landscapes/portraits can go up to ~0.83).
-      // Formula: corner_dist = R·ISCL·√(1+1/ar²) for landscape, R·ISCL·√(ar²+1) for portrait.
-      // Setting corner_dist = 0.88·R → ISCL = 0.88/√(…).
+      const ar  = img.ar || 1;
       const T    = 0.88;
       const ISCL = ar >= 1
         ? T / Math.sqrt(1 + 1 / (ar * ar))
         : T / Math.sqrt(ar * ar + 1);
-      const iw  = (ar >= 1 ? R*2 : R*2*ar) * ISCL;
-      const ih  = (ar >= 1 ? R*2/ar : R*2) * ISCL;
-      const idx = img.dx || 0;          // centroid x-offset (fraction of PNG width)
-      const idy = img.dy || 0;          // centroid y-offset (fraction of PNG height)
+      const iw  = (ar >= 1 ? IR*2 : IR*2*ar) * ISCL;
+      const ih  = (ar >= 1 ? IR*2/ar : IR*2) * ISCL;
+      const idx = img.dx || 0;
+      const idy = img.dy || 0;
       const ix  = cx - (0.5 + idx) * iw;
       const iy  = cy - (0.5 + idy) * ih;
       if (illusOutline) {
-        s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="#fff" stroke="#D1D5DB" stroke-width="2"/>`;
+        s += `<circle cx="${cx}" cy="${cy}" r="${IR}" fill="#fff" stroke="#D1D5DB" stroke-width="2"/>`;
         const id = uid();
-        defs.push(`<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath>`);
+        defs.push(`<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${IR}"/></clipPath>`);
         s += `<image x="${ix}" y="${iy}" width="${iw}" height="${ih}" href="${url}" clip-path="url(#${id})" preserveAspectRatio="none"/>`;
       } else {
-        // No outline, no clip — full image as a rectangle
         s += `<image x="${ix}" y="${iy}" width="${iw}" height="${ih}" href="${url}" preserveAspectRatio="none"/>`;
       }
 
     } else {
       // Emoji
-      const fs = Math.round(R * 1.05);
-      s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="${img.bg}" stroke="${img.stroke}" stroke-width="2.5"/>`;
+      const fs = Math.round(IR * 1.05);
+      s += `<circle cx="${cx}" cy="${cy}" r="${IR}" fill="${img.bg}" stroke="${img.stroke}" stroke-width="2.5"/>`;
       s += `<text x="${cx}" y="${cy}" dominant-baseline="central" text-anchor="middle" font-size="${fs}" font-family="sans-serif">${esc(img.emoji)}</text>`;
     }
 
     if (crossed) {
-      const d = R * 0.60, sw = Math.max(2.5, R * 0.12);
+      const d = IR * 0.60, sw = Math.max(2.5, IR * 0.12);
       s += `<line x1="${cx - d}" y1="${cy - d}" x2="${cx + d}" y2="${cy + d}" stroke="#DC2626" stroke-width="${sw}" stroke-linecap="round"/>`;
       s += `<line x1="${cx + d}" y1="${cy - d}" x2="${cx - d}" y2="${cy + d}" stroke="#DC2626" stroke-width="${sw}" stroke-linecap="round"/>`;
     }
@@ -917,36 +907,45 @@ function pictorialSVG(cfg) {
   }
 
   // ── 10-frame renderer ─────────────────────────────────────────────────────
+  // Frames are laid out side-by-side (horizontal) when count > 10.
+  // FS/RF are larger than the array cell/radius so items have breathing room.
+  const F_COLS = 5, F_ROWS = 2;
+  const F_PER  = F_COLS * F_ROWS;   // 10 items per frame
+  const FS     = 68;                 // frame cell size (vs array step S=54)
+  const RF     = 26;                 // frame item radius (vs array R=22)
+  const FW     = F_COLS * FS;       // one frame width  = 340
+  const FH     = F_ROWS * FS;       // one frame height = 136
+
   function renderFrames(count, img, ox, oy, parts, crossFrom) {
-    const FC = 5, FR = 2;
-    const perFrame = FC * FR;
-    const numFrames = Math.ceil(Math.max(1, count) / perFrame);
-    const FW = FC * S, FH = FR * S;
+    const numFrames = Math.ceil(Math.max(1, count) / F_PER);
     const fGap = 16;
-    const GL = 1.5, GC = '#374151', h = GL / 2;
+    const GL = 1.5, GC = '#374151', lh = GL / 2;
 
     for (let f = 0; f < numFrames; f++) {
-      const fy = oy + f * (FH + fGap);
-      // White background (no rounded corners, no grey fill)
-      parts.push(`<rect x="${ox}" y="${fy}" width="${FW}" height="${FH}" fill="#fff"/>`);
-      // Items
-      const fs2 = f * perFrame, fc2 = Math.min(count - fs2, perFrame);
-      for (let i = 0; i < fc2; i++) {
-        const gi = fs2 + i, col = i % FC, row = Math.floor(i / FC);
-        parts.push(renderItem(img, ox + col * S + R, fy + row * S + R, crossFrom !== undefined && gi >= crossFrom));
+      const fx = ox + f * (FW + fGap);  // frames side by side
+      parts.push(`<rect x="${fx}" y="${oy}" width="${FW}" height="${FH}" fill="#fff"/>`);
+
+      // Items — centred within each cell
+      const fStart = f * F_PER, fCount = Math.min(count - fStart, F_PER);
+      for (let i = 0; i < fCount; i++) {
+        const gi = fStart + i, col = i % F_COLS, row = Math.floor(i / F_COLS);
+        const cx = fx + col * FS + FS / 2;
+        const cy = oy + row * FS + FS / 2;
+        parts.push(renderItem(img, cx, cy, crossFrom !== undefined && gi >= crossFrom, RF));
       }
-      // Grid lines drawn on top (border + internal dividers)
+
+      // Grid lines on top of items (border + internal dividers)
       const la = `stroke="${GC}" stroke-width="${GL}" stroke-linecap="square"`;
-      for (let col = 0; col <= FC; col++) {
-        const x = col === 0 ? ox + h : col === FC ? ox + FW - h : ox + col * S;
-        parts.push(`<line x1="${x}" y1="${fy + h}" x2="${x}" y2="${fy + FH - h}" ${la}/>`);
+      for (let col = 0; col <= F_COLS; col++) {
+        const x = col === 0 ? fx + lh : col === F_COLS ? fx + FW - lh : fx + col * FS;
+        parts.push(`<line x1="${x}" y1="${oy + lh}" x2="${x}" y2="${oy + FH - lh}" ${la}/>`);
       }
-      for (let row = 0; row <= FR; row++) {
-        const y = row === 0 ? fy + h : row === FR ? fy + FH - h : fy + row * S;
-        parts.push(`<line x1="${ox + h}" y1="${y}" x2="${ox + FW - h}" y2="${y}" ${la}/>`);
+      for (let row = 0; row <= F_ROWS; row++) {
+        const y = row === 0 ? oy + lh : row === F_ROWS ? oy + FH - lh : oy + row * FS;
+        parts.push(`<line x1="${fx + lh}" y1="${y}" x2="${fx + FW - lh}" y2="${y}" ${la}/>`);
       }
     }
-    return { w: FW, h: numFrames * (FH + fGap) - fGap };
+    return { w: numFrames * (FW + fGap) - fGap, h: FH };
   }
 
   // ── Render a single group ─────────────────────────────────────────────────
@@ -986,14 +985,14 @@ function pictorialSVG(cfg) {
       realWB = numB ? numWB : (ptB.length ? Math.max(...ptB.map(p => p.x + R)) : S);
       realHB = numB ? S     : (ptB.length ? Math.max(...ptB.map(p => p.y + R)) : S);
     } else if (display === 'frame') {
-      const FC = 5, FR = 2, fGap = 16;
-      const FW = FC * S, FH = FR * S;
-      const numFA = Math.ceil(Math.max(1, countA) / (FC * FR));
-      const numFB = Math.ceil(Math.max(1, countB) / (FC * FR));
-      realWA = numA ? numWA : FW;
-      realHA = numA ? S     : numFA * (FH + fGap) - fGap;
-      realWB = numB ? numWB : FW;
-      realHB = numB ? S     : numFB * (FH + fGap) - fGap;
+      const fGap = 16;
+      const numFA = Math.ceil(Math.max(1, countA) / F_PER);
+      const numFB = Math.ceil(Math.max(1, countB) / F_PER);
+      // Frames are horizontal: width = numFrames × FW + gaps, height = FH
+      realWA = numA ? numWA : numFA * (FW + fGap) - fGap;
+      realHA = FH;
+      realWB = numB ? numWB : numFB * (FW + fGap) - fGap;
+      realHB = FH;
     } else {
       // array: use actual rendered width — min(count, cols) items per row, not the full cols
       realWA = numA ? numWA : Math.min(Math.max(1, countA), cols) * S - GAP;
@@ -1053,23 +1052,32 @@ function pictorialSVG(cfg) {
       const {w, h} = renderGroup(countA, imgA, PAD, PAD, parts, crossFrom);
       svgW = w + PAD * 2; svgH = h + PAD * 2;
     } else if (display === 'frame') {
+      // Combined frame for addsub: A items first, then B items, side-by-side frames when > 10
       const total = countA + countB;
-      const FC = 5, FR = 2, FP = 8;
-      const perFrame = FC * FR, numFrames = Math.ceil(Math.max(1, total) / perFrame);
-      const innerW = FC * S - GAP + FP * 2, innerH = FR * S - GAP + FP * 2;
-      const fGap = 12;
-      svgW = innerW + PAD * 2; svgH = numFrames * (innerH + fGap) - fGap + PAD * 2;
+      const fGap = 16;
+      const numFrames = Math.ceil(Math.max(1, total) / F_PER);
+      svgW = PAD + numFrames * (FW + fGap) - fGap + PAD;
+      svgH = FH + PAD * 2;
+      const GL = 1.5, GC = '#374151', lh = GL / 2;
       for (let f = 0; f < numFrames; f++) {
-        const fy = PAD + f * (innerH + fGap);
-        parts.push(`<rect x="${PAD}" y="${fy}" width="${innerW}" height="${innerH}" rx="7" fill="#F8F9FB" stroke="#C8CDD4" stroke-width="2"/>`);
-        for (let r = 0; r < FR; r++) for (let c = 0; c < FC; c++) {
-          const cx = PAD + FP + c * S + R, cy = fy + FP + r * S + R;
-          parts.push(`<circle cx="${cx}" cy="${cy}" r="${R}" fill="#EAECF0" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4,3"/>`);
+        const fx = PAD + f * (FW + fGap);
+        const fy = PAD;
+        parts.push(`<rect x="${fx}" y="${fy}" width="${FW}" height="${FH}" fill="#fff"/>`);
+        const fStart = f * F_PER, fCount = Math.min(total - fStart, F_PER);
+        for (let i = 0; i < fCount; i++) {
+          const gi = fStart + i, col = i % F_COLS, row = Math.floor(i / F_COLS);
+          const cx = fx + col * FS + FS / 2;
+          const cy = fy + row * FS + FS / 2;
+          parts.push(renderItem(gi < countA ? imgA : imgB, cx, cy, gi >= countA && op === 'sub', RF));
         }
-        const fs2 = f * perFrame, fc2 = Math.min(total - fs2, perFrame);
-        for (let i = 0; i < fc2; i++) {
-          const gi = fs2 + i, col = i % FC, row = Math.floor(i / FC);
-          parts.push(renderItem(gi < countA ? imgA : imgB, PAD + FP + col * S + R, fy + FP + row * S + R, gi >= countA && op === 'sub'));
+        const la = `stroke="${GC}" stroke-width="${GL}" stroke-linecap="square"`;
+        for (let col = 0; col <= F_COLS; col++) {
+          const x = col === 0 ? fx + lh : col === F_COLS ? fx + FW - lh : fx + col * FS;
+          parts.push(`<line x1="${x}" y1="${fy + lh}" x2="${x}" y2="${fy + FH - lh}" ${la}/>`);
+        }
+        for (let row = 0; row <= F_ROWS; row++) {
+          const y = row === 0 ? fy + lh : row === F_ROWS ? fy + FH - lh : fy + row * FS;
+          parts.push(`<line x1="${fx + lh}" y1="${y}" x2="${fx + FW - lh}" y2="${y}" ${la}/>`);
         }
       }
     } else {
