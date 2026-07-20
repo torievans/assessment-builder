@@ -82,7 +82,7 @@ const ILLUSTRATION_BANK = [
 // ── Emoji Bank ────────────────────────────────────────────────────────────────
 const PR_IMAGE_BANK = [
   {id:'tiger',     label:'Tiger',     emoji:'🐯', bg:'#FDE8C8', stroke:'#D97706'},
-  {id:'dog',       label:'Dog',       emoji:'🐶', bg:'#EDD9C0', stroke:'#92400E'},
+  {id:'rabbit',    label:'Rabbit',    emoji:'🐰', bg:'#F5E6E8', stroke:'#D97B9A'},
   {id:'cat',       label:'Cat',       emoji:'🐱', bg:'#E8E8E8', stroke:'#6B7280'},
   {id:'frog',      label:'Frog',      emoji:'🐸', bg:'#C8EDD8', stroke:'#065F46'},
   {id:'butterfly', label:'Butterfly', emoji:'🦋', bg:'#DDD9F5', stroke:'#4C1D95'},
@@ -104,9 +104,9 @@ let pr_mode         = 'count';
 let pr_display      = 'array';    // 'array' | 'frame' | 'clustered'
 let pr_align        = 'left';     // 'left' | 'centre'  (array only)
 let pr_countA       = 7;
-let pr_imageA       = 'tiger';    // imageId: plain string (emoji), 'counter:S:F:C', 'illus:path'
+let pr_imageA       = 'illus:space/crescent_moon_yellow';    // imageId: plain string (emoji), 'counter:S:F:C', 'illus:path'
 let pr_countB       = 3;
-let pr_imageB       = 'apple';
+let pr_imageB       = 'illus:space/crescent_moon_yellow';
 let pr_op           = 'add';
 let pr_subMode      = 'crossed';  // 'total' | 'separate' | 'crossed'
 let pr_cols         = 5;
@@ -117,8 +117,8 @@ let pr_numA        = false;       // show Group A as a numeral instead of images
 let pr_numB        = false;       // show Group B as a numeral instead of images
 let pr_showEq      = false;       // show = sign after Group B in addsub
 // Image bank UI state
-let pr_bankA        = 'emoji';    // 'emoji' | 'counter' | 'illus'
-let pr_bankB        = 'emoji';
+let pr_bankA        = 'illus';    // 'emoji' | 'counter' | 'illus'
+let pr_bankB        = 'illus';
 let pr_bankGroupSel = 'A';        // which group's bank is displayed
 // Counter sub-state (shape, face, colour indices)
 let pr_counterA     = {s:0, f:0, c:0};
@@ -399,9 +399,9 @@ function prPanelHTML() {
       <!-- Bank type tabs -->
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <div class="tog-row" style="flex-wrap:wrap;gap:4px">
-          <button class="tog-btn active" data-banktab="emoji"   onclick="prBankSetTab(this)">🐯 Emojis</button>
+          <button class="tog-btn active" data-banktab="illus"   onclick="prBankSetTab(this)">🦒 Illustrations</button>
           <button class="tog-btn"        data-banktab="counter" onclick="prBankSetTab(this)">😊 Friendly Counters</button>
-          <button class="tog-btn"        data-banktab="illus"   onclick="prBankSetTab(this)">🦒 Illustrations</button>
+          <button class="tog-btn"        data-banktab="emoji"   onclick="prBankSetTab(this)">🐯 Emojis</button>
         </div>
         <!-- Circle outline toggle — shown inline next to tabs when illustrations are active -->
         <div id="pr-illus-opts" style="display:none">
@@ -571,7 +571,7 @@ function prSetMode(btn) {
   document.querySelectorAll('[data-prmode]').forEach(b =>
     b.classList.toggle('active', b.dataset.prmode === pr_mode));
   // Seed Group B from Group A when first entering addsub (B still at default 'apple')
-  if (pr_mode === 'addsub' && pr_imageB === 'apple') {
+  if (pr_mode === 'addsub' && pr_imageB === 'illus:space/crescent_moon_yellow') {
     pr_imageB   = pr_imageA;
     pr_bankB    = pr_bankA;
     pr_counterB = {...pr_counterA};
@@ -729,9 +729,9 @@ function restorePRConfig(cfg) {
   pr_display      = cfg.display      || 'array';
   pr_align        = cfg.align        || 'left';
   pr_countA       = cfg.countA       || 7;
-  pr_imageA       = cfg.imageIdA     || 'tiger';
+  pr_imageA       = cfg.imageIdA     || 'illus:space/crescent_moon_yellow';
   pr_countB       = cfg.countB       || 3;
-  pr_imageB       = cfg.imageIdB     || 'apple';
+  pr_imageB       = cfg.imageIdB     || 'illus:space/crescent_moon_yellow';
   pr_op           = cfg.op           || 'add';
   pr_subMode      = cfg.subMode      || 'crossed';
   pr_cols         = cfg.cols         || 5;
@@ -771,13 +771,13 @@ function restorePRConfig(cfg) {
 
 function prResetState() {
   pr_mode = 'count'; pr_display = 'array'; pr_align = 'left';
-  pr_countA = 7; pr_imageA = 'tiger';
-  pr_countB = 3; pr_imageB = 'apple';
+  pr_countA = 7; pr_imageA = 'illus:space/crescent_moon_yellow';
+  pr_countB = 3; pr_imageB = 'illus:space/crescent_moon_yellow';
   pr_op = 'add'; pr_subMode = 'crossed';
   pr_cols = 5; pr_mrows = 2; pr_mcols = 5;
   pr_illusOutline = true;
   pr_numA = false; pr_numB = false; pr_showEq = false;
-  pr_bankA = 'emoji'; pr_bankB = 'emoji'; pr_bankGroupSel = 'A';
+  pr_bankA = 'illus'; pr_bankB = 'illus'; pr_bankGroupSel = 'A';
   pr_counterA = {s:0, f:0, c:0}; pr_counterB = {s:1, f:2, c:3};
 }
 
@@ -914,25 +914,35 @@ function pictorialSVG(cfg) {
 
   // ── 10-frame renderer ─────────────────────────────────────────────────────
   function renderFrames(count, img, ox, oy, parts, crossFrom) {
-    const FC = 5, FR = 2, FP = 8;
+    const FC = 5, FR = 2;
     const perFrame = FC * FR;
     const numFrames = Math.ceil(Math.max(1, count) / perFrame);
-    const innerW = FC * S - GAP + FP * 2, innerH = FR * S - GAP + FP * 2;
-    const fGap = 12;
+    const FW = FC * S, FH = FR * S;
+    const fGap = 16;
+    const GL = 1.5, GC = '#374151', h = GL / 2;
+
     for (let f = 0; f < numFrames; f++) {
-      const fy = oy + f * (innerH + fGap);
-      parts.push(`<rect x="${ox}" y="${fy}" width="${innerW}" height="${innerH}" rx="7" fill="#F8F9FB" stroke="#C8CDD4" stroke-width="2"/>`);
-      for (let r = 0; r < FR; r++) for (let c = 0; c < FC; c++) {
-        const cx = ox + FP + c * S + R, cy = fy + FP + r * S + R;
-        parts.push(`<circle cx="${cx}" cy="${cy}" r="${R}" fill="#EAECF0" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4,3"/>`);
-      }
+      const fy = oy + f * (FH + fGap);
+      // White background (no rounded corners, no grey fill)
+      parts.push(`<rect x="${ox}" y="${fy}" width="${FW}" height="${FH}" fill="#fff"/>`);
+      // Items
       const fs2 = f * perFrame, fc2 = Math.min(count - fs2, perFrame);
       for (let i = 0; i < fc2; i++) {
         const gi = fs2 + i, col = i % FC, row = Math.floor(i / FC);
-        parts.push(renderItem(img, ox + FP + col * S + R, fy + FP + row * S + R, crossFrom !== undefined && gi >= crossFrom));
+        parts.push(renderItem(img, ox + col * S + R, fy + row * S + R, crossFrom !== undefined && gi >= crossFrom));
+      }
+      // Grid lines drawn on top (border + internal dividers)
+      const la = `stroke="${GC}" stroke-width="${GL}" stroke-linecap="square"`;
+      for (let col = 0; col <= FC; col++) {
+        const x = col === 0 ? ox + h : col === FC ? ox + FW - h : ox + col * S;
+        parts.push(`<line x1="${x}" y1="${fy + h}" x2="${x}" y2="${fy + FH - h}" ${la}/>`);
+      }
+      for (let row = 0; row <= FR; row++) {
+        const y = row === 0 ? fy + h : row === FR ? fy + FH - h : fy + row * S;
+        parts.push(`<line x1="${ox + h}" y1="${y}" x2="${ox + FW - h}" y2="${y}" ${la}/>`);
       }
     }
-    return { w: FC * S - GAP + FP * 2, h: numFrames * (FR * S - GAP + FP * 2 + fGap) - fGap };
+    return { w: FW, h: numFrames * (FH + fGap) - fGap };
   }
 
   // ── Render a single group ─────────────────────────────────────────────────
@@ -994,7 +1004,7 @@ function pictorialSVG(cfg) {
     // Group B
     if (numB) {
       const fs = Math.min(72, maxH * 0.85);
-      parts.push(`<text x="${PAD + realWA + OP_W + realWB / 2}" y="${svgH / 2}" dominant-baseline="central" text-anchor="middle" font-size="${fs}" font-weight="700" font-family="${FONT}" fill="#1F2937">${countB}</text>`);
+      parts.push(`<text x="${PAD + realWA + OP_W}" y="${svgH / 2}" dominant-baseline="central" text-anchor="start" font-size="${fs}" font-weight="700" font-family="${FONT}" fill="#1F2937">${countB}</text>`);
     } else {
       renderGroup(countB, imgB, PAD + realWA + OP_W, PAD + (maxH - realHB) / 2, parts, crossedB ? 0 : undefined);
     }
@@ -1059,5 +1069,5 @@ function pictorialSVG(cfg) {
   const svgStyle = align === 'left'
     ? 'background:#fff;border-radius:4px;margin-right:auto;margin-left:0'
     : 'background:#fff;border-radius:4px';
-  return `<svg viewBox="0 0 ${Math.ceil(svgW)} ${Math.ceil(svgH)}" xmlns="http://www.w3.org/2000/svg" style="${svgStyle}">${defsBlock}${parts.join('')}</svg>`;
+  return `<svg viewBox="0 0 ${Math.ceil(svgW)} ${Math.ceil(svgH)}" width="100%" xmlns="http://www.w3.org/2000/svg" style="${svgStyle}">${defsBlock}${parts.join('')}</svg>`;
 }
