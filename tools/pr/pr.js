@@ -151,7 +151,10 @@ function counterSVG(shapeIdx, faceIdx, colourIdx, size) {
   const colour = COUNTER_COLOURS[colourIdx] || COUNTER_COLOURS[0];
   const sp = shape.paths.map(p => `<path d="${p}" fill="${colour}"/>`).join('');
   const fp = face.map(p => `<path d="${p.d}" fill="${p.f}"/>`).join('');
-  return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">${sp}${fp}</svg>`;
+  // Expanded viewBox (-15 to 115) lets features that poke slightly outside the
+  // circle boundary exist in the coordinate space; the circle clipPath then
+  // clips them with a smooth round edge rather than a hard rectangular crop.
+  return `<svg viewBox="-15 -15 130 130" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="tc"><circle cx="50" cy="50" r="50"/></clipPath></defs><g clip-path="url(#tc)">${sp}${fp}</g></svg>`;
 }
 
 // ── Image Bank UI ─────────────────────────────────────────────────────────────
