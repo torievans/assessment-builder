@@ -49,10 +49,10 @@ const ILLUSTRATION_BANK = [
   // ar = width/height (measured from actual PNG files)
   // dx/dy = alpha-weighted centroid offset from PNG centre, as fraction of PNG size.
   //         Shifts the image so the visual centre of mass aligns with the circle centre.
-  {id:'space/crescent_moon_yellow',         label:'Moon',         ar:0.883, dx: 0.142, dy: 0.087},
+  {id:'space/crescent_moon_yellow',         label:'Moon',         ar:0.883, dx: 0.000, dy: 0.000},
   {id:'space/planet_purple',                label:'Planet',       ar:1.626, dx: 0.003, dy:-0.005},
   {id:'animals/flamingo_pink',              label:'Flamingo',     ar:0.586, dx: 0.019, dy:-0.069},
-  {id:'animals/giraffe_orange',             label:'Giraffe',      ar:0.499, dx: 0.022, dy: 0.045},
+  {id:'animals/giraffe_orange',             label:'Giraffe',      ar:0.499, dx: 0.000, dy: 0.000},
   {id:'animals/crocodile_green',            label:'Crocodile',    ar:2.789, dx: 0.047, dy:-0.092},
   {id:'animals/elephant_grey',              label:'Elephant',     ar:1.463, dx: 0.003, dy:-0.018},
   {id:'animals/rhinoceros_grey',            label:'Rhino',        ar:1.929, dx: 0.093, dy:-0.015},
