@@ -553,16 +553,22 @@ function pictorialSVG(cfg) {
   // ── Render two groups side by side with operator between them ─────────────
   function renderTwoGroups(parts, crossedB) {
     const OP_W = 54;
-    const {w: wA, h: hA} = arrayBox(countA, cols);
-    const {w: wB, h: hB} = arrayBox(countB, cols);
+    const {h: hA} = arrayBox(countA, cols);
+    const {h: hB} = arrayBox(countB, cols);
 
-    // For clustered, get real bounds by dry-running with ox=oy=0
-    let realWA = wA, realHA = hA, realWB = wB, realHB = hB;
+    // Width: clustered uses dry-run bounds; array uses FULL perRow width so that
+    // centred partial rows (which shift items right) never overflow the SVG boundary.
+    let realWA, realHA = hA, realWB, realHB = hB;
     if (display === 'clustered') {
       const ptA = clusterPts(countA, 0, 0);
-      if (ptA.length) { realWA = Math.max(...ptA.map(p => p.x + R)); realHA = Math.max(...ptA.map(p => p.y + R)); }
+      realWA = ptA.length ? Math.max(...ptA.map(p => p.x + R)) : S;
+      realHA = ptA.length ? Math.max(...ptA.map(p => p.y + R)) : S;
       const ptB = clusterPts(countB, 0, 0);
-      if (ptB.length) { realWB = Math.max(...ptB.map(p => p.x + R)); realHB = Math.max(...ptB.map(p => p.y + R)); }
+      realWB = ptB.length ? Math.max(...ptB.map(p => p.x + R)) : S;
+      realHB = ptB.length ? Math.max(...ptB.map(p => p.y + R)) : S;
+    } else {
+      realWA = cols * S - GAP;   // full column width — room for centred items
+      realWB = cols * S - GAP;
     }
 
     const maxH = Math.max(realHA, realHB);
@@ -640,8 +646,9 @@ function pictorialSVG(cfg) {
       }
 
     } else {
-      // Addition or sub-separate: two groups side by side
-      const {svgW: w2, svgH: h2} = renderTwoGroups(parts, op === 'sub');
+      // Addition or sub-separate: two groups side by side, no crossing
+      // (crossing is only used in subMode='crossed' which is handled above)
+      const {svgW: w2, svgH: h2} = renderTwoGroups(parts, false);
       svgW = w2; svgH = h2;
     }
 
