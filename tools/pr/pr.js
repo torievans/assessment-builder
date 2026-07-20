@@ -479,7 +479,7 @@ function prPanelHTML() {
           </label>
           <label style="font-size:10px;cursor:pointer;display:flex;align-items:center;gap:4px;margin-top:3px;color:var(--muted)">
             <input type="checkbox" id="pr-show-eq" onchange="pr_showEq=this.checked;autoPreviewPR()">
-            Show = sign
+            Show = ?
           </label>
         </div>
       </div>
@@ -966,7 +966,7 @@ function pictorialSVG(cfg) {
   // ── Render two groups side by side ────────────────────────────────────────
   function renderTwoGroups(parts, crossedB) {
     const OP_W = 54;
-    const EQ_W = 54;
+    const EQ_W = 80;
     const {h: hA} = arrayBox(countA, cols);
     const {h: hB} = arrayBox(countB, cols);
     // Estimate numeral rendered width (px at ≈72px font) so = sits OP_W/2 after numeral
@@ -1022,7 +1022,7 @@ function pictorialSVG(cfg) {
 
     // Optional = sign
     if (showEq) {
-      parts.push(`<text x="${PAD + realWA + OP_W + realWB + EQ_W / 2}" y="${svgH / 2}" dominant-baseline="central" text-anchor="middle" font-size="30" font-weight="700" font-family="${FONT}" fill="#374151">=</text>`);
+      parts.push(`<text x="${PAD + realWA + OP_W + realWB + EQ_W / 2}" y="${svgH / 2}" dominant-baseline="central" text-anchor="middle" font-size="30" font-weight="700" font-family="${FONT}" fill="#374151">= ?</text>`);
     }
 
     return { svgW, svgH };
