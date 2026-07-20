@@ -482,8 +482,8 @@ function pictorialSVG(cfg) {
 
   function arrayBox(count, perRow) {
     return {
-      w: Math.min(count, perRow) * S - GAP,
-      h: Math.ceil(count / perRow) * S - GAP,
+      w: perRow * S - GAP,                     // fixed canvas width based on perRow
+      h: Math.ceil(count / perRow) * S - GAP,  // exact height based on count
     };
   }
 
@@ -660,5 +660,10 @@ function pictorialSVG(cfg) {
     arrayPts(count, mcols, PAD, PAD).forEach(({x, y}) => parts.push(renderItem(imgA, x, y)));
   }
 
-  return `<svg viewBox="0 0 ${Math.ceil(svgW)} ${Math.ceil(svgH)}" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border-radius:4px">${parts.join('')}</svg>`;
+  // For left alignment, push SVG to the left of its flex container (preview box).
+  // For centre, the preview box default (justify-content:center) centres it.
+  const svgStyle = align === 'left'
+    ? 'background:#fff;border-radius:4px;margin-right:auto;margin-left:0'
+    : 'background:#fff;border-radius:4px';
+  return `<svg viewBox="0 0 ${Math.ceil(svgW)} ${Math.ceil(svgH)}" xmlns="http://www.w3.org/2000/svg" style="${svgStyle}">${parts.join('')}</svg>`;
 }
