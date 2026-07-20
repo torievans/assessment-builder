@@ -1005,32 +1005,34 @@ function pictorialSVG(cfg) {
     const svgW = PAD + realWA + OP_W + realWB + (showEq ? EQ_W : 0) + PAD;
     const svgH = maxH + PAD * 2;
 
-    // Group A
+    // Operator / numerals align with the top row of whichever group has images.
+    // For frame cells the first-row centre is FS/2; for array/clustered it's R.
+    const opY = PAD + (display === 'frame' ? FS / 2 : R);
+    const fs  = Math.min(72, maxH * 0.85);
+
+    // Group A — top-aligned
     if (numA) {
-      const fs = Math.min(72, maxH * 0.85);
-      parts.push(`<text x="${PAD + realWA / 2}" y="${svgH / 2}" dominant-baseline="central" text-anchor="middle" font-size="${fs}" font-weight="700" font-family="${FONT}" fill="#1F2937">${countA}</text>`);
+      parts.push(`<text x="${PAD + realWA / 2}" y="${opY}" dominant-baseline="central" text-anchor="middle" font-size="${fs}" font-weight="700" font-family="${FONT}" fill="#1F2937">${countA}</text>`);
     } else {
-      renderGroup(countA, imgA, PAD, PAD + (maxH - realHA) / 2, parts, undefined, true);
+      renderGroup(countA, imgA, PAD, PAD, parts, undefined, true);
     }
 
     // Operator
     const sym = op === 'add' ? '+' : '−';
-    parts.push(`<text x="${PAD + realWA + OP_W / 2}" y="${svgH / 2}" dominant-baseline="central" text-anchor="middle" font-size="30" font-weight="700" font-family="${FONT}" fill="#374151">${sym}</text>`);
+    parts.push(`<text x="${PAD + realWA + OP_W / 2}" y="${opY}" dominant-baseline="central" text-anchor="middle" font-size="30" font-weight="700" font-family="${FONT}" fill="#374151">${sym}</text>`);
 
-    // Group B
+    // Group B — top-aligned
     if (numB) {
-      const fs = Math.min(72, maxH * 0.85);
-      parts.push(`<text x="${PAD + realWA + OP_W}" y="${svgH / 2}" dominant-baseline="central" text-anchor="start" font-size="${fs}" font-weight="700" font-family="${FONT}" fill="#1F2937">${countB}</text>`);
+      parts.push(`<text x="${PAD + realWA + OP_W}" y="${opY}" dominant-baseline="central" text-anchor="start" font-size="${fs}" font-weight="700" font-family="${FONT}" fill="#1F2937">${countB}</text>`);
     } else {
-      renderGroup(countB, imgB, PAD + realWA + OP_W, PAD + (maxH - realHB) / 2, parts, crossedB ? 0 : undefined, true);
+      renderGroup(countB, imgB, PAD + realWA + OP_W, PAD, parts, crossedB ? 0 : undefined, true);
     }
 
-    // Optional = ? (= at operator size, ? at numeral size)
+    // Optional = ?
     if (showEq) {
-      const qfs = Math.min(72, maxH * 0.85);
       const eqX = PAD + realWA + OP_W + realWB;
-      parts.push(`<text x="${eqX + 22}" y="${svgH / 2}" dominant-baseline="central" text-anchor="middle" font-size="30" font-weight="700" font-family="${FONT}" fill="#374151">=</text>`);
-      parts.push(`<text x="${eqX + 65}" y="${svgH / 2}" dominant-baseline="central" text-anchor="middle" font-size="${qfs}" font-weight="700" font-family="${FONT}" fill="#1F2937">?</text>`);
+      parts.push(`<text x="${eqX + 22}" y="${opY}" dominant-baseline="central" text-anchor="middle" font-size="30" font-weight="700" font-family="${FONT}" fill="#374151">=</text>`);
+      parts.push(`<text x="${eqX + 65}" y="${opY}" dominant-baseline="central" text-anchor="middle" font-size="${fs}" font-weight="700" font-family="${FONT}" fill="#1F2937">?</text>`);
     }
 
     return { svgW, svgH };
