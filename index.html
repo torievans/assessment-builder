@@ -343,6 +343,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
           <button class="tool-tab" data-tool="nt" onclick="openTool('nt')">🔢 Number Track</button>
           <button class="tool-tab" data-tool="nr" onclick="openTool('nr')">🔴 Number Reps</button>
           <button class="tool-tab" data-tool="pv" onclick="openTool('pv')">📊 PV Representations</button>
+          <button class="tool-tab" data-tool="pr" onclick="openTool('pr')">🖼 Pictorial Reps</button>
         </div>
 
         <!-- ── Number Line panel ── -->
@@ -424,6 +425,11 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 
         <!-- PV Representations panel -->
         <div class="tool-panel hidden" id="tool-panel-pv">
+          <div class="form-card"></div>
+        </div>
+
+        <!-- Pictorial Representations panel -->
+        <div class="tool-panel hidden" id="tool-panel-pr">
           <div class="form-card"></div>
         </div>
 
@@ -543,6 +549,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 <script src="tools/nt/nt.js"></script>
 <script src="tools/nr/nr.js"></script>
 <script src="tools/pv/pv.js"></script>
+<script src="tools/pr/pr.js"></script>
 <script>
 'use strict';
 /* ── Palette & SVG renderers (from tools/shared.js) ── */
@@ -1263,6 +1270,7 @@ function addToolQuestion(type){
   else if(type==='nt'){text=document.getElementById('nt-text').value.trim();answer=document.getElementById('nt-answer').value.trim();}
   else if(type==='nr'){text=document.getElementById('nr-text').value.trim();answer=document.getElementById('nr-answer').value.trim();}
   else if(type==='pv'){text=document.getElementById('pv-text').value.trim();answer=document.getElementById('pv-answer').value.trim();}
+  else if(type==='pr'){text=document.getElementById('pr-text').value.trim();answer=document.getElementById('pr-answer').value.trim();}
   else{text=document.getElementById('text-q-text').value.trim();answer=document.getElementById('text-answer').value.trim();}
   if(!text){alert('Please enter the question text.');return;}
   if(!answer){alert('Please enter the correct answer.');return;}
@@ -1276,6 +1284,7 @@ function addToolQuestion(type){
       else if(type==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');return;}q.cfg=cfg;}
       else if(type==='nr'){q.cfg=getNRConfig();}
       else if(type==='pv'){q.cfg=getPVConfig();}
+      else if(type==='pr'){q.cfg=getPRConfig();}
       else if(type==='custom'&&customImageDataURL){const fname=`q-${String(editingQId).padStart(4,'0')}.png`;const imagePath=`question-data/${nuggetSlug(activeId)}/${fname}`;saveImageToFile(activeId,fname,customImageDataURL);q.imagePath=imagePath;q.image='';}
     }
     editingQId=null;setEditMode(false,type);save();renderQuestions();renderSidebar();renderWorkflow();closeTool();return;
@@ -1287,6 +1296,7 @@ function addToolQuestion(type){
   else if(type==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');nextQId--;return;}q.cfg=cfg;}
   else if(type==='nr'){q.cfg=getNRConfig();}
   else if(type==='pv'){q.cfg=getPVConfig();}
+  else if(type==='pr'){q.cfg=getPRConfig();}
   else if(type==='custom'){
     if(!customImageDataURL&&!customImagePath){alert('Please add an image for this question.');nextQId--;return;}
     q.visualType='custom';
@@ -1354,6 +1364,7 @@ async function batchExport(){
         const q=ns.questions[i];const qFolder=`${folder}/q${String(i+1).padStart(2,'0')}`;
         let imgFile=null;
         if((q.visualType==='nl'||q.visualType==='bm'||q.visualType==='nt'||q.visualType==='nr')&&q.cfg&&Object.keys(q.cfg).length){try{const svg=q.visualType==='nl'?numberLineSVG(q.cfg):q.visualType==='bm'?barModelSVG(q.cfg):q.visualType==='nr'?nrRenderFromCfg(q.cfg):numberTrackSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${qFolder}/image.png`,png);imgFile='image.png';}catch(e){console.warn(e);}}
+        else if(q.visualType==='pr'&&q.cfg&&q.cfg.mode){try{const svg=pictorialSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${qFolder}/image.png`,png);imgFile='image.png';}catch(e){console.warn(e);}}
         else if(q.visualType==='pv'&&q.cfg&&q.cfg.n!=null){try{const blob=await pvGetPngBlob(q.cfg);zip.file(`${qFolder}/image.png`,blob);imgFile='image.png';}catch(e){console.warn(e);}}
         else if(q.image){imgFile=q.image.split('/').pop();}
         zip.file(`${qFolder}/question.xml`,qtiXML(q,imgFile));
@@ -1422,6 +1433,10 @@ function editQuestion(qid){
     document.getElementById('pv-text').value=q.text;
     document.getElementById('pv-answer').value=q.answer||'';
     restorePVConfig(q.cfg||{});
+  } else if(type==='pr'){
+    document.getElementById('pr-text').value=q.text;
+    document.getElementById('pr-answer').value=q.answer||'';
+    restorePRConfig(q.cfg||{});
   } else if(type==='custom'){
     document.getElementById('custom-q-text').value=q.text;
     document.getElementById('custom-answer').value=q.answer||'';
@@ -1439,7 +1454,7 @@ function editQuestion(qid){
 }
 
 function setEditMode(editing,type){
-  const types=type?[type]:['nl','bm','text','custom','nt','nr','pv'];
+  const types=type?[type]:['nl','bm','text','custom','nt','nr','pv','pr'];
   types.forEach(t=>{
     const btn=document.getElementById('add-q-btn-'+t);if(!btn)return;
     btn.textContent=editing?'✓ Update Question':'+ Add Question';
@@ -1667,7 +1682,8 @@ document.querySelector('#tool-panel-bm .form-card').innerHTML = bmPanelHTML();
 document.querySelector('#tool-panel-nt .form-card').innerHTML = ntPanelHTML();
 document.querySelector('#tool-panel-nr .form-card').innerHTML = nrPanelHTML();
 document.querySelector('#tool-panel-pv .form-card').innerHTML = pvPanelHTML();
-initState();loadStorage();renderSidebar();initNLPanel();initBMPanel();initNRPanel();updateFolderStatus();
+document.querySelector('#tool-panel-pr .form-card').innerHTML = prPanelHTML();
+initState();loadStorage();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();
 </script>
 </body>
 </html>
