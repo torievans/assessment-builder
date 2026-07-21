@@ -1,7 +1,7 @@
 {
   "nuggetId": 1,
   "status": "in-progress",
-  "nextQId": 1034,
+  "nextQId": 1035,
   "questions": [
     {
       "id": 1032,
@@ -30,6 +30,37 @@
         "numA": false,
         "numB": false,
         "showEq": false
+      },
+      "updatedAt": "2026-07-21",
+      "createdAt": "2026-07-21"
+    },
+    {
+      "id": 1034,
+      "text": "How many apples are there?",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pr",
+      "cfg": {
+        "mode": "addsub",
+        "display": "array",
+        "align": "left",
+        "countA": 10,
+        "imageIdA": "counter:1:12:5",
+        "countB": 3,
+        "imageIdB": "counter:5:12:5",
+        "op": "add",
+        "subMode": "crossed",
+        "cols": 5,
+        "mrows": 2,
+        "mcols": 5,
+        "illusOutline": true,
+        "imgScale": 1,
+        "numA": false,
+        "numB": false,
+        "showEq": true
       },
       "updatedAt": "2026-07-21",
       "createdAt": "2026-07-21"
