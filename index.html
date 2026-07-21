@@ -1201,6 +1201,7 @@ function setStatus(s){if(!activeId)return;nuggetState[activeId].status=s;save();
 
 /* ── QA Bot ── */
 let qaSpellChecker=null;
+let qaIssueFixes=new Map(); // iid → {qId, fix}
 async function ensureSpellChecker(){
   if(qaSpellChecker)return;
   const [aff,dic]=await Promise.all([
@@ -1221,14 +1222,11 @@ async function runQABot(){
 }
 function closeQABotModal(e){if(!e||e.target===document.getElementById('qabot-modal'))document.getElementById('qabot-modal').classList.add('hidden');}
 const QA_ALLOWED_WORDS=new Set([
-  // British English
   'maths','colour','colours','coloured','favourite','favourites','recognise','recognises',
   'analyse','organise','practise','programme','whilst','amongst','behaviour','honour',
-  // Maths education
   'counters','cubes','numicon','subitise','subitising','partitioning','commutativity',
   'addend','minuend','subtrahend','regroup','regrouping','unitise','unitising',
   'tens','ones','abacus','bead','beads','numberline','partitioned',
-  // Common abbreviations / math punctuation context
   'eg','ie','nd','rd','st','th',
 ]);
 const QA_MISSPELLINGS=[
@@ -1247,35 +1245,53 @@ const QA_MISSPELLINGS=[
 function qaSpagCheck(text,answer){
   const issues=[];const t=text||'';const tr=t.trim();
   const endsEq=/=/.test(tr)&&/[=\d]\s*$/.test(tr);
+  const isQ=/^(how many|how much|what is|what are|what|which|who|where|can you|is there|are there|count the|find the|work out|how)/i.test(tr);
   if(!tr){issues.push({level:'error',msg:'Question text is empty'});return issues;}
-  if(/^[a-z]/.test(tr)) issues.push({level:'error',msg:'Starts with a lowercase letter'});
-  if(!endsEq&&!/[.?!]$/.test(tr)) issues.push({level:'warning',msg:'No trailing punctuation — should end with . or ?'});
-  if(!endsEq&&/^(how many|how much|what is|what are|what|which|who|where|can you|is there|are there|count the|find the|work out|how)/i.test(tr)&&!/[?]$/.test(tr))
-    issues.push({level:'error',msg:"Looks like a question but doesn't end with ?"});
-  if(/  /.test(t)) issues.push({level:'error',msg:'Double space detected'});
-  if(t!==tr) issues.push({level:'warning',msg:'Has leading or trailing whitespace'});
-  // Curated misspellings
+  if(/^[a-z]/.test(tr)) issues.push({level:'error',msg:'Starts with a lowercase letter',fix:{type:'capitalise'}});
+  if(!endsEq&&!/[.?!]$/.test(tr)) issues.push({level:'warning',msg:'No trailing punctuation — should end with . or ?',fix:{type:'addPunct',char:isQ?'?':'.'}});
+  if(!endsEq&&isQ&&!/[?]$/.test(tr)) issues.push({level:'error',msg:"Looks like a question but doesn't end with ?",fix:{type:'addPunct',char:'?'}});
+  if(/  /.test(t)) issues.push({level:'error',msg:'Double space detected',fix:{type:'removeDoubleSpaces'}});
+  if(t!==tr) issues.push({level:'warning',msg:'Has leading or trailing whitespace',fix:{type:'trimWhitespace'}});
   const caughtWords=new Set();
   for(const [wrong,right] of QA_MISSPELLINGS)
-    if(new RegExp('\\b'+wrong+'\\b','i').test(tr)){issues.push({level:'error',msg:`Misspelling: "${wrong}" → "${right}"`});caughtWords.add(wrong.toLowerCase());}
-  // Dictionary spell check
+    if(new RegExp('\\b'+wrong+'\\b','i').test(tr)){issues.push({level:'error',msg:`Misspelling: "${wrong}" → "${right}"`,fix:{type:'replace',from:wrong,to:right}});caughtWords.add(wrong.toLowerCase());}
   if(qaSpellChecker){
     const words=tr.match(/\b[a-zA-Z]{3,}\b/g)||[];
     for(const word of words){
-      if(/^[A-Z]/.test(word))continue;  // skip potential proper nouns
+      if(/^[A-Z]/.test(word))continue;
       const lw=word.toLowerCase();
       if(QA_ALLOWED_WORDS.has(lw)||caughtWords.has(lw))continue;
       if(!qaSpellChecker.check(word)){
         const sugg=qaSpellChecker.suggest(word).slice(0,3);
-        issues.push({level:'error',msg:`Misspelling: "${word}"${sugg.length?` — did you mean: ${sugg.join(', ')}?`:''}`});
+        issues.push({level:'error',msg:`Misspelling: "${word}"${sugg.length?` — did you mean: ${sugg.join(', ')}?`:''}`,fix:sugg.length?{type:'replace',from:word,to:sugg[0]}:null});
       }
     }
   }
   if(!answer||!String(answer).trim()) issues.push({level:'error',msg:'Answer is empty'});
   return issues;
 }
+function qaApplyFix(qId,fix){
+  if(!activeId||!fix)return;
+  const q=nuggetState[activeId].questions.find(q=>q.id===qId);
+  if(!q)return;
+  switch(fix.type){
+    case 'capitalise':
+      if(q.text&&/^[a-z]/.test(q.text))q.text=q.text.charAt(0).toUpperCase()+q.text.slice(1);break;
+    case 'addPunct':
+      if(q.text&&!/[.?!]$/.test(q.text.trimEnd()))q.text=q.text.trimEnd()+fix.char;break;
+    case 'removeDoubleSpaces':
+      if(q.text)q.text=q.text.replace(/  +/g,' ');break;
+    case 'trimWhitespace':
+      if(q.text)q.text=q.text.trim();break;
+    case 'replace':
+      if(q.text&&fix.from&&fix.to)q.text=q.text.replace(new RegExp('\\b'+fix.from+'\\b','i'),fix.to);break;
+  }
+  save();renderQuestions();
+}
 function qaAcceptIssue(id){
   const el=document.getElementById('qaissue-'+id);if(!el)return;
+  const meta=qaIssueFixes.get(id);
+  if(meta?.fix)qaApplyFix(meta.qId,meta.fix);
   el.classList.add('qa-accepted');
   const btn=el.querySelector('[data-accept]');if(btn){btn.textContent='✓';btn.disabled=true;}
   const card=el.closest('[data-qacard]');
@@ -1283,6 +1299,7 @@ function qaAcceptIssue(id){
     card.classList.add('qa-card-accepted');
 }
 function renderQABotModal(flagged,total){
+  qaIssueFixes.clear();
   const clean=total-flagged.length;let html='';
   if(!flagged.length){
     html=`<div style="text-align:center;padding:28px 0"><div style="font-size:44px;margin-bottom:10px">✅</div><div style="font-size:16px;font-weight:700;color:#059669">All ${total} question${total!==1?'s':''} passed</div><div style="font-size:13px;color:#6B7280;margin-top:5px">No SPaG issues detected</div></div>`;
@@ -1291,12 +1308,17 @@ function renderQABotModal(flagged,total){
     flagged.forEach(({q,num,issues})=>{
       const hasErr=issues.some(i=>i.level==='error');
       const bg=hasErr?'#FEF2F2':'#FFFBEB',bd=hasErr?'#FECACA':'#FDE68A';
-      const rows=issues.map(({level,msg},idx)=>{
+      const rows=issues.map(({level,msg,fix},idx)=>{
         const iid=`${num}-${idx}`;
+        qaIssueFixes.set(iid,{qId:q.id,fix:fix||null});
+        const hasFix=!!fix;
+        const btnStyle=hasFix
+          ?'flex-shrink:0;font-size:11px;font-weight:700;color:#fff;background:#4F46E5;border:none;border-radius:4px;padding:2px 9px;cursor:pointer;white-space:nowrap;font-family:var(--font)'
+          :'flex-shrink:0;font-size:11px;font-weight:600;color:#6B7280;background:#F3F4F6;border:1px solid #E5E7EB;border-radius:4px;padding:2px 8px;cursor:pointer;white-space:nowrap;font-family:var(--font)';
         return `<div id="qaissue-${iid}" style="display:flex;align-items:flex-start;gap:6px;font-size:12.5px;padding:3px 0">
           <span style="color:${level==='error'?'#DC2626':'#D97706'};flex-shrink:0;font-size:8px;margin-top:3px">⬤</span>
           <span style="color:${level==='error'?'#B91C1C':'#92400E'};line-height:1.45;flex:1">${msg}</span>
-          <button data-accept="${iid}" style="flex-shrink:0;font-size:11px;font-weight:600;color:#6B7280;background:#F3F4F6;border:1px solid #E5E7EB;border-radius:4px;padding:2px 8px;cursor:pointer;white-space:nowrap;font-family:var(--font)">Accept</button>
+          <button data-accept="${iid}" style="${btnStyle}">${hasFix?'Fix →':'Accept'}</button>
         </div>`;
       }).join('');
       html+=`<div data-qacard style="background:${bg};border:1px solid ${bd};border-radius:10px;padding:12px 14px;margin-bottom:10px;transition:background .3s,border-color .3s">
