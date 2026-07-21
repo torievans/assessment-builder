@@ -1735,10 +1735,12 @@ function generateScaffoldingXLSX(){
       assessRows.push([nuggetName,assessName,'','','','','',gid,false]);
     });
   }
+  const fragmentsRows=[['Nugget Name','Fragment Name','Type','Difficulty (?)','Tags']];
+  for(const nid of checkedIds){fragmentsRows.push([nuggetDisplayName(nid),'CENTURY Explains','Slideshow','','']);}
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Name','Subject','Level','Tags','Description'],['','Mathematics','Primary','','']]),'Courses');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(topicsRows),'Topics, Subtopics & Nuggets');
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Nugget Name','Fragment Name','Type','Difficulty (?)','Tags']]),'Fragments');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(fragmentsRows),'Fragments');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(assessRows),'Assessments');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Nugget Name','Assessment Name','Prerequisites','Question Group Name','Marks','Type','Question Id']]),'Mocks');
   XLSX.writeFile(wb,`course-scaffolding-${new Date().toISOString().slice(0,10)}.xlsx`);
