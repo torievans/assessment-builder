@@ -33,37 +33,6 @@
       },
       "updatedAt": "2026-07-21",
       "createdAt": "2026-07-21"
-    },
-    {
-      "id": 1033,
-      "text": "How many moons are there?",
-      "answer": "7",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "pr",
-      "cfg": {
-        "mode": "count",
-        "display": "array",
-        "align": "left",
-        "countA": 7,
-        "imageIdA": "illus:space/crescent_moon_yellow",
-        "countB": 3,
-        "imageIdB": "illus:space/crescent_moon_yellow",
-        "op": "add",
-        "subMode": "crossed",
-        "cols": 5,
-        "mrows": 2,
-        "mcols": 5,
-        "illusOutline": true,
-        "imgScale": 1,
-        "numA": false,
-        "numB": false,
-        "showEq": false
-      },
-      "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
     }
   ]
 }
