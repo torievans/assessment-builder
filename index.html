@@ -1517,13 +1517,13 @@ async function batchExport(){
       const n=NUGGETS.find(n=>n.id===nid),ns=nuggetState[nid];
       const folder=n.name.replace(/[^a-z0-9]+/gi,'_').slice(0,40);
       for(let i=0;i<ns.questions.length;i++){
-        const q=ns.questions[i];const qFolder=`${folder}/q${String(i+1).padStart(2,'0')}`;
+        const q=ns.questions[i];const qPad=String(i+1).padStart(2,'0');const imgName=`q${qPad}.png`;
         let imgFile=null;
-        if((q.visualType==='nl'||q.visualType==='bm'||q.visualType==='nt'||q.visualType==='nr')&&q.cfg&&Object.keys(q.cfg).length){try{const svg=q.visualType==='nl'?numberLineSVG(q.cfg):q.visualType==='bm'?barModelSVG(q.cfg):q.visualType==='nr'?nrRenderFromCfg(q.cfg):numberTrackSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${qFolder}/image.png`,png);imgFile='image.png';}catch(e){console.warn(e);}}
-        else if(q.visualType==='pr'&&q.cfg&&q.cfg.mode){try{const svg=pictorialSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${qFolder}/image.png`,png);imgFile='image.png';}catch(e){console.warn(e);}}
-        else if(q.visualType==='pv'&&q.cfg&&q.cfg.n!=null){try{const blob=await pvGetPngBlob(q.cfg);zip.file(`${qFolder}/image.png`,blob);imgFile='image.png';}catch(e){console.warn(e);}}
+        if((q.visualType==='nl'||q.visualType==='bm'||q.visualType==='nt'||q.visualType==='nr')&&q.cfg&&Object.keys(q.cfg).length){try{const svg=q.visualType==='nl'?numberLineSVG(q.cfg):q.visualType==='bm'?barModelSVG(q.cfg):q.visualType==='nr'?nrRenderFromCfg(q.cfg):numberTrackSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${folder}/${imgName}`,png);imgFile=imgName;}catch(e){console.warn(e);}}
+        else if(q.visualType==='pr'&&q.cfg&&q.cfg.mode){try{const svg=pictorialSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${folder}/${imgName}`,png);imgFile=imgName;}catch(e){console.warn(e);}}
+        else if(q.visualType==='pv'&&q.cfg&&q.cfg.n!=null){try{const blob=await pvGetPngBlob(q.cfg);zip.file(`${folder}/${imgName}`,blob);imgFile=imgName;}catch(e){console.warn(e);}}
         else if(q.image){imgFile=q.image.split('/').pop();}
-        zip.file(`${qFolder}/question.xml`,qtiXML(q,imgFile));
+        zip.file(`${folder}/q${qPad}.xml`,qtiXML(q,imgFile));
       }
     }
     const blob=await zip.generateAsync({type:'blob'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`y1-maths-qti-${new Date().toISOString().slice(0,10)}.zip`;a.click();URL.revokeObjectURL(a.href);
