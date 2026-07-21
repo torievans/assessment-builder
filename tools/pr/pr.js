@@ -244,8 +244,8 @@ function prBankRender() {
       const sel = selId === img.id;
       return `<button class="pr-img-btn${sel ? ' selected' : ''}"
         title="${img.label}" onclick="${fn}('${img.id}')"
-        style="width:46px;height:46px;background:${img.bg};border-color:${sel ? img.stroke : 'transparent'}">
-        <span style="font-size:22px;line-height:1;display:block">${img.emoji}</span>
+        style="width:38px;height:38px;background:${img.bg};border-color:${sel ? img.stroke : 'transparent'}">
+        <span style="font-size:18px;line-height:1;display:block">${img.emoji}</span>
       </button>`;
     }).join('');
 
@@ -306,8 +306,8 @@ function prBankRender() {
       const url = `${ILLUS_BASE}/${img.id}.png`;
       return `<button class="pr-img-btn${sel ? ' selected' : ''}"
         title="${img.label}" onclick="${fn}('illus:${img.id}')"
-        style="width:52px;height:52px;padding:2px;background:#f4f5f6;border-color:${sel ? '#555' : 'transparent'};border-width:${sel ? 2 : 1}px;border-style:solid">
-        <img src="${url}" width="46" height="46"
+        style="width:40px;height:40px;padding:2px;background:#f4f5f6;border-color:${sel ? '#555' : 'transparent'};border-width:${sel ? 2 : 1}px;border-style:solid">
+        <img src="${url}" width="34" height="34"
              style="object-fit:contain;display:block;margin:0 auto">
       </button>`;
     }).join('');
