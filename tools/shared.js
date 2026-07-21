@@ -687,7 +687,23 @@ function svgToPng(svgStr) {
     const blob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const img = new Image();
-    img.onload = () => { ctx.drawImage(img, 0, 0, w, h); URL.revokeObjectURL(url); cv.toBlob(res, 'image/png'); };
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, w, h);
+      URL.revokeObjectURL(url);
+      // Enforce min aspect ratio (width ≥ 1.8× height) to prevent scrolling in CENTURY
+      const MIN_ASPECT = 1.8;
+      if (cv.width < cv.height * MIN_ASPECT) {
+        const w2 = Math.ceil(cv.height * MIN_ASPECT);
+        const cv2 = document.createElement('canvas');
+        cv2.width = w2; cv2.height = cv.height;
+        const ctx2 = cv2.getContext('2d');
+        ctx2.fillStyle = '#fff'; ctx2.fillRect(0, 0, w2, cv.height);
+        ctx2.drawImage(cv, (w2 - cv.width) / 2, 0);
+        cv2.toBlob(res, 'image/png');
+      } else {
+        cv.toBlob(res, 'image/png');
+      }
+    };
     img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('SVG render failed')); };
     img.src = url;
   });
