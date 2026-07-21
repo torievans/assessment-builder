@@ -8,7 +8,7 @@ let pv_missingVals=new Set();
 let pv_blkColors={1000:'#788CB4',100:'#50B4A0',10:'#F0B478',1:'#C86464'};
 let pv_pvColors={};
 const PV_FONT="'Proxima Soft','Nunito','Arial Rounded MT Bold',sans-serif";
-const PV_GAP=6,PV_PAD=20,PV_CELL=10,PV_DEP=4,PV_CTR=44;
+const PV_GAP=6,PV_PAD=16,PV_CELL=16,PV_DEP=6,PV_CTR=44;
 const PV_BLK_PER_ROW={1000:3,100:3,10:5,1:5};
 const PV_FULL_PARTS=[
   {val:1000000,label:'Millions',         abbr:'M',  defColor:'#288C50'},
@@ -102,7 +102,7 @@ function pvRenderToCanvas(cv,cfg,scale){
     let totalW=PV_PAD*2;
     if(repType==='numbers'&&numEqMode!=='none')totalW+=numW+eqW;
     sizes.forEach((sz,i)=>{totalW+=sz.w+(i>0?(repType==='numbers'?plusW:SEC_GAP):0);});
-    const lw=Math.max(totalW,200),lh=Math.max(maxH+PV_PAD*2,80);
+    const lw=Math.max(totalW,100),lh=Math.max(maxH+PV_PAD*2,80);
     const ctx=pvSetupCanvas(cv,lw,lh,scale);
     let cx=PV_PAD;
     if(repType==='numbers'&&numEqMode==='before'){
