@@ -1566,6 +1566,20 @@ function qtiXML(q,imgFile,nuggetTitle,qNum){
 
 </assessmentItem>`;
 }
+async function inlineSVGImages(svgStr){
+  const matches=[...svgStr.matchAll(/href="(https?:\/\/[^"]+)"/g)];
+  if(!matches.length)return svgStr;
+  const cache={};
+  await Promise.all(matches.map(async m=>{
+    const url=m[1];
+    if(cache[url])return;
+    try{
+      const resp=await fetch(url);const blob=await resp.blob();
+      cache[url]=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(blob);});
+    }catch(e){console.warn('inlineSVGImages: failed to fetch',url,e);}
+  }));
+  return svgStr.replace(/href="(https?:\/\/[^"]+)"/g,(_,url)=>cache[url]?`href="${cache[url]}"`:_);
+}
 async function batchExport(){
   const checked=[...document.querySelectorAll('.ex-cb:checked')].map(c=>parseInt(c.id.replace('ec-','')));
   if(!checked.length){alert('Select at least one nugget.');return;}
@@ -1581,7 +1595,7 @@ async function batchExport(){
         const q=ns.questions[i];const qPad=String(i+1).padStart(2,'0');const imgName=`q${qPad}.png`;
         let imgFile=null;
         if((q.visualType==='nl'||q.visualType==='bm'||q.visualType==='nt'||q.visualType==='nr')&&q.cfg&&Object.keys(q.cfg).length){try{const svg=q.visualType==='nl'?numberLineSVG(q.cfg):q.visualType==='bm'?barModelSVG(q.cfg):q.visualType==='nr'?nrRenderFromCfg(q.cfg):numberTrackSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${folder}/${imgName}`,png);imgFile=imgName;}catch(e){console.warn(e);}}
-        else if(q.visualType==='pr'&&q.cfg&&q.cfg.mode){try{const svg=pictorialSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${folder}/${imgName}`,png);imgFile=imgName;}catch(e){console.warn(e);}}
+        else if(q.visualType==='pr'&&q.cfg&&q.cfg.mode){try{const svg=await inlineSVGImages(pictorialSVG(q.cfg));const png=await svgToPng(svg);zip.file(`${folder}/${imgName}`,png);imgFile=imgName;}catch(e){console.warn(e);}}
         else if(q.visualType==='pv'&&q.cfg&&q.cfg.n!=null){try{const blob=await pvGetPngBlob(q.cfg);zip.file(`${folder}/${imgName}`,blob);imgFile=imgName;}catch(e){console.warn(e);}}
         else if(q.image){imgFile=q.image.split('/').pop();}
         zip.file(`${folder}/${slug}-q${qPad}.xml`,qtiXML(q,imgFile,n.name,i+1));
