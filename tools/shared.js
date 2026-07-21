@@ -677,7 +677,7 @@ function svgToPng(svgStr) {
     div.innerHTML = svgStr;
     const el = div.querySelector('svg');
     const vb = (el?.getAttribute('viewBox') || '0 0 460 120').split(/\s+/).map(Number);
-    const w = vb[2], h = vb[3], sc = 4;
+    const w = vb[2], h = vb[3], sc = 6;
     const cv = document.createElement('canvas');
     cv.width = w * sc; cv.height = h * sc;
     const ctx = cv.getContext('2d');
