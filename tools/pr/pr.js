@@ -112,6 +112,7 @@ let pr_cols         = 5;
 let pr_mrows        = 2;
 let pr_mcols        = 5;
 let pr_illusOutline = true;       // show circle outline under illustrations
+let pr_imgScale    = 1.0;         // image scale multiplier (1.0 = default)
 let pr_numA        = false;       // show Group A as a numeral instead of images
 let pr_numB        = false;       // show Group B as a numeral instead of images
 let pr_showEq      = false;       // show = sign after Group B in addsub
@@ -414,6 +415,14 @@ function prPanelHTML() {
               onchange="pr_illusOutline=this.checked;autoPreviewPR()">
             Circle outline
           </label>
+        </div>
+        <!-- Image scale slider — always visible -->
+        <div style="display:flex;align-items:center;gap:6px;white-space:nowrap">
+          <span style="font-size:11px;color:var(--muted)">Size</span>
+          <input type="range" id="pr-img-scale" min="0.5" max="1.5" step="0.05" value="1"
+            style="width:80px;cursor:pointer;accent-color:var(--accent)"
+            oninput="pr_imgScale=parseFloat(this.value);document.getElementById('pr-img-scale-val').textContent=Math.round(this.value*100)+'%';autoPreviewPR()">
+          <span id="pr-img-scale-val" style="font-size:11px;color:var(--muted);min-width:30px">100%</span>
         </div>
       </div>
       <!-- Bank content -->
@@ -723,6 +732,7 @@ function getPRConfig() {
     mrows:        pr_mrows,
     mcols:        pr_mcols,
     illusOutline: pr_illusOutline,
+    imgScale:     pr_imgScale,
     numA:         pr_numA,
     numB:         pr_numB,
     showEq:       pr_showEq,
@@ -744,6 +754,7 @@ function restorePRConfig(cfg) {
   pr_mrows        = cfg.mrows        || 2;
   pr_mcols        = cfg.mcols        || 5;
   pr_illusOutline = cfg.illusOutline !== false;
+  pr_imgScale     = cfg.imgScale ?? 1.0;
   pr_numA         = !!cfg.numA;
   pr_numB         = !!cfg.numB;
   pr_showEq       = !!cfg.showEq;
@@ -757,6 +768,9 @@ function restorePRConfig(cfg) {
   sv('pr-addsub-cb', pr_countB);
   sv('pr-mrows', pr_mrows);     sv('pr-mcols', pr_mcols);
   sv('pr-cols-in', pr_cols);
+  sv('pr-img-scale', pr_imgScale);
+  const scaleVal = document.getElementById('pr-img-scale-val');
+  if (scaleVal) scaleVal.textContent = Math.round(pr_imgScale * 100) + '%';
   const sc = (id, v) => { const e = document.getElementById(id); if (e) e.checked = v; };
   sc('pr-illus-outline', pr_illusOutline);
   sc('pr-num-a',   pr_numA);
@@ -800,6 +814,7 @@ function pictorialSVG(cfg) {
     cols        = 5,
     mrows       = 2,  mcols = 5,
     illusOutline = true,
+    imgScale = 1.0,
     numA    = false,
     numB    = false,
     showEq  = false,
@@ -834,8 +849,8 @@ function pictorialSVG(cfg) {
       const shape  = COUNTER_SHAPES[shapeIdx] || COUNTER_SHAPES[0];
       const face   = faceIdx >= 0 ? (COUNTER_FACES[faceIdx] || COUNTER_FACES[0]) : [];
       const colour = COUNTER_COLOURS[colourIdx] || COUNTER_COLOURS[0];
-      const sc = (IR * 2) / 100;
-      s += `<g transform="translate(${cx - IR},${cy - IR}) scale(${sc})">`;
+      const sc = (IR * 2 * imgScale) / 100;
+      s += `<g transform="translate(${cx - IR * imgScale},${cy - IR * imgScale}) scale(${sc})">`;
       shape.paths.forEach(p => { s += `<path d="${p}" fill="${colour}"/>`; });
       if (face.length) {
         const faceYOff = COUNTER_FACE_OFFSETS[faceIdx] || 0;
@@ -849,7 +864,7 @@ function pictorialSVG(cfg) {
       const url = `${ILLUS_BASE}/${img.id}.png`;
       const ar  = img.ar || 1;
       // Without the circle clip there's nothing to trim corners, so scale up a bit
-      const T    = illusOutline ? 0.88 : 1.1;
+      const T    = (illusOutline ? 0.88 : 1.1) * imgScale;
       const ISCL = ar >= 1
         ? T / Math.sqrt(1 + 1 / (ar * ar))
         : T / Math.sqrt(ar * ar + 1);
@@ -870,7 +885,7 @@ function pictorialSVG(cfg) {
 
     } else {
       // Emoji
-      const fs = Math.round(IR * 1.05);
+      const fs = Math.round(IR * 1.05 * imgScale);
       s += `<circle cx="${cx}" cy="${cy}" r="${IR}" fill="${img.bg}" stroke="${img.stroke}" stroke-width="2.5"/>`;
       s += `<text x="${cx}" y="${cy}" dominant-baseline="central" text-anchor="middle" font-size="${fs}" font-family="sans-serif">${esc(img.emoji)}</text>`;
     }
