@@ -568,6 +568,7 @@ function prPanelHTML() {
     <div class="preview-box" id="pr-preview"><p class="preview-empty">Configure above to preview.</p></div>
     <div class="form-actions">
       <button class="btn btn-blue" id="add-q-btn-pr" onclick="addToolQuestion('pr')">+ Add Question</button>
+      <button class="btn-create-more" onclick="openSharedBatch('pr')">⊞ Create more like this</button>
       <button class="btn btn-ghost" onclick="closeTool()">Cancel</button>
     </div>
   `;
