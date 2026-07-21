@@ -820,9 +820,9 @@ function pictorialSVG(cfg) {
     showEq  = false,
   } = cfg;
 
-  const R    = 22;
-  const GAP  = 10;
-  const PAD  = 22;
+  const R    = 22 * imgScale;
+  const GAP  = 10 * imgScale;
+  const PAD  = 22 * imgScale;
   const S    = R * 2 + GAP;
   const HX   = S;
   const HY   = HX * (Math.sqrt(3) / 2);
@@ -849,8 +849,8 @@ function pictorialSVG(cfg) {
       const shape  = COUNTER_SHAPES[shapeIdx] || COUNTER_SHAPES[0];
       const face   = faceIdx >= 0 ? (COUNTER_FACES[faceIdx] || COUNTER_FACES[0]) : [];
       const colour = COUNTER_COLOURS[colourIdx] || COUNTER_COLOURS[0];
-      const sc = (IR * 2 * imgScale) / 100;
-      s += `<g transform="translate(${cx - IR * imgScale},${cy - IR * imgScale}) scale(${sc})">`;
+      const sc = (IR * 2) / 100;
+      s += `<g transform="translate(${cx - IR},${cy - IR}) scale(${sc})">`;
       shape.paths.forEach(p => { s += `<path d="${p}" fill="${colour}"/>`; });
       if (face.length) {
         const faceYOff = COUNTER_FACE_OFFSETS[faceIdx] || 0;
@@ -864,7 +864,7 @@ function pictorialSVG(cfg) {
       const url = `${ILLUS_BASE}/${img.id}.png`;
       const ar  = img.ar || 1;
       // Without the circle clip there's nothing to trim corners, so scale up a bit
-      const T    = (illusOutline ? 0.88 : 1.1) * imgScale;
+      const T    = illusOutline ? 0.88 : 1.1;
       const ISCL = ar >= 1
         ? T / Math.sqrt(1 + 1 / (ar * ar))
         : T / Math.sqrt(ar * ar + 1);
@@ -885,7 +885,7 @@ function pictorialSVG(cfg) {
 
     } else {
       // Emoji
-      const fs = Math.round(IR * 1.05 * imgScale);
+      const fs = Math.round(IR * 1.05);
       s += `<circle cx="${cx}" cy="${cy}" r="${IR}" fill="${img.bg}" stroke="${img.stroke}" stroke-width="2.5"/>`;
       s += `<text x="${cx}" y="${cy}" dominant-baseline="central" text-anchor="middle" font-size="${fs}" font-family="sans-serif">${esc(img.emoji)}</text>`;
     }
@@ -933,8 +933,8 @@ function pictorialSVG(cfg) {
   // FS/RF are larger than the array cell/radius so items have breathing room.
   const F_COLS = 5, F_ROWS = 2;
   const F_PER  = F_COLS * F_ROWS;   // 10 items per frame
-  const FS     = 68;                 // frame cell size (vs array step S=54)
-  const RF     = 26;                 // frame item radius (vs array R=22)
+  const FS     = 68 * imgScale;      // frame cell size (vs array step S=54)
+  const RF     = 26 * imgScale;     // frame item radius (vs array R=22)
   const FW     = F_COLS * FS;       // one frame width  = 340
   const FH     = F_ROWS * FS;       // one frame height = 136
 
