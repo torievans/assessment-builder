@@ -1,7 +1,7 @@
 {
   "nuggetId": 1,
   "status": "in-progress",
-  "nextQId": 1042,
+  "nextQId": 1043,
   "questions": [
     {
       "id": 1032,
@@ -270,6 +270,27 @@
         "total": 13,
         "colorIdx": 5,
         "multi": true
+      },
+      "updatedAt": "2026-07-21",
+      "createdAt": "2026-07-21"
+    },
+    {
+      "id": 1042,
+      "text": "What number is missing from the number line?",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "13",
+        "lineStyle": "terminate",
+        "colour": "purple"
       },
       "updatedAt": "2026-07-21",
       "createdAt": "2026-07-21"
