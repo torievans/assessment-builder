@@ -1,7 +1,7 @@
 {
   "nuggetId": 1,
   "status": "in-progress",
-  "nextQId": 1040,
+  "nextQId": 1041,
   "questions": [
     {
       "id": 1032,
@@ -208,6 +208,34 @@
         "dispMode": "standalone",
         "numEqMode": "none",
         "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-07-21",
+      "createdAt": "2026-07-21"
+    },
+    {
+      "id": 1040,
+      "text": "What number is missing from the part whole model?",
+      "answer": "10",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 13,
+        "repType": "numbers",
+        "dispMode": "partwhole",
+        "numEqMode": "none",
+        "missingVals": [
+          10
+        ],
         "blkColors": {
           "1": "#C86464",
           "10": "#F0B478",
