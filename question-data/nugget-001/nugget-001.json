@@ -1,6 +1,38 @@
 {
   "nuggetId": 1,
-  "status": "not-started",
-  "nextQId": 1032,
-  "questions": []
+  "status": "in-progress",
+  "nextQId": 1033,
+  "questions": [
+    {
+      "id": 1032,
+      "text": "How many apples are there?",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pr",
+      "cfg": {
+        "mode": "count",
+        "display": "array",
+        "align": "centre",
+        "countA": 13,
+        "imageIdA": "illus:food/fruit/apple_orange",
+        "countB": 3,
+        "imageIdB": "illus:space/crescent_moon_yellow",
+        "op": "add",
+        "subMode": "crossed",
+        "cols": 10,
+        "mrows": 2,
+        "mcols": 5,
+        "illusOutline": true,
+        "imgScale": 1,
+        "numA": false,
+        "numB": false,
+        "showEq": false
+      },
+      "updatedAt": "2026-07-21",
+      "createdAt": "2026-07-21"
+    }
+  ]
 }
