@@ -290,13 +290,14 @@ function prBankRender() {
     }).join('');
 
     const labelStyle = 'font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px';
-    el.innerHTML = `
+    el.innerHTML = `<div style="width:100%">
       <div style="${labelStyle}">Colour</div>
       <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px">${colHTML}</div>
       <div style="${labelStyle}">Shape</div>
       <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">${shapeHTML}</div>
       <div style="${labelStyle}">Expression</div>
-      <div style="display:flex;flex-wrap:wrap;gap:4px">${faceHTML}</div>`;
+      <div style="display:flex;flex-wrap:wrap;gap:4px">${faceHTML}</div>
+    </div>`;
 
   } else {
     // Illustrations
