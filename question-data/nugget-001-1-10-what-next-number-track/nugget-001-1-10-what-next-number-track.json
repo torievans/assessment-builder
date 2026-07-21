@@ -2,20 +2,5 @@
   "nuggetId": 1,
   "status": "not-started",
   "nextQId": 1032,
-  "questions": [
-    {
-      "id": 1010,
-      "text": "What number is missing?",
-      "answer": "19",
-      "image": "",
-      "type": "exact",
-      "display": "",
-      "qaComment": "",
-      "visualType": null,
-      "cfg": {},
-      "updatedAt": "2026-07-13",
-      "createdAt": "2026-07-13",
-      "imagePath": "question-data/nugget-001-counting-forwards-1-20/q10.png"
-    }
-  ]
+  "questions": []
 }
