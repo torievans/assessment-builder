@@ -35,6 +35,27 @@
       "createdAt": "2026-07-21"
     },
     {
+      "id": 1042,
+      "text": "What number is missing from the number line?",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "13",
+        "lineStyle": "terminate",
+        "colour": "purple"
+      },
+      "updatedAt": "2026-07-21",
+      "createdAt": "2026-07-21"
+    },
+    {
       "id": 1044,
       "text": "What number is missing?",
       "answer": "13",
@@ -288,27 +309,6 @@
           "1000": "#788CB4"
         },
         "pvColors": {}
-      },
-      "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
-    },
-    {
-      "id": 1042,
-      "text": "What number is missing from the number line?",
-      "answer": "13",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nl",
-      "cfg": {
-        "start": 0,
-        "end": 20,
-        "partitions": 20,
-        "valuesGivenEvery": null,
-        "answer": "13",
-        "lineStyle": "terminate",
-        "colour": "purple"
       },
       "updatedAt": "2026-07-21",
       "createdAt": "2026-07-21"
