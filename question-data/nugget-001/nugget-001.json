@@ -15,7 +15,7 @@
       "cfg": {
         "mode": "count",
         "display": "array",
-        "align": "centre",
+        "align": "left",
         "countA": 13,
         "imageIdA": "illus:food/fruit/apple_orange",
         "countB": 3,
