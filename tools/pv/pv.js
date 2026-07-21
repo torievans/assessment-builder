@@ -181,7 +181,7 @@ function pvRenderToCanvas(cv,cfg,scale){
   }
 }
 function pvGetDataURL(cfg,scale){const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,scale||2);return cv.toDataURL('image/png');}
-function pvGetPngBlob(cfg){return new Promise((res,rej)=>{const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,3);cv.toBlob(b=>{if(b)res(b);else rej(new Error('canvas toBlob failed'));},'image/png');});}
+function pvGetPngBlob(cfg){return new Promise((res,rej)=>{const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,4);cv.toBlob(b=>{if(b)res(b);else rej(new Error('canvas toBlob failed'));},'image/png');});}
 function pvSetN(v){const n=parseFloat(v);pv_N=isNaN(n)?0:Math.max(0,n);const el=document.getElementById('pv-num-in');if(el)el.value=pv_N;autoPreviewPV();}
 function pvChangeNum(d){pvSetN(pv_N+d);}
 function pvSetRep(btn){
