@@ -91,6 +91,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .wfbtn-green{background:#059669;color:#fff}
 .wfbtn-ghost{background:transparent;border:1.5px solid #D1D5DB;color:#6B7280}
 .wfbtn-ghost:hover{border-color:#9CA3AF;color:#374151}
+.wfbtn-indigo{background:#4F46E5;color:#fff}
 /* Question grid */
 .q-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
 .q-card{background:var(--card);border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 1px 8px rgba(0,0,0,.04);overflow:hidden;display:flex;flex-direction:column}
@@ -545,6 +546,17 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
         <div id="migrate-status" style="font-size:12px;color:#6B7280;margin-top:8px"></div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- QA Bot modal -->
+<div class="modal-overlay hidden" id="qabot-modal" onclick="closeQABotModal(event)">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-hdr">
+      <div class="modal-hdr-text"><h2>🤖 QA Bot — SPaG Check</h2><p>Automatic spelling, punctuation &amp; grammar check across all questions in this nugget</p></div>
+      <button class="modal-close" onclick="closeQABotModal()">✕</button>
+    </div>
+    <div class="modal-body" id="qabot-modal-body" style="gap:0;padding-top:16px"></div>
   </div>
 </div>
 
@@ -1176,13 +1188,66 @@ function renderWorkflow(){
   const siCls={'not-started':'si-ns','in-progress':'si-ip','ready-for-qa':'si-qa','ready-for-qti':'si-rd','uploaded-to-cms':'si-up'};
   let html=`<div class="si ${siCls[st]}"><div class="si-dot"></div>${STATUS_LABELS[st]}</div>`;
   if(st==='not-started'||st==='in-progress'){html+=`<button class="wfbtn wfbtn-dark" onclick="advanceStatus()">Ready for QA →</button>`;if(st==='in-progress')html+=`<button class="wfbtn wfbtn-ghost" onclick="setStatus('not-started')">Reset</button>`;}
-  else if(st==='ready-for-qa'){html+=`<button class="wfbtn wfbtn-teal" onclick="advanceStatus()">QA Complete ✓</button>`;html+=`<button class="wfbtn wfbtn-ghost" onclick="setStatus('in-progress')">Send Back</button>`;}
-  else if(st==='ready-for-qti'){html+=`<button class="wfbtn wfbtn-green" onclick="advanceStatus()">Mark as Uploaded ✓</button>`;html+=`<button class="wfbtn wfbtn-ghost" onclick="setStatus('ready-for-qa')">Send Back to QA</button>`;}
+  else if(st==='ready-for-qa'){html+=`<button class="wfbtn wfbtn-teal" onclick="advanceStatus()">QA Complete ✓</button>`;html+=`<button class="wfbtn wfbtn-indigo" onclick="runQABot()">🤖 QA Bot</button>`;html+=`<button class="wfbtn wfbtn-ghost" onclick="setStatus('in-progress')">Send Back</button>`;}
+  else if(st==='ready-for-qti'){html+=`<button class="wfbtn wfbtn-green" onclick="advanceStatus()">Mark as Uploaded ✓</button>`;html+=`<button class="wfbtn wfbtn-indigo" onclick="runQABot()">🤖 QA Bot</button>`;html+=`<button class="wfbtn wfbtn-ghost" onclick="setStatus('ready-for-qa')">Send Back to QA</button>`;}
   else if(st==='uploaded-to-cms'){html+=`<button class="wfbtn wfbtn-ghost" onclick="setStatus('ready-for-qti')">Send Back</button>`;}
   document.getElementById('wf').innerHTML=html;
 }
 function advanceStatus(){const order=['not-started','in-progress','ready-for-qa','ready-for-qti','uploaded-to-cms'];const cur=nuggetState[activeId].status;const idx=order.indexOf(cur);if(idx<order.length-1)setStatus(order[idx+1]);}
 function setStatus(s){if(!activeId)return;nuggetState[activeId].status=s;save();renderWorkflow();renderSidebar();}
+
+/* ── QA Bot ── */
+function runQABot(){
+  if(!activeId)return;
+  const qs=nuggetState[activeId]?.questions||[];
+  if(!qs.length){alert('No questions to check.');return;}
+  const flagged=qs.map((q,i)=>({q,num:i+1,issues:qaSpagCheck(q.text,q.answer)})).filter(r=>r.issues.length);
+  renderQABotModal(flagged,qs.length);
+  document.getElementById('qabot-modal').classList.remove('hidden');
+}
+function closeQABotModal(e){if(!e||e.target===document.getElementById('qabot-modal'))document.getElementById('qabot-modal').classList.add('hidden');}
+const QA_MISSPELLINGS=[
+  ['substract','subtract'],['substraction','subtraction'],
+  ['altogeather','altogether'],['alltogether','altogether'],['altogther','altogether'],
+  ['differance','difference'],['differrence','difference'],
+  ['adition','addition'],['addision','addition'],
+  ['beetween','between'],['beteen','between'],
+  ['remainding','remaining'],['remainig','remaining'],
+  ['equels','equals'],['equas','equals'],
+  ['greather','greater'],['feewer','fewer'],['fewere','fewer'],
+  ['wiht','with'],['teh','the'],['adn','and'],['ect','etc'],
+  ['similiar','similar'],['seperate','separate'],['wich','which'],
+  ['wether','whether'],['wheather','whether'],['recieve','receive'],
+];
+function qaSpagCheck(text,answer){
+  const issues=[];const t=text||'';const tr=t.trim();
+  if(!tr){issues.push({level:'error',msg:'Question text is empty'});return issues;}
+  if(/^[a-z]/.test(tr)) issues.push({level:'error',msg:'Starts with a lowercase letter'});
+  if(!/[.?!]$/.test(tr)) issues.push({level:'warning',msg:'No trailing punctuation — should end with . or ?'});
+  if(/^(how many|how much|what is|what are|what|which|who|where|can you|is there|are there|count the|find the|work out|how)/i.test(tr)&&!/[?]$/.test(tr))
+    issues.push({level:'error',msg:"Looks like a question but doesn't end with ?"});
+  if(/  /.test(t)) issues.push({level:'error',msg:'Double space detected'});
+  if(t!==tr) issues.push({level:'warning',msg:'Has leading or trailing whitespace'});
+  for(const [wrong,right] of QA_MISSPELLINGS)
+    if(new RegExp('\\b'+wrong+'\\b','i').test(tr)) issues.push({level:'error',msg:`Misspelling: "${wrong}" → "${right}"`});
+  if(!answer||!String(answer).trim()) issues.push({level:'error',msg:'Answer is empty'});
+  return issues;
+}
+function renderQABotModal(flagged,total){
+  const clean=total-flagged.length;let html='';
+  if(!flagged.length){
+    html=`<div style="text-align:center;padding:28px 0"><div style="font-size:44px;margin-bottom:10px">✅</div><div style="font-size:16px;font-weight:700;color:#059669">All ${total} question${total!==1?'s':''} passed</div><div style="font-size:13px;color:#6B7280;margin-top:5px">No SPaG issues detected</div></div>`;
+  } else {
+    html+=`<div style="display:flex;gap:16px;margin-bottom:14px;font-size:13px;font-weight:600"><span style="color:#DC2626">⚠ ${flagged.length} question${flagged.length!==1?'s':''} with issues</span>${clean?`<span style="color:#059669">✓ ${clean} clean</span>`:''}</div>`;
+    flagged.forEach(({q,num,issues})=>{
+      const hasErr=issues.some(i=>i.level==='error');
+      const bg=hasErr?'#FEF2F2':'#FFFBEB',bd=hasErr?'#FECACA':'#FDE68A';
+      const rows=issues.map(({level,msg})=>`<div style="display:flex;align-items:flex-start;gap:6px;font-size:12.5px;padding:2px 0"><span style="color:${level==='error'?'#DC2626':'#D97706'};flex-shrink:0;font-size:8px;margin-top:3px">⬤</span><span style="color:${level==='error'?'#B91C1C':'#92400E'};line-height:1.45">${msg}</span></div>`).join('');
+      html+=`<div style="background:${bg};border:1px solid ${bd};border-radius:10px;padding:12px 14px;margin-bottom:10px"><div style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Q${num}</div><div style="font-size:13.5px;color:#1A1A2E;margin-bottom:8px;line-height:1.4;font-weight:500">${esc(q.text)||'<em style="color:#9CA3AF">(empty)</em>'}</div>${rows}</div>`;
+    });
+  }
+  document.getElementById('qabot-modal-body').innerHTML=html;
+}
 
 /* ── Questions ── */
 function renderQVisual(q){
