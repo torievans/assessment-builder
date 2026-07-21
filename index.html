@@ -92,6 +92,8 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .wfbtn-ghost{background:transparent;border:1.5px solid #D1D5DB;color:#6B7280}
 .wfbtn-ghost:hover{border-color:#9CA3AF;color:#374151}
 .wfbtn-indigo{background:#4F46E5;color:#fff}
+.qa-accepted{opacity:.35;text-decoration:line-through;pointer-events:none}
+.qa-card-accepted{background:#F0FDF4!important;border-color:#BBF7D0!important}
 /* Question grid */
 .q-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
 .q-card{background:var(--card);border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 1px 8px rgba(0,0,0,.04);overflow:hidden;display:flex;flex-direction:column}
@@ -1244,7 +1246,7 @@ const QA_MISSPELLINGS=[
 ];
 function qaSpagCheck(text,answer){
   const issues=[];const t=text||'';const tr=t.trim();
-  const endsEq=/=\s*$/.test(tr);
+  const endsEq=/=/.test(tr)&&/[=\d]\s*$/.test(tr);
   if(!tr){issues.push({level:'error',msg:'Question text is empty'});return issues;}
   if(/^[a-z]/.test(tr)) issues.push({level:'error',msg:'Starts with a lowercase letter'});
   if(!endsEq&&!/[.?!]$/.test(tr)) issues.push({level:'warning',msg:'No trailing punctuation — should end with . or ?'});
@@ -1274,12 +1276,11 @@ function qaSpagCheck(text,answer){
 }
 function qaAcceptIssue(id){
   const el=document.getElementById('qaissue-'+id);if(!el)return;
-  el.style.opacity='0.35';el.style.textDecoration='line-through';
-  const btn=el.querySelector('button');if(btn){btn.textContent='✓';btn.disabled=true;btn.style.opacity='0.45';}
+  el.classList.add('qa-accepted');
+  const btn=el.querySelector('[data-accept]');if(btn){btn.textContent='✓';btn.disabled=true;}
   const card=el.closest('[data-qacard]');
-  if(card&&[...card.querySelectorAll('[id^="qaissue-"]')].every(i=>i.style.opacity==='0.35')){
-    card.style.background='#F0FDF4';card.style.borderColor='#BBF7D0';
-  }
+  if(card&&[...card.querySelectorAll('[id^="qaissue-"]')].every(i=>i.classList.contains('qa-accepted')))
+    card.classList.add('qa-card-accepted');
 }
 function renderQABotModal(flagged,total){
   const clean=total-flagged.length;let html='';
@@ -1295,7 +1296,7 @@ function renderQABotModal(flagged,total){
         return `<div id="qaissue-${iid}" style="display:flex;align-items:flex-start;gap:6px;font-size:12.5px;padding:3px 0">
           <span style="color:${level==='error'?'#DC2626':'#D97706'};flex-shrink:0;font-size:8px;margin-top:3px">⬤</span>
           <span style="color:${level==='error'?'#B91C1C':'#92400E'};line-height:1.45;flex:1">${msg}</span>
-          <button onclick="qaAcceptIssue('${iid}')" style="flex-shrink:0;font-size:11px;font-weight:600;color:#6B7280;background:#F3F4F6;border:1px solid #E5E7EB;border-radius:4px;padding:2px 8px;cursor:pointer;white-space:nowrap;font-family:var(--font)">Accept</button>
+          <button data-accept="${iid}" style="flex-shrink:0;font-size:11px;font-weight:600;color:#6B7280;background:#F3F4F6;border:1px solid #E5E7EB;border-radius:4px;padding:2px 8px;cursor:pointer;white-space:nowrap;font-family:var(--font)">Accept</button>
         </div>`;
       }).join('');
       html+=`<div data-qacard style="background:${bg};border:1px solid ${bd};border-radius:10px;padding:12px 14px;margin-bottom:10px;transition:background .3s,border-color .3s">
@@ -1834,6 +1835,7 @@ document.querySelector('#tool-panel-nr .form-card').innerHTML = nrPanelHTML();
 document.querySelector('#tool-panel-pv .form-card').innerHTML = pvPanelHTML();
 document.querySelector('#tool-panel-pr .form-card').innerHTML = prPanelHTML();
 initState();loadStorage();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();
+document.getElementById('qabot-modal-body').addEventListener('click',e=>{const b=e.target.closest('[data-accept]');if(b)qaAcceptIssue(b.getAttribute('data-accept'));});
 </script>
 </body>
 </html>
