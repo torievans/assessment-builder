@@ -314,6 +314,32 @@
       "createdAt": "2026-07-21"
     },
     {
+      "id": 1047,
+      "text": "new 13",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 13,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-07-21",
+      "createdAt": "2026-07-21"
+    },
+    {
       "id": 1045,
       "text": "? + 3 = 13",
       "answer": "10",
@@ -365,32 +391,6 @@
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "red"
-      },
-      "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
-    },
-    {
-      "id": 1047,
-      "text": "new 13",
-      "answer": "13",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "pv",
-      "cfg": {
-        "n": 13,
-        "repType": "blocks",
-        "dispMode": "standalone",
-        "numEqMode": "none",
-        "missingVals": [],
-        "blkColors": {
-          "1": "#C86464",
-          "10": "#F0B478",
-          "100": "#50B4A0",
-          "1000": "#788CB4"
-        },
-        "pvColors": {}
       },
       "updatedAt": "2026-07-21",
       "createdAt": "2026-07-21"
