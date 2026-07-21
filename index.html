@@ -1661,6 +1661,8 @@ function parseQTIReportCSV(text){
   return rows;
 }
 
+const SCAFFOLD_MAP_KEY='ab_scaffoldGroupMap';
+
 function handleQTIReportUpload(input){
   if(!input.files[0])return;
   const statusEl=document.getElementById('sc-upload-status');
@@ -1676,17 +1678,8 @@ function handleQTIReportUpload(input){
       if(qidCol<0||gidCol<0)throw new Error('CSV missing QuestionId or QuestionGroupId columns');
       const groupMap={};
       for(let r=1;r<rows.length;r++){const row=rows[r];const qid=(row[qidCol]||'').trim();const gid=(row[gidCol]||'').trim();if(qid&&gid)groupMap[qid]=gid;}
-      let matchCount=0;
-      NUGGETS.forEach(n=>{
-        const ns=nuggetState[n.id];if(!ns||!ns.questions.length)return;
-        const nuggetName=nuggetDisplayName(n.id);
-        ns.questions.forEach((q,i)=>{
-          const assessTitle=`${nuggetName} - Q${String(i+1).padStart(2,'0')}`;
-          if(groupMap[assessTitle]){q.groupId=groupMap[assessTitle];matchCount++;}
-        });
-      });
-      save();
-      statusEl.textContent=`✓ ${matchCount} questions matched`;
+      localStorage.setItem(SCAFFOLD_MAP_KEY,JSON.stringify(groupMap));
+      statusEl.textContent=`✓ ${Object.keys(groupMap).length} questions loaded`;
       renderScaffoldView();
     }catch(err){statusEl.textContent='Error: '+err.message;}
   };
@@ -1694,46 +1687,52 @@ function handleQTIReportUpload(input){
 }
 
 function renderScaffoldView(){
-  // Step 1 summary
-  let totalMatched=0;const nuggetLines=[];
-  NUGGETS.forEach(n=>{
-    const ns=nuggetState[n.id];if(!ns)return;
-    const matched=ns.questions.filter(q=>q.groupId).length;
-    if(matched>0){totalMatched+=matched;nuggetLines.push(`<div><strong>${esc(nuggetDisplayName(n.id))}</strong> — ${matched} of ${ns.questions.length} questions matched</div>`);}
-  });
+  const groupMap=JSON.parse(localStorage.getItem(SCAFFOLD_MAP_KEY)||'{}');
+  // Parse nugget names and counts directly from the map keys ("[nugget name] - Q01" format)
+  const nuggetCounts={};
+  Object.keys(groupMap).forEach(qid=>{const m=qid.match(/^(.+) - Q\d+$/);if(m)nuggetCounts[m[1]]=(nuggetCounts[m[1]]||0)+1;});
+  const totalMatched=Object.keys(groupMap).length;
   const infoEl=document.getElementById('sc-match-info');
+  const statusEl=document.getElementById('sc-upload-status');
   if(totalMatched>0){
-    infoEl.innerHTML=`<strong>${totalMatched} question${totalMatched!==1?'s':''} matched across ${nuggetLines.length} nugget${nuggetLines.length!==1?'s':''}</strong><div style="margin-top:6px">${nuggetLines.join('')}</div>`;
+    const nuggetNames=Object.keys(nuggetCounts);
+    const lines=nuggetNames.map(name=>`<div><strong>${esc(name)}</strong> — ${nuggetCounts[name]} question${nuggetCounts[name]!==1?'s':''}</div>`).join('');
+    infoEl.innerHTML=`<strong>${totalMatched} question${totalMatched!==1?'s':''} matched across ${nuggetNames.length} nugget${nuggetNames.length!==1?'s':''}</strong><div style="margin-top:6px">${lines}</div>`;
     infoEl.classList.remove('hidden');
+    statusEl.textContent=`✓ ${totalMatched} questions loaded`;
   }else{infoEl.classList.add('hidden');}
-  // Step 2 nugget list
+  // Step 2: find NUGGETS whose n.name appears in the map
   const listEl=document.getElementById('sc-nugget-list');
-  const matchedNuggets=NUGGETS.filter(n=>{const ns=nuggetState[n.id];return ns&&ns.questions.some(q=>q.groupId);});
+  const matchedNuggets=NUGGETS.filter(n=>nuggetCounts[n.name]>0);
   if(!matchedNuggets.length){
-    listEl.innerHTML='<div class="sc-empty">No questions have Question Group IDs yet — upload a QTI report in Step 1.</div>';
+    listEl.innerHTML='<div class="sc-empty">No matched questions — upload a QTI report in Step 1.</div>';
     return;
   }
   listEl.innerHTML=matchedNuggets.map(n=>{
-    const ns=nuggetState[n.id];
-    const matched=ns.questions.filter(q=>q.groupId).length;
-    return`<div class="sc-row"><input type="checkbox" class="sc-cb" id="sc-cb-${n.id}" checked><label class="sc-row-name" for="sc-cb-${n.id}">${esc(nuggetDisplayName(n.id))}</label><span class="sc-row-count">${matched} of ${ns.questions.length} Q with IDs</span></div>`;
+    const count=nuggetCounts[n.name]||0;
+    return`<div class="sc-row"><input type="checkbox" class="sc-cb" id="sc-cb-${n.id}" checked><label class="sc-row-name" for="sc-cb-${n.id}">${esc(nuggetDisplayName(n.id))}</label><span class="sc-row-count">${count} Q matched</span></div>`;
   }).join('');
 }
 
 function setAllScaffoldChecks(val){document.querySelectorAll('.sc-cb').forEach(cb=>cb.checked=val);}
 
 function generateScaffoldingXLSX(){
+  const groupMap=JSON.parse(localStorage.getItem(SCAFFOLD_MAP_KEY)||'{}');
+  if(!Object.keys(groupMap).length){alert('No Question Group IDs found — upload a QTI report in Step 1 first.');return;}
   const checkedIds=[...document.querySelectorAll('.sc-cb:checked')].map(c=>parseInt(c.id.replace('sc-cb-','')));
   if(!checkedIds.length){alert('Select at least one nugget.');return;}
   const topicsRows=[['Topic Name','Subtopic Name','Nugget Name','Nugget Summary','Prerequisites','Tags']];
   const assessRows=[['Nugget Name','Assessment Name','Prerequisites','Question Group Name','Difficulty','Marks','Type','Question Group Id','Clone']];
   for(const nid of checkedIds){
-    const n=NUGGETS.find(n=>n.id===nid);const ns=nuggetState[nid];const nuggetName=nuggetDisplayName(nid);
+    const n=NUGGETS.find(n=>n.id===nid);
+    const nuggetName=nuggetDisplayName(nid);
     topicsRows.push([n.topic||'',n.subtopic||'',nuggetName,'','','']);
-    ns.questions.forEach((q,i)=>{
-      if(!q.groupId)return;
-      const assessName=`${nuggetName} - Q${String(i+1).padStart(2,'0')}`;
-      assessRows.push([nuggetName,assessName,'','','','','',q.groupId,false]);
+    // Pull assessment entries from the stored map using n.name (matches the QTI export title)
+    const entries=Object.entries(groupMap)
+      .filter(([qid])=>qid.startsWith(n.name+' - Q'))
+      .sort(([a],[b])=>a.localeCompare(b));
+    entries.forEach(([assessName,gid])=>{
+      assessRows.push([nuggetName,assessName,'','','','','',gid,false]);
     });
   }
   const wb=XLSX.utils.book_new();
