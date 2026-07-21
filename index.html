@@ -1721,6 +1721,8 @@ function generateScaffoldingXLSX(){
   if(!Object.keys(groupMap).length){alert('No Question Group IDs found — upload a QTI report in Step 1 first.');return;}
   const checkedIds=[...document.querySelectorAll('.sc-cb:checked')].map(c=>parseInt(c.id.replace('sc-cb-','')));
   if(!checkedIds.length){alert('Select at least one nugget.');return;}
+  const courseName=prompt('Enter the course name:','');
+  if(courseName===null)return; // cancelled
   const topicsRows=[['Topic Name','Subtopic Name','Nugget Name','Nugget Summary','Prerequisites','Tags']];
   const assessRows=[['Nugget Name','Assessment Name','Prerequisites','Question Group Name','Difficulty','Marks','Type','Question Group Id','Clone']];
   for(const nid of checkedIds){
@@ -1738,7 +1740,7 @@ function generateScaffoldingXLSX(){
   const fragmentsRows=[['Nugget Name','Fragment Name','Type','Difficulty (?)','Tags']];
   for(const nid of checkedIds){fragmentsRows.push([nuggetDisplayName(nid),'CENTURY Explains','Slideshow','','']);}
   const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Name','Subject','Level','Tags','Description'],['','Mathematics','Primary','','']]),'Courses');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Name','Subject','Level','Tags','Description'],[courseName,'Mathematics','Primary','','']]),'Courses');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(topicsRows),'Topics, Subtopics & Nuggets');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(fragmentsRows),'Fragments');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(assessRows),'Assessments');
