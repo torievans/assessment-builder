@@ -1119,7 +1119,7 @@ function pictorialSVG(cfg) {
   const defsBlock = defs.length ? `<defs>${defs.join('')}</defs>` : '';
   // count+array|clustered: fill canvas width. Everything else: natural size, centred.
   // Frame mode always centres (align setting doesn't apply to discrete frames).
-  const useNaturalSize = display === 'frame' || mode !== 'count';
+  const useNaturalSize = true; // always use explicit px width so imgScale takes effect
   const centre = display === 'frame' || align !== 'left';
   const svgStyle = useNaturalSize
     ? `display:block;${centre ? 'margin:0 auto;' : ''}width:${Math.ceil(svgW)}px;max-width:100%;background:#fff;border-radius:4px`
