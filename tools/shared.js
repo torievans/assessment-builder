@@ -691,7 +691,7 @@ function svgToPng(svgStr) {
       ctx.drawImage(img, 0, 0, w, h);
       URL.revokeObjectURL(url);
       // Enforce min aspect ratio (width ≥ 1.8× height) to prevent scrolling in CENTURY
-      const MIN_ASPECT = 1.8;
+      const MIN_ASPECT = 2.5;
       if (cv.width < cv.height * MIN_ASPECT) {
         const w2 = Math.ceil(cv.height * MIN_ASPECT);
         const cv2 = document.createElement('canvas');
