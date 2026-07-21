@@ -36,7 +36,7 @@
     },
     {
       "id": 1042,
-      "text": "What number is missing from the number line",
+      "text": "What number is missing from the number line?",
       "answer": "13",
       "type": "exact",
       "image": "",
@@ -208,7 +208,7 @@
     },
     {
       "id": 1038,
-      "text": "which number is represented by the place value blocks?",
+      "text": "Which number is represented by the place value blocks?",
       "answer": "13",
       "type": "exact",
       "image": "",
