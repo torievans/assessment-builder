@@ -569,7 +569,6 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 <script src="tools/nr/nr.js"></script>
 <script src="tools/pv/pv.js"></script>
 <script src="tools/pr/pr.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typo-js/1.2.1/typo.js"></script>
 <script>
 'use strict';
 /* ── Palette & SVG renderers (from tools/shared.js) ── */
@@ -1200,25 +1199,14 @@ function advanceStatus(){const order=['not-started','in-progress','ready-for-qa'
 function setStatus(s){if(!activeId)return;nuggetState[activeId].status=s;save();renderWorkflow();renderSidebar();}
 
 /* ── QA Bot ── */
-let qaSpellChecker=null;
-let qaIssueFixes=new Map(); // iid → {qId, fix}
-async function ensureSpellChecker(){
-  if(qaSpellChecker)return;
-  const [aff,dic]=await Promise.all([
-    fetch('https://cdn.jsdelivr.net/npm/dictionary-en@4.0.0/index.aff').then(r=>r.text()),
-    fetch('https://cdn.jsdelivr.net/npm/dictionary-en@4.0.0/index.dic').then(r=>r.text())
-  ]);
-  qaSpellChecker=new Typo('en_US',aff,dic,{platform:'any'});
-}
-async function runQABot(){
+let qaIssueFixes=new Map();
+function runQABot(){
   if(!activeId)return;
   const qs=nuggetState[activeId]?.questions||[];
   if(!qs.length){alert('No questions to check.');return;}
-  document.getElementById('qabot-modal-body').innerHTML='<div style="text-align:center;padding:28px;color:#6B7280;font-size:13.5px">⏳ Loading spell checker…</div>';
-  document.getElementById('qabot-modal').classList.remove('hidden');
-  try{await ensureSpellChecker();}catch(e){console.warn('Spell checker unavailable:',e);}
   const flagged=qs.map((q,i)=>({q,num:i+1,issues:qaSpagCheck(q.text,q.answer)})).filter(r=>r.issues.length);
   renderQABotModal(flagged,qs.length);
+  document.getElementById('qabot-modal').classList.remove('hidden');
 }
 function closeQABotModal(e){if(!e||e.target===document.getElementById('qabot-modal'))document.getElementById('qabot-modal').classList.add('hidden');}
 const QA_ALLOWED_WORDS=new Set([
@@ -1242,6 +1230,15 @@ const QA_MISSPELLINGS=[
   ['similiar','similar'],['seperate','separate'],['wich','which'],
   ['wether','whether'],['wheather','whether'],['recieve','receive'],
 ];
+// Self-contained spell list — words 1 edit away get flagged
+const QA_SPELL_LIST=new Set('zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty thirty forty fifty sixty seventy eighty ninety hundred thousand million first second third fourth fifth sixth seventh eighth ninth tenth eleventh twelfth once twice the a an and or but if in on at to for of with by from into through during before after above below between among out off over under around about not no yes so then when where how what which who all any both each every few more most other some such only own same too very well also even here there these those this that they them their we our you your he she him her his it its me my us add adds added adding subtract subtracts subtracted subtracting multiply multiplies multiplied multiplying divide divides divided dividing count counts counted counting find finds found finding write writes wrote writing draw draws drew drawing show shows showed showing complete completes completing circle circles circling shade shades shading fill fills filled filling mark marks marking tick ticks ticking cross crosses crossing colour colours coloured colouring calculate calculates solving solve work works answer answers answering arrange arranges share shares sharing split splits join joins match matches matching order orders ordering sort sorts sorting group groups grouping compare comparing estimate estimates place places represent represents number numbers digit digits total sum difference product quotient remainder result value equation problem pattern sequence quantity amount addition subtraction multiplication division increase decrease altogether remaining missing unknown blank calculation fraction decimal percentage half quarter whole part double triple tens ones hundreds thousands place shape shapes side sides corner corners edge edges angle angles face faces line lines area perimeter circle square triangle rectangle oval pentagon hexagon octagon sphere cylinder cone pyramid cuboid flat solid curved straight parallel horizontal vertical length width height depth measurement centimetre centimetres metre metres gram grams kilogram kilograms litre litres hour hours minute minutes second seconds day days week weeks month months year years morning afternoon evening night today tomorrow yesterday counter counters bead beads block blocks cube cubes button buttons coin coins penny pence pound pounds apple apples pear pears banana bananas orange oranges cherry cherries lemon lemons grape grapes strawberry strawberries ball balls toy toys book books pencil pencils pen pens bag bags box boxes chair chairs table tables school teacher child children pupil pupils student students boy boys girl girls man men woman women friend friends dog dogs cat cats bird birds fish rabbit rabbits horse horses cow cows pig pigs sheep chicken chickens duck ducks tree trees flower flowers leaf leaves seed seeds fruit vegetables food cup cups plate plates car cars bus buses train trains star stars heart hearts sweet sweets cake cakes biscuit biscuits egg eggs card cards dice big small large little long short tall wide narrow thick thin heavy light full empty open closed fast slow hot cold warm near far high low left right top bottom middle centre front back inside outside next last missing hidden correct wrong true false equal unequal different same many few both more less fewer greater smaller red blue green yellow orange purple pink black white brown grey'.split(' '));
+function qaLevenshtein(a,b){
+  const la=a.length,lb=b.length;
+  if(Math.abs(la-lb)>1)return 99;
+  const row=Array.from({length:lb+1},(_,i)=>i);
+  for(let i=1;i<=la;i++){let prev=row[0];row[0]=i;for(let j=1;j<=lb;j++){const t=row[j];row[j]=a[i-1]===b[j-1]?prev:Math.min(prev,row[j],row[j-1])+1;prev=t;}}
+  return row[lb];
+}
 function qaSpagCheck(text,answer){
   const issues=[];const t=text||'';const tr=t.trim();
   const endsEq=/=/.test(tr)&&/[=\d]\s*$/.test(tr);
@@ -1255,18 +1252,18 @@ function qaSpagCheck(text,answer){
   const caughtWords=new Set();
   for(const [wrong,right] of QA_MISSPELLINGS)
     if(new RegExp('\\b'+wrong+'\\b','i').test(tr)){issues.push({level:'error',msg:`Misspelling: "${wrong}" → "${right}"`,fix:{type:'replace',from:wrong,to:right}});caughtWords.add(wrong.toLowerCase());}
-  if(qaSpellChecker){
-    const words=tr.match(/\b[a-zA-Z]{3,}\b/g)||[];
-    for(const word of words){
-      if(/^[A-Z]/.test(word))continue;
-      const lw=word.toLowerCase();
-      if(QA_ALLOWED_WORDS.has(lw)||caughtWords.has(lw))continue;
-      if(!qaSpellChecker.check(word)){
-        const sugg=qaSpellChecker.suggest(word).slice(0,3);
-        issues.push({level:'error',msg:`Misspelling: "${word}"${sugg.length?` — did you mean: ${sugg.join(', ')}?`:''}`,fix:sugg.length?{type:'replace',from:word,to:sugg[0]}:null});
-      }
+  {const words=tr.match(/\b[a-zA-Z]{4,}\b/g)||[];
+  for(const word of words){
+    if(/^[A-Z]/.test(word))continue;
+    const lw=word.toLowerCase();
+    if(QA_ALLOWED_WORDS.has(lw)||caughtWords.has(lw)||QA_SPELL_LIST.has(lw))continue;
+    const suggs=[];
+    for(const known of QA_SPELL_LIST){
+      if(Math.abs(known.length-lw.length)>1)continue;
+      if(qaLevenshtein(lw,known)===1){suggs.push(known);if(suggs.length>=3)break;}
     }
-  }
+    if(suggs.length)issues.push({level:'error',msg:`Possible misspelling: "${word}" — did you mean: ${suggs.join(', ')}?`,fix:{type:'replace',from:word,to:suggs[0]}});
+  }}
   if(!answer||!String(answer).trim()) issues.push({level:'error',msg:'Answer is empty'});
   return issues;
 }
