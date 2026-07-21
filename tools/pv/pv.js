@@ -181,7 +181,7 @@ function pvRenderToCanvas(cv,cfg,scale){
   }
 }
 function pvGetDataURL(cfg,scale){const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,scale||2);return cv.toDataURL('image/png');}
-function pvGetPngBlob(cfg){return new Promise((res,rej)=>{const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,3);
+function pvGetPngBlob(cfg){return new Promise((res,rej)=>{const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,6);
   // Enforce min aspect ratio (width ≥ 1.8× height) so tall images don't cause scrolling in CENTURY.
   // Matches the manual fix of adding whitespace to the sides.
   const MIN_ASPECT=1.8;
