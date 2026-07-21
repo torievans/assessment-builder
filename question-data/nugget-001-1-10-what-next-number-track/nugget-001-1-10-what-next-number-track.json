@@ -1,7 +1,7 @@
 {
   "nuggetId": 1,
   "status": "in-progress",
-  "nextQId": 1036,
+  "nextQId": 1037,
   "questions": [
     {
       "id": 1032,
@@ -95,6 +95,40 @@
         "mlSplit": 5,
         "niSplitOn": false,
         "niSplit": 5
+      },
+      "updatedAt": "2026-07-21",
+      "createdAt": "2026-07-21"
+    },
+    {
+      "id": 1036,
+      "text": "10 + 3 =",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nr",
+      "cfg": {
+        "n": 13,
+        "rep": "beads",
+        "fType": "5",
+        "fc1": 0,
+        "fc2": 4,
+        "fSplitOn": false,
+        "fSplit": 1,
+        "bg": 10,
+        "ba": 5,
+        "bb": 4,
+        "beadPreset": "rw",
+        "mc": 4,
+        "mc2": 0,
+        "mlRows": "10",
+        "mlFill": "row",
+        "mlGap": false,
+        "mlSplitOn": false,
+        "mlSplit": 1,
+        "niSplitOn": false,
+        "niSplit": 3
       },
       "updatedAt": "2026-07-21",
       "createdAt": "2026-07-21"
