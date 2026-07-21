@@ -556,7 +556,7 @@ function prPanelHTML() {
         </div>
       </div>
       <div class="field" id="pr-align-field" style="display:none">
-        <label>Align last row</label>
+        <label>Align</label>
         <div class="tog-row">
           <button class="tog-btn active" data-pralign="left"   onclick="prSetAlign(this)">Left</button>
           <button class="tog-btn"        data-pralign="centre" onclick="prSetAlign(this)">Centre</button>
