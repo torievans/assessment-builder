@@ -611,7 +611,7 @@ function prUpdateMode() {
   show('pr-bank-group-sel', isAddSub);
   const isArray = pr_display === 'array' && !isMultiply;
   show('pr-cols-field',  isArray);
-  show('pr-align-field', isArray);
+  show('pr-align-field', !isMultiply);
   // Show outline toggle whenever any illustration is in use or selected in bank
   const hasIllus = pr_imageA.startsWith('illus:') || pr_imageB.startsWith('illus:')
                 || pr_bankA === 'illus' || pr_bankB === 'illus';
@@ -626,7 +626,7 @@ function prSetDisplay(btn) {
   const isArray = pr_display === 'array' && pr_mode !== 'multiply';
   const showEl = (id, v) => { const e = document.getElementById(id); if (e) e.style.display = v ? '' : 'none'; };
   showEl('pr-cols-field',  isArray);
-  showEl('pr-align-field', isArray);
+  showEl('pr-align-field', pr_mode !== 'multiply');
   autoPreviewPR();
 }
 
@@ -708,7 +708,7 @@ function autoPreviewPR() {
   if (optsEl) optsEl.style.display = hasIllus ? '' : 'none';
   prUpdateGroupThumbs();
   // Reflect alignment in the preview container — frame mode always centres
-  box.style.justifyContent = (pr_align === 'left' && pr_display !== 'frame') ? 'flex-start' : 'center';
+  box.style.justifyContent = pr_align === 'left' ? 'flex-start' : 'center';
   try {
     box.innerHTML = pictorialSVG(getPRConfig());
   } catch (err) {
@@ -1120,7 +1120,7 @@ function pictorialSVG(cfg) {
   // count+array|clustered: fill canvas width. Everything else: natural size, centred.
   // Frame mode always centres (align setting doesn't apply to discrete frames).
   const useNaturalSize = true; // always use explicit px width so imgScale takes effect
-  const centre = display === 'frame' || align !== 'left';
+  const centre = align !== 'left';
   const svgStyle = useNaturalSize
     ? `display:block;${centre ? 'margin:0 auto;' : ''}width:${Math.ceil(svgW)}px;max-width:100%;background:#fff;border-radius:4px`
     : 'display:block;min-width:100%;background:#fff;border-radius:4px';
