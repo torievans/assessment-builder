@@ -698,9 +698,23 @@ function prDeltaCols(d) {
   autoPreviewPR();
 }
 
+function prComputeAnswer() {
+  if (pr_mode === 'count') return pr_countA;
+  if (pr_mode === 'multiply') return pr_mrows * pr_mcols;
+  if (pr_mode === 'addsub') {
+    if (pr_op === 'add') return pr_countA + pr_countB;
+    // sub: crossed = A - B; total/separate = A - B (B items removed from A)
+    return pr_countA - pr_countB;
+  }
+  return '';
+}
+
 function autoPreviewPR() {
   const box = document.getElementById('pr-preview');
   if (!box) return;
+  // Auto-fill answer whenever config changes
+  const ansEl = document.getElementById('pr-answer');
+  if (ansEl) ansEl.value = prComputeAnswer();
   // Show outline toggle whenever any illustration is in use or selected in the bank
   const hasIllus = pr_imageA.startsWith('illus:') || pr_imageB.startsWith('illus:')
                 || pr_bankA === 'illus' || pr_bankB === 'illus';
