@@ -184,7 +184,7 @@ function pvGetDataURL(cfg,scale){const cv=document.createElement('canvas');pvRen
 function pvGetPngBlob(cfg){return new Promise((res,rej)=>{const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,6);
   // Enforce min aspect ratio (width ≥ 1.8× height) so tall images don't cause scrolling in CENTURY.
   // Matches the manual fix of adding whitespace to the sides.
-  const MIN_ASPECT=1.8;
+  const MIN_ASPECT=2.5;
   const finalCv=(cv.width<cv.height*MIN_ASPECT)?()=>{
     const w2=Math.ceil(cv.height*MIN_ASPECT);const cv2=document.createElement('canvas');
     cv2.width=w2;cv2.height=cv.height;const ctx2=cv2.getContext('2d');
