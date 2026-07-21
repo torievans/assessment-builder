@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Year 1 Maths — Assessment Builder</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
@@ -477,6 +478,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
         <div class="ex-list" id="ex-list"></div>
         <div class="ex-footer">
           <button class="btn btn-blue" id="ex-btn" onclick="batchExport()">↓ Export selected ZIP</button>
+          <button class="btn btn-ghost" id="scaffold-btn" onclick="openScaffoldingUpload()">📋 Course Scaffolding</button>
           <span class="ex-prog" id="ex-prog"></span>
         </div>
       </div>
@@ -485,6 +487,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 </div>
 
 <input type="file" id="json-file" accept=".json" style="display:none" onchange="handleJSONUpload(this)">
+<input type="file" id="qti-report-file" accept=".csv" style="display:none" onchange="handleScaffoldingCSV(this)">
 
 <div class="modal-overlay hidden" id="ei-modal" onclick="closeEIModal(event)">
   <div class="modal">
@@ -1580,6 +1583,109 @@ async function inlineSVGImages(svgStr){
   }));
   return svgStr.replace(/href="(https?:\/\/[^"]+)"/g,(_,url)=>cache[url]?`href="${cache[url]}"`:_);
 }
+/* ── Course Scaffolding ── */
+function openScaffoldingUpload(){
+  const checked=[...document.querySelectorAll('.ex-cb:checked')];
+  if(!checked.length){alert('Select at least one nugget first.');return;}
+  document.getElementById('qti-report-file').value='';
+  document.getElementById('qti-report-file').click();
+}
+
+function parseQTIReportCSV(text){
+  // RFC 4180-compliant CSV parser (handles quoted fields with embedded newlines/commas)
+  const rows=[];let i=0,row=[],field='',inQuote=false;
+  while(i<text.length){
+    const c=text[i];
+    if(inQuote){
+      if(c==='"'&&text[i+1]==='"'){field+='"';i+=2;continue;}
+      if(c==='"'){inQuote=false;i++;continue;}
+      field+=c;i++;continue;
+    }
+    if(c==='"'){inQuote=true;i++;continue;}
+    if(c===','){row.push(field);field='';i++;continue;}
+    if(c==='\r'||c==='\n'){
+      row.push(field);field='';
+      if(row.some(f=>f!==''))rows.push(row);
+      row=[];i++;
+      if(c==='\r'&&text[i]==='\n')i++;
+      continue;
+    }
+    field+=c;i++;
+  }
+  if(field||row.length){row.push(field);if(row.some(f=>f!==''))rows.push(row);}
+  return rows;
+}
+
+function handleScaffoldingCSV(input){
+  if(!input.files[0])return;
+  const prog=document.getElementById('ex-prog');
+  prog.textContent='Generating scaffolding…';
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const rows=parseQTIReportCSV(e.target.result);
+      if(!rows.length){throw new Error('CSV appears empty');}
+      const hdr=rows[0];
+      const qidCol=hdr.findIndex(h=>h.trim()==='QuestionId');
+      const gidCol=hdr.findIndex(h=>h.trim()==='QuestionGroupId');
+      if(qidCol<0||gidCol<0)throw new Error('CSV missing QuestionId or QuestionGroupId columns');
+
+      // Build map: assessmentName → questionGroupId
+      const groupMap={};
+      for(let r=1;r<rows.length;r++){
+        const row=rows[r];
+        const qid=(row[qidCol]||'').trim();
+        const gid=(row[gidCol]||'').trim();
+        if(qid&&gid)groupMap[qid]=gid;
+      }
+
+      // Get selected nuggets
+      const checkedIds=[...document.querySelectorAll('.ex-cb:checked')].map(c=>parseInt(c.id.replace('ec-','')));
+
+      // Build sheet data
+      const topicsRows=[['Topic Name','Subtopic Name','Nugget Name','Nugget Summary','Prerequisites','Tags']];
+      const assessRows=[['Nugget Name','Assessment Name','Prerequisites','Question Group Name','Difficulty','Marks','Type','Question Group Id','Clone']];
+      let missing=[];
+
+      for(const nid of checkedIds){
+        const n=NUGGETS.find(n=>n.id===nid);
+        const ns=nuggetState[nid];
+        const nuggetName=nuggetDisplayName(nid);
+        topicsRows.push([n.topic||'',n.subtopic||'',nuggetName,'','','']);
+        for(let i=0;i<ns.questions.length;i++){
+          const qPad=String(i+1).padStart(2,'0');
+          const assessName=`${nuggetName} - Q${qPad}`;
+          const gid=groupMap[assessName]||'';
+          if(!gid)missing.push(assessName);
+          assessRows.push([nuggetName,assessName,'','','','','',gid,false]);
+        }
+      }
+
+      // Build workbook
+      const wb=XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Name','Subject','Level','Tags','Description'],['','Mathematics','Primary','','']]),'Courses');
+      XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(topicsRows),'Topics, Subtopics & Nuggets');
+      XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Nugget Name','Fragment Name','Type','Difficulty (?)','Tags']]),'Fragments');
+      XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(assessRows),'Assessments');
+      XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Nugget Name','Assessment Name','Prerequisites','Question Group Name','Marks','Type','Question Id']]),'Mocks');
+
+      XLSX.writeFile(wb,`course-scaffolding-${new Date().toISOString().slice(0,10)}.xlsx`);
+
+      if(missing.length){
+        prog.textContent=`⚠ Done — ${missing.length} question(s) had no matching QuestionGroupId`;
+        setTimeout(()=>prog.textContent='',8000);
+      }else{
+        prog.textContent=`✓ Scaffolding downloaded`;
+        setTimeout(()=>prog.textContent='',4000);
+      }
+    }catch(err){
+      prog.textContent='Error: '+err.message;
+      setTimeout(()=>prog.textContent='',6000);
+    }
+  };
+  reader.readAsText(input.files[0]);
+}
+
 async function batchExport(){
   const checked=[...document.querySelectorAll('.ex-cb:checked')].map(c=>parseInt(c.id.replace('ec-','')));
   if(!checked.length){alert('Select at least one nugget.');return;}
