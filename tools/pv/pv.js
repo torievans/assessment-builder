@@ -8,7 +8,7 @@ let pv_missingVals=new Set();
 let pv_blkColors={1000:'#788CB4',100:'#50B4A0',10:'#F0B478',1:'#C86464'};
 let pv_pvColors={};
 const PV_FONT="'Proxima Soft','Nunito','Arial Rounded MT Bold',sans-serif";
-const PV_GAP=6,PV_PAD=16,PV_CELL=16,PV_DEP=6,PV_CTR=44;
+const PV_GAP=6,PV_PAD=20,PV_CELL=10,PV_DEP=4,PV_CTR=44;
 const PV_BLK_PER_ROW={1000:3,100:3,10:5,1:5};
 const PV_FULL_PARTS=[
   {val:1000000,label:'Millions',         abbr:'M',  defColor:'#288C50'},
@@ -41,13 +41,13 @@ function pvDrawBlock(ctx,bx,by,val,blkColors){
   ctx.fillStyle=sideC;ctx.beginPath();ctx.moveTo(fx+W,fy);ctx.lineTo(fx+W+D,fy-D);ctx.lineTo(fx+W+D,fy-D+H);ctx.lineTo(fx+W,fy+H);ctx.closePath();ctx.fill();
   ctx.fillStyle=topC;ctx.beginPath();ctx.moveTo(fx,fy);ctx.lineTo(fx+W,fy);ctx.lineTo(fx+W+D,fy-D);ctx.lineTo(fx+D,fy-D);ctx.closePath();ctx.fill();
   ctx.fillStyle=base;ctx.fillRect(fx,fy,W,H);
-  ctx.strokeStyle='#1A1A2E';ctx.lineWidth=0.5;
+  ctx.strokeStyle='#374151';ctx.lineWidth=0.55;
   for(let r=1;r<rows;r++){const ly=fy+r*PV_CELL;ctx.beginPath();ctx.moveTo(fx,ly);ctx.lineTo(fx+W,ly);ctx.stroke();}
   for(let c=1;c<cols;c++){const lx=fx+c*PV_CELL;ctx.beginPath();ctx.moveTo(lx,fy);ctx.lineTo(lx,fy+H);ctx.stroke();ctx.beginPath();ctx.moveTo(lx,fy);ctx.lineTo(lx+D,fy-D);ctx.stroke();}
   for(let d=1;d<depth;d++){const ox=d*PV_DEP,oy=-d*PV_DEP;ctx.beginPath();ctx.moveTo(fx+ox,fy+oy);ctx.lineTo(fx+W+ox,fy+oy);ctx.stroke();}
   for(let r=1;r<rows;r++){const ly=fy+r*PV_CELL;ctx.beginPath();ctx.moveTo(fx+W,ly);ctx.lineTo(fx+W+D,ly-D);ctx.stroke();}
   for(let d=1;d<depth;d++){const ox=d*PV_DEP,oy=-d*PV_DEP;ctx.beginPath();ctx.moveTo(fx+W+ox,fy+oy);ctx.lineTo(fx+W+ox,fy+oy+H);ctx.stroke();}
-  ctx.strokeStyle='#1A1A2E';ctx.lineWidth=1.0;
+  ctx.strokeStyle='#374151';ctx.lineWidth=1.0;
   ctx.beginPath();ctx.moveTo(fx+D,fy-D);ctx.lineTo(fx+W+D,fy-D);ctx.lineTo(fx+W+D,fy-D+H);ctx.lineTo(fx+W,fy+H);ctx.lineTo(fx,fy+H);ctx.lineTo(fx,fy);ctx.closePath();ctx.stroke();
   ctx.beginPath();ctx.moveTo(fx,fy);ctx.lineTo(fx+W,fy);ctx.stroke();
   ctx.beginPath();ctx.moveTo(fx+W,fy);ctx.lineTo(fx+W,fy+H);ctx.stroke();
@@ -75,7 +75,7 @@ function pvDrawColoredNum(ctx,n,parts,bx,cy){
 function pvSecSize(ctx,pv,count,repType,perRow){if(repType==='blocks')return pvBlkSize(pv.val,count);if(repType==='counters')return pvCtrSize(count,perRow);return pvNumSize(ctx,pv.val,count);}
 function pvDrawContent(ctx,pv,count,x,y,repType,blkColors,perRow){if(repType==='blocks'){pvDrawBlks(ctx,x,y,pv.val,count,blkColors);return;}if(repType==='counters'){pvDrawCtrs(ctx,x,y,pv,count,perRow);return;}const sz=pvNumSize(ctx,pv.val,count);pvDrawNumTxt(ctx,x+sz.w/2,y+sz.h/2,pv.val,count,pv.color);}
 function pvDrawQMark(ctx,x,y,w,h){const R=Math.min(10,w/4,h/4);ctx.save();ctx.fillStyle='#F3F4F6';ctx.beginPath();ctx.moveTo(x+R,y);ctx.lineTo(x+w-R,y);ctx.quadraticCurveTo(x+w,y,x+w,y+R);ctx.lineTo(x+w,y+h-R);ctx.quadraticCurveTo(x+w,y+h,x+w-R,y+h);ctx.lineTo(x+R,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-R);ctx.lineTo(x,y+R);ctx.quadraticCurveTo(x,y,x+R,y);ctx.closePath();ctx.fill();ctx.strokeStyle='#9CA3AF';ctx.lineWidth=2;ctx.setLineDash([5,4]);ctx.stroke();ctx.setLineDash([]);const fs=Math.max(Math.min(w*0.45,h*0.65,52),18);ctx.font=`bold ${fs}px ${PV_FONT}`;ctx.fillStyle='#6B7280';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('?',x+w/2,y+h/2);ctx.restore();}
-function pvDrawQMarkCircle(ctx,cx,cy,r){ctx.font=`bold ${Math.max(r*0.7,20)}px ${PV_FONT}`;ctx.fillStyle='#1A1A2E';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('?',cx,cy);}
+function pvDrawQMarkCircle(ctx,cx,cy,r){ctx.font=`bold ${Math.max(r*0.7,20)}px ${PV_FONT}`;ctx.fillStyle='#6B7280';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('?',cx,cy);}
 function pvRenderToCanvas(cv,cfg,scale){
   const rawN=cfg.n||0;
   const repType=cfg.repType||'blocks',dispMode=cfg.dispMode||'standalone',numEqMode=cfg.numEqMode||'none';
@@ -102,7 +102,7 @@ function pvRenderToCanvas(cv,cfg,scale){
     let totalW=PV_PAD*2;
     if(repType==='numbers'&&numEqMode!=='none')totalW+=numW+eqW;
     sizes.forEach((sz,i)=>{totalW+=sz.w+(i>0?(repType==='numbers'?plusW:SEC_GAP):0);});
-    const lw=Math.max(totalW,100),lh=Math.max(maxH+PV_PAD*2,80);
+    const lw=Math.max(totalW,200),lh=Math.max(maxH+PV_PAD*2,80);
     const ctx=pvSetupCanvas(cv,lw,lh,scale);
     let cx=PV_PAD;
     if(repType==='numbers'&&numEqMode==='before'){
@@ -173,15 +173,24 @@ function pvRenderToCanvas(cv,cfg,scale){
     let px=(lw-partsTotalW)/2;
     const partCXs=[];partRs.forEach(r=>{partCXs.push(px+r);px+=r*2+PART_GAP;});
     const wholeCX=activeParts.length?((partCXs[0]+partCXs[partCXs.length-1])/2):lw/2;
-    ctx.strokeStyle='#1A1A2E';ctx.lineWidth=2;
+    ctx.strokeStyle='#374151';ctx.lineWidth=2;
     activeParts.forEach((_,i)=>{const ang=Math.atan2(partCY-wholeCY,partCXs[i]-wholeCX);const sx=wholeCX+wholeR*Math.cos(ang),sy=wholeCY+wholeR*Math.sin(ang);const ex=partCXs[i]-partRs[i]*Math.cos(ang),ey=partCY-partRs[i]*Math.sin(ang);ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();});
-    ctx.beginPath();ctx.arc(wholeCX,wholeCY,wholeR,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#1A1A2E';ctx.lineWidth=2.5;ctx.stroke();
-    if(mv.has('whole')){pvDrawQMarkCircle(ctx,wholeCX,wholeCY,wholeR);}else{(()=>{ctx.font=`bold 38px ${PV_FONT}`;ctx.textBaseline='middle';ctx.textAlign='left';const ns=String(n);const cm={};parts.forEach(p=>{cm[Math.round(p.val*1e6)]=p.color;});const il=ns.indexOf('.')<0?ns.length:ns.indexOf('.');const tw=ctx.measureText(ns).width;let dx=wholeCX-tw/2;ns.split('').forEach((ch,i)=>{let c='#1A1A2E';if(ch!=='.'){const pv=i<il?Math.pow(10,il-1-i):Math.round(Math.pow(10,-(i-il))*1e6)/1e6;c=cm[Math.round(pv*1e6)]||'#1A1A2E';}ctx.fillStyle=c;ctx.fillText(ch,dx,wholeCY);dx+=ctx.measureText(ch).width;});})();}
-    activeParts.forEach((p,i)=>{const cx=partCXs[i],r=partRs[i],s=partSizes[i];ctx.beginPath();ctx.arc(cx,partCY,r,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#1A1A2E';ctx.lineWidth=2.5;ctx.stroke();if(mv.has(p.val)){pvDrawQMarkCircle(ctx,cx,partCY,r);}else if(repType==='numbers'){pvDrawNumTxt(ctx,cx,partCY,p.val,p.count,p.color);}else{ctx.save();ctx.beginPath();ctx.arc(cx,partCY,r-4,0,Math.PI*2);ctx.clip();pvDrawContent(ctx,p,p.count,cx-s.w/2,partCY-s.h/2,repType,blkColors,CTR_PER_ROW);ctx.restore();}});
+    ctx.beginPath();ctx.arc(wholeCX,wholeCY,wholeR,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#374151';ctx.lineWidth=2.5;ctx.stroke();
+    if(mv.has('whole')){pvDrawQMarkCircle(ctx,wholeCX,wholeCY,wholeR);}else{ctx.font=`bold 38px ${PV_FONT}`;ctx.fillStyle='#1A1A2E';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(n),wholeCX,wholeCY);}
+    activeParts.forEach((p,i)=>{const cx=partCXs[i],r=partRs[i],s=partSizes[i];ctx.beginPath();ctx.arc(cx,partCY,r,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#374151';ctx.lineWidth=2.5;ctx.stroke();if(mv.has(p.val)){pvDrawQMarkCircle(ctx,cx,partCY,r);}else if(repType==='numbers'){pvDrawNumTxt(ctx,cx,partCY,p.val,p.count,p.color);}else{ctx.save();ctx.beginPath();ctx.arc(cx,partCY,r-4,0,Math.PI*2);ctx.clip();pvDrawContent(ctx,p,p.count,cx-s.w/2,partCY-s.h/2,repType,blkColors,CTR_PER_ROW);ctx.restore();}});
   }
 }
 function pvGetDataURL(cfg,scale){const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,scale||2);return cv.toDataURL('image/png');}
-function pvGetPngBlob(cfg){return new Promise((res,rej)=>{const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,6);cv.toBlob(b=>{if(b)res(b);else rej(new Error('canvas toBlob failed'));},'image/png');});}
+function pvGetPngBlob(cfg){return new Promise((res,rej)=>{const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,3);
+  // Enforce min aspect ratio (width ≥ 1.8× height) so tall images don't cause scrolling in CENTURY.
+  // Matches the manual fix of adding whitespace to the sides.
+  const MIN_ASPECT=1.8;
+  const finalCv=(cv.width<cv.height*MIN_ASPECT)?()=>{
+    const w2=Math.ceil(cv.height*MIN_ASPECT);const cv2=document.createElement('canvas');
+    cv2.width=w2;cv2.height=cv.height;const ctx2=cv2.getContext('2d');
+    ctx2.fillStyle='#fff';ctx2.fillRect(0,0,w2,cv.height);ctx2.drawImage(cv,(w2-cv.width)/2,0);return cv2;
+  }:()=>cv;
+  finalCv().toBlob(b=>{if(b)res(b);else rej(new Error('canvas toBlob failed'));},'image/png');});}
 function pvSetN(v){const n=parseFloat(v);pv_N=isNaN(n)?0:Math.max(0,n);const el=document.getElementById('pv-num-in');if(el)el.value=pv_N;autoPreviewPV();}
 function pvChangeNum(d){pvSetN(pv_N+d);}
 function pvSetRep(btn){
