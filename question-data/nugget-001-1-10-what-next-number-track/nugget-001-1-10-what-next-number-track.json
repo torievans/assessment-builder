@@ -1,7 +1,7 @@
 {
   "nuggetId": 1,
   "status": "in-progress",
-  "nextQId": 1043,
+  "nextQId": 1044,
   "questions": [
     {
       "id": 1032,
@@ -291,6 +291,34 @@
         "answer": "13",
         "lineStyle": "terminate",
         "colour": "purple"
+      },
+      "updatedAt": "2026-07-21",
+      "createdAt": "2026-07-21"
+    },
+    {
+      "id": 1043,
+      "text": "10 + 3 =",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "13",
+        "lineStyle": "terminate",
+        "colour": "purple",
+        "jumpFrom": 10,
+        "jumpTo": 13,
+        "jumpType": "single",
+        "jumpLabel": "+3",
+        "jumpArrow": true,
+        "jumpCircle": "none",
+        "jumpColour": "red"
       },
       "updatedAt": "2026-07-21",
       "createdAt": "2026-07-21"
