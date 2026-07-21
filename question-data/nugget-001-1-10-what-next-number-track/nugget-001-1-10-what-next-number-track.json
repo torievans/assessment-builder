@@ -4,20 +4,6 @@
   "nextQId": 1032,
   "questions": [
     {
-      "id": 1007,
-      "text": "What number is missing?",
-      "answer": "8",
-      "image": "",
-      "type": "exact",
-      "display": "",
-      "qaComment": "",
-      "visualType": null,
-      "cfg": {},
-      "updatedAt": "2026-07-13",
-      "createdAt": "2026-07-13",
-      "imagePath": "question-data/nugget-001-counting-forwards-1-20/q07.png"
-    },
-    {
       "id": 1008,
       "text": "What number comes next?",
       "answer": "18",
