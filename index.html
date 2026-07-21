@@ -1500,11 +1500,71 @@ function renderExportView(){
 }
 function selectAllEx(v){document.querySelectorAll('.ex-cb').forEach(c=>c.checked=v);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function qtiXML(q,imgFile){
-  const rid=`RESPONSE-${10000+q.id}`,iid=`ITEM-${String(q.id).padStart(3,'0')}`;
-  const ans=parseFloat(q.answer);const av=isNaN(ans)?q.answer:ans;
-  const imgLine=imgFile?`\n      <p><img src="${esc(imgFile)}" alt=""/></p>`:'';
-  return`<?xml version="1.0" encoding="UTF-8"?>\n<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"\n  identifier="${iid}" title="${esc(q.text.slice(0,80))}"\n  adaptive="false" timeDependent="false">\n  <responseDeclaration identifier="${rid}" cardinality="single" baseType="float">\n    <correctResponse><value>${av}</value></correctResponse>\n  </responseDeclaration>\n  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">\n    <defaultValue><value>0</value></defaultValue>\n  </outcomeDeclaration>\n  <itemBody>\n    <div>\n      <p>${esc(q.text)}</p>${imgLine}\n      <p><textEntryInteraction responseIdentifier="${rid}"/></p>\n    </div>\n    <div/>\n  </itemBody>\n  <responseProcessing>\n    <responseCondition><responseIf>\n      <match><variable identifier="${rid}"/><correct identifier="${rid}"/></match>\n      <setOutcomeValue identifier="SCORE"><baseValue baseType="float">1</baseValue></setOutcomeValue>\n    </responseIf></responseCondition>\n  </responseProcessing>\n</assessmentItem>`;
+function qtiXML(q,imgFile,nuggetTitle,qNum){
+  const rid=`RESPONSE-${10000+q.id}`;
+  const title=`${nuggetTitle} - Q${String(qNum).padStart(2,'0')}`;
+  const imgLine=imgFile
+    ?`\n      <br/>\n      <p>\n        <img src="${esc(imgFile)}" alt=""/>\n      </p>`:'';
+  return`<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2p2.xsd"
+                xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:m="http://www.w3.org/1998/Math/MathML"
+                toolName="Bond11Plus"
+                toolVersion="1.0"
+                xml:lang="en"
+                identifier="multi-input"
+                title="${esc(title)}"
+                adaptive="false"
+                timeDependent="false">
+
+  <responseDeclaration identifier="${rid}" cardinality="single" baseType="identifier">
+    <correctResponse>
+      <value>${esc(String(q.answer))}</value>
+    </correctResponse>
+  </responseDeclaration>
+
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+
+  <itemBody>
+    <div>
+      <p>${esc(q.text)}</p>
+      <br/>
+      <p/>${imgLine}
+      <br/>
+      <p>
+        <span data-teams="true">
+          <textEntryInteraction responseIdentifier="${rid}"/>
+        </span>
+      </p>
+    </div>
+  </itemBody>
+
+  <responseProcessing>
+    <responseCondition>
+      <responseIf>
+        <match>
+          <variable identifier="${rid}"/>
+          <correct identifier="${rid}"/>
+        </match>
+        <setOutcomeValue identifier="SCORE">
+          <baseValue baseType="float">1</baseValue>
+        </setOutcomeValue>
+      </responseIf>
+      <responseElse>
+        <setOutcomeValue identifier="SCORE">
+          <baseValue baseType="float">0</baseValue>
+        </setOutcomeValue>
+      </responseElse>
+    </responseCondition>
+  </responseProcessing>
+
+</assessmentItem>`;
 }
 async function batchExport(){
   const checked=[...document.querySelectorAll('.ex-cb:checked')].map(c=>parseInt(c.id.replace('ec-','')));
@@ -1515,7 +1575,8 @@ async function batchExport(){
     const zip=new JSZip();
     for(const nid of checked){
       const n=NUGGETS.find(n=>n.id===nid),ns=nuggetState[nid];
-      const folder=n.name.replace(/[^a-z0-9]+/gi,'_').slice(0,40);
+      const folder=n.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
+      const slug=folder;
       for(let i=0;i<ns.questions.length;i++){
         const q=ns.questions[i];const qPad=String(i+1).padStart(2,'0');const imgName=`q${qPad}.png`;
         let imgFile=null;
@@ -1523,7 +1584,7 @@ async function batchExport(){
         else if(q.visualType==='pr'&&q.cfg&&q.cfg.mode){try{const svg=pictorialSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${folder}/${imgName}`,png);imgFile=imgName;}catch(e){console.warn(e);}}
         else if(q.visualType==='pv'&&q.cfg&&q.cfg.n!=null){try{const blob=await pvGetPngBlob(q.cfg);zip.file(`${folder}/${imgName}`,blob);imgFile=imgName;}catch(e){console.warn(e);}}
         else if(q.image){imgFile=q.image.split('/').pop();}
-        zip.file(`${folder}/q${qPad}.xml`,qtiXML(q,imgFile));
+        zip.file(`${folder}/${slug}-q${qPad}.xml`,qtiXML(q,imgFile,n.name,i+1));
       }
     }
     const blob=await zip.generateAsync({type:'blob'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`y1-maths-qti-${new Date().toISOString().slice(0,10)}.zip`;a.click();URL.revokeObjectURL(a.href);
