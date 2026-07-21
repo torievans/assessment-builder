@@ -1,7 +1,7 @@
 {
   "nuggetId": 1,
   "status": "in-progress",
-  "nextQId": 1039,
+  "nextQId": 1040,
   "questions": [
     {
       "id": 1032,
@@ -179,6 +179,32 @@
       "cfg": {
         "n": 13,
         "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-07-21",
+      "createdAt": "2026-07-21"
+    },
+    {
+      "id": 1039,
+      "text": "Which number is represented by the place value counters?",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 13,
+        "repType": "counters",
         "dispMode": "standalone",
         "numEqMode": "none",
         "missingVals": [],
