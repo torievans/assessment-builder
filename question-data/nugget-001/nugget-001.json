@@ -194,6 +194,24 @@
       "createdAt": "2026-07-21"
     },
     {
+      "id": 1044,
+      "text": "What number is missing?",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "9,10,11,_,?",
+        "shape": "star",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-07-21",
+      "createdAt": "2026-07-21"
+    },
+    {
       "id": 1039,
       "text": "Which number is represented by the place value counters?",
       "answer": "13",
@@ -270,24 +288,6 @@
         "total": 13,
         "colorIdx": 5,
         "multi": true
-      },
-      "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
-    },
-    {
-      "id": 1044,
-      "text": "What number is missing?",
-      "answer": "13",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nt",
-      "cfg": {
-        "sequence": "9,10,11,_,?",
-        "shape": "star",
-        "layout": "straight",
-        "colourMode": "full"
       },
       "updatedAt": "2026-07-21",
       "createdAt": "2026-07-21"
