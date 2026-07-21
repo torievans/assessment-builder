@@ -75,7 +75,7 @@ function pvDrawColoredNum(ctx,n,parts,bx,cy){
 function pvSecSize(ctx,pv,count,repType,perRow){if(repType==='blocks')return pvBlkSize(pv.val,count);if(repType==='counters')return pvCtrSize(count,perRow);return pvNumSize(ctx,pv.val,count);}
 function pvDrawContent(ctx,pv,count,x,y,repType,blkColors,perRow){if(repType==='blocks'){pvDrawBlks(ctx,x,y,pv.val,count,blkColors);return;}if(repType==='counters'){pvDrawCtrs(ctx,x,y,pv,count,perRow);return;}const sz=pvNumSize(ctx,pv.val,count);pvDrawNumTxt(ctx,x+sz.w/2,y+sz.h/2,pv.val,count,pv.color);}
 function pvDrawQMark(ctx,x,y,w,h){const R=Math.min(10,w/4,h/4);ctx.save();ctx.fillStyle='#F3F4F6';ctx.beginPath();ctx.moveTo(x+R,y);ctx.lineTo(x+w-R,y);ctx.quadraticCurveTo(x+w,y,x+w,y+R);ctx.lineTo(x+w,y+h-R);ctx.quadraticCurveTo(x+w,y+h,x+w-R,y+h);ctx.lineTo(x+R,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-R);ctx.lineTo(x,y+R);ctx.quadraticCurveTo(x,y,x+R,y);ctx.closePath();ctx.fill();ctx.strokeStyle='#9CA3AF';ctx.lineWidth=2;ctx.setLineDash([5,4]);ctx.stroke();ctx.setLineDash([]);const fs=Math.max(Math.min(w*0.45,h*0.65,52),18);ctx.font=`bold ${fs}px ${PV_FONT}`;ctx.fillStyle='#6B7280';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('?',x+w/2,y+h/2);ctx.restore();}
-function pvDrawQMarkCircle(ctx,cx,cy,r){ctx.font=`bold ${Math.max(r*0.7,20)}px ${PV_FONT}`;ctx.fillStyle='#6B7280';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('?',cx,cy);}
+function pvDrawQMarkCircle(ctx,cx,cy,r){ctx.font=`bold ${Math.max(r*0.7,20)}px ${PV_FONT}`;ctx.fillStyle='#1A1A2E';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('?',cx,cy);}
 function pvRenderToCanvas(cv,cfg,scale){
   const rawN=cfg.n||0;
   const repType=cfg.repType||'blocks',dispMode=cfg.dispMode||'standalone',numEqMode=cfg.numEqMode||'none';
@@ -173,11 +173,11 @@ function pvRenderToCanvas(cv,cfg,scale){
     let px=(lw-partsTotalW)/2;
     const partCXs=[];partRs.forEach(r=>{partCXs.push(px+r);px+=r*2+PART_GAP;});
     const wholeCX=activeParts.length?((partCXs[0]+partCXs[partCXs.length-1])/2):lw/2;
-    ctx.strokeStyle='#374151';ctx.lineWidth=2;
+    ctx.strokeStyle='#1A1A2E';ctx.lineWidth=2;
     activeParts.forEach((_,i)=>{const ang=Math.atan2(partCY-wholeCY,partCXs[i]-wholeCX);const sx=wholeCX+wholeR*Math.cos(ang),sy=wholeCY+wholeR*Math.sin(ang);const ex=partCXs[i]-partRs[i]*Math.cos(ang),ey=partCY-partRs[i]*Math.sin(ang);ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();});
-    ctx.beginPath();ctx.arc(wholeCX,wholeCY,wholeR,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#374151';ctx.lineWidth=2.5;ctx.stroke();
+    ctx.beginPath();ctx.arc(wholeCX,wholeCY,wholeR,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#1A1A2E';ctx.lineWidth=2.5;ctx.stroke();
     if(mv.has('whole')){pvDrawQMarkCircle(ctx,wholeCX,wholeCY,wholeR);}else{ctx.font=`bold 38px ${PV_FONT}`;ctx.fillStyle='#1A1A2E';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(n),wholeCX,wholeCY);}
-    activeParts.forEach((p,i)=>{const cx=partCXs[i],r=partRs[i],s=partSizes[i];ctx.beginPath();ctx.arc(cx,partCY,r,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#374151';ctx.lineWidth=2.5;ctx.stroke();if(mv.has(p.val)){pvDrawQMarkCircle(ctx,cx,partCY,r);}else if(repType==='numbers'){pvDrawNumTxt(ctx,cx,partCY,p.val,p.count,p.color);}else{ctx.save();ctx.beginPath();ctx.arc(cx,partCY,r-4,0,Math.PI*2);ctx.clip();pvDrawContent(ctx,p,p.count,cx-s.w/2,partCY-s.h/2,repType,blkColors,CTR_PER_ROW);ctx.restore();}});
+    activeParts.forEach((p,i)=>{const cx=partCXs[i],r=partRs[i],s=partSizes[i];ctx.beginPath();ctx.arc(cx,partCY,r,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#1A1A2E';ctx.lineWidth=2.5;ctx.stroke();if(mv.has(p.val)){pvDrawQMarkCircle(ctx,cx,partCY,r);}else if(repType==='numbers'){pvDrawNumTxt(ctx,cx,partCY,p.val,p.count,'#1A1A2E');}else{ctx.save();ctx.beginPath();ctx.arc(cx,partCY,r-4,0,Math.PI*2);ctx.clip();pvDrawContent(ctx,p,p.count,cx-s.w/2,partCY-s.h/2,repType,blkColors,CTR_PER_ROW);ctx.restore();}});
   }
 }
 function pvGetDataURL(cfg,scale){const cv=document.createElement('canvas');pvRenderToCanvas(cv,cfg,scale||2);return cv.toDataURL('image/png');}
