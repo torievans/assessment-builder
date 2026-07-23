@@ -626,7 +626,10 @@ function nrRenderMultilink(cfg) {
   const RECT_D='M 75.52 78.88 L 2.75 78.88 C 1.51 78.88 0.5 77.88 0.5 76.64 L 0.5 2.75 C 0.5 1.51 1.51 0.5 2.75 0.5 L 75.52 0.5 C 76.76 0.5 77.76 1.51 77.76 2.75 L 77.76 76.64 C 77.76 77.88 76.76 78.88 75.52 78.88 Z';
   const CIRC_D='M 39.05 14.19 C 24.85 14.19 13.33 25.7 13.33 39.9 C 13.33 54.11 24.85 65.62 39.05 65.62 C 53.25 65.62 64.77 54.11 64.77 39.9 C 64.77 25.7 53.25 14.19 39.05 14.19 Z';
   const CONN_D='M 87.47 26.73 L 86.72 23.06 C 86.62 22.31 86.0 21.99 85.25 22.0 L 77.98 22.04 L 77.98 57.4 L 78.08 57.48 L 85.45 57.49 C 86.03 57.49 86.48 57.23 86.66 56.69 C 89.0 47.08 89.41 36.38 87.47 26.73 Z';
-  const SNS='vector-effect="non-scaling-stroke"';
+  // SW in local (77.76-unit) space → appears as SW*(CW/77.76) px in the SVG viewport.
+  // Target ~1.5px visible stroke: 1.5 / (CW/77.76) = 1.5*77.76/CW.
+  // No vector-effect="non-scaling-stroke" — that breaks raster export (strokes become ~0.3px in CMS).
+  const SW=(1.5*77.76/CW).toFixed(2);
   let s=`<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg" style="width:${SVG_W}px;height:auto;max-width:100%">`;
   for(let i=0;i<N;i++){
     const{row,col}=pos[i], useC2=mlSplitOn&&i>=mlSplit, f=useC2?NR_STROKES[mc2]:fill, st=nrDarkenHex(f);
@@ -636,9 +639,9 @@ function nrRenderMultilink(cfg) {
     else{const g=Math.floor(i/10),rig=pos[i].row-g*2,nI=g*10+(col+1)*2+rig;isLastInRow=nI>=N;}
     const tx=PAD+col*CW, gO=numGaps>0?Math.floor(row/2)*GAP:0, ty=PAD+row*CH+gO;
     s+=`<g transform="translate(${tx},${ty}) scale(${scale.toFixed(4)})">`;
-    s+=`<path d="${RECT_D}" fill="${f}" stroke="${st}" stroke-width="1.5" ${SNS}/>`;
-    s+=`<path d="${CIRC_D}" fill="none" stroke="${st}" stroke-width="1.5" ${SNS}/>`;
-    if(isLastInRow) s+=`<path d="${CONN_D}" fill="${f}" stroke="${st}" stroke-width="1.5" ${SNS}/>`;
+    s+=`<path d="${RECT_D}" fill="${f}" stroke="${st}" stroke-width="${SW}"/>`;
+    s+=`<path d="${CIRC_D}" fill="none" stroke="${st}" stroke-width="${SW}"/>`;
+    if(isLastInRow) s+=`<path d="${CONN_D}" fill="${f}" stroke="${st}" stroke-width="${SW}"/>`;
     s+=`</g>`;
   }
   s+=`</svg>`; return s;
