@@ -74,7 +74,7 @@
     {
       "id": 307003,
       "text": "What number is missing?",
-      "answer": "52",
+      "answer": "50",
       "type": "exact",
       "visualType": "nl",
       "image": "",
@@ -84,7 +84,7 @@
         "end": 55,
         "partitions": 10,
         "valuesGivenEvery": 1,
-        "answer": "52",
+        "answer": "50",
         "lineStyle": "terminate",
         "colour": "green",
         "hideTo": 57,
