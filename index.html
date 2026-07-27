@@ -2075,7 +2075,7 @@ async function batchExport(){
       const folder=nuggetSlug(nid); // ID-prefixed slug — guaranteed unique across all nuggets
       const slug=folder;
       for(let i=0;i<ns.questions.length;i++){
-        const q=ns.questions[i];const qPad=String(i+1).padStart(2,'0');const imgName=`q${qPad}.png`;
+        const q=ns.questions[i];const qPad=String(i+1).padStart(2,'0');const imgName=`${slug}-q${qPad}.png`;
         let imgFile=null;
         if((q.visualType==='nl'||q.visualType==='bm'||q.visualType==='nt'||q.visualType==='nr')&&q.cfg&&Object.keys(q.cfg).length){try{const svg=q.visualType==='nl'?numberLineSVG(q.cfg):q.visualType==='bm'?barModelSVG(q.cfg):q.visualType==='nr'?nrRenderFromCfg(q.cfg):numberTrackSVG(q.cfg);const png=await svgToPng(svg);zip.file(`${folder}/${imgName}`,png);imgFile=imgName;}catch(e){console.warn(e);}}
         else if(q.visualType==='pr'&&q.cfg&&q.cfg.mode){try{const svg=await inlineSVGImages(pictorialSVG(q.cfg));const png=await svgToPng(svg);zip.file(`${folder}/${imgName}`,png);imgFile=imgName;}catch(e){console.warn(e);}}
