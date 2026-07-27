@@ -60,13 +60,13 @@
     {
       "id": 310004,
       "text": "What number should go at the end?",
-      "answer": "61",
+      "answer": "60",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "56,57,58,_,_,?",
+        "sequence": "56,57,58,_,?",
         "shape": "star",
         "layout": "straight",
         "colourMode": "full"
