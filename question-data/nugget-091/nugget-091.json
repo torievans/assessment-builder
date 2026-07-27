@@ -138,7 +138,7 @@
       "cfg": {
         "mode": "count",
         "display": "clustered",
-        "align": "left",
+        "align": "centre",
         "countA": 15,
         "imageIdA": "illus:food/fruit/apple_green",
         "countB": 3,
