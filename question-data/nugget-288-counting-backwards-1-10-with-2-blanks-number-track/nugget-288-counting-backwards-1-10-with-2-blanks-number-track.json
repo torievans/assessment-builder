@@ -42,6 +42,25 @@
       "updatedAt": "2026-07-27"
     },
     {
+      "id": 288005,
+      "text": "What number comes next?",
+      "answer": "1",
+      "type": "exact",
+      "visualType": "nt",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "sequence": "6,5,4,_,_,?",
+        "shape": "square",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 4
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
       "id": 288003,
       "text": "What number comes next?",
       "answer": "3",
@@ -74,25 +93,6 @@
         "layout": "straight",
         "colourMode": "full",
         "colourOffset": 3
-      },
-      "qaComment": "",
-      "createdAt": "2026-07-27",
-      "updatedAt": "2026-07-27"
-    },
-    {
-      "id": 288005,
-      "text": "What number comes next?",
-      "answer": "1",
-      "type": "exact",
-      "visualType": "nt",
-      "image": "",
-      "imagePath": "",
-      "cfg": {
-        "sequence": "6,5,4,_,_,?",
-        "shape": "square",
-        "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 4
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
