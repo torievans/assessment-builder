@@ -27,6 +27,28 @@
       "updatedAt": "2026-07-27"
     },
     {
+      "id": 307004,
+      "text": "What number is missing?",
+      "answer": "60",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 55,
+        "end": 65,
+        "partitions": 10,
+        "valuesGivenEvery": 1,
+        "answer": "60",
+        "lineStyle": "terminate",
+        "colour": "blue",
+        "answerCircle": true
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
       "id": 307002,
       "text": "What number is missing?",
       "answer": "41",
@@ -66,28 +88,6 @@
         "lineStyle": "terminate",
         "colour": "green",
         "hideTo": 57,
-        "answerCircle": true
-      },
-      "qaComment": "",
-      "createdAt": "2026-07-27",
-      "updatedAt": "2026-07-27"
-    },
-    {
-      "id": 307004,
-      "text": "What number is missing?",
-      "answer": "60",
-      "type": "exact",
-      "visualType": "nl",
-      "image": "",
-      "imagePath": "",
-      "cfg": {
-        "start": 55,
-        "end": 65,
-        "partitions": 10,
-        "valuesGivenEvery": 1,
-        "answer": "60",
-        "lineStyle": "terminate",
-        "colour": "blue",
         "answerCircle": true
       },
       "qaComment": "",
