@@ -1291,11 +1291,20 @@ function updateStats(){
 async function selectNugget(id){
   activeId=id;if(activeTab!=='builder')switchTab('builder');
   closeTool();renderSidebar();
-  // Load from JSON file (local folder if connected, otherwise fetch from server)
-  const fileData=await loadNuggetFromFile(id);
-  if(fileData){
-    nuggetState[id]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined};
-    if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
+  // Only load from file if there is no local data for this nugget yet.
+  // Once a nugget has been opened (questions or a non-default status exist in
+  // localStorage), we keep that local state so in-browser edits are never
+  // silently overwritten by a server-side file update.
+  // To pull the latest file deliberately, use the ↻ Refresh button.
+  const ns=nuggetState[id];
+  const hasLocalData=(ns?.questions?.length>0)||(ns?.status&&ns.status!=='not-started');
+  if(!hasLocalData){
+    const fileData=await loadNuggetFromFile(id);
+    if(fileData){
+      nuggetState[id]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined};
+      if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
+      save(); // persist to localStorage so the next page-load uses this data
+    }
   }
   const n=NUGGETS.find(n=>n.id===id);
   document.getElementById('builder-empty').style.display='none';
