@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 3001,
-      "text": "What number is missing?",
+      "text": "What number comes next?",
       "answer": "2",
       "type": "exact",
       "visualType": "nl",
@@ -19,7 +19,9 @@
         "answer": "2",
         "lineStyle": "terminate",
         "colour": "red",
-        "hideTo": 10
+        "hideFrom": 3,
+        "hideTo": 10,
+        "answerCircle": true
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -27,7 +29,7 @@
     },
     {
       "id": 3002,
-      "text": "What number is missing?",
+      "text": "What number comes next?",
       "answer": "3",
       "type": "exact",
       "visualType": "nl",
@@ -41,7 +43,9 @@
         "answer": "3",
         "lineStyle": "terminate",
         "colour": "orange",
-        "hideTo": 10
+        "hideFrom": 4,
+        "hideTo": 10,
+        "answerCircle": true
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -49,7 +53,7 @@
     },
     {
       "id": 3003,
-      "text": "What number is missing?",
+      "text": "What number comes next?",
       "answer": "6",
       "type": "exact",
       "visualType": "nl",
@@ -63,7 +67,9 @@
         "answer": "6",
         "lineStyle": "terminate",
         "colour": "green",
-        "hideTo": 10
+        "hideFrom": 7,
+        "hideTo": 10,
+        "answerCircle": true
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -71,7 +77,7 @@
     },
     {
       "id": 3004,
-      "text": "What number is missing?",
+      "text": "What number comes next?",
       "answer": "7",
       "type": "exact",
       "visualType": "nl",
@@ -85,7 +91,9 @@
         "answer": "7",
         "lineStyle": "terminate",
         "colour": "blue",
-        "hideTo": 10
+        "hideFrom": 8,
+        "hideTo": 10,
+        "answerCircle": true
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -93,7 +101,7 @@
     },
     {
       "id": 3005,
-      "text": "What number is missing?",
+      "text": "What number comes next?",
       "answer": "9",
       "type": "exact",
       "visualType": "nl",
@@ -107,7 +115,9 @@
         "answer": "9",
         "lineStyle": "terminate",
         "colour": "purple",
-        "hideTo": 10
+        "hideFrom": 10,
+        "hideTo": 10,
+        "answerCircle": true
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
