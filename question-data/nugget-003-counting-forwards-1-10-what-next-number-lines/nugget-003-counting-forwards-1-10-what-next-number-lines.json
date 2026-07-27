@@ -19,7 +19,6 @@
         "answer": "2",
         "lineStyle": "terminate",
         "colour": "red",
-        "hideFrom": 3,
         "hideTo": 10
       },
       "qaComment": "",
