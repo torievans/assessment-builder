@@ -48,11 +48,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "6,?,4,3",
-        "shape": "square",
+        "sequence": "7,6,?,4,3",
+        "shape": "cloud",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
