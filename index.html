@@ -1322,7 +1322,7 @@ async function refreshNugget(){
   if(btn){btn.style.opacity='';btn.style.pointerEvents='';}
 }
 function renderWorkflow(){
-  if(!activeId)return;const ns=nuggetState[activeId];const st=ns.status;
+  if(!activeId)return;const ns=nuggetState[activeId];const VALID_STATUSES=['not-started','in-progress','ready-for-qa','ready-for-qti','uploaded-to-cms'];const st=VALID_STATUSES.includes(ns.status)?ns.status:'not-started';
   const siCls={'not-started':'si-ns','in-progress':'si-ip','ready-for-qa':'si-qa','ready-for-qti':'si-rd','uploaded-to-cms':'si-up'};
   let html=`<div class="si ${siCls[st]}"><div class="si-dot"></div>${STATUS_LABELS[st]}</div>`;
   if(st==='not-started'||st==='in-progress'){html+=`<button class="wfbtn wfbtn-dark" onclick="advanceStatus()">Ready for QA →</button>`;if(st==='in-progress')html+=`<button class="wfbtn wfbtn-ghost" onclick="setStatus('not-started')">Reset</button>`;}
