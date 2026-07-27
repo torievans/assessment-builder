@@ -2319,7 +2319,7 @@ document.querySelector('#tool-panel-nt .form-card').innerHTML = ntPanelHTML();
 document.querySelector('#tool-panel-nr .form-card').innerHTML = nrPanelHTML();
 document.querySelector('#tool-panel-pv .form-card').innerHTML = pvPanelHTML();
 document.querySelector('#tool-panel-pr .form-card').innerHTML = prPanelHTML();
-initState();loadStorage();loadPanel();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();loadStatusMap();
+initState();loadStorage();loadPanel();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();loadStatusMap().then(()=>saveStatusMap());
 document.getElementById('qabot-modal-body').addEventListener('click',e=>{const b=e.target.closest('[data-accept]');if(b)qaAcceptIssue(b.getAttribute('data-accept'));});
 </script>
 </body>
