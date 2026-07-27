@@ -80,17 +80,16 @@
     {
       "id": 319005,
       "text": "What number comes next?",
-      "answer": "68",
+      "answer": "67",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "73,72,71,_,_,?",
+        "sequence": "72,71,70,_,_,?",
         "shape": "cloud",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 4
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
