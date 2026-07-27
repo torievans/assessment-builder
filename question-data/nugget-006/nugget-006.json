@@ -1,0 +1,102 @@
+{
+  "nuggetId": 6,
+  "status": "in-progress",
+  "nextQId": 5011,
+  "questions": [
+    {
+      "id": 5006,
+      "text": "What number should go at the end?",
+      "answer": "6",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "1,2,3,_,_,?",
+        "shape": "balloon",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 0
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5007,
+      "text": "What number should go at the end?",
+      "answer": "9",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "4,5,6,_,_,?",
+        "shape": "balloon",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 1
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5008,
+      "text": "What number should go at the end?",
+      "answer": "7",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "2,3,4,_,_,?",
+        "shape": "balloon",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 2
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5009,
+      "text": "What number should go at the end?",
+      "answer": "10",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "5,6,7,_,_,?",
+        "shape": "balloon",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 3
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5010,
+      "text": "What number should go at the end?",
+      "answer": "8",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "3,4,5,_,_,?",
+        "shape": "balloon",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 4
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    }
+  ]
+}
