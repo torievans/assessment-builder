@@ -81,17 +81,16 @@
     {
       "id": 19005,
       "text": "What number comes next?",
-      "answer": "10",
+      "answer": "12",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "14,13,12,_,?",
+        "sequence": "16,15,14,_,?",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 4
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
