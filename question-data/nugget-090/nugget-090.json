@@ -54,7 +54,7 @@
         "fSplitOn": false,
         "fSplit": 5,
         "bg": 10,
-        "ba": 4,
+        "ba": 0,
         "bb": 0,
         "beadPreset": "colour",
         "mc": 4,
