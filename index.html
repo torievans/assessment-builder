@@ -524,6 +524,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
         <div class="ex-footer">
           <button class="btn btn-blue" id="ex-btn" onclick="batchExport()">↓ Export selected ZIP</button>
           <span class="ex-prog" id="ex-prog"></span>
+          <span class="ex-prog" id="ex-count"></span>
         </div>
       </div>
     </div>
@@ -1812,9 +1813,11 @@ function renderExportView(){
   // Show any nugget with a non-default status (questions exist on GH even if not loaded into memory yet)
   const ns=NUGGETS.filter(n=>{const s=nuggetState[n.id]?.status;return s&&s!=='not-started';});
   if(!ns.length){el.innerHTML='<p style="color:var(--muted);font-size:13px">No nuggets have questions yet.</p>';return;}
-  el.innerHTML=ns.map(n=>{const s=nuggetState[n.id];const st=s.status;const cm=STATUS_CM[st]||'ns';const qc=s.questions.length;return`<div class="ex-row exs-${cm}"><input type="checkbox" class="ex-cb" id="ec-${n.id}"${st==='ready-for-qti'?' checked':''}><label class="ex-name" for="ec-${n.id}">${esc(n.name)}</label><span class="ex-st">${STATUS_LABELS[st]}</span><span class="ex-qcnt">${qc?qc+' Q':'…'}</span></div>`;}).join('');
+  el.innerHTML=ns.map(n=>{const s=nuggetState[n.id];const st=s.status;const cm=STATUS_CM[st]||'ns';const qc=s.questions.length;return`<div class="ex-row exs-${cm}"><input type="checkbox" class="ex-cb" id="ec-${n.id}"${st==='ready-for-qti'?' checked':''} onchange="updateExCount()"><label class="ex-name" for="ec-${n.id}">${esc(n.name)}</label><span class="ex-st">${STATUS_LABELS[st]}</span><span class="ex-qcnt">${qc?qc+' Q':'…'}</span></div>`;}).join('');
+  updateExCount();
 }
-function selectAllEx(v){document.querySelectorAll('.ex-cb').forEach(c=>c.checked=v);}
+function updateExCount(){const total=document.querySelectorAll('.ex-cb').length,sel=document.querySelectorAll('.ex-cb:checked').length;const el=document.getElementById('ex-count');if(el)el.textContent=sel+' of '+total+' selected';}
+function selectAllEx(v){document.querySelectorAll('.ex-cb').forEach(c=>c.checked=v);updateExCount();}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function qtiXML(q,imgFile,nuggetTitle,qNum){
   const rid=`RESPONSE-${10000+q.id}`;
