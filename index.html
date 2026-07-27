@@ -81,6 +81,9 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .cm-add-sm{background:rgba(74,143,224,.12);border:1px solid rgba(74,143,224,.25);color:#60A5FA;border-radius:3px;font-size:10px;font-weight:700;padding:2px 6px;cursor:pointer;transition:background .12s;white-space:nowrap}
 .cm-add-sm:hover{background:rgba(74,143,224,.25)}
 .cm-add-sm.cm-in-panel{background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.25);color:#34D399;cursor:default}
+.cm-add-sub{background:rgba(74,143,224,.12);border:1.5px solid rgba(74,143,224,.4);color:#60A5FA;border-radius:3px;font-size:13px;font-weight:800;padding:1px 7px;cursor:pointer;transition:background .12s;line-height:1.4}
+.cm-add-sub:hover{background:rgba(74,143,224,.28)}
+.cm-add-sub.cm-in-panel{background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.25);color:#34D399;cursor:default}
 .cm-chk{color:#34D399;font-size:13px;font-weight:700}
 /* Main */
 .main{flex:1;background:var(--mbg);display:flex;flex-direction:column;overflow:hidden}
@@ -1605,7 +1608,7 @@ function renderCurriculum(){
     const topicIds=topicNuggets.map(n=>n.id);
     const topicInPanel=topicIds.every(id=>panelIds.includes(id));
     html+=`<div class="cm-section"><div class="cm-topic-hdr"><span>${esc(topic)}</span><button class="cm-add-btn${topicInPanel?' cm-in-panel':''}" onclick="addToPanel([${topicIds.join(',')}]);event.stopPropagation()">${topicInPanel?'✓ In panel':'+ Add topic'}</button></div>`;
-    html+=`<table class="cm-table"><thead><tr><th style="width:40%">NC Objective</th><th>Assessment Focus</th><th style="width:110px">Status</th><th style="width:36px"></th></tr></thead><tbody>`;
+    html+=`<table class="cm-table"><thead><tr><th style="width:40%">Subtopic</th><th>Assessment Focus</th><th style="width:110px">Status</th><th style="width:36px"></th></tr></thead><tbody>`;
     let prevSt='';
     topicNuggets.forEach(n=>{
       const ns=nuggetState[n.id];const st=ns?.status||'not-started';const cm=STATUS_CM[st]||'ns';
@@ -1616,7 +1619,7 @@ function renderCurriculum(){
         const subNuggets=topicNuggets.filter(n2=>n2.subtopic===n.subtopic);
         const subIds=subNuggets.map(n2=>n2.id);
         const subInPanel=subIds.every(id=>panelIds.includes(id));
-        html+=`<tr class="cm-obj-row"><td colspan="3" class="cm-obj-cell"><span class="cm-obj-label">${esc(n.subtopic)}</span></td><td style="text-align:center"><button class="cm-add-sm${subInPanel?' cm-in-panel':''}" onclick="addToPanel([${subIds.join(',')}]);event.stopPropagation()" title="${subInPanel?'All in panel':'Add objective to panel'}">${subInPanel?'✓':'+obj'}</button></td></tr>`;
+        html+=`<tr class="cm-obj-row"><td colspan="3" class="cm-obj-cell"><span class="cm-obj-label">${esc(n.subtopic)}</span></td><td style="text-align:center"><button class="cm-add-sub${subInPanel?' cm-in-panel':''}" onclick="addToPanel([${subIds.join(',')}]);event.stopPropagation()" title="${subInPanel?'All in panel':'Add subtopic to panel'}">${subInPanel?'✓':'+'}</button></td></tr>`;
       }
       html+=`<tr onclick="selectNugget(${n.id})"><td></td><td class="cm-name">${esc(n.name)}</td><td class="cms-${cm}"><div class="cm-st"><div class="cm-dot"></div>${STATUS_LABELS[st]}</div></td><td style="text-align:center">${inPanel?`<span class="cm-chk" title="In panel">✓</span>`:`<button class="cm-add-sm" onclick="addToPanel([${n.id}]);event.stopPropagation()" title="Add to panel">+</button>`}</td></tr>`;
     });
