@@ -1,7 +1,7 @@
 {
   "nuggetId": 307,
   "status": "in-progress",
-  "nextQId": 307006,
+  "nextQId": 309006,
   "questions": [
     {
       "id": 307001,
@@ -12,16 +12,15 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "start": 27,
-        "end": 37,
+        "start": 25,
+        "end": 35,
         "partitions": 10,
         "valuesGivenEvery": 1,
         "answer": "31",
         "lineStyle": "terminate",
         "colour": "red",
-        "answerCircle": true,
-        "hideFrom": 32,
-        "hideTo": 37
+        "hideTo": 37,
+        "answerCircle": true
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
