@@ -31,10 +31,9 @@
       "imagePath": "",
       "cfg": {
         "sequence": "3,4,?,6",
-        "shape": "square",
+        "shape": "star",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 1
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
