@@ -127,7 +127,7 @@
         "beadPreset": "colour",
         "mc": 0,
         "mc2": 0,
-        "mlRows": "20",
+        "mlRows": "10",
         "mlFill": "row",
         "mlGap": false,
         "mlSplitOn": false,
