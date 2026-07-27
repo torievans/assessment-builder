@@ -42,7 +42,6 @@
         "answer": "3",
         "lineStyle": "terminate",
         "colour": "orange",
-        "hideFrom": 4,
         "hideTo": 10,
         "answerCircle": true
       },
