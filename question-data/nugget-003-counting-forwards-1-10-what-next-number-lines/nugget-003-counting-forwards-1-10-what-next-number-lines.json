@@ -88,7 +88,6 @@
         "answer": "7",
         "lineStyle": "terminate",
         "colour": "blue",
-        "hideFrom": 8,
         "hideTo": 10,
         "answerCircle": true
       },
