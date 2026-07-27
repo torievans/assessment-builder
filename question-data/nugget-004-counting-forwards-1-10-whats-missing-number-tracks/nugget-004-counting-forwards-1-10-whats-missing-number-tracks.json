@@ -1,7 +1,7 @@
 {
   "nuggetId": 4,
   "status": "in-progress",
-  "nextQId": 4006,
+  "nextQId": 5006,
   "questions": [
     {
       "id": 4001,
@@ -13,10 +13,9 @@
       "imagePath": "",
       "cfg": {
         "sequence": "1,?,3,4",
-        "shape": "square",
+        "shape": "star",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 0
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
