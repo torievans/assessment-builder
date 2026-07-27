@@ -75,22 +75,20 @@
     {
       "id": 307004,
       "text": "What number is missing?",
-      "answer": "61",
+      "answer": "60",
       "type": "exact",
       "visualType": "nl",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "start": 57,
-        "end": 67,
+        "start": 55,
+        "end": 65,
         "partitions": 10,
         "valuesGivenEvery": 1,
-        "answer": "61",
+        "answer": "60",
         "lineStyle": "terminate",
         "colour": "blue",
-        "answerCircle": true,
-        "hideFrom": 62,
-        "hideTo": 67
+        "answerCircle": true
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
