@@ -109,7 +109,7 @@
         "display": "clustered",
         "align": "left",
         "countA": 9,
-        "imageIdA": "counter:1:0:0",
+        "imageIdA": "counter:4:11:0",
         "countB": 3,
         "imageIdB": "counter:1:0:0",
         "op": "add",
