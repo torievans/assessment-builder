@@ -12,11 +12,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "15,?,13,12",
-        "shape": "circle",
+        "sequence": "16,15,?,13,12",
+        "shape": "star",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 0
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
