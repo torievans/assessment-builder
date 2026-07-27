@@ -1963,13 +1963,19 @@ function renderScaffoldView(){
   const tsEl=document.getElementById('sc-upload-ts');
   const clearBtn=document.getElementById('sc-clear-btn');
   const statusEl2=document.getElementById('sc-upload-status');
-  if(ts&&tsEl){
-    const d=new Date(ts);
-    tsEl.textContent=`Loaded: ${d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})} at ${d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`;
-    tsEl.style.display='block';
+  const gm=JSON.parse(localStorage.getItem(SCAFFOLD_MAP_KEY)||'{}');
+  const hasData=Object.keys(gm).length>0;
+  if(hasData){
     if(clearBtn)clearBtn.style.display='';
-    const gm=JSON.parse(localStorage.getItem(SCAFFOLD_MAP_KEY)||'{}');
     if(statusEl2&&!statusEl2.textContent)statusEl2.textContent=`✓ ${Object.keys(gm).length} questions loaded`;
+    if(tsEl&&ts){
+      const d=new Date(ts);
+      tsEl.textContent=`Loaded: ${d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})} at ${d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`;
+      tsEl.style.display='block';
+    } else if(tsEl){
+      tsEl.textContent='Loaded: unknown date (uploaded before timestamp tracking was added)';
+      tsEl.style.display='block';
+    }
   } else {
     if(tsEl)tsEl.style.display='none';
     if(clearBtn)clearBtn.style.display='none';
