@@ -49,7 +49,7 @@
       "imagePath": "",
       "cfg": {
         "sequence": "17,16,?,14,13",
-        "shape": "circle",
+        "shape": "star",
         "layout": "straight",
         "colourMode": "full"
       },
