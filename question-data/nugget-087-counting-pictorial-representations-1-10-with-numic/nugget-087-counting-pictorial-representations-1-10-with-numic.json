@@ -1,11 +1,11 @@
 {
   "nuggetId": 87,
   "status": "in-progress",
-  "nextQId": 8706,
+  "nextQId": 319006,
   "questions": [
     {
       "id": 8701,
-      "text": "What number does the numicon show?",
+      "text": "What number does the number shape show?",
       "answer": "5",
       "type": "exact",
       "visualType": "nr",
@@ -39,7 +39,7 @@
     },
     {
       "id": 8702,
-      "text": "What number does the numicon show?",
+      "text": "What number does the number shape show?",
       "answer": "2",
       "type": "exact",
       "visualType": "nr",
@@ -73,7 +73,7 @@
     },
     {
       "id": 8703,
-      "text": "What number does the numicon show?",
+      "text": "What number does the number shape show?",
       "answer": "8",
       "type": "exact",
       "visualType": "nr",
@@ -107,7 +107,7 @@
     },
     {
       "id": 8704,
-      "text": "What number does the numicon show?",
+      "text": "What number does the number shape show?",
       "answer": "4",
       "type": "exact",
       "visualType": "nr",
@@ -141,7 +141,7 @@
     },
     {
       "id": 8705,
-      "text": "What number does the numicon show?",
+      "text": "What number does the number shape show?",
       "answer": "10",
       "type": "exact",
       "visualType": "nr",
