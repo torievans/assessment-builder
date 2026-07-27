@@ -1,0 +1,137 @@
+{
+  "nuggetId": 88,
+  "status": "in-progress",
+  "nextQId": 8806,
+  "questions": [
+    {
+      "id": 8801,
+      "text": "How many ones counters are there?",
+      "answer": "4",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 4,
+        "repType": "counters",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1000": "#788CB4",
+          "100": "#50B4A0",
+          "10": "#F0B478",
+          "1": "#C86464"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-21",
+      "updatedAt": "2026-07-21"
+    },
+    {
+      "id": 8802,
+      "text": "How many ones counters are there?",
+      "answer": "7",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 7,
+        "repType": "counters",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1000": "#788CB4",
+          "100": "#50B4A0",
+          "10": "#F0B478",
+          "1": "#C86464"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-21",
+      "updatedAt": "2026-07-21"
+    },
+    {
+      "id": 8803,
+      "text": "How many ones counters are there?",
+      "answer": "3",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 3,
+        "repType": "counters",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1000": "#788CB4",
+          "100": "#50B4A0",
+          "10": "#F0B478",
+          "1": "#C86464"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-21",
+      "updatedAt": "2026-07-21"
+    },
+    {
+      "id": 8804,
+      "text": "How many ones counters are there?",
+      "answer": "9",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 9,
+        "repType": "counters",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1000": "#788CB4",
+          "100": "#50B4A0",
+          "10": "#F0B478",
+          "1": "#C86464"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-21",
+      "updatedAt": "2026-07-21"
+    },
+    {
+      "id": 8805,
+      "text": "How many ones counters are there?",
+      "answer": "6",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 6,
+        "repType": "counters",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1000": "#788CB4",
+          "100": "#50B4A0",
+          "10": "#F0B478",
+          "1": "#C86464"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-21",
+      "updatedAt": "2026-07-21"
+    }
+  ]
+}
