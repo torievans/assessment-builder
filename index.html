@@ -74,17 +74,19 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .cm-topic-hdr span{flex:1}
 .cm-add-btn{background:rgba(74,143,224,.15);border:1px solid rgba(74,143,224,.3);color:#60A5FA;border-radius:4px;font-size:11px;font-weight:600;padding:3px 9px;cursor:pointer;white-space:nowrap;transition:background .12s}
 .cm-add-btn:hover{background:rgba(74,143,224,.28)}
-.cm-add-btn.cm-in-panel{background:rgba(52,211,153,.12);border-color:rgba(52,211,153,.3);color:#34D399;cursor:default}
+.cm-add-btn.cm-in-panel{background:rgba(52,211,153,.12);border-color:rgba(52,211,153,.3);color:#34D399;cursor:pointer}
+.cm-add-btn.cm-in-panel:hover{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#F87171}
 .cm-obj-row td{background:#F8FAFC;padding:6px 14px!important}
 .cm-obj-cell{display:flex;align-items:center;gap:8px}
 .cm-obj-label{font-size:12px;font-weight:600;color:#374151;flex:1}
 .cm-add-sm{background:rgba(74,143,224,.12);border:1px solid rgba(74,143,224,.25);color:#60A5FA;border-radius:3px;font-size:10px;font-weight:700;padding:2px 6px;cursor:pointer;transition:background .12s;white-space:nowrap}
 .cm-add-sm:hover{background:rgba(74,143,224,.25)}
-.cm-add-sm.cm-in-panel{background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.25);color:#34D399;cursor:default}
+.cm-rm-sm{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);color:#34D399;border-radius:3px;font-size:10px;font-weight:700;padding:2px 6px;cursor:pointer;transition:all .12s;white-space:nowrap}
+.cm-rm-sm:hover{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#F87171}
 .cm-add-sub{background:rgba(74,143,224,.12);border:1.5px solid rgba(74,143,224,.4);color:#60A5FA;border-radius:3px;font-size:13px;font-weight:800;padding:1px 7px;cursor:pointer;transition:background .12s;line-height:1.4}
 .cm-add-sub:hover{background:rgba(74,143,224,.28)}
-.cm-add-sub.cm-in-panel{background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.25);color:#34D399;cursor:default}
-.cm-chk{color:#34D399;font-size:13px;font-weight:700}
+.cm-rm-sub{background:rgba(52,211,153,.1);border:1.5px solid rgba(52,211,153,.3);color:#34D399;border-radius:3px;font-size:13px;font-weight:800;padding:1px 7px;cursor:pointer;transition:all .12s;line-height:1.4}
+.cm-rm-sub:hover{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#F87171}
 /* Main */
 .main{flex:1;background:var(--mbg);display:flex;flex-direction:column;overflow:hidden}
 .view{flex:1;display:flex;flex-direction:column;overflow:hidden}
@@ -1323,6 +1325,11 @@ function removeFromPanel(id,e){
   panelIds=panelIds.filter(pid=>pid!==id);savePanel();renderSidebar();
   if(activeTab==='curriculum')renderCurriculum();
 }
+function removeFromPanelMany(ids,e){
+  if(e){e.stopPropagation();e.preventDefault();}
+  const s=new Set(ids);panelIds=panelIds.filter(pid=>!s.has(pid));savePanel();renderSidebar();
+  if(activeTab==='curriculum')renderCurriculum();
+}
 function togglePanelTopic(t){panelCollapseMap[t]=!panelCollapseMap[t];savePanelCollapse();renderSidebar();}
 function renderSidebar(){
   const q=document.getElementById('sb-search').value.toLowerCase();
@@ -1718,7 +1725,10 @@ function renderCurriculum(){
     const topicNuggets=NUGGETS.filter(n=>n.topic===topic);if(!topicNuggets.length)return;
     const topicIds=topicNuggets.map(n=>n.id);
     const topicInPanel=topicIds.every(id=>panelIds.includes(id));
-    html+=`<div class="cm-section"><div class="cm-topic-hdr"><span>${esc(topic)}</span><button class="cm-add-btn${topicInPanel?' cm-in-panel':''}" onclick="addToPanel([${topicIds.join(',')}]);event.stopPropagation()">${topicInPanel?'✓ In panel':'+ Add topic'}</button></div>`;
+    const topicBtn=topicInPanel
+      ?`<button class="cm-add-btn cm-in-panel" onclick="removeFromPanelMany([${topicIds.join(',')}],event)" title="Remove all from panel">✓ In panel</button>`
+      :`<button class="cm-add-btn" onclick="addToPanel([${topicIds.join(',')}]);event.stopPropagation()">+ Add topic</button>`;
+    html+=`<div class="cm-section"><div class="cm-topic-hdr"><span>${esc(topic)}</span>${topicBtn}</div>`;
     html+=`<table class="cm-table"><thead><tr><th style="width:40%">Subtopic</th><th>Assessment Focus</th><th style="width:110px">Status</th><th style="width:36px"></th></tr></thead><tbody>`;
     let prevSt='';
     topicNuggets.forEach(n=>{
@@ -1730,9 +1740,15 @@ function renderCurriculum(){
         const subNuggets=topicNuggets.filter(n2=>n2.subtopic===n.subtopic);
         const subIds=subNuggets.map(n2=>n2.id);
         const subInPanel=subIds.every(id=>panelIds.includes(id));
-        html+=`<tr class="cm-obj-row"><td colspan="3" class="cm-obj-cell"><span class="cm-obj-label">${esc(n.subtopic)}</span></td><td style="text-align:center"><button class="cm-add-sub${subInPanel?' cm-in-panel':''}" onclick="addToPanel([${subIds.join(',')}]);event.stopPropagation()" title="${subInPanel?'All in panel':'Add subtopic to panel'}">${subInPanel?'✓':'+'}</button></td></tr>`;
+        const subBtn=subInPanel
+          ?`<button class="cm-rm-sub" onclick="removeFromPanelMany([${subIds.join(',')}],event)" title="Remove subtopic from panel">✓</button>`
+          :`<button class="cm-add-sub" onclick="addToPanel([${subIds.join(',')}]);event.stopPropagation()" title="Add subtopic to panel">+</button>`;
+        html+=`<tr class="cm-obj-row"><td colspan="3" class="cm-obj-cell"><span class="cm-obj-label">${esc(n.subtopic)}</span></td><td style="text-align:center">${subBtn}</td></tr>`;
       }
-      html+=`<tr onclick="selectNugget(${n.id})"><td></td><td class="cm-name">${esc(n.name)}</td><td class="cms-${cm}"><div class="cm-st"><div class="cm-dot"></div>${STATUS_LABELS[st]}</div></td><td style="text-align:center">${inPanel?`<span class="cm-chk" title="In panel">✓</span>`:`<button class="cm-add-sm" onclick="addToPanel([${n.id}]);event.stopPropagation()" title="Add to panel">+</button>`}</td></tr>`;
+      const nuggetBtn=inPanel
+        ?`<button class="cm-rm-sm" onclick="removeFromPanel(${n.id},event)" title="Remove from panel">✓</button>`
+        :`<button class="cm-add-sm" onclick="addToPanel([${n.id}]);event.stopPropagation()" title="Add to panel">+</button>`;
+      html+=`<tr onclick="selectNugget(${n.id})"><td></td><td class="cm-name">${esc(n.name)}</td><td class="cms-${cm}"><div class="cm-st"><div class="cm-dot"></div>${STATUS_LABELS[st]}</div></td><td style="text-align:center">${nuggetBtn}</td></tr>`;
     });
     html+='</tbody></table></div>';
   });
