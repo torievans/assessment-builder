@@ -63,17 +63,16 @@
     {
       "id": 20004,
       "text": "What number comes next?",
-      "answer": "7",
+      "answer": "14",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "12,11,10,_,_,?",
+        "sequence": "19,18,17,_,_,?",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 3
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
