@@ -1808,9 +1808,11 @@ function handleJSONUpload(input){const file=input.files[0];if(!file)return;const
 
 /* ── QTI export ── */
 function renderExportView(){
-  const el=document.getElementById('ex-list');const ns=NUGGETS.filter(n=>nuggetState[n.id]?.questions?.length>0);
+  const el=document.getElementById('ex-list');
+  // Show any nugget with a non-default status (questions exist on GH even if not loaded into memory yet)
+  const ns=NUGGETS.filter(n=>{const s=nuggetState[n.id]?.status;return s&&s!=='not-started';});
   if(!ns.length){el.innerHTML='<p style="color:var(--muted);font-size:13px">No nuggets have questions yet.</p>';return;}
-  el.innerHTML=ns.map(n=>{const s=nuggetState[n.id];const st=s.status;const cm=STATUS_CM[st]||'ns';return`<div class="ex-row exs-${cm}"><input type="checkbox" class="ex-cb" id="ec-${n.id}"${st==='ready-for-qti'?' checked':''}><label class="ex-name" for="ec-${n.id}">${esc(n.name)}</label><span class="ex-st">${STATUS_LABELS[st]}</span><span class="ex-qcnt">${s.questions.length} Q</span></div>`;}).join('');
+  el.innerHTML=ns.map(n=>{const s=nuggetState[n.id];const st=s.status;const cm=STATUS_CM[st]||'ns';const qc=s.questions.length;return`<div class="ex-row exs-${cm}"><input type="checkbox" class="ex-cb" id="ec-${n.id}"${st==='ready-for-qti'?' checked':''}><label class="ex-name" for="ec-${n.id}">${esc(n.name)}</label><span class="ex-st">${STATUS_LABELS[st]}</span><span class="ex-qcnt">${qc?qc+' Q':'…'}</span></div>`;}).join('');
 }
 function selectAllEx(v){document.querySelectorAll('.ex-cb').forEach(c=>c.checked=v);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -2016,7 +2018,15 @@ async function batchExport(){
   try{
     const zip=new JSZip();
     for(const nid of checked){
-      const n=NUGGETS.find(n=>n.id===nid),ns=nuggetState[nid];
+      const n=NUGGETS.find(n=>n.id===nid);let ns=nuggetState[nid];
+      // Lazy-load questions from GH if not yet in memory
+      if(!ns.questions.length){
+        prog.textContent=`Loading ${n.name}…`;
+        const fileData=await loadNuggetFromFile(nid);
+        if(fileData){nuggetState[nid]={status:fileData.status||ns.status,questions:fileData.questions||[],customName:fileData.customName||undefined};if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);save();}
+        ns=nuggetState[nid];
+      }
+      if(!ns.questions.length)continue;
       const folder=n.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
       const slug=folder;
       for(let i=0;i<ns.questions.length;i++){
