@@ -23,7 +23,7 @@
     },
     {
       "id": 19002,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "11",
       "type": "exact",
       "visualType": "nt",
@@ -33,8 +33,7 @@
         "sequence": "15,14,13,_,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 1
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
