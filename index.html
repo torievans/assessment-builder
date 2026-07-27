@@ -2005,11 +2005,15 @@ function dndEnd(e){
 
 /* ── Shared batch panel ── */
 let sharedBatchTool=null, sharedBatchStructure={}, sharedBatchRowIdx=0, sharedBatchRowColors={};
+let sharedBatchNTNextOffset=0; // auto-incremented colourOffset for NT batch rows
 
 function openSharedBatch(tool){
   // Validate current tool config first
   if(tool==='bm'){const cfg=getBMConfig();if(!cfg){alert('Please fill in at least one segment value.');return;}sharedBatchStructure=cfg;}
-  else if(tool==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='nt'){const cfg=getNTConfig();if(!cfg){alert('Please enter a sequence.');return;}sharedBatchStructure=cfg;
+    // Start the colour offset from the existing question count so batch rows
+    // continue the palette rather than all starting from colour 0
+    sharedBatchNTNextOffset=(nuggetState[activeId]?.questions?.length||0)%7;}
   else if(tool==='pv'){const cfg=getPVConfig();if(!cfg){alert('Please enter a number.');return;}sharedBatchStructure=cfg;}
   else if(tool==='nr'){const cfg=getNRConfig();if(!cfg){alert('Please set a number.');return;}sharedBatchStructure=cfg;}
   else if(tool==='text'){sharedBatchStructure={};}
@@ -2089,6 +2093,8 @@ function addSharedBatchRow(defaults={}){
     const segs=sharedBatchStructure.segments||[];
     segs.forEach((s,i)=>{ cells+=`<td>${n('seg'+i, defaults['seg'+i]??s.value)}</td>`; });
   } else if(tool==='nt'){
+    // Track a unique colourOffset per row so each question starts on a different palette colour
+    sharedBatchRowColors[idx]={colourOffset:sharedBatchNTNextOffset%7};sharedBatchNTNextOffset++;
     cells+=`<td>${t('seq',defaults.seq??'1,2,3,?,5','batch-input-text')}</td>`;
   } else if(tool==='nr'){
     cells+=`<td>${n('n',defaults.n??0,72)}</td>`;
@@ -2144,7 +2150,9 @@ function getSharedBatchRowCfg(tr){
     return {...sharedBatchStructure, segments:segs, colorIdx};
   } else if(tool==='nt'){
     const seq=g('seq');if(!seq)return null;
-    return {...sharedBatchStructure, sequence:seq};
+    const rowIdx=parseInt(tr.dataset.rowIdx);
+    const colourOffset=sharedBatchRowColors[rowIdx]?.colourOffset??0;
+    return {...sharedBatchStructure, sequence:seq, colourOffset};
   } else if(tool==='nr'){
     const num=parseFloat(g('n'));if(isNaN(num))return null;
     return {...sharedBatchStructure, n:num};
