@@ -97,22 +97,20 @@
     {
       "id": 307005,
       "text": "What number is missing?",
-      "answer": "71",
+      "answer": "69",
       "type": "exact",
       "visualType": "nl",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "start": 67,
-        "end": 77,
+        "start": 65,
+        "end": 75,
         "partitions": 10,
         "valuesGivenEvery": 1,
-        "answer": "71",
+        "answer": "69",
         "lineStyle": "terminate",
         "colour": "purple",
-        "answerCircle": true,
-        "hideFrom": 72,
-        "hideTo": 77
+        "answerCircle": true
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
