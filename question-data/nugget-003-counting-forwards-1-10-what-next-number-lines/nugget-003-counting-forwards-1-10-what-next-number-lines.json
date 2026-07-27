@@ -27,7 +27,7 @@
     },
     {
       "id": 3002,
-      "text": "What number comes next?",
+      "text": "What number is missing?",
       "answer": "3",
       "type": "exact",
       "visualType": "nl",
