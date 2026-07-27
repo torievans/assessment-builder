@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 5001,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "5",
       "type": "exact",
       "visualType": "nt",
@@ -15,8 +15,7 @@
         "sequence": "1,2,3,_,?",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 0
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
