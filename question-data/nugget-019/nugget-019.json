@@ -1,11 +1,11 @@
 {
   "nuggetId": 19,
   "status": "ready-for-qa",
-  "nextQId": 20006,
+  "nextQId": 288006,
   "questions": [
     {
       "id": 19001,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "16",
       "type": "exact",
       "visualType": "nt",
@@ -15,8 +15,7 @@
         "sequence": "20,19,18,_,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 0
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
