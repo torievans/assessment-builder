@@ -1,6 +1,112 @@
 {
   "nuggetId": 3,
-  "status": "in-progress",
-  "nextQId": 1049,
-  "questions": []
+  "status": "draft",
+  "nextQId": 3006,
+  "questions": [
+    {
+      "id": 3001,
+      "text": "What number comes next?",
+      "answer": "4",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 1,
+        "end": 4,
+        "partitions": 3,
+        "valuesGivenEvery": 1,
+        "answer": "4",
+        "lineStyle": "terminate",
+        "colour": "grey"
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 3002,
+      "text": "What number comes next?",
+      "answer": "6",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 3,
+        "end": 6,
+        "partitions": 3,
+        "valuesGivenEvery": 1,
+        "answer": "6",
+        "lineStyle": "terminate",
+        "colour": "grey"
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 3003,
+      "text": "What number comes next?",
+      "answer": "8",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 5,
+        "end": 8,
+        "partitions": 3,
+        "valuesGivenEvery": 1,
+        "answer": "8",
+        "lineStyle": "terminate",
+        "colour": "grey"
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 3004,
+      "text": "What number comes next?",
+      "answer": "10",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 7,
+        "end": 10,
+        "partitions": 3,
+        "valuesGivenEvery": 1,
+        "answer": "10",
+        "lineStyle": "terminate",
+        "colour": "grey"
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 3005,
+      "text": "What number comes next?",
+      "answer": "5",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 2,
+        "end": 5,
+        "partitions": 3,
+        "valuesGivenEvery": 1,
+        "answer": "5",
+        "lineStyle": "terminate",
+        "colour": "grey"
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    }
+  ]
 }
