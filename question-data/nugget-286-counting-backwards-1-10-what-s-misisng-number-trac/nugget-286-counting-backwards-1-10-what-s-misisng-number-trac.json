@@ -84,11 +84,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "7,?,5,4",
+        "sequence": "8,7,?,5,4",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 4
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
