@@ -41,7 +41,7 @@
     },
     {
       "id": 26003,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "88",
       "type": "exact",
       "visualType": "nt",
