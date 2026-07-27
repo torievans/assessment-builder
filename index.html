@@ -1114,8 +1114,12 @@ async function loadStatusMap(){
   Object.entries(map).forEach(([id,status])=>{
     const nid=parseInt(id);
     const ns=nuggetState[nid];
-    // Only seed if nugget has no local data (still at default not-started with no questions)
-    if(ns&&ns.status==='not-started'&&(!ns.questions||!ns.questions.length)){
+    if(!ns)return;
+    if(!_statusHadLocalState){
+      // No local state (incognito / fresh session): GH is authoritative, apply unconditionally
+      nuggetState[nid].status=status;changed=true;
+    } else if(ns.status==='not-started'&&(!ns.questions||!ns.questions.length)){
+      // Local state exists: only seed nuggets with no local data
       nuggetState[nid].status=status;changed=true;
     }
   });
@@ -1255,6 +1259,7 @@ async function migrateOldFolders(){
 /* ── State ── */
 let nuggetState={};let activeId=null;let activeTab='builder';let filter='all';let nextQId=1;
 let panelIds=[];let panelCollapseMap={};let removedPanelIds=new Set();let _panelHadLocalState=false;
+let _statusHadLocalState=false;
 const STORE='maths-ab-v3';
 const PANEL_STORE='ab_panel_v1';
 const PANEL_COLLAPSE_STORE='ab_panel_collapse_v1';
@@ -1293,7 +1298,7 @@ function save(){
     _autoSaveTimer=setTimeout(()=>saveNuggetToFile(activeId),700);
   }
 }
-function loadStorage(){try{const d=localStorage.getItem(STORE);if(d)applyState(JSON.parse(d));else nextQId=SEED_NEXT;}catch(e){}}
+function loadStorage(){try{const d=localStorage.getItem(STORE);if(d){_statusHadLocalState=true;applyState(JSON.parse(d));}else nextQId=SEED_NEXT;}catch(e){}}
 
 /* ── Tab / view switching ── */
 function switchTab(t){activeTab=t;['builder','curriculum'].forEach(v=>{document.getElementById('view-'+v).classList.toggle('hidden',t!==v);document.getElementById('tab-'+v).classList.toggle('active',t===v);});document.getElementById('view-export').classList.add('hidden');document.getElementById('view-scaffold').classList.add('hidden');if(t==='curriculum')renderCurriculum();}
@@ -1389,6 +1394,7 @@ async function selectNugget(id){
       nuggetState[id]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined};
       if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
       save(); // persist to localStorage so the next page-load uses this data
+      renderSidebar(); // update sidebar dot to reflect file status
     }
   }
   const n=NUGGETS.find(n=>n.id===id);
@@ -1751,7 +1757,7 @@ function addToolQuestion(type){
       q.imagePath=imagePath;q.image='';
     }
   }
-  if(nuggetState[activeId].status==='not-started')nuggetState[activeId].status='in-progress';
+  if(nuggetState[activeId].status==='not-started'){nuggetState[activeId].status='in-progress';saveStatusMap();}
   nuggetState[activeId].questions.push(q);
   save();renderQuestions();renderSidebar();renderWorkflow();closeTool();
 }
@@ -2363,7 +2369,7 @@ function addAllSharedBatch(){
     nuggetState[activeId].questions.push(q);added++;
   });
   if(!added){alert('No valid rows to add — each row needs Question text and Answer.');return;}
-  if(nuggetState[activeId].status==='not-started')nuggetState[activeId].status='in-progress';
+  if(nuggetState[activeId].status==='not-started'){nuggetState[activeId].status='in-progress';saveStatusMap();}
   save();renderQuestions();renderSidebar();renderWorkflow();closeSharedBatch();closeTool();
 }
 
