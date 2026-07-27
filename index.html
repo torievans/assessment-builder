@@ -1973,11 +1973,13 @@ function renderScaffoldView(){
   }
   listEl.innerHTML=matchedNuggets.map(n=>{
     const count=nuggetCounts[n.name]||0;
-    return`<div class="sc-row"><input type="checkbox" class="sc-cb" id="sc-cb-${n.id}" checked><label class="sc-row-name" for="sc-cb-${n.id}">${esc(nuggetDisplayName(n.id))}</label><span class="sc-row-count">${count} Q matched</span></div>`;
+    return`<div class="sc-row"><input type="checkbox" class="sc-cb" id="sc-cb-${n.id}" checked onchange="updateScCount()"><label class="sc-row-name" for="sc-cb-${n.id}">${esc(nuggetDisplayName(n.id))}</label><span class="sc-row-count">${count} Q matched</span></div>`;
   }).join('');
+  updateScCount();
 }
 
-function setAllScaffoldChecks(val){document.querySelectorAll('.sc-cb').forEach(cb=>cb.checked=val);}
+function updateScCount(){const total=document.querySelectorAll('.sc-cb').length,sel=document.querySelectorAll('.sc-cb:checked').length;const el=document.getElementById('sc-gen-status');if(el)el.textContent=sel+' of '+total+' selected';}
+function setAllScaffoldChecks(val){document.querySelectorAll('.sc-cb').forEach(cb=>cb.checked=val);updateScCount();}
 
 function generateScaffoldingXLSX(){
   const groupMap=JSON.parse(localStorage.getItem(SCAFFOLD_MAP_KEY)||'{}');
