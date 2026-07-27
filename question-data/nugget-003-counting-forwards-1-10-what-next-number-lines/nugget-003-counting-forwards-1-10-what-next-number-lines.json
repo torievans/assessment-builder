@@ -111,7 +111,6 @@
         "answer": "9",
         "lineStyle": "terminate",
         "colour": "purple",
-        "hideFrom": 10,
         "hideTo": 10,
         "answerCircle": true
       },
