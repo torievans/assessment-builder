@@ -77,7 +77,7 @@
     },
     {
       "id": 288004,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "2",
       "type": "exact",
       "visualType": "nt",
@@ -87,8 +87,7 @@
         "sequence": "7,6,5,_,_,?",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 3
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
