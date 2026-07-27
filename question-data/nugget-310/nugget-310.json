@@ -6,17 +6,16 @@
     {
       "id": 310001,
       "text": "What number comes next?",
-      "answer": "32",
+      "answer": "31",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "28,29,_,31,?",
+        "sequence": "27,28,29,_,?",
         "shape": "star",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 0
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
