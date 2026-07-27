@@ -48,11 +48,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "48,49,_,51,?",
+        "sequence": "48,49,50,_,?",
         "shape": "star",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
