@@ -14,7 +14,7 @@
       "cfg": {
         "mode": "count",
         "display": "clustered",
-        "align": "left",
+        "align": "centre",
         "countA": 11,
         "imageIdA": "illus:animals/rhinoceros_grey",
         "countB": 3,
