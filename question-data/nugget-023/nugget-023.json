@@ -79,15 +79,13 @@
       "qaComment": "",
       "visualType": "nl",
       "cfg": {
-        "lineStyle": "terminate",
-        "colour": "red",
-        "valuesGivenEvery": null,
-        "jumpColour": "dark",
-        "jump2Colour": "dark",
         "start": 60,
         "end": 70,
         "partitions": 10,
-        "answer": "68"
+        "valuesGivenEvery": null,
+        "answer": "68",
+        "lineStyle": "terminate",
+        "colour": "purple"
       },
       "updatedAt": "2026-07-27",
       "createdAt": "2026-07-27"
