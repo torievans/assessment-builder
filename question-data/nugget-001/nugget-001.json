@@ -1,7 +1,7 @@
 {
   "nuggetId": 1,
-  "status": "ready-for-qa",
-  "nextQId": 1049,
+  "status": "in-progress",
+  "nextQId": 5040,
   "questions": [
     {
       "id": 1032,
@@ -32,7 +32,8 @@
         "showEq": false
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "74f99aaf-2e57-488f-8eba-905cd59a0b98"
     },
     {
       "id": 1042,
@@ -53,7 +54,8 @@
         "colour": "purple"
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "7411e48c-50c7-4b7d-91a5-3880b7c62428"
     },
     {
       "id": 1044,
@@ -71,7 +73,8 @@
         "colourMode": "full"
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "62814d88-e7e3-420b-a28d-3b510c641c5d"
     },
     {
       "id": 1034,
@@ -102,7 +105,8 @@
         "showEq": true
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "70e9b411-84b0-4a19-ab5f-5aa8a30fef11"
     },
     {
       "id": 1035,
@@ -136,7 +140,8 @@
         "niSplit": 5
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "a53338c5-d912-466f-a1d3-0a58f670ce19"
     },
     {
       "id": 1036,
@@ -170,7 +175,8 @@
         "niSplit": 3
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "6102da17-8aab-4b7a-8f98-6e110993e0e4"
     },
     {
       "id": 1048,
@@ -196,7 +202,8 @@
         "pvColors": {}
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "c91714bb-93d9-4751-a466-2ee0b48369d2"
     },
     {
       "id": 1037,
@@ -230,7 +237,8 @@
         "niSplit": 3
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "c6a85178-bc29-4322-aabe-699410752171"
     },
     {
       "id": 1038,
@@ -256,7 +264,8 @@
         "pvColors": {}
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "f8931de0-5b28-4c66-b524-93e71839039f"
     },
     {
       "id": 1047,
@@ -282,7 +291,8 @@
         "pvColors": {}
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "7054579e-23d8-4d96-8929-74e0bc224c20"
     },
     {
       "id": 1039,
@@ -308,7 +318,8 @@
         "pvColors": {}
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "fff46291-e4b2-4b3a-8668-745194c127ea"
     },
     {
       "id": 1041,
@@ -335,7 +346,8 @@
         "multi": true
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "58e97c0c-a254-4d08-8d43-671e8e2a65b8"
     },
     {
       "id": 1040,
@@ -363,7 +375,8 @@
         "pvColors": {}
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "1d9d7933-6e0e-47d0-8bea-53ed97f8d433"
     },
     {
       "id": 1045,
@@ -391,7 +404,8 @@
         "pvColors": {}
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "b59480f6-d6ad-4a52-a06c-3b1e6cc1d50e"
     },
     {
       "id": 1043,
@@ -419,7 +433,8 @@
         "jumpColour": "red"
       },
       "updatedAt": "2026-07-21",
-      "createdAt": "2026-07-21"
+      "createdAt": "2026-07-21",
+      "groupId": "b351fcb5-cba5-40c9-a5a3-8ff9844c7d49"
     }
   ]
 }
