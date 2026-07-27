@@ -35,16 +35,15 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "start": 37,
-        "end": 47,
+        "start": 35,
+        "end": 45,
         "partitions": 10,
         "valuesGivenEvery": 1,
         "answer": "41",
         "lineStyle": "terminate",
         "colour": "orange",
-        "answerCircle": true,
-        "hideFrom": 42,
-        "hideTo": 47
+        "hideTo": 47,
+        "answerCircle": true
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
