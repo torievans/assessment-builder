@@ -63,7 +63,6 @@
         "answer": "6",
         "lineStyle": "terminate",
         "colour": "green",
-        "hideFrom": 7,
         "hideTo": 10
       },
       "qaComment": "",
