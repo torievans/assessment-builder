@@ -1,7 +1,7 @@
 {
   "nuggetId": 26,
   "status": "in-progress",
-  "nextQId": 26006,
+  "nextQId": 288006,
   "questions": [
     {
       "id": 26001,
@@ -44,17 +44,16 @@
     {
       "id": 26003,
       "text": "What number comes next?",
-      "answer": "87",
+      "answer": "88",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "83,84,85,_,?",
+        "sequence": "84,85,86,_,?",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
