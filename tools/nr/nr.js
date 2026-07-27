@@ -141,7 +141,7 @@ function restoreNRConfig(cfg){
 // ── Panel HTML ─────────────────────────────────────────────────
 function nrPanelHTML(){
   return `<div class="form-row">
-              <div class="field field-grow"><label>Question text</label><input type="text" id="nr-text" placeholder="e.g. Show 7 on a ten frame."></div>
+              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('nr-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><input type="text" id="nr-text" placeholder="e.g. Show 7 on a ten frame."></div>
               <div class="field field-sm"><label>Answer</label><input type="text" id="nr-answer" placeholder="e.g. 7"></div>
             </div>
             <div class="form-row" style="align-items:center">
