@@ -78,7 +78,7 @@
         "display": "frame",
         "align": "left",
         "countA": 8,
-        "imageIdA": "counter:1:1:3",
+        "imageIdA": "counter:1:4:4",
         "countB": 3,
         "imageIdB": "counter:1:1:3",
         "op": "add",
