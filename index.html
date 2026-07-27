@@ -543,10 +543,12 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
             </div>
           </div>
           <div class="sc-card-body">
-            <div style="display:flex;gap:10px;align-items:center">
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
               <button class="btn btn-blue" onclick="document.getElementById('qti-report-file').value='';document.getElementById('qti-report-file').click()">↑ Upload QTI report CSV</button>
+              <button class="btn btn-ghost" id="sc-clear-btn" style="display:none;font-size:11px;padding:4px 10px;color:#c0392b" onclick="clearScaffoldMap()">✕ Clear</button>
               <span class="sc-status" id="sc-upload-status"></span>
             </div>
+            <div id="sc-upload-ts" style="font-size:11px;color:#888;margin-top:4px;display:none"></div>
             <div class="sc-match-info hidden" id="sc-match-info"></div>
           </div>
         </div>
@@ -1921,6 +1923,7 @@ function parseQTIReportCSV(text){
 }
 
 const SCAFFOLD_MAP_KEY='ab_scaffoldGroupMap';
+const SCAFFOLD_MAP_TS_KEY='ab_scaffoldGroupMapTs';
 
 function handleQTIReportUpload(input){
   if(!input.files[0])return;
@@ -1938,6 +1941,7 @@ function handleQTIReportUpload(input){
       const groupMap={};
       for(let r=1;r<rows.length;r++){const row=rows[r];const qid=(row[qidCol]||'').trim();const gid=(row[gidCol]||'').trim();if(qid&&gid)groupMap[qid]=gid;}
       localStorage.setItem(SCAFFOLD_MAP_KEY,JSON.stringify(groupMap));
+      localStorage.setItem(SCAFFOLD_MAP_TS_KEY,new Date().toISOString());
       statusEl.textContent=`✓ ${Object.keys(groupMap).length} questions loaded`;
       renderScaffoldView();
     }catch(err){statusEl.textContent='Error: '+err.message;}
@@ -1945,7 +1949,31 @@ function handleQTIReportUpload(input){
   reader.readAsText(input.files[0]);
 }
 
+function clearScaffoldMap(){
+  localStorage.removeItem(SCAFFOLD_MAP_KEY);
+  localStorage.removeItem(SCAFFOLD_MAP_TS_KEY);
+  document.getElementById('sc-upload-status').textContent='';
+  document.getElementById('sc-upload-ts').style.display='none';
+  document.getElementById('sc-clear-btn').style.display='none';
+  renderScaffoldView();
+}
 function renderScaffoldView(){
+  // Show/hide timestamp and clear button based on stored data
+  const ts=localStorage.getItem(SCAFFOLD_MAP_TS_KEY);
+  const tsEl=document.getElementById('sc-upload-ts');
+  const clearBtn=document.getElementById('sc-clear-btn');
+  const statusEl2=document.getElementById('sc-upload-status');
+  if(ts&&tsEl){
+    const d=new Date(ts);
+    tsEl.textContent=`Loaded: ${d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})} at ${d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`;
+    tsEl.style.display='block';
+    if(clearBtn)clearBtn.style.display='';
+    const gm=JSON.parse(localStorage.getItem(SCAFFOLD_MAP_KEY)||'{}');
+    if(statusEl2&&!statusEl2.textContent)statusEl2.textContent=`✓ ${Object.keys(gm).length} questions loaded`;
+  } else {
+    if(tsEl)tsEl.style.display='none';
+    if(clearBtn)clearBtn.style.display='none';
+  }
   const groupMap=JSON.parse(localStorage.getItem(SCAFFOLD_MAP_KEY)||'{}');
   // Parse nugget names and counts directly from the map keys ("[nugget name] - Q01" format)
   const nuggetCounts={};
