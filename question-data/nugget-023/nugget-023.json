@@ -85,7 +85,8 @@
         "valuesGivenEvery": null,
         "answer": "68",
         "lineStyle": "terminate",
-        "colour": "purple"
+        "colour": "purple",
+        "answerCircle": true
       },
       "updatedAt": "2026-07-27",
       "createdAt": "2026-07-27"
