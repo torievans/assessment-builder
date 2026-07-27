@@ -30,11 +30,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "10,?,8,7",
-        "shape": "square",
+        "sequence": "11,10,?,8,7",
+        "shape": "cloud",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 1
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
