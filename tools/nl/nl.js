@@ -12,7 +12,7 @@ const JP_SWATCH   = NL_JUMP_PALETTE_NAMES;
 function resolveNLC(k){ return resolveNLColour(k); }
 
 // ── State ──────────────────────────────────────────────────────
-let nlStyle='through',nlColour='grey',nlJumpOpen=false,nlJump2Open=false;
+let nlStyle='through',nlColour='grey',nlJumpOpen=false,nlJump2Open=false,nlAnswerCircle=false;
 let nlArcType='single',nlArcType2='single',nlArrow=true,nlArrow2=true;
 let nlCircle='none',nlCircle2='none',nlJumpCol='dark',nlJump2Col='dark';
 
@@ -41,6 +41,7 @@ function initNLPanel(){
   document.querySelectorAll('.tog-btn[data-arctype2]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-arctype2]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlArcType2=b.dataset.arctype2;autoPreviewNL();}));
   document.querySelectorAll('.tog-btn[data-arrow2]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-arrow2]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlArrow2=b.dataset.arrow2==='yes';autoPreviewNL();}));
   document.querySelectorAll('.tog-btn[data-circle2]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-circle2]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlCircle2=b.dataset.circle2;autoPreviewNL();}));
+  document.querySelectorAll('.tog-btn[data-anscircle]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tog-btn[data-anscircle]').forEach(x=>x.classList.remove('active'));b.classList.add('active');nlAnswerCircle=b.dataset.anscircle==='yes';autoPreviewNL();}));
   ['nl-answer','f-start','f-end','f-step','f-vge','f-hide-from','f-hide-to'].forEach(id=>document.getElementById(id)?.addEventListener('input',autoPreviewNL));
   setupJumpCalc('f-from','f-to','f-jump-label');
   setupJumpCalc('f-from2','f-to2','f-jump-label2');
@@ -58,7 +59,7 @@ function getNLConfig(){
   const start=parseFloat(document.getElementById('f-start').value),end=parseFloat(document.getElementById('f-end').value),step=parseFloat(document.getElementById('f-step').value),vge=parseFloat(document.getElementById('f-vge').value),hF=parseFloat(document.getElementById('f-hide-from').value),hT=parseFloat(document.getElementById('f-hide-to').value);
   if(isNaN(start)||isNaN(end)||isNaN(step)||step<=0)return null;const p=Math.round((end-start)/step);if(p<=0)return null;
   const ans=document.getElementById('nl-answer').value.trim()||undefined;
-  const cfg={start,end,partitions:p,valuesGivenEvery:vge,answer:ans,lineStyle:nlStyle,colour:nlColour,hideFrom:isNaN(hF)?undefined:hF,hideTo:isNaN(hT)?undefined:hT};
+  const cfg={start,end,partitions:p,valuesGivenEvery:vge,answer:ans,lineStyle:nlStyle,colour:nlColour,hideFrom:isNaN(hF)?undefined:hF,hideTo:isNaN(hT)?undefined:hT,answerCircle:nlAnswerCircle||undefined};
   if(nlJumpOpen){const from=parseFloat(document.getElementById('f-from').value),to=parseFloat(document.getElementById('f-to').value),lbl=document.getElementById('f-jump-label').value.trim();if(!isNaN(from)&&!isNaN(to)&&from!==to){cfg.jumpFrom=from;cfg.jumpTo=to;cfg.jumpType=nlArcType;cfg.jumpLabel=lbl;cfg.jumpArrow=nlArrow;cfg.jumpCircle=nlCircle;cfg.jumpColour=nlJumpCol;}if(nlJump2Open){const from2=parseFloat(document.getElementById('f-from2').value),to2=parseFloat(document.getElementById('f-to2').value),lbl2=document.getElementById('f-jump-label2').value.trim();if(!isNaN(from2)&&!isNaN(to2)&&from2!==to2){cfg.jump2From=from2;cfg.jump2To=to2;cfg.jump2Type=nlArcType2;cfg.jump2Label=lbl2;cfg.jump2Arrow=nlArrow2;cfg.jump2Circle=nlCircle2;cfg.jump2Colour=nlJump2Col;}}}
   return cfg;
 }
@@ -173,6 +174,9 @@ function restoreNLConfig(cfg){
   // Line style toggle
   nlStyle=cfg.lineStyle||'through';
   document.querySelectorAll('.tog-btn[data-style]').forEach(b=>b.classList.toggle('active',b.dataset.style===nlStyle));
+  // Answer circle toggle
+  nlAnswerCircle=cfg.answerCircle||false;
+  document.querySelectorAll('.tog-btn[data-anscircle]').forEach(b=>b.classList.toggle('active',b.dataset.anscircle===(nlAnswerCircle?'yes':'no')));
   // Colour swatch
   nlColour=cfg.colour||'grey';
   document.querySelectorAll('#nl-swatch-row .swatch').forEach(b=>b.classList.toggle('selected',b.title===nlColour));
@@ -228,6 +232,7 @@ function nlPanelHTML(){
             </div>
             <div class="form-row">
               <div class="field"><label>Style</label><div class="tog-row"><button class="tog-btn active" data-style="through">Through</button><button class="tog-btn" data-style="terminate">Terminate</button></div></div>
+              <div class="field"><label>Circle ?</label><div class="tog-row"><button class="tog-btn active" data-anscircle="no">No</button><button class="tog-btn" data-anscircle="yes">Yes</button></div></div>
               <div class="field"><label>Colour</label><div class="swatch-row" id="nl-swatch-row"></div></div>
             </div>
             <button class="jump-toggle" id="jump-toggle-btn" onclick="nlToggleJump()">＋ Add jumps</button>
