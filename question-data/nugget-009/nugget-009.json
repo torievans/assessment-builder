@@ -28,7 +28,7 @@
     {
       "id": 5017,
       "text": "What number is missing?",
-      "answer": "15",
+      "answer": "16",
       "type": "exact",
       "image": "",
       "display": "",
@@ -39,7 +39,7 @@
         "end": 20,
         "partitions": 20,
         "valuesGivenEvery": null,
-        "answer": "15",
+        "answer": "16",
         "lineStyle": "terminate",
         "colour": "yellow",
         "answerCircle": true
