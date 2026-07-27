@@ -26,28 +26,6 @@
       "createdAt": "2026-07-27"
     },
     {
-      "id": 5017,
-      "text": "What number is missing?",
-      "answer": "16",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nl",
-      "cfg": {
-        "start": 0,
-        "end": 20,
-        "partitions": 20,
-        "valuesGivenEvery": null,
-        "answer": "16",
-        "lineStyle": "terminate",
-        "colour": "yellow",
-        "answerCircle": true
-      },
-      "updatedAt": "2026-07-27",
-      "createdAt": "2026-07-27"
-    },
-    {
       "id": 5018,
       "text": "What number is missing?",
       "answer": "13",
