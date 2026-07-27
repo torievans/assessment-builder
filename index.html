@@ -1066,6 +1066,44 @@ async function loadNuggetFromFile(nid){
   }
   return null;
 }
+// ── Status map ── seeds sidebar dots on load without fetching every nugget file
+async function loadStatusMap(){
+  let map=null;
+  // 1. Try local folder
+  if(folderHandle){
+    try{
+      const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:false});
+      const fh=await qdDir.getFileHandle('status.json',{create:false});
+      map=JSON.parse(await(await fh.getFile()).text());
+    }catch(e){}
+  }
+  // 2. Try GitHub Pages static path
+  if(!map){
+    try{
+      const r=await fetch('question-data/status.json',{cache:'no-store'});
+      if(r.ok)map=await r.json();
+    }catch(e){}
+  }
+  // 3. Try GitHub API (if token set and Pages not available)
+  if(!map&&ghToken){
+    try{
+      const r=await fetch(`https://api.github.com/repos/${ghOwner}/${ghRepo}/contents/question-data/status.json`,
+        {headers:{'Authorization':`token ${ghToken}`,'Accept':'application/vnd.github.v3+json'}});
+      if(r.ok){const j=await r.json();map=JSON.parse(atob(j.content.replace(/\n/g,'')));}
+    }catch(e){}
+  }
+  if(!map)return;
+  let changed=false;
+  Object.entries(map).forEach(([id,status])=>{
+    const nid=parseInt(id);
+    const ns=nuggetState[nid];
+    // Only seed if nugget has no local data (still at default not-started with no questions)
+    if(ns&&ns.status==='not-started'&&(!ns.questions||!ns.questions.length)){
+      nuggetState[nid].status=status;changed=true;
+    }
+  });
+  if(changed){save();renderSidebar();}
+}
 async function saveNuggetToFile(nid){
   const ns=nuggetState[nid];if(!ns)return;
   const slug=nuggetSlug(nid);   // name-based, human-readable (e.g. nugget-001-1-10-what-next-number-track)
@@ -2236,7 +2274,7 @@ document.querySelector('#tool-panel-nt .form-card').innerHTML = ntPanelHTML();
 document.querySelector('#tool-panel-nr .form-card').innerHTML = nrPanelHTML();
 document.querySelector('#tool-panel-pv .form-card').innerHTML = pvPanelHTML();
 document.querySelector('#tool-panel-pr .form-card').innerHTML = prPanelHTML();
-initState();loadStorage();loadPanel();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();
+initState();loadStorage();loadPanel();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();loadStatusMap();
 document.getElementById('qabot-modal-body').addEventListener('click',e=>{const b=e.target.closest('[data-accept]');if(b)qaAcceptIssue(b.getAttribute('data-accept'));});
 </script>
 </body>
