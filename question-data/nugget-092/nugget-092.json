@@ -114,7 +114,7 @@
         "imageIdB": "illus:food/fruit/lemon_yellow",
         "op": "add",
         "subMode": "crossed",
-        "cols": 5,
+        "cols": 10,
         "mrows": 2,
         "mcols": 5,
         "illusOutline": false,
