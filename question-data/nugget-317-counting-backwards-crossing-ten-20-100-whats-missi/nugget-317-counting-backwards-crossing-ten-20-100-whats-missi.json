@@ -25,17 +25,16 @@
     {
       "id": 317002,
       "text": "What number is missing?",
-      "answer": "40",
+      "answer": "39",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "41,?,39,38",
+        "sequence": "41,40,?,38",
         "shape": "balloon",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 1
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -50,11 +49,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "51,?,49,48",
+        "sequence": "52,51,?,49",
         "shape": "balloon",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -69,11 +67,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "61,?,59,58",
+        "sequence": "62,61,?,59",
         "shape": "balloon",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 3
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
