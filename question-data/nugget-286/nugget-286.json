@@ -15,7 +15,8 @@
         "sequence": "9,8,?,6,5",
         "shape": "cloud",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 0
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -33,7 +34,8 @@
         "sequence": "11,10,?,8,7",
         "shape": "cloud",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 1
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -51,7 +53,8 @@
         "sequence": "7,6,?,4,3",
         "shape": "cloud",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 2
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -69,7 +72,8 @@
         "sequence": "10,9,?,7,6",
         "shape": "cloud",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 3
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -85,9 +89,10 @@
       "imagePath": "",
       "cfg": {
         "sequence": "8,7,?,5,4",
-        "shape": "square",
+        "shape": "cloud",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 4
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
