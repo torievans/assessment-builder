@@ -107,7 +107,7 @@
       "cfg": {
         "mode": "count",
         "display": "clustered",
-        "align": "left",
+        "align": "centre",
         "countA": 12,
         "imageIdA": "illus:sports/ball_basketball_orange",
         "countB": 3,
