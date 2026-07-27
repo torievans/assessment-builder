@@ -62,17 +62,16 @@
     {
       "id": 306004,
       "text": "What number comes next?",
-      "answer": "61",
+      "answer": "60",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "57,58,59,60,?",
+        "sequence": "56,57,58,59,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 3
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
