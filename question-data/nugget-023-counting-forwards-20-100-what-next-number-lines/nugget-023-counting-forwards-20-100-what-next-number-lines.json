@@ -13,15 +13,14 @@
       "qaComment": "",
       "visualType": "nl",
       "cfg": {
-        "lineStyle": "terminate",
-        "colour": "red",
-        "valuesGivenEvery": null,
-        "jumpColour": "dark",
-        "jump2Colour": "dark",
         "start": 40,
         "end": 50,
         "partitions": 10,
-        "answer": "47"
+        "valuesGivenEvery": null,
+        "answer": "47",
+        "lineStyle": "terminate",
+        "colour": "green",
+        "answerCircle": true
       },
       "updatedAt": "2026-07-27",
       "createdAt": "2026-07-27"
