@@ -4,25 +4,6 @@
   "nextQId": 5029,
   "questions": [
     {
-      "id": 5022,
-      "text": "What number is missing?",
-      "answer": "15",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nt",
-      "cfg": {
-        "sequence": "13,14,?,16,17",
-        "shape": "cloud",
-        "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 0
-      },
-      "updatedAt": "2026-07-27",
-      "createdAt": "2026-07-27"
-    },
-    {
       "id": 5024,
       "text": "What number is missing?",
       "answer": "15",
