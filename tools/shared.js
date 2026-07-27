@@ -41,7 +41,7 @@ function numberLineSVG(config) {
   const {
     start, end, partitions, valuesGivenEvery, answer,
     lineStyle = 'through', colour,
-    hideFrom, hideTo,
+    hideFrom, hideTo, answerCircle = false,
     // Optional jump overlay
     jumpFrom, jumpTo, jumpType = 'single',
     jumpLabel = '', jumpArrow = true, jumpCircle = 'none', jumpColour = 'dark',
@@ -105,12 +105,14 @@ function numberLineSVG(config) {
   const circleLblLen = circleVal !== null ? String(Math.round(circleVal)).length : 1;
   const crMin = circleLblLen <= 1 ? 9 : 11;
   const cr = hasCircle ? Math.min(Math.max(crMin, Math.floor(pxPerUnit * 0.32)), 18) : 0;
+  const hasAnswerCircle = answerCircle && answerNum !== null;
+  const acr = hasAnswerCircle ? Math.min(Math.max(9, Math.floor(pxPerUnit * 0.32)), 18) : 0;
 
   const EXTEND    = terminate ? 0 : 20;
   const PAD_L     = terminate ? 22 : 8 + EXTEND;
   const PAD_R     = terminate ? 22 : 8 + EXTEND;
   const PAD_T     = Math.max((answerAbove || answerBetweenTicks) ? 34 : 16, arcPadT);
-  const PAD_B     = hasCircle ? Math.max(36, Math.ceil(18 + cr + 6)) : 36;
+  const PAD_B     = (hasCircle || hasAnswerCircle) ? Math.max(36, Math.ceil(18 + Math.max(cr, acr) + 6)) : 36;
   const SVG_W     = BAR_W + PAD_L + PAD_R;
   const LINE_Y    = PAD_T;
   const TICK_HALF = 8;
@@ -170,6 +172,10 @@ function numberLineSVG(config) {
       if (isCircled) {
         const circleCy = (parseFloat(ly) + 4).toFixed(1);
         s += `<circle cx="${x.toFixed(1)}" cy="${circleCy}" r="${cr}" fill="none" stroke="${JC1}" stroke-width="2"/>`;
+      }
+      if (isAnswer && hasAnswerCircle) {
+        const circleCy = (parseFloat(ly) + 4).toFixed(1);
+        s += `<circle cx="${x.toFixed(1)}" cy="${circleCy}" r="${acr}" fill="none" stroke="${LABEL_COLOR}" stroke-width="2"/>`;
       }
       s += `<text x="${x.toFixed(1)}" y="${ly}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="13" fill="${LABEL_COLOR}">${lbl}</text>`;
     }
