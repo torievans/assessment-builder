@@ -1,6 +1,101 @@
 {
   "nuggetId": 4,
-  "status": "not-started",
-  "nextQId": 1049,
-  "questions": []
+  "status": "in-progress",
+  "nextQId": 5006,
+  "questions": [
+    {
+      "id": 4001,
+      "text": "What number is missing?",
+      "answer": "2",
+      "type": "exact",
+      "visualType": "nt",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "sequence": "1,?,3,4",
+        "shape": "star",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 4002,
+      "text": "What number is missing?",
+      "answer": "5",
+      "type": "exact",
+      "visualType": "nt",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "sequence": "3,4,?,6",
+        "shape": "square",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 1
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 4003,
+      "text": "What number is missing?",
+      "answer": "6",
+      "type": "exact",
+      "visualType": "nt",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "sequence": "5,?,7,8",
+        "shape": "square",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 2
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 4004,
+      "text": "What number is missing?",
+      "answer": "8",
+      "type": "exact",
+      "visualType": "nt",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "sequence": "7,?,9,10",
+        "shape": "square",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 3
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 4005,
+      "text": "What number is missing?",
+      "answer": "4",
+      "type": "exact",
+      "visualType": "nt",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "sequence": "2,3,?,5",
+        "shape": "square",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 4
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    }
+  ]
 }
