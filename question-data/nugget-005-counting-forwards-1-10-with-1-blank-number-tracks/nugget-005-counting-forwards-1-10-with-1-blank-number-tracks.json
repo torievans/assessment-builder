@@ -89,10 +89,9 @@
       "imagePath": "",
       "cfg": {
         "sequence": "6,7,8,_,?",
-        "shape": "square",
+        "shape": "circle",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 4
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
