@@ -87,7 +87,7 @@
         "fc2": 4,
         "fSplitOn": false,
         "fSplit": 5,
-        "bg": 5,
+        "bg": 10,
         "ba": 5,
         "bb": 1,
         "beadPreset": "colour",
