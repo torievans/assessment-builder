@@ -44,17 +44,16 @@
     {
       "id": 311003,
       "text": "What number should go at the end?",
-      "answer": "52",
+      "answer": "51",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "47,48,49,_,_,?",
+        "sequence": "46,47,48,_,_,?",
         "shape": "cloud",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
