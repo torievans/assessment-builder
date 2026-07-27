@@ -1,6 +1,6 @@
 {
   "nuggetId": 26,
-  "status": "in-progress",
+  "status": "ready-for-qa",
   "nextQId": 288006,
   "questions": [
     {
@@ -62,17 +62,16 @@
     {
       "id": 26004,
       "text": "What number comes next?",
-      "answer": "31",
+      "answer": "25",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "27,28,29,_,?",
+        "sequence": "21,22,23,_,?",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 3
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
