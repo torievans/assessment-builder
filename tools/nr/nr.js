@@ -157,7 +157,7 @@ function nrPanelHTML(){
                   <button class="tog-btn active" data-nrrep="frames" onclick="nrSetRep(this)">Frames</button>
                   <button class="tog-btn" data-nrrep="beads" onclick="nrSetRep(this)">Beads</button>
                   <button class="tog-btn" data-nrrep="multilink" onclick="nrSetRep(this)">Multilink</button>
-                  <button class="tog-btn" data-nrrep="numicon" onclick="nrSetRep(this)">Numicon</button>
+                  <button class="tog-btn" data-nrrep="numicon" onclick="nrSetRep(this)">Number Shapes</button>
                 </div>
               </div>
             </div>
