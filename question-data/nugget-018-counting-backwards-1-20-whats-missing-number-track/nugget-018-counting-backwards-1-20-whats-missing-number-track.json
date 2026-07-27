@@ -84,7 +84,7 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "12,10,?,9",
+        "sequence": "12,10,?,9,8",
         "shape": "star",
         "layout": "straight",
         "colourMode": "full"
