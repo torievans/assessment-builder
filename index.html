@@ -1304,7 +1304,7 @@ function setFilter(f){filter=filter===f?'all':f;renderSidebar();}
 function loadPanel(){
   try{
     const raw=localStorage.getItem(PANEL_STORE);
-    if(raw){panelIds=JSON.parse(raw);}
+    if(raw){panelIds=JSON.parse(raw);const anyNew=NUGGETS.some(n=>!panelIds.includes(n.id));if(anyNew){NUGGETS.forEach(n=>{if(!panelIds.includes(n.id))panelIds.push(n.id);});savePanel();}}
     else{panelIds=NUGGETS.map(n=>n.id);savePanel();}
     const craw=localStorage.getItem(PANEL_COLLAPSE_STORE);
     if(craw)panelCollapseMap=JSON.parse(craw);
