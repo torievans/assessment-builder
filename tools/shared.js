@@ -452,7 +452,7 @@ function barModelSVG(config) {
 
 // ─── Number Track ─────────────────────────────────────────────────────────────
 function numberTrackSVG(cfg) {
-  const { sequence, shape = 'square', layout = 'straight', colourMode = 'full' } = cfg;
+  const { sequence, shape = 'square', layout = 'straight', colourMode = 'full', colourOffset = 0 } = cfg;
   if (!sequence) return '';
   const tokens = sequence.split(',').map(s => s.trim()).filter(s => s !== '');
   if (!tokens.length) return '';
@@ -518,7 +518,7 @@ function numberTrackSVG(cfg) {
   const totalW = PAD*2 + n*CELL + (n-1)*GAP;
   const totalH = PAD*2 + CELL + (layout === 'ascending' ? 2*maxOffset : layout !== 'straight' ? maxOffset : 0) + balloonExtra;
 
-  let parts = [], palIdx = 0;
+  let parts = [], palIdx = colourOffset % 7;
 
   tokens.forEach((token, i) => {
     const cx = PAD + i * (CELL + GAP) + CELL/2;
