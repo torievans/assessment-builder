@@ -58,13 +58,13 @@
     {
       "id": 10203,
       "text": "What number is shown?",
-      "answer": "100",
+      "answer": "50",
       "type": "exact",
       "visualType": "pv",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "n": 100,
+        "n": 50,
         "repType": "blocks",
         "dispMode": "standalone",
         "numEqMode": "none",
