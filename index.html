@@ -1254,7 +1254,7 @@ async function migrateOldFolders(){
 
 /* ── State ── */
 let nuggetState={};let activeId=null;let activeTab='builder';let filter='all';let nextQId=1;
-let panelIds=[];let panelCollapseMap={};let removedPanelIds=new Set();
+let panelIds=[];let panelCollapseMap={};let removedPanelIds=new Set();let _panelHadLocalState=false;
 const STORE='maths-ab-v3';
 const PANEL_STORE='ab_panel_v1';
 const PANEL_COLLAPSE_STORE='ab_panel_collapse_v1';
@@ -1308,6 +1308,7 @@ function loadPanel(){
     if(rraw)removedPanelIds=new Set(JSON.parse(rraw));
     const raw=localStorage.getItem(PANEL_STORE);
     if(raw){
+      _panelHadLocalState=true;
       panelIds=JSON.parse(raw);
       // Only auto-add nuggets that are genuinely new (never seen and not intentionally removed)
       const anyNew=NUGGETS.some(n=>!panelIds.includes(n.id)&&!removedPanelIds.has(n.id));
@@ -1453,6 +1454,8 @@ async function loadPanelMap(){
     if(r.ok)data=await r.json();
   }catch(e){}
   if(!data)return;
+  // Cancel any pending debounced save from loadPanel() init — GH is authoritative
+  if(_panelSaveTimer){clearTimeout(_panelSaveTimer);_panelSaveTimer=null;}
   // Apply GH state: replace local panel state
   if(Array.isArray(data.panelIds))panelIds=data.panelIds;
   if(Array.isArray(data.removedPanelIds))removedPanelIds=new Set(data.removedPanelIds);
@@ -2370,7 +2373,7 @@ document.querySelector('#tool-panel-nt .form-card').innerHTML = ntPanelHTML();
 document.querySelector('#tool-panel-nr .form-card').innerHTML = nrPanelHTML();
 document.querySelector('#tool-panel-pv .form-card').innerHTML = pvPanelHTML();
 document.querySelector('#tool-panel-pr .form-card').innerHTML = prPanelHTML();
-initState();loadStorage();loadPanel();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();loadStatusMap().then(()=>saveStatusMap());loadPanelMap().then(()=>savePanelMap());
+initState();loadStorage();loadPanel();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();loadStatusMap().then(()=>saveStatusMap());loadPanelMap().then(()=>{if(_panelHadLocalState)savePanelMap();});
 document.getElementById('qabot-modal-body').addEventListener('click',e=>{const b=e.target.closest('[data-accept]');if(b)qaAcceptIssue(b.getAttribute('data-accept'));});
 </script>
 </body>
