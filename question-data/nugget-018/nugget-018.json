@@ -88,11 +88,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "12,?,10,9",
-        "shape": "circle",
+        "sequence": "12,10,?,9",
+        "shape": "star",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 4
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
