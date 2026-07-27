@@ -76,7 +76,7 @@
       "cfg": {
         "mode": "count",
         "display": "clustered",
-        "align": "left",
+        "align": "centre",
         "countA": 17,
         "imageIdA": "illus:animals/giraffe_orange",
         "countB": 3,
