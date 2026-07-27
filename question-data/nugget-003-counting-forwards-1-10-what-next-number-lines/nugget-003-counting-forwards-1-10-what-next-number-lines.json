@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 3001,
-      "text": "What number comes next?",
+      "text": "What number is missing?",
       "answer": "2",
       "type": "exact",
       "visualType": "nl",
