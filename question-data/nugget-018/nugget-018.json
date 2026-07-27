@@ -50,11 +50,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "10,?,8,7",
+        "sequence": "17,16,?,14,13",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
