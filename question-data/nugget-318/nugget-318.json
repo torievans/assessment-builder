@@ -42,17 +42,16 @@
     {
       "id": 318003,
       "text": "What number comes next?",
-      "answer": "49",
+      "answer": "47",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "53,52,51,_,?",
+        "sequence": "51,50,49,_,?",
         "shape": "star",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
