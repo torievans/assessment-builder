@@ -52,22 +52,21 @@
     {
       "id": 307003,
       "text": "What number is missing?",
-      "answer": "51",
+      "answer": "52",
       "type": "exact",
       "visualType": "nl",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "start": 47,
-        "end": 57,
+        "start": 45,
+        "end": 55,
         "partitions": 10,
         "valuesGivenEvery": 1,
-        "answer": "51",
+        "answer": "52",
         "lineStyle": "terminate",
         "colour": "green",
-        "answerCircle": true,
-        "hideFrom": 52,
-        "hideTo": 57
+        "hideTo": 57,
+        "answerCircle": true
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
