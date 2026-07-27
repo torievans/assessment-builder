@@ -30,11 +30,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "20,?,18,17",
-        "shape": "circle",
+        "sequence": "20,18,?,16,15",
+        "shape": "star",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 1
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
