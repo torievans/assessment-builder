@@ -381,7 +381,7 @@ function prPanelHTML() {
     </div>
     <div class="form-row">
       <div class="field field-grow">
-        <label>Question text</label>
+        <label>Question text<button class="apply-all-btn" onclick="applyTextToAll('pr-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label>
         <input type="text" id="pr-text" placeholder="e.g. How many tigers are there?">
       </div>
       <div class="field field-sm">
