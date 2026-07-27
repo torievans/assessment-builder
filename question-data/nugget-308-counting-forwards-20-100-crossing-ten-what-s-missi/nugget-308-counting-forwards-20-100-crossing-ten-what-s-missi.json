@@ -1,7 +1,7 @@
 {
   "nuggetId": 308,
   "status": "in-progress",
-  "nextQId": 308006,
+  "nextQId": 309006,
   "questions": [
     {
       "id": 308001,
@@ -50,11 +50,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "49,?,51,52",
+        "sequence": "49,50,?,52",
         "shape": "balloon",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
