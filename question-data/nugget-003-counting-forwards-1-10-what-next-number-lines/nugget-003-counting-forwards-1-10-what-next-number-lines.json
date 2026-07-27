@@ -1,7 +1,7 @@
 {
   "nuggetId": 3,
-  "status": "in-progress",
-  "nextQId": 3006,
+  "status": "draft",
+  "nextQId": 5006,
   "questions": [
     {
       "id": 3001,
@@ -19,7 +19,6 @@
         "answer": "2",
         "lineStyle": "terminate",
         "colour": "red",
-        "hideFrom": 3,
         "hideTo": 10,
         "answerCircle": true
       },
