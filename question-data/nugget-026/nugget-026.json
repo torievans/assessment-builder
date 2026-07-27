@@ -59,7 +59,7 @@
     },
     {
       "id": 26004,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "25",
       "type": "exact",
       "visualType": "nt",
