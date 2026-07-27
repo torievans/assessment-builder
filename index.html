@@ -1342,6 +1342,13 @@ function renderWorkflow(){
 }
 function advanceStatus(){const order=['not-started','in-progress','ready-for-qa','ready-for-qti','uploaded-to-cms'];const cur=nuggetState[activeId].status;const idx=order.indexOf(cur);if(idx<order.length-1)setStatus(order[idx+1]);}
 function setStatus(s){if(!activeId)return;nuggetState[activeId].status=s;save();renderWorkflow();renderSidebar();}
+function resequenceNTColours(){
+  if(!activeId)return;
+  const qs=nuggetState[activeId].questions;
+  let offset=0;
+  qs.forEach(q=>{if(q.visualType==='nt'&&q.cfg){q.cfg.colourOffset=offset%7;offset++;}});
+  save();renderQuestions();showToast('🎨 Colours resequenced');
+}
 
 /* ── QA Bot ── */
 let qaIssueFixes=new Map();
@@ -1495,7 +1502,9 @@ function renderQVisual(q){
 function renderQuestions(){
   if(!activeId)return;const qs=nuggetState[activeId]?.questions||[];const el=document.getElementById('q-grid');
   if(!qs.length){el.innerHTML='<div class="q-empty-grid">No questions yet — use the tools above to add questions for this nugget.</div>';return;}
-  el.innerHTML=qs.map((q,i)=>{
+  const hasNT=qs.some(q=>q.visualType==='nt');
+  const hdr=hasNT?`<div style="grid-column:1/-1;display:flex;justify-content:flex-end;margin-bottom:4px"><button class="wfbtn wfbtn-ghost" style="font-size:11px;padding:3px 10px" onclick="resequenceNTColours()" title="Assign a different starting colour to each number track question">🎨 Vary track colours</button></div>`:'';
+  el.innerHTML=hdr+qs.map((q,i)=>{
     return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}" ondragover="dndOver(event,${q.id})" ondragleave="dndLeave(event)" ondrop="dndDrop(event,${q.id})"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions"><button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button><div class="q-drag-handle" draggable="true" ondragstart="dndStart(event,${q.id})" ondragend="dndEnd(event)" title="Drag to reorder">⠿</div></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
   }).join('');
 }
