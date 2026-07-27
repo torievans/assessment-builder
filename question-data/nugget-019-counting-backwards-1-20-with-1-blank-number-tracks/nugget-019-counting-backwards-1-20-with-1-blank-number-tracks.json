@@ -1,22 +1,21 @@
 {
   "nuggetId": 19,
   "status": "in-progress",
-  "nextQId": 19006,
+  "nextQId": 20006,
   "questions": [
     {
       "id": 19001,
       "text": "What number comes next?",
-      "answer": "6",
+      "answer": "16",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "10,9,8,_,?",
+        "sequence": "20,19,18,_,?",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 0
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
