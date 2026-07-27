@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 10101,
-      "text": "What number is shown?",
+      "text": "What number is represented by the place value blocks?",
       "answer": "10",
       "type": "exact",
       "visualType": "pv",
@@ -31,7 +31,7 @@
     },
     {
       "id": 10102,
-      "text": "What number is shown?",
+      "text": "What number is represented by the place value blocks?",
       "answer": "30",
       "type": "exact",
       "visualType": "pv",
@@ -57,7 +57,7 @@
     },
     {
       "id": 10103,
-      "text": "What number is shown?",
+      "text": "What number is represented by the place value blocks?",
       "answer": "50",
       "type": "exact",
       "visualType": "pv",
@@ -83,7 +83,7 @@
     },
     {
       "id": 10104,
-      "text": "What number is shown?",
+      "text": "What number is represented by the place value blocks?",
       "answer": "20",
       "type": "exact",
       "visualType": "pv",
@@ -109,7 +109,7 @@
     },
     {
       "id": 10105,
-      "text": "What number is shown?",
+      "text": "What number is represented by the place value blocks?",
       "answer": "40",
       "type": "exact",
       "visualType": "pv",
