@@ -71,7 +71,7 @@
     },
     {
       "id": 3004,
-      "text": "What number comes next?",
+      "text": "What number is missing?",
       "answer": "7",
       "type": "exact",
       "visualType": "nl",
