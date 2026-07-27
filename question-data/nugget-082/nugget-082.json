@@ -86,7 +86,7 @@
         "cols": 5,
         "mrows": 2,
         "mcols": 5,
-        "illusOutline": true,
+        "illusOutline": false,
         "imgScale": 1,
         "numA": false,
         "numB": false,
