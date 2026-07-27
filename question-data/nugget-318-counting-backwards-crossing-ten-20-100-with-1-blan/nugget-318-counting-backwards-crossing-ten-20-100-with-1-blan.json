@@ -6,7 +6,7 @@
     {
       "id": 318001,
       "text": "What number comes next?",
-      "answer": "29",
+      "answer": "20",
       "type": "exact",
       "visualType": "nt",
       "image": "",
@@ -15,8 +15,7 @@
         "sequence": "33,32,31,_,?",
         "shape": "star",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 0
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
