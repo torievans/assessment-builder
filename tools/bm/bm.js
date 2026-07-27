@@ -73,7 +73,7 @@ function restoreBMConfig(cfg){
 // ── Panel HTML ─────────────────────────────────────────────────
 function bmPanelHTML(){
   return `<div class="form-row">
-              <div class="field field-grow"><label>Question text</label><input type="text" id="bm-text" placeholder="e.g. What is the missing number?"></div>
+              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('bm-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><input type="text" id="bm-text" placeholder="e.g. What is the missing number?"></div>
               <div class="field field-sm"><label>Answer</label><input type="text" id="bm-answer" placeholder="e.g. 6"></div>
             </div>
             <div class="form-row">
