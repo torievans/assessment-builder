@@ -1,7 +1,7 @@
 {
   "nuggetId": 9,
   "status": "in-progress",
-  "nextQId": 5017,
+  "nextQId": 5022,
   "questions": [
     {
       "id": 5016,
@@ -22,6 +22,121 @@
         "end": 20,
         "partitions": 20,
         "answer": "15"
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5017,
+      "text": "What number is missing?",
+      "answer": "15",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "lineStyle": "terminate",
+        "colour": "red",
+        "valuesGivenEvery": null,
+        "jumpColour": "dark",
+        "jump2Colour": "dark",
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "answer": "15"
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5018,
+      "text": "What number is missing?",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "lineStyle": "terminate",
+        "colour": "red",
+        "valuesGivenEvery": null,
+        "jumpColour": "dark",
+        "jump2Colour": "dark",
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "answer": "13"
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5019,
+      "text": "What number is missing?",
+      "answer": "17",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "lineStyle": "terminate",
+        "colour": "red",
+        "valuesGivenEvery": null,
+        "jumpColour": "dark",
+        "jump2Colour": "dark",
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "answer": "17"
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5020,
+      "text": "What number is missing?",
+      "answer": "12",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "lineStyle": "terminate",
+        "colour": "red",
+        "valuesGivenEvery": null,
+        "jumpColour": "dark",
+        "jump2Colour": "dark",
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "answer": "12"
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5021,
+      "text": "What number is missing?",
+      "answer": "18",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "lineStyle": "terminate",
+        "colour": "red",
+        "valuesGivenEvery": null,
+        "jumpColour": "dark",
+        "jump2Colour": "dark",
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "answer": "18"
       },
       "updatedAt": "2026-07-27",
       "createdAt": "2026-07-27"
