@@ -127,6 +127,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .q-svg-wrap svg{width:100%;height:auto;display:block}
 .q-body{padding:0 14px 10px}
 .q-text{font-size:13.5px;color:var(--text);font-weight:500;line-height:1.45;margin-bottom:10px}
+.apply-all-btn{background:none;border:none;padding:0 0 0 6px;font-size:11px;color:var(--muted);cursor:pointer;font-weight:400;text-decoration:underline;vertical-align:middle}.apply-all-btn:hover{color:var(--text)}
 .q-ans-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:2px}
 .q-ans-val{font-size:22px;font-weight:700;color:var(--green);line-height:1}
 .q-qa{border-top:1px solid #F3F4F6;padding:10px 14px 12px;background:#FAFBFC}
@@ -428,7 +429,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
           <div class="form-card">
             <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px">For abstract questions with no image — e.g. <strong>4 + 4 = ?</strong> or <strong>How many more to make 10?</strong></p>
             <div class="form-row">
-              <div class="field field-grow"><label>Question text</label><input type="text" id="text-q-text" placeholder="e.g. 4 + 4 = ?"></div>
+              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('text-q-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><input type="text" id="text-q-text" placeholder="e.g. 4 + 4 = ?"></div>
               <div class="field field-sm"><label>Answer</label><input type="text" id="text-answer" placeholder="e.g. 8"></div>
             </div>
             <div class="form-actions" style="margin-top:14px">
@@ -443,7 +444,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
           <div class="form-card">
             <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px">For questions with a unique image — e.g. a photo, hand-drawn diagram, or screenshot.</p>
             <div class="form-row">
-              <div class="field field-grow"><label>Question text</label><input type="text" id="custom-q-text" placeholder="e.g. How many squares can you see?"></div>
+              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('custom-q-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><input type="text" id="custom-q-text" placeholder="e.g. How many squares can you see?"></div>
               <div class="field field-sm"><label>Answer</label><input type="text" id="custom-answer" placeholder="e.g. 4"></div>
             </div>
             <div style="margin:12px 0 4px">
@@ -2021,6 +2022,15 @@ function setEditMode(editing,type){
     const btn=document.getElementById('add-q-btn-'+t);if(!btn)return;
     btn.textContent=editing?'✓ Update Question':'+ Add Question';
   });
+}
+function applyTextToAll(inputId){
+  if(!activeId)return;
+  const qs=nuggetState[activeId]?.questions||[];
+  if(qs.length<=1){showToast('Only one question in this nugget');return;}
+  const newText=document.getElementById(inputId)?.value?.trim();
+  if(!newText){showToast('Question text is empty');return;}
+  qs.forEach(q=>{q.text=newText;});
+  save();renderQuestions();showToast(`✓ Applied to all ${qs.length} questions`);
 }
 
 let dndSrcId=null;
