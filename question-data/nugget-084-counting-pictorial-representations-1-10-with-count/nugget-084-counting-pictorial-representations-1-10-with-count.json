@@ -4,9 +4,9 @@
   "nextQId": 319006,
   "questions": [
     {
-      "id": 8401,
+      "id": 8402,
       "text": "How many counters are there?",
-      "answer": "6",
+      "answer": "2",
       "type": "exact",
       "visualType": "pr",
       "image": "",
@@ -15,7 +15,7 @@
         "mode": "count",
         "display": "array",
         "align": "left",
-        "countA": 6,
+        "countA": 2,
         "imageIdA": "counter:1:3:4",
         "countB": 3,
         "imageIdB": "counter:1:3:4",
@@ -35,9 +35,9 @@
       "updatedAt": "2026-07-21"
     },
     {
-      "id": 8402,
+      "id": 8401,
       "text": "How many counters are there?",
-      "answer": "2",
+      "answer": "6",
       "type": "exact",
       "visualType": "pr",
       "image": "",
@@ -46,7 +46,7 @@
         "mode": "count",
         "display": "array",
         "align": "left",
-        "countA": 2,
+        "countA": 6,
         "imageIdA": "counter:1:3:4",
         "countB": 3,
         "imageIdB": "counter:1:3:4",
