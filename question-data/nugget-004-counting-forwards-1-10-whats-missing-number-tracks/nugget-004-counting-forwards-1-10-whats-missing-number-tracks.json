@@ -31,9 +31,10 @@
       "imagePath": "",
       "cfg": {
         "sequence": "3,4,?,6",
-        "shape": "star",
+        "shape": "square",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 1
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -49,9 +50,10 @@
       "imagePath": "",
       "cfg": {
         "sequence": "5,?,7,8",
-        "shape": "star",
+        "shape": "square",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 2
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -67,9 +69,10 @@
       "imagePath": "",
       "cfg": {
         "sequence": "7,?,9,10",
-        "shape": "star",
+        "shape": "square",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 3
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -85,9 +88,10 @@
       "imagePath": "",
       "cfg": {
         "sequence": "2,3,?,5",
-        "shape": "star",
+        "shape": "square",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 4
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
