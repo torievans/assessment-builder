@@ -4,42 +4,6 @@
   "nextQId": 1049,
   "questions": [
     {
-      "id": 1029,
-      "text": "What number do these place value blocks represent?",
-      "answer": "663",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "pv",
-      "cfg": {
-        "n": 663,
-        "repType": "blocks",
-        "dispMode": "standalone",
-        "missingVals": []
-      },
-      "updatedAt": "2026-07-27",
-      "createdAt": "2026-07-27"
-    },
-    {
-      "id": 1030,
-      "text": "What number do these place value blocks represent?",
-      "answer": "234",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "pv",
-      "cfg": {
-        "n": 234,
-        "repType": "blocks",
-        "dispMode": "standalone",
-        "missingVals": []
-      },
-      "updatedAt": "2026-07-27",
-      "createdAt": "2026-07-27"
-    },
-    {
       "id": 1031,
       "text": "What number do these place value blocks represent?",
       "answer": "532",
