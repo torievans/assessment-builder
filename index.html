@@ -1319,8 +1319,8 @@ function loadPanel(){
     if(craw)panelCollapseMap=JSON.parse(craw);
   }catch(e){panelIds=NUGGETS.map(n=>n.id);}
 }
-function savePanel(){try{localStorage.setItem(PANEL_STORE,JSON.stringify(panelIds));}catch(e){}}
-function saveRemovedPanel(){try{localStorage.setItem(PANEL_REMOVED_STORE,JSON.stringify([...removedPanelIds]));}catch(e){}}
+function savePanel(){try{localStorage.setItem(PANEL_STORE,JSON.stringify(panelIds));}catch(e){} debouncedSavePanelMap();}
+function saveRemovedPanel(){try{localStorage.setItem(PANEL_REMOVED_STORE,JSON.stringify([...removedPanelIds]));}catch(e){} debouncedSavePanelMap();}
 function savePanelCollapse(){try{localStorage.setItem(PANEL_COLLAPSE_STORE,JSON.stringify(panelCollapseMap));}catch(e){}}
 function addToPanel(ids){
   ids.forEach(id=>{if(!panelIds.includes(id))panelIds.push(id);removedPanelIds.delete(id);});
@@ -1444,6 +1444,35 @@ async function saveStatusMap(){
   if(ghToken){
     try{await commitToGitHub('question-data/status.json',json);}catch(e){}
   }
+}
+// ── Panel sync (GitHub ↔ localStorage) ──────────────────────────────────────
+async function loadPanelMap(){
+  let data=null;
+  // 1. Try raw.githubusercontent.com (always current, no token needed)
+  try{
+    const r=await fetch(`https://raw.githubusercontent.com/${ghOwner}/${ghRepo}/main/question-data/panel.json`,{cache:'no-store'});
+    if(r.ok)data=await r.json();
+  }catch(e){}
+  if(!data)return;
+  // Apply GH state: replace local panel state
+  if(Array.isArray(data.panelIds))panelIds=data.panelIds;
+  if(Array.isArray(data.removedPanelIds))removedPanelIds=new Set(data.removedPanelIds);
+  // Append any newly added nuggets not yet in GH state
+  NUGGETS.forEach(n=>{if(!panelIds.includes(n.id)&&!removedPanelIds.has(n.id))panelIds.push(n.id);});
+  try{localStorage.setItem(PANEL_STORE,JSON.stringify(panelIds));}catch(e){}
+  try{localStorage.setItem(PANEL_REMOVED_STORE,JSON.stringify([...removedPanelIds]));}catch(e){}
+  renderSidebar();
+  if(activeTab==='curriculum')renderCurriculum();
+}
+async function savePanelMap(){
+  const data={panelIds,removedPanelIds:[...removedPanelIds]};
+  const json=JSON.stringify(data,null,2);
+  if(ghToken){try{await commitToGitHub('question-data/panel.json',json);}catch(e){}}
+}
+let _panelSaveTimer=null;
+function debouncedSavePanelMap(){
+  if(_panelSaveTimer)clearTimeout(_panelSaveTimer);
+  _panelSaveTimer=setTimeout(()=>savePanelMap(),1500);
 }
 function resequenceNTColours(){
   if(!activeId)return;
@@ -2342,7 +2371,7 @@ document.querySelector('#tool-panel-nt .form-card').innerHTML = ntPanelHTML();
 document.querySelector('#tool-panel-nr .form-card').innerHTML = nrPanelHTML();
 document.querySelector('#tool-panel-pv .form-card').innerHTML = pvPanelHTML();
 document.querySelector('#tool-panel-pr .form-card').innerHTML = prPanelHTML();
-initState();loadStorage();loadPanel();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();loadStatusMap().then(()=>saveStatusMap());
+initState();loadStorage();loadPanel();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();loadStatusMap().then(()=>saveStatusMap());loadPanelMap().then(()=>savePanelMap());
 document.getElementById('qabot-modal-body').addEventListener('click',e=>{const b=e.target.closest('[data-accept]');if(b)qaAcceptIssue(b.getAttribute('data-accept'));});
 </script>
 </body>
