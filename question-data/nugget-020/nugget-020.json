@@ -41,7 +41,7 @@
     },
     {
       "id": 20003,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "13",
       "type": "exact",
       "visualType": "nt",
@@ -51,8 +51,7 @@
         "sequence": "18,17,16,_,_,?",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
