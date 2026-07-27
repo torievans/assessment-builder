@@ -12,11 +12,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "8,?,6,5",
-        "shape": "square",
+        "sequence": "9,8,?,6,5",
+        "shape": "cloud",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 0
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
