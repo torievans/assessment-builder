@@ -32,13 +32,13 @@
     {
       "id": 8902,
       "text": "How many ones blocks are there?",
-      "answer": "2",
+      "answer": "6",
       "type": "exact",
       "visualType": "pv",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "n": 2,
+        "n": 6,
         "repType": "blocks",
         "dispMode": "standalone",
         "numEqMode": "none",
