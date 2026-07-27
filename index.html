@@ -1367,7 +1367,7 @@ async function selectNugget(id){
   // silently overwritten by a server-side file update.
   // To pull the latest file deliberately, use the ↻ Refresh button.
   const ns=nuggetState[id];
-  const hasLocalData=(ns?.questions?.length>0)||(ns?.status&&ns.status!=='not-started');
+  const hasLocalData=(ns?.questions?.length>0);
   if(!hasLocalData){
     const fileData=await loadNuggetFromFile(id);
     if(fileData){
