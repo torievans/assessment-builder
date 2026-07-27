@@ -31,7 +31,7 @@
       "imagePath": "",
       "cfg": {
         "sequence": "2,3,4,_,?",
-        "shape": "square",
+        "shape": "circle",
         "layout": "straight",
         "colourMode": "full"
       },
