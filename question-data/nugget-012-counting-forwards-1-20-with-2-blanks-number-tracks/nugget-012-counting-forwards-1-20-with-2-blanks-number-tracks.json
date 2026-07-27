@@ -1,7 +1,7 @@
 {
   "nuggetId": 12,
   "status": "in-progress",
-  "nextQId": 5038,
+  "nextQId": 5040,
   "questions": [
     {
       "id": 5034,
@@ -75,6 +75,44 @@
         "layout": "straight",
         "colourMode": "full",
         "colourOffset": 2
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5038,
+      "text": "What number should go at the end?",
+      "answer": "18",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "13,14,15,_,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 4
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5039,
+      "text": "What number should go at the end?",
+      "answer": "20",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "15,16,17,_,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 5
       },
       "updatedAt": "2026-07-27",
       "createdAt": "2026-07-27"
