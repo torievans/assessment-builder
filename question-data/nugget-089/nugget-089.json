@@ -1,0 +1,137 @@
+{
+  "nuggetId": 89,
+  "status": "in-progress",
+  "nextQId": 319006,
+  "questions": [
+    {
+      "id": 8901,
+      "text": "How many ones blocks are there?",
+      "answer": "5",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 5,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-21",
+      "updatedAt": "2026-07-21"
+    },
+    {
+      "id": 8902,
+      "text": "How many ones blocks are there?",
+      "answer": "2",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 2,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-21",
+      "updatedAt": "2026-07-21"
+    },
+    {
+      "id": 8903,
+      "text": "How many ones blocks are there?",
+      "answer": "8",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 8,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-21",
+      "updatedAt": "2026-07-21"
+    },
+    {
+      "id": 8904,
+      "text": "How many ones blocks are there?",
+      "answer": "4",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 4,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-21",
+      "updatedAt": "2026-07-21"
+    },
+    {
+      "id": 8905,
+      "text": "How many ones blocks are there?",
+      "answer": "10",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 10,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-21",
+      "updatedAt": "2026-07-21"
+    }
+  ]
+}
