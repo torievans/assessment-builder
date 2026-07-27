@@ -1095,14 +1095,14 @@ async function loadStatusMap(){
       map=JSON.parse(await(await fh.getFile()).text());
     }catch(e){}
   }
-  // 2. Try GitHub Pages static path
+  // 2. Try raw.githubusercontent.com (always current, no token needed)
   if(!map){
     try{
-      const r=await fetch('question-data/status.json',{cache:'no-store'});
+      const r=await fetch(`https://raw.githubusercontent.com/${ghOwner}/${ghRepo}/main/question-data/status.json`,{cache:'no-store'});
       if(r.ok)map=await r.json();
     }catch(e){}
   }
-  // 3. Try GitHub API (if token set and Pages not available)
+  // 3. Try GitHub API (if token set and raw fetch failed)
   if(!map&&ghToken){
     try{
       const r=await fetch(`https://api.github.com/repos/${ghOwner}/${ghRepo}/contents/question-data/status.json`,
