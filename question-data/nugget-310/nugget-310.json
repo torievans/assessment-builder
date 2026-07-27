@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 310001,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "31",
       "type": "exact",
       "visualType": "nt",
@@ -23,7 +23,7 @@
     },
     {
       "id": 310002,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "42",
       "type": "exact",
       "visualType": "nt",
@@ -41,7 +41,7 @@
     },
     {
       "id": 310003,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "52",
       "type": "exact",
       "visualType": "nt",
@@ -60,7 +60,7 @@
     },
     {
       "id": 310004,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "62",
       "type": "exact",
       "visualType": "nt",
@@ -79,7 +79,7 @@
     },
     {
       "id": 310005,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "72",
       "type": "exact",
       "visualType": "nt",
