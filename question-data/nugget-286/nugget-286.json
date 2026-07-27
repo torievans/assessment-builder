@@ -66,11 +66,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "9,?,7,6",
-        "shape": "square",
+        "sequence": "10,9,?,7,6",
+        "shape": "cloud",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 3
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
