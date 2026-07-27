@@ -2,29 +2,5 @@
   "nuggetId": 2,
   "status": "not-started",
   "nextQId": 1049,
-  "questions": [
-    {
-      "id": 1021,
-      "text": "What number is missing?",
-      "answer": "9",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nl",
-      "cfg": {
-        "lineStyle": "terminate",
-        "colour": "grey",
-        "valuesGivenEvery": null,
-        "jumpColour": "dark",
-        "jump2Colour": "dark",
-        "start": 0,
-        "end": 10,
-        "partitions": 10,
-        "answer": "9"
-      },
-      "updatedAt": "2026-07-13",
-      "createdAt": "2026-07-13"
-    }
-  ]
+  "questions": []
 }
