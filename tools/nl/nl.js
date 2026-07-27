@@ -219,7 +219,7 @@ function restoreNLConfig(cfg){
 // ── Panel HTML ─────────────────────────────────────────────────
 function nlPanelHTML(){
   return `<div class="form-row">
-              <div class="field field-grow"><label>Question text</label><input type="text" id="nl-text" placeholder="e.g. What number is missing?"></div>
+              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('nl-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><input type="text" id="nl-text" placeholder="e.g. What number is missing?"></div>
               <div class="field field-sm"><label>Answer</label><input type="text" id="nl-answer" placeholder="e.g. 7"></div>
             </div>
             <div class="form-row">
