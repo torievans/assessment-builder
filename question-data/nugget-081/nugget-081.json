@@ -14,7 +14,7 @@
       "cfg": {
         "mode": "count",
         "display": "clustered",
-        "align": "left",
+        "align": "centre",
         "countA": 3,
         "imageIdA": "illus:animals/crocodile_green",
         "countB": 3,
