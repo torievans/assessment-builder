@@ -59,7 +59,7 @@
     },
     {
       "id": 19003,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "14",
       "type": "exact",
       "visualType": "nt",
@@ -67,10 +67,9 @@
       "imagePath": "",
       "cfg": {
         "sequence": "18,17,16,_,?",
-        "shape": "square",
+        "shape": "circle",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 3
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
