@@ -44,17 +44,16 @@
     {
       "id": 312003,
       "text": "What number comes next?",
-      "answer": "50",
+      "answer": "56",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "53,52,51,?",
+        "sequence": "59,58,57,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
