@@ -15,7 +15,8 @@
         "sequence": "1,2,3,_,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 0
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -33,7 +34,8 @@
         "sequence": "2,3,4,_,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 1
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -51,7 +53,8 @@
         "sequence": "4,5,6,_,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 2
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -69,7 +72,8 @@
         "sequence": "5,6,7,_,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 3
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -85,9 +89,10 @@
       "imagePath": "",
       "cfg": {
         "sequence": "6,7,8,_,?",
-        "shape": "circle",
+        "shape": "square",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 4
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
