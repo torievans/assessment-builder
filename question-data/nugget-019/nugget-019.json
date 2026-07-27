@@ -13,7 +13,7 @@
       "imagePath": "",
       "cfg": {
         "sequence": "20,19,18,_,?",
-        "shape": "square",
+        "shape": "circle",
         "layout": "straight",
         "colourMode": "full"
       },
