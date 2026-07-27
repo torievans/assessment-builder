@@ -30,11 +30,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "38,39,_,41,?",
+        "sequence": "38,39,40,_,?",
         "shape": "star",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 1
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
