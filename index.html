@@ -2030,7 +2030,7 @@ async function batchExport(){
         ns=nuggetState[nid];
       }
       if(!ns.questions.length)continue;
-      const folder=n.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
+      const folder=nuggetSlug(nid); // ID-prefixed slug — guaranteed unique across all nuggets
       const slug=folder;
       for(let i=0;i<ns.questions.length;i++){
         const q=ns.questions[i];const qPad=String(i+1).padStart(2,'0');const imgName=`q${qPad}.png`;
