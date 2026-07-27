@@ -1,0 +1,137 @@
+{
+  "nuggetId": 102,
+  "status": "ready-for-qa",
+  "nextQId": 10206,
+  "questions": [
+    {
+      "id": 10201,
+      "text": "What number is shown?",
+      "answer": "60",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 60,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1000": "#788CB4",
+          "100": "#50B4A0",
+          "10": "#F0B478",
+          "1": "#C86464"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 10202,
+      "text": "What number is shown?",
+      "answer": "80",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 80,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1000": "#788CB4",
+          "100": "#50B4A0",
+          "10": "#F0B478",
+          "1": "#C86464"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 10203,
+      "text": "What number is shown?",
+      "answer": "100",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 100,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1000": "#788CB4",
+          "100": "#50B4A0",
+          "10": "#F0B478",
+          "1": "#C86464"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 10204,
+      "text": "What number is shown?",
+      "answer": "70",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 70,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1000": "#788CB4",
+          "100": "#50B4A0",
+          "10": "#F0B478",
+          "1": "#C86464"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 10205,
+      "text": "What number is shown?",
+      "answer": "90",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 90,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1000": "#788CB4",
+          "100": "#50B4A0",
+          "10": "#F0B478",
+          "1": "#C86464"
+        },
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    }
+  ]
+}
