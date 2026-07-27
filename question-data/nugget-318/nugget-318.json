@@ -24,17 +24,16 @@
     {
       "id": 318002,
       "text": "What number comes next?",
-      "answer": "39",
+      "answer": "38",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "43,42,41,_,?",
+        "sequence": "42,41,40,_,?",
         "shape": "star",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 1
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
