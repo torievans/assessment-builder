@@ -45,7 +45,7 @@
       "cfg": {
         "mode": "count",
         "display": "clustered",
-        "align": "left",
+        "align": "centre",
         "countA": 14,
         "imageIdA": "illus:animals/toucan_black",
         "countB": 3,
