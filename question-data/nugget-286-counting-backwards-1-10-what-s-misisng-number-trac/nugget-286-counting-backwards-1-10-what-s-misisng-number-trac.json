@@ -85,7 +85,7 @@
       "imagePath": "",
       "cfg": {
         "sequence": "8,7,?,5,4",
-        "shape": "square",
+        "shape": "cloud",
         "layout": "straight",
         "colourMode": "full"
       },
