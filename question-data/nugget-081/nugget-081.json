@@ -45,7 +45,7 @@
       "cfg": {
         "mode": "count",
         "display": "clustered",
-        "align": "left",
+        "align": "centre",
         "countA": 7,
         "imageIdA": "illus:animals/flamingo_pink",
         "countB": 3,
@@ -55,7 +55,7 @@
         "cols": 5,
         "mrows": 2,
         "mcols": 5,
-        "illusOutline": true,
+        "illusOutline": false,
         "imgScale": 1,
         "numA": false,
         "numB": false,
