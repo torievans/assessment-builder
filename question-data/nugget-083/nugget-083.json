@@ -47,7 +47,7 @@
         "display": "clustered",
         "align": "left",
         "countA": 7,
-        "imageIdA": "counter:3:0:5",
+        "imageIdA": "counter:3:3:5",
         "countB": 3,
         "imageIdB": "counter:1:0:0",
         "op": "add",
