@@ -31,11 +31,10 @@
       "qaComment": "",
       "visualType": "nt",
       "cfg": {
-        "sequence": "11,12,13,_,?",
+        "sequence": "12,13,14,_,?",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 1
+        "colourMode": "full"
       },
       "updatedAt": "2026-07-27",
       "createdAt": "2026-07-27"
