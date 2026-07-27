@@ -1412,7 +1412,25 @@ function renderWorkflow(){
   document.getElementById('wf').innerHTML=html;
 }
 function advanceStatus(){const order=['not-started','in-progress','ready-for-qa','ready-for-qti','uploaded-to-cms'];const cur=nuggetState[activeId].status;const idx=order.indexOf(cur);if(idx<order.length-1)setStatus(order[idx+1]);}
-function setStatus(s){if(!activeId)return;nuggetState[activeId].status=s;save();renderWorkflow();renderSidebar();}
+function setStatus(s){if(!activeId)return;nuggetState[activeId].status=s;save();renderWorkflow();renderSidebar();saveStatusMap();}
+async function saveStatusMap(){
+  // Build map of every nugget that has a non-default status
+  const map={};
+  Object.entries(nuggetState).forEach(([id,ns])=>{if(ns&&ns.status&&ns.status!=='not-started')map[id]=ns.status;});
+  const json=JSON.stringify(map,null,2);
+  // Save to local folder
+  if(folderHandle){
+    try{
+      const qdDir=await folderHandle.getDirectoryHandle('question-data',{create:true});
+      const fh=await qdDir.getFileHandle('status.json',{create:true});
+      const w=await fh.createWritable();await w.write(json);await w.close();
+    }catch(e){}
+  }
+  // Save to GitHub
+  if(ghToken){
+    try{await commitToGitHub('question-data/status.json',json);}catch(e){}
+  }
+}
 function resequenceNTColours(){
   if(!activeId)return;
   const qs=nuggetState[activeId].questions;
