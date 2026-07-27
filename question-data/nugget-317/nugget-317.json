@@ -61,13 +61,13 @@
     {
       "id": 317004,
       "text": "What number is missing?",
-      "answer": "60",
+      "answer": "59",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "62,61,?,59",
+        "sequence": "61,60,?,58",
         "shape": "balloon",
         "layout": "straight",
         "colourMode": "full"
