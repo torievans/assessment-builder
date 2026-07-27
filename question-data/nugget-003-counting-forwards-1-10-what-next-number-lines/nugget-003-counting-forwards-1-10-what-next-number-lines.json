@@ -49,7 +49,7 @@
     },
     {
       "id": 3003,
-      "text": "What number comes next?",
+      "text": "What number is missing?",
       "answer": "6",
       "type": "exact",
       "visualType": "nl",
