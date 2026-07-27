@@ -1,7 +1,7 @@
 {
   "nuggetId": 2,
-  "status": "in-progress",
-  "nextQId": 2006,
+  "status": "ready-for-qa",
+  "nextQId": 5011,
   "questions": [
     {
       "id": 2001,
