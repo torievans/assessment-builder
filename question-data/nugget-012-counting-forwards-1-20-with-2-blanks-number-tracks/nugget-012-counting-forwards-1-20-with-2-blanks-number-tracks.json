@@ -23,6 +23,25 @@
       "createdAt": "2026-07-27"
     },
     {
+      "id": 5037,
+      "text": "What number should go at the end?",
+      "answer": "15",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "10,11,12,_,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 3
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
       "id": 5035,
       "text": "What number should go at the end?",
       "answer": "13",
@@ -56,25 +75,6 @@
         "layout": "straight",
         "colourMode": "full",
         "colourOffset": 2
-      },
-      "updatedAt": "2026-07-27",
-      "createdAt": "2026-07-27"
-    },
-    {
-      "id": 5037,
-      "text": "What number should go at the end?",
-      "answer": "15",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nt",
-      "cfg": {
-        "sequence": "10,11,12,_,_,?",
-        "shape": "circle",
-        "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 3
       },
       "updatedAt": "2026-07-27",
       "createdAt": "2026-07-27"
