@@ -68,11 +68,10 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "62,61,60,?",
+        "sequence": "63,62,61,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 3
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
