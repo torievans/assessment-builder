@@ -1,0 +1,127 @@
+{
+  "nuggetId": 307,
+  "status": "in-progress",
+  "nextQId": 307006,
+  "questions": [
+    {
+      "id": 307001,
+      "text": "What number comes next?",
+      "answer": "31",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 27,
+        "end": 37,
+        "partitions": 10,
+        "valuesGivenEvery": 1,
+        "answer": "31",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": true,
+        "hideFrom": 32,
+        "hideTo": 37
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 307002,
+      "text": "What number comes next?",
+      "answer": "41",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 37,
+        "end": 47,
+        "partitions": 10,
+        "valuesGivenEvery": 1,
+        "answer": "41",
+        "lineStyle": "terminate",
+        "colour": "orange",
+        "answerCircle": true,
+        "hideFrom": 42,
+        "hideTo": 47
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 307003,
+      "text": "What number comes next?",
+      "answer": "51",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 47,
+        "end": 57,
+        "partitions": 10,
+        "valuesGivenEvery": 1,
+        "answer": "51",
+        "lineStyle": "terminate",
+        "colour": "green",
+        "answerCircle": true,
+        "hideFrom": 52,
+        "hideTo": 57
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 307004,
+      "text": "What number comes next?",
+      "answer": "61",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 57,
+        "end": 67,
+        "partitions": 10,
+        "valuesGivenEvery": 1,
+        "answer": "61",
+        "lineStyle": "terminate",
+        "colour": "blue",
+        "answerCircle": true,
+        "hideFrom": 62,
+        "hideTo": 67
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 307005,
+      "text": "What number comes next?",
+      "answer": "71",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 67,
+        "end": 77,
+        "partitions": 10,
+        "valuesGivenEvery": 1,
+        "answer": "71",
+        "lineStyle": "terminate",
+        "colour": "purple",
+        "answerCircle": true,
+        "hideFrom": 72,
+        "hideTo": 77
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    }
+  ]
+}
