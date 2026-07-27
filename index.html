@@ -1255,10 +1255,11 @@ async function migrateOldFolders(){
 
 /* ── State ── */
 let nuggetState={};let activeId=null;let activeTab='builder';let filter='all';let nextQId=1;
-let panelIds=[];let panelCollapseMap={};
+let panelIds=[];let panelCollapseMap={};let removedPanelIds=new Set();
 const STORE='maths-ab-v3';
 const PANEL_STORE='ab_panel_v1';
 const PANEL_COLLAPSE_STORE='ab_panel_collapse_v1';
+const PANEL_REMOVED_STORE='ab_panel_removed_v1';
 const SEED={1:{status:'ready-for-qti',questions:[
   {id:1001,text:'What number comes next?',answer:'6', image:'counting-forwards-1-20-qti/q01.png',type:'exact',display:'',qaComment:'',visualType:null,cfg:{}},
   {id:1002,text:'What number comes next?',answer:'11',image:'counting-forwards-1-20-qti/q02.png',type:'exact',display:'',qaComment:'',visualType:null,cfg:{}},
@@ -1304,28 +1305,36 @@ function setFilter(f){filter=filter===f?'all':f;renderSidebar();}
 /* ── Panel persistence ── */
 function loadPanel(){
   try{
+    const rraw=localStorage.getItem(PANEL_REMOVED_STORE);
+    if(rraw)removedPanelIds=new Set(JSON.parse(rraw));
     const raw=localStorage.getItem(PANEL_STORE);
-    if(raw){panelIds=JSON.parse(raw);const anyNew=NUGGETS.some(n=>!panelIds.includes(n.id));if(anyNew){NUGGETS.forEach(n=>{if(!panelIds.includes(n.id))panelIds.push(n.id);});savePanel();}}
+    if(raw){
+      panelIds=JSON.parse(raw);
+      // Only auto-add nuggets that are genuinely new (never seen and not intentionally removed)
+      const anyNew=NUGGETS.some(n=>!panelIds.includes(n.id)&&!removedPanelIds.has(n.id));
+      if(anyNew){NUGGETS.forEach(n=>{if(!panelIds.includes(n.id)&&!removedPanelIds.has(n.id))panelIds.push(n.id);});savePanel();}
+    }
     else{panelIds=NUGGETS.map(n=>n.id);savePanel();}
     const craw=localStorage.getItem(PANEL_COLLAPSE_STORE);
     if(craw)panelCollapseMap=JSON.parse(craw);
   }catch(e){panelIds=NUGGETS.map(n=>n.id);}
 }
 function savePanel(){try{localStorage.setItem(PANEL_STORE,JSON.stringify(panelIds));}catch(e){}}
+function saveRemovedPanel(){try{localStorage.setItem(PANEL_REMOVED_STORE,JSON.stringify([...removedPanelIds]));}catch(e){}}
 function savePanelCollapse(){try{localStorage.setItem(PANEL_COLLAPSE_STORE,JSON.stringify(panelCollapseMap));}catch(e){}}
 function addToPanel(ids){
-  ids.forEach(id=>{if(!panelIds.includes(id))panelIds.push(id);});
-  savePanel();renderSidebar();
+  ids.forEach(id=>{if(!panelIds.includes(id))panelIds.push(id);removedPanelIds.delete(id);});
+  savePanel();saveRemovedPanel();renderSidebar();
   if(activeTab==='curriculum')renderCurriculum();
 }
 function removeFromPanel(id,e){
   if(e){e.stopPropagation();e.preventDefault();}
-  panelIds=panelIds.filter(pid=>pid!==id);savePanel();renderSidebar();
+  panelIds=panelIds.filter(pid=>pid!==id);removedPanelIds.add(id);savePanel();saveRemovedPanel();renderSidebar();
   if(activeTab==='curriculum')renderCurriculum();
 }
 function removeFromPanelMany(ids,e){
   if(e){e.stopPropagation();e.preventDefault();}
-  const s=new Set(ids);panelIds=panelIds.filter(pid=>!s.has(pid));savePanel();renderSidebar();
+  const s=new Set(ids);panelIds=panelIds.filter(pid=>!s.has(pid));ids.forEach(id=>removedPanelIds.add(id));savePanel();saveRemovedPanel();renderSidebar();
   if(activeTab==='curriculum')renderCurriculum();
 }
 function togglePanelTopic(t){panelCollapseMap[t]=!panelCollapseMap[t];savePanelCollapse();renderSidebar();}
