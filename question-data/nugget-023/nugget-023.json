@@ -41,7 +41,8 @@
         "valuesGivenEvery": null,
         "answer": "53",
         "lineStyle": "terminate",
-        "colour": "pink"
+        "colour": "pink",
+        "answerCircle": true
       },
       "updatedAt": "2026-07-27",
       "createdAt": "2026-07-27"
