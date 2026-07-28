@@ -81,17 +81,16 @@
     {
       "id": 288004,
       "text": "What number should go at the end?",
-      "answer": "2",
+      "answer": "5",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "7,6,5,_,_,?",
+        "sequence": "10,9,8_,_,?",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 4
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
