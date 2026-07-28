@@ -15,7 +15,8 @@
         "sequence": "41,?,39,38",
         "shape": "balloon",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 0
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -33,7 +34,8 @@
         "sequence": "51,50,?,48",
         "shape": "balloon",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 1
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -51,7 +53,8 @@
         "sequence": "92,91,?,89",
         "shape": "balloon",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 2
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -69,7 +72,8 @@
         "sequence": "61,60,?,58",
         "shape": "balloon",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 3
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
