@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 19001,
-      "text": "What number should go at the end?",
+      "text": "What number comes next?",
       "answer": "16",
       "type": "exact",
       "visualType": "nt",
@@ -15,7 +15,8 @@
         "sequence": "20,19,18,_,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 0
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -23,7 +24,7 @@
     },
     {
       "id": 19002,
-      "text": "What number should go at the end?",
+      "text": "What number comes next?",
       "answer": "11",
       "type": "exact",
       "visualType": "nt",
@@ -33,7 +34,8 @@
         "sequence": "15,14,13,_,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 1
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -41,7 +43,7 @@
     },
     {
       "id": 19004,
-      "text": "What number should go at the end?",
+      "text": "What number comes next?",
       "answer": "16",
       "type": "exact",
       "visualType": "nt",
@@ -59,7 +61,7 @@
     },
     {
       "id": 19003,
-      "text": "What number should go at the end?",
+      "text": "What number comes next?",
       "answer": "14",
       "type": "exact",
       "visualType": "nt",
@@ -67,9 +69,10 @@
       "imagePath": "",
       "cfg": {
         "sequence": "18,17,16,_,?",
-        "shape": "circle",
+        "shape": "square",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 3
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -77,7 +80,7 @@
     },
     {
       "id": 19005,
-      "text": "What number should go at the end?",
+      "text": "What number comes next?",
       "answer": "12",
       "type": "exact",
       "visualType": "nt",
@@ -85,9 +88,10 @@
       "imagePath": "",
       "cfg": {
         "sequence": "16,15,14,_,?",
-        "shape": "circle",
+        "shape": "square",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 4
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
