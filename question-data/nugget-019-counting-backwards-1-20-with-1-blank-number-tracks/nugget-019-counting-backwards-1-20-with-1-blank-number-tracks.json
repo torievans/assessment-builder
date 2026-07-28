@@ -15,7 +15,8 @@
         "sequence": "20,19,18,_,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 0
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
@@ -52,7 +53,8 @@
         "sequence": "19,18,17,_,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 2
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
