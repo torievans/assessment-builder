@@ -1,0 +1,97 @@
+{
+  "nuggetId": 18,
+  "status": "ready-for-qa",
+  "nextQId": 319006,
+  "questions": [
+    {
+      "id": 18001,
+      "text": "What number is missing?",
+      "answer": "14",
+      "type": "exact",
+      "visualType": "nt",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "sequence": "16,15,?,13,12",
+        "shape": "star",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 18002,
+      "text": "What number is missing?",
+      "answer": "17",
+      "type": "exact",
+      "visualType": "nt",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "sequence": "20,18,?,16,15",
+        "shape": "star",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 18003,
+      "text": "What number is missing?",
+      "answer": "15",
+      "type": "exact",
+      "visualType": "nt",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "sequence": "17,16,?,14,13",
+        "shape": "star",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 18004,
+      "text": "What number is missing?",
+      "answer": "17",
+      "type": "exact",
+      "visualType": "nt",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "sequence": "19,18,?,16,15",
+        "shape": "star",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 18005,
+      "text": "What number is missing?",
+      "answer": "11",
+      "type": "exact",
+      "visualType": "nt",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "sequence": "13,12,?,10,9",
+        "shape": "star",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    }
+  ]
+}
