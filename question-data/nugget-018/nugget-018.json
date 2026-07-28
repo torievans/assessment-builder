@@ -24,13 +24,13 @@
     {
       "id": 18002,
       "text": "What number is missing?",
-      "answer": "17",
+      "answer": "18",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "19,18,?,16,15",
+        "sequence": "20,19,?,17,16",
         "shape": "star",
         "layout": "straight",
         "colourMode": "full"
