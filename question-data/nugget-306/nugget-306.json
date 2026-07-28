@@ -42,13 +42,13 @@
     {
       "id": 306003,
       "text": "What number comes next?",
-      "answer": "53",
+      "answer": "83",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": ",49,50,51,52,?",
+        "sequence": "79,80,81,82,?",
         "shape": "circle",
         "layout": "straight",
         "colourMode": "full"
