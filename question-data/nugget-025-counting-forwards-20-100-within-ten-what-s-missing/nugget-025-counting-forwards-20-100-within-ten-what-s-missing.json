@@ -1,0 +1,117 @@
+{
+  "nuggetId": 25,
+  "status": "ready-for-qa",
+  "nextQId": 319006,
+  "questions": [
+    {
+      "id": 25001,
+      "text": "What number is missing?",
+      "answer": "43",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 40,
+        "end": 50,
+        "partitions": 10,
+        "valuesGivenEvery": 1,
+        "answer": "43",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": true
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 25002,
+      "text": "What number is missing?",
+      "answer": "67",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 60,
+        "end": 70,
+        "partitions": 10,
+        "valuesGivenEvery": 1,
+        "answer": "67",
+        "lineStyle": "terminate",
+        "colour": "orange",
+        "answerCircle": true
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 25003,
+      "text": "What number is missing?",
+      "answer": "24",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 20,
+        "end": 30,
+        "partitions": 10,
+        "valuesGivenEvery": 1,
+        "answer": "24",
+        "lineStyle": "terminate",
+        "colour": "green",
+        "answerCircle": true
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 25004,
+      "text": "What number is missing?",
+      "answer": "86",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 80,
+        "end": 90,
+        "partitions": 10,
+        "valuesGivenEvery": 1,
+        "answer": "86",
+        "lineStyle": "terminate",
+        "colour": "blue",
+        "answerCircle": true
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 25005,
+      "text": "What number is missing?",
+      "answer": "52",
+      "type": "exact",
+      "visualType": "nl",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "start": 50,
+        "end": 60,
+        "partitions": 10,
+        "valuesGivenEvery": 1,
+        "answer": "52",
+        "lineStyle": "terminate",
+        "colour": "purple",
+        "answerCircle": true
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    }
+  ]
+}
