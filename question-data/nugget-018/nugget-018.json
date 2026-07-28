@@ -30,7 +30,7 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "20,18,?,16,15",
+        "sequence": "19,18,?,16,15",
         "shape": "star",
         "layout": "straight",
         "colourMode": "full"
