@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Example Slides Review</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f0f0;display:flex;height:100vh;overflow:hidden}
+#sidebar{width:280px;min-width:280px;background:#293039;color:#d0d5dd;display:flex;flex-direction:column;overflow:hidden}
+#search-wrap{padding:12px 12px 8px}
+#search{width:100%;background:#1e242c;border:1px solid #3d4654;border-radius:20px;color:#d0d5dd;padding:7px 14px;font-size:13px;outline:none}
+#search::placeholder{color:#5a6475}
+#search:focus{border-color:#5b8dd9}
+#nugget-list{flex:1;overflow-y:auto;padding-bottom:12px}
+#nugget-list::-webkit-scrollbar{width:4px}
+#nugget-list::-webkit-scrollbar-track{background:#293039}
+#nugget-list::-webkit-scrollbar-thumb{background:#3d4654;border-radius:2px}
+.group-header{font-size:10px;font-weight:700;letter-spacing:.08em;color:#5a6475;padding:14px 14px 4px;text-transform:uppercase}
+.nugget-item{display:flex;align-items:center;padding:7px 14px;cursor:pointer;font-size:13px;border-left:3px solid transparent;transition:background .12s}
+.nugget-item:hover{background:#323b47}
+.nugget-item.selected{background:#1e5fa8;border-left-color:#5b8dd9;color:#fff}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-right:9px;background:#4a5568}
+.dot.approved{background:#38a169}
+.dot.changes{background:#e0893a}
+.dot.pending{background:#4a5568}
+.nug-name{flex:1;line-height:1.35}
+.nug-id{font-size:11px;color:#5a6475;margin-left:6px;flex-shrink:0}
+.nugget-item.selected .nug-id{color:#8ab4e8}
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#fff}
+#topbar{background:#fff;border-bottom:1px solid #e2e5ea;padding:12px 24px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+#nug-badge{background:#293039;color:#fff;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+#nug-title{font-size:17px;font-weight:600;color:#1a202c;flex:1}
+#nav-btns{display:flex;gap:8px;flex-shrink:0}
+.nav-btn{background:#fff;border:1px solid #d1d5db;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;color:#374151;font-weight:500;transition:background .12s}
+.nav-btn:hover{background:#f3f4f6}
+.nav-btn:disabled{opacity:.35;cursor:default}
+#progress-bar{height:3px;background:#e5e7eb;flex-shrink:0}
+#progress-fill{height:100%;background:#5b8dd9;transition:width .3s}
+#slide-wrap{flex:1;overflow-y:auto;padding:20px 24px}
+#slide-img{max-width:100%;border-radius:10px;display:block;margin:0 auto;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+#review-panel{background:#f9fafb;border-top:1px solid #e5e7eb;padding:16px 24px;flex-shrink:0}
+.review-row{display:flex;align-items:flex-start;gap:16px;margin-bottom:12px}
+.review-label{font-size:13px;font-weight:600;color:#374151;width:72px;flex-shrink:0;padding-top:6px}
+.status-btns{display:flex;gap:8px;flex-wrap:wrap}
+.status-btn{padding:6px 18px;border-radius:20px;border:1.5px solid #d1d5db;background:#fff;color:#374151;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
+.status-btn:hover{border-color:#9ca3af}
+.status-btn.active-approved{background:#38a169;border-color:#38a169;color:#fff}
+.status-btn.active-changes{background:#e0893a;border-color:#e0893a;color:#fff}
+.status-btn.active-pending{background:#6b7280;border-color:#6b7280;color:#fff}
+#comment-box{width:100%;border:1.5px solid #d1d5db;border-radius:8px;padding:9px 12px;font-size:13px;color:#374151;resize:vertical;min-height:72px;font-family:inherit;outline:none;background:#fff}
+#comment-box:focus{border-color:#5b8dd9}
+#comment-box::placeholder{color:#9ca3af}
+#footer{background:#f9fafb;border-top:1px solid #e5e7eb;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+#stats-line{font-size:12px;color:#6b7280}
+.stat-approved{color:#38a169;font-weight:600}
+.stat-changes{color:#e0893a;font-weight:600}
+#export-btn{background:#293039;color:#fff;border:none;border-radius:6px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer}
+#export-btn:hover{background:#3d4654}
+</style>
+</head>
+<body>
+<nav id="sidebar">
+  <div id="search-wrap"><input id="search" type="text" placeholder="Search nuggets..." autocomplete="off"></div>
+  <div id="nugget-list"></div>
+</nav>
+<main id="main">
+  <div id="topbar">
+    <div id="nug-badge">#-</div>
+    <div id="nug-title">Select a nugget</div>
+    <div id="nav-btns">
+      <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>&#8592; Prev</button>
+      <button class="nav-btn" id="btn-next" onclick="navigate(1)">Next &#8594;</button>
+    </div>
+  </div>
+  <div id="progress-bar"><div id="progress-fill" style="width:0%"></div></div>
+  <div id="slide-wrap"><img id="slide-img" src="" alt="Example slide" style="display:none"></div>
+  <div id="review-panel">
+    <div class="review-row">
+      <div class="review-label">Status</div>
+      <div class="status-btns">
+        <button class="status-btn" id="btn-approved" onclick="setStatus('approved')">Approved</button>
+        <button class="status-btn" id="btn-changes"  onclick="setStatus('changes')">Needs Changes</button>
+        <button class="status-btn" id="btn-pending"  onclick="setStatus('pending')">Pending</button>
+      </div>
+    </div>
+    <div class="review-row">
+      <div class="review-label">Comment</div>
+      <textarea id="comment-box" placeholder="Add a comment..." oninput="saveComment(this.value)"></textarea>
+    </div>
+  </div>
+  <div id="footer">
+    <div id="stats-line">Loading…</div>
+    <button id="export-btn" onclick="exportJSON()">&#11015; Export feedback JSON</button>
+  </div>
+</main>
+<script>
+const KEY='example-slides-review';
+const NUGGETS=[{"id": 2, "name": "Counting Forwards 1-10 What's Next? (Number Tracks)", "group": "COUNTING FORWARDS 1-10"}, {"id": 3, "name": "Counting Forwards 1-10 What's Next? (Number Lines)", "group": "COUNTING FORWARDS 1-10"}, {"id": 4, "name": "Counting Forwards 1-10 What's Missing? (Number Tracks)", "group": "COUNTING FORWARDS 1-10"}, {"id": 5, "name": "Counting Forwards 1-10 With 1 Blank (Number Tracks)", "group": "COUNTING FORWARDS 1-10"}, {"id": 6, "name": "Counting Forwards 1-10 With 2 Blanks (Number Tracks)", "group": "COUNTING FORWARDS 1-10"}, {"id": 8, "name": "Counting Forwards 1-20 What's Next? (Number Tracks)", "group": "COUNTING FORWARDS 1-20"}, {"id": 9, "name": "Counting Forwards 1-20 What's Next? (Number Lines)", "group": "COUNTING FORWARDS 1-20"}, {"id": 10, "name": "Counting Forwards 1-20 What's Missing? (Number Tracks)", "group": "COUNTING FORWARDS 1-20"}, {"id": 11, "name": "Counting Forwards 1-20 With 1 Blank (Number Tracks)", "group": "COUNTING FORWARDS 1-20"}, {"id": 12, "name": "Counting Forwards 1-20 With 2 Blanks (Number Tracks)", "group": "COUNTING FORWARDS 1-20"}, {"id": 14, "name": "Counting Backwards 1-10 What's Next? (Number Tracks)", "group": "COUNTING BACKWARDS 1-10"}, {"id": 286, "name": "Counting Backwards 1-10 What's Missing? (Number Tracks)", "group": "COUNTING BACKWARDS 1-10"}, {"id": 287, "name": "Counting Backwards 1-10 With 1 Blank (Number Tracks)", "group": "COUNTING BACKWARDS 1-10"}, {"id": 288, "name": "Counting Backwards 1-10 With 2 Blanks (Number Tracks)", "group": "COUNTING BACKWARDS 1-10"}, {"id": 16, "name": "Counting Backwards 1-20 What's Next? (Number Tracks)", "group": "COUNTING BACKWARDS 1-20"}, {"id": 18, "name": "Counting Backwards 1-20 What's Missing? (Number Tracks)", "group": "COUNTING BACKWARDS 1-20"}, {"id": 19, "name": "Counting Backwards 1-20 With 1 Blank (Number Tracks)", "group": "COUNTING BACKWARDS 1-20"}, {"id": 20, "name": "Counting Backwards 1-20 With 2 Blanks (Number Tracks)", "group": "COUNTING BACKWARDS 1-20"}, {"id": 22, "name": "Counting Forwards 20-100 Within Ten What's Next? (Number Tracks)", "group": "COUNTING FORWARDS 20-100 WITHIN TEN"}, {"id": 23, "name": "Counting Forwards 20-100 Within Ten What's Next? (Number Lines)", "group": "COUNTING FORWARDS 20-100 WITHIN TEN"}, {"id": 24, "name": "Counting Forwards 20-100 Within Ten What's Missing? (Number Tracks)", "group": "COUNTING FORWARDS 20-100 WITHIN TEN"}, {"id": 25, "name": "Counting Forwards 20-100 Within Ten What's Missing? (Number Lines)", "group": "COUNTING FORWARDS 20-100 WITHIN TEN"}, {"id": 26, "name": "Counting Forwards 20-100 Within Ten With 1 Blank (Number Tracks)", "group": "COUNTING FORWARDS 20-100 WITHIN TEN"}, {"id": 27, "name": "Counting Forwards 20-100 Within Ten With 2 Blanks (Number Tracks)", "group": "COUNTING FORWARDS 20-100 WITHIN TEN"}, {"id": 306, "name": "Counting Forwards 20-100 Crossing Ten What's Next? (Number Tracks)", "group": "COUNTING FORWARDS 20-100 CROSSING TEN"}, {"id": 307, "name": "Counting Forwards 20-100 Crossing Ten What's Missing? (Number Lines)", "group": "COUNTING FORWARDS 20-100 CROSSING TEN"}, {"id": 308, "name": "Counting Forwards 20-100 Crossing Ten What's Missing? (Number Tracks)", "group": "COUNTING FORWARDS 20-100 CROSSING TEN"}, {"id": 309, "name": "Counting Forwards 20-100 Crossing Ten What's Missing? (Number Lines) B", "group": "COUNTING FORWARDS 20-100 CROSSING TEN"}, {"id": 310, "name": "Counting Forwards 20-100 Crossing Ten With 1 Blank (Number Tracks)", "group": "COUNTING FORWARDS 20-100 CROSSING TEN"}, {"id": 311, "name": "Counting Forwards 20-100 Crossing Ten With 2 Blanks (Number Tracks)", "group": "COUNTING FORWARDS 20-100 CROSSING TEN"}, {"id": 312, "name": "Counting Backwards 20-100 Within Ten What's Next? (Number Tracks)", "group": "COUNTING BACKWARDS 20-100 WITHIN TEN"}, {"id": 313, "name": "Counting Backwards 20-100 Within Ten What's Missing? (Number Tracks)", "group": "COUNTING BACKWARDS 20-100 WITHIN TEN"}, {"id": 314, "name": "Counting Backwards 20-100 Within Ten With 1 Blank (Number Tracks)", "group": "COUNTING BACKWARDS 20-100 WITHIN TEN"}, {"id": 315, "name": "Counting Backwards 20-100 Within Ten With 2 Blanks (Number Tracks)", "group": "COUNTING BACKWARDS 20-100 WITHIN TEN"}, {"id": 316, "name": "Counting Backwards 20-100 Crossing Ten What's Next? (Number Tracks)", "group": "COUNTING BACKWARDS 20-100 CROSSING TEN"}, {"id": 317, "name": "Counting Backwards 20-100 Crossing Ten What's Missing? (Number Tracks)", "group": "COUNTING BACKWARDS 20-100 CROSSING TEN"}, {"id": 318, "name": "Counting Backwards 20-100 Crossing Ten With 1 Blank (Number Tracks)", "group": "COUNTING BACKWARDS 20-100 CROSSING TEN"}, {"id": 319, "name": "Counting Backwards 20-100 Crossing Ten With 2 Blanks (Number Tracks)", "group": "COUNTING BACKWARDS 20-100 CROSSING TEN"}, {"id": 81, "name": "PR Images Clustered 1-10", "group": "PICTORIAL REPRESENTATIONS 1-10"}, {"id": 82, "name": "PR Images in Rows 1-10", "group": "PICTORIAL REPRESENTATIONS 1-10"}, {"id": 83, "name": "PR Counters Clustered 1-10", "group": "PICTORIAL REPRESENTATIONS 1-10"}, {"id": 84, "name": "PR Counters in Rows 1-10", "group": "PICTORIAL REPRESENTATIONS 1-10"}, {"id": 85, "name": "PR Counters 10-Frame 1-10", "group": "PICTORIAL REPRESENTATIONS 1-10"}, {"id": 86, "name": "NR Multilink Cubes 1-10", "group": "PICTORIAL REPRESENTATIONS 1-10"}, {"id": 87, "name": "NR Numicon 1-10", "group": "PICTORIAL REPRESENTATIONS 1-10"}, {"id": 89, "name": "PV Place Value Blocks 1-10", "group": "PICTORIAL REPRESENTATIONS 1-10"}, {"id": 90, "name": "NR Beads 1-10", "group": "PICTORIAL REPRESENTATIONS 1-10"}, {"id": 91, "name": "PR Images Clustered 11-20", "group": "PICTORIAL REPRESENTATIONS 11-20"}, {"id": 92, "name": "PR Images in Rows 11-20", "group": "PICTORIAL REPRESENTATIONS 11-20"}, {"id": 93, "name": "PR Counters Clustered 11-20", "group": "PICTORIAL REPRESENTATIONS 11-20"}, {"id": 94, "name": "PR Counters in Rows 11-20", "group": "PICTORIAL REPRESENTATIONS 11-20"}, {"id": 95, "name": "PR Counters 10-Frame 11-20", "group": "PICTORIAL REPRESENTATIONS 11-20"}, {"id": 96, "name": "NR Multilink Cubes 11-20", "group": "PICTORIAL REPRESENTATIONS 11-20"}, {"id": 97, "name": "NR Numicon 11-20", "group": "PICTORIAL REPRESENTATIONS 11-20"}, {"id": 99, "name": "PV Place Value Counters 11-20", "group": "PICTORIAL REPRESENTATIONS 11-20"}, {"id": 100, "name": "NR Beads 11-20", "group": "PICTORIAL REPRESENTATIONS 11-20"}, {"id": 101, "name": "Place Value Blocks 10-50 (A)", "group": "PLACE VALUE BLOCKS"}, {"id": 102, "name": "Place Value Blocks 50-100 (A)", "group": "PLACE VALUE BLOCKS"}, {"id": 103, "name": "Place Value Blocks 10-50 (B)", "group": "PLACE VALUE BLOCKS"}, {"id": 104, "name": "Place Value Blocks 50-100 (B)", "group": "PLACE VALUE BLOCKS"}];
+let state={};let currentIdx=0;
+try{const s=localStorage.getItem(KEY);if(s)state=JSON.parse(s);}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+function nuggetState(id){return state[id]||{status:'pending',comment:''};}
+function buildSidebar(filter){
+  const list=document.getElementById('nugget-list');
+  const q=(filter||'').toLowerCase().trim();
+  list.innerHTML='';let lastGroup=null;
+  NUGGETS.forEach((n,i)=>{
+    if(q&&!n.name.toLowerCase().includes(q)&&!String(n.id).includes(q))return;
+    if(n.group!==lastGroup){const gh=document.createElement('div');gh.className='group-header';gh.textContent=n.group;list.appendChild(gh);lastGroup=n.group;}
+    const item=document.createElement('div');
+    const ns=nuggetState(n.id);
+    item.className='nugget-item'+(i===currentIdx?' selected':'');
+    item.dataset.idx=i;
+    item.innerHTML=`<div class="dot ${ns.status}"></div><span class="nug-name">${n.name}</span><span class="nug-id">#${n.id}</span>`;
+    item.onclick=()=>selectIdx(i);
+    list.appendChild(item);
+  });
+}
+function selectIdx(idx){
+  currentIdx=idx;const n=NUGGETS[idx];if(!n)return;
+  document.querySelectorAll('.nugget-item').forEach(el=>{el.classList.toggle('selected',parseInt(el.dataset.idx)===idx);});
+  const sel=document.querySelector('.nugget-item.selected');if(sel)sel.scrollIntoView({block:'nearest'});
+  document.getElementById('nug-badge').textContent='#'+n.id;
+  document.getElementById('nug-title').textContent=n.name;
+  const img=document.getElementById('slide-img');
+  img.style.display='block';
+  img.src='example-slides/nugget-'+String(n.id).padStart(3,'0')+'.jpg';
+  const ns=nuggetState(n.id);
+  renderStatus(ns.status);
+  document.getElementById('comment-box').value=ns.comment||'';
+  document.getElementById('btn-prev').disabled=idx===0;
+  document.getElementById('btn-next').disabled=idx===NUGGETS.length-1;
+  const pct=Math.round((idx+1)/NUGGETS.length*100);
+  document.getElementById('progress-fill').style.width=pct+'%';
+  updateStats();
+}
+function renderStatus(status){
+  ['approved','changes','pending'].forEach(s=>{
+    const btn=document.getElementById('btn-'+s);
+    btn.className='status-btn'+(status===s?' active-'+s:'');
+  });
+}
+function setStatus(status){
+  const n=NUGGETS[currentIdx];if(!n)return;
+  if(!state[n.id])state[n.id]={status:'pending',comment:''};
+  state[n.id].status=status;save();renderStatus(status);
+  const sel=document.querySelector('.nugget-item.selected .dot');
+  if(sel)sel.className='dot '+status;
+  updateStats();
+}
+function saveComment(val){
+  const n=NUGGETS[currentIdx];if(!n)return;
+  if(!state[n.id])state[n.id]={status:'pending',comment:''};
+  state[n.id].comment=val;save();
+}
+function navigate(dir){const next=currentIdx+dir;if(next>=0&&next<NUGGETS.length)selectIdx(next);}
+function updateStats(){
+  let approved=0,changes=0,pending=0;
+  NUGGETS.forEach(n=>{const s=nuggetState(n.id).status;if(s==='approved')approved++;else if(s==='changes')changes++;else pending++;});
+  document.getElementById('stats-line').innerHTML=
+    `<span class="stat-approved">&#10003; ${approved} approved</span> &nbsp; `+
+    `<span class="stat-changes">&#9998; ${changes} need changes</span> &nbsp; `+
+    `${pending} pending &nbsp;·&nbsp; ${NUGGETS.length} total`;
+}
+function exportJSON(){
+  const out=NUGGETS.map(n=>{
+    const ns=nuggetState(n.id);
+    return{nuggetId:n.id,nuggetName:n.name,status:ns.status,comment:ns.comment||''};
+  }).filter(x=>x.status!=='pending'||x.comment);
+  const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),reviews:out},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='example-slides-feedback-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+}
+document.getElementById('search').addEventListener('input',e=>{buildSidebar(e.target.value);});
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')navigate(-1);
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')navigate(1);
+  if(e.key==='a')setStatus('approved');if(e.key==='c')setStatus('changes');if(e.key==='p')setStatus('pending');
+});
+buildSidebar();selectIdx(0);
+</script>
+</body>
+</html>
