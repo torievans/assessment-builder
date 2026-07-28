@@ -41,7 +41,7 @@ function numberLineSVG(config) {
   const {
     start, end, partitions, valuesGivenEvery, answer,
     lineStyle = 'through', colour,
-    hideFrom, hideTo, answerCircle = false,
+    hideFrom, hideTo, answerCircle = false, revealAnswer = false,
     // Optional jump overlay
     jumpFrom, jumpTo, jumpType = 'single',
     jumpLabel = '', jumpArrow = true, jumpCircle = 'none', jumpColour = 'dark',
@@ -164,9 +164,9 @@ function numberLineSVG(config) {
       const arrowBaseY = arrowTipY - 7;
       const AW = 3.5;
       s += `<polygon points="${x.toFixed(1)},${arrowTipY.toFixed(1)} ${(x-AW).toFixed(1)},${arrowBaseY.toFixed(1)} ${(x+AW).toFixed(1)},${arrowBaseY.toFixed(1)}" fill="${LABEL_COLOR}" stroke="${LABEL_COLOR}" stroke-width="1" stroke-linejoin="round"/>`;
-      s += `<text x="${x.toFixed(1)}" y="${(arrowBaseY-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${LABEL_COLOR}">?</text>`;
+      s += `<text x="${x.toFixed(1)}" y="${(arrowBaseY-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="13" fill="${LABEL_COLOR}">${revealAnswer ? String(value) : '?'}</text>`;
     } else if (show) {
-      const lbl = isAnswer ? '?' : String(value);
+      const lbl = (isAnswer && !revealAnswer) ? '?' : String(value);
       const ly  = (LINE_Y + TICK_HALF + 14).toFixed(1);
       const isCircled = circleVal !== null && Math.abs(value - circleVal) < 0.001;
       if (isCircled) {
@@ -606,7 +606,7 @@ function nrRenderFrames(cfg) {
 }
 
 function nrRenderBeads(cfg) {
-  const N=cfg.n, bg=cfg.bg||5, ba=cfg.ba??4, bb=cfg.bb??0, beadPreset=cfg.beadPreset||'colour';
+  const N=cfg.n, bg=cfg.bg||5, ba=cfg.ba??4, bb=cfg.bb??0, beadPreset=cfg.beadPreset||'colour', showCount=cfg.showCount||false;
   const RW_RED={fill:'#CC2200',stroke:nrDarkenHex('#CC2200')}, RW_WHITE={fill:'#FFFFFF',stroke:nrDarkenHex('#FFFFFF')};
   function beadCol(i) { const even=Math.floor(i/bg)%2===0; if(beadPreset==='rw') return even?RW_RED:RW_WHITE; const fill=even?NR_STROKES[ba]:NR_STROKES[bb]; return{fill,stroke:nrDarkenHex(fill)}; }
   const r=Math.min(18,Math.max(11,Math.floor(180/N))), LTAIL=18, RTAIL=110, A=4, WL=140;
@@ -617,11 +617,19 @@ function nrRenderBeads(cfg) {
   let s=`<svg viewBox="0 0 ${SVG_W} ${SVG_H}" xmlns="http://www.w3.org/2000/svg" style="width:${SVG_W}px;max-width:100%">`;
   s+=`<path d="${pathD}" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round"/>`;
   for(let i=0;i<N;i++){const{fill,stroke}=beadCol(i); s+=`<circle cx="${beads[i].x.toFixed(1)}" cy="${beads[i].y.toFixed(1)}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;}
+  if(showCount){
+    const NR_FONT="proxima-soft,'Nunito',Arial,sans-serif";
+    for(let i=0;i<N;i++){
+      const br=Math.max(7,Math.round(r*0.45)), bx=(beads[i].x).toFixed(1), by=(beads[i].y).toFixed(1), bfs=Math.max(8,Math.round(br*1.25));
+      s+=`<circle cx="${bx}" cy="${by}" r="${br}" fill="#2E7D5E" stroke="#fff" stroke-width="2"/>`;
+      s+=`<text x="${bx}" y="${by}" dominant-baseline="central" text-anchor="middle" font-family="${NR_FONT}" font-weight="700" font-size="${bfs}" fill="#fff">${i+1}</text>`;
+    }
+  }
   s+=`</svg>`; return s;
 }
 
 function nrRenderMultilink(cfg) {
-  const N=cfg.n, mc=cfg.mc??4, mc2=cfg.mc2??0, mlRows=cfg.mlRows||'10', mlFill=cfg.mlFill||'row', mlGap=cfg.mlGap||false, mlSplitOn=cfg.mlSplitOn||false, mlSplit=cfg.mlSplit||5;
+  const N=cfg.n, mc=cfg.mc??4, mc2=cfg.mc2??0, mlRows=cfg.mlRows||'10', mlFill=cfg.mlFill||'row', mlGap=cfg.mlGap||false, mlSplitOn=cfg.mlSplitOn||false, mlSplit=cfg.mlSplit||5, showCount=cfg.showCount||false;
   const fill=NR_STROKES[mc], rowSize=parseInt(mlRows);
   const CW=Math.max(20,Math.min(60,Math.floor(560/rowSize))), scale=CW/77.76, CH=Math.round(79.38*scale), CONN_W=Math.round((89.2025-77.76)*scale), PAD=2;
   const colFill=(rowSize===5&&mlFill==='col');
@@ -650,23 +658,39 @@ function nrRenderMultilink(cfg) {
     if(isLastInRow) s+=`<path d="${CONN_D}" fill="${f}" stroke="${st}" stroke-width="${SW}"/>`;
     s+=`</g>`;
   }
+  if(showCount){
+    const NR_FONT="proxima-soft,'Nunito',Arial,sans-serif";
+    for(let i=0;i<N;i++){
+      const{row,col}=pos[i], gO=numGaps>0?Math.floor(row/2)*GAP:0;
+      const tx=PAD+col*CW, ty=PAD+row*CH+gO;
+      const br=Math.max(7,Math.round(CW*0.22)), bx=(tx+CW*0.50).toFixed(1), by=(ty+CH*0.50).toFixed(1), bfs=Math.max(9,Math.round(br*1.25));
+      s+=`<circle cx="${bx}" cy="${by}" r="${br}" fill="#2E7D5E" stroke="#fff" stroke-width="2"/>`;
+      s+=`<text x="${bx}" y="${by}" dominant-baseline="central" text-anchor="middle" font-family="${NR_FONT}" font-weight="700" font-size="${bfs}" fill="#fff">${i+1}</text>`;
+    }
+  }
   s+=`</svg>`; return s;
 }
 
 function nrRenderNumicon(cfg) {
-  const N=cfg.n, niSplitOn=cfg.niSplitOn||false, niSplit=cfg.niSplit||5;
+  const N=cfg.n, niSplitOn=cfg.niSplitOn||false, niSplit=cfg.niSplit||5, showCount=cfg.showCount||false;
   const CW=60, CH=60, R=4, CR=CW*0.33, PAD=4, PIECE_GAP=8;
+  const NR_FONT="proxima-soft,'Nunito',Arial,sans-serif";
   function niColour(n) { return NR_NUMICON_COLOURS[Math.min(n,10)-1]; }
   function rrPath(x,y,w,h,r){const p=(a,b)=>`${a.toFixed(1)},${b.toFixed(1)}`;return`M ${p(x+r,y)} L ${p(x+w-r,y)} A ${r} ${r} 0 0 1 ${p(x+w,y+r)} L ${p(x+w,y+h-r)} A ${r} ${r} 0 0 1 ${p(x+w-r,y+h)} L ${p(x+r,y+h)} A ${r} ${r} 0 0 1 ${p(x,y+h-r)} L ${p(x,y+r)} A ${r} ${r} 0 0 1 ${p(x+r,y)} Z`;}
   function lPath(x,y,W1,W2,r){const H=2*CH,p=(a,b)=>`${a.toFixed(1)},${b.toFixed(1)}`;return`M ${p(x+r,y)} L ${p(x+W1-r,y)} A ${r} ${r} 0 0 1 ${p(x+W1,y+r)} L ${p(x+W1,y+CH-r)} A ${r} ${r} 0 0 1 ${p(x+W1-r,y+CH)} L ${p(x+W2+r,y+CH)} A ${r} ${r} 0 0 0 ${p(x+W2,y+CH+r)} L ${p(x+W2,y+H-r)} A ${r} ${r} 0 0 1 ${p(x+W2-r,y+H)} L ${p(x+r,y+H)} A ${r} ${r} 0 0 1 ${p(x,y+H-r)} L ${p(x,y+r)} A ${r} ${r} 0 0 1 ${p(x+r,y)} Z`;}
   function piecePath(n,ox,oy){const fc=Math.floor(n/2),rem=n%2;if(n===1)return rrPath(ox,oy,CW,CH,R);if(rem===0)return rrPath(ox,oy,fc*CW,2*CH,R);return lPath(ox,oy,(fc+1)*CW,fc*CW,R);}
-  function holes(n,ox,oy,sc){let s='';for(let i=0;i<n;i++){const cx=ox+Math.floor(i/2)*CW+CW/2,cy=oy+(i%2)*CH+CH/2;s+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${CR}" fill="white" stroke="${sc}" stroke-width="1.5"/>`;}return s;}
+  // Each hole circle as a path string — appended to the piece path and rendered with
+  // fill-rule="evenodd" so the circles are genuinely cut out of the colored piece.
+  function circPath(cx,cy,r){return `M ${(cx-r).toFixed(1)},${cy.toFixed(1)} A ${r.toFixed(1)},${r.toFixed(1)},0,1,0,${(cx+r).toFixed(1)},${cy.toFixed(1)} A ${r.toFixed(1)},${r.toFixed(1)},0,1,0,${(cx-r).toFixed(1)},${cy.toFixed(1)} Z`;}
+  function holePaths(n,ox,oy){const ncols=Math.ceil(n/2);let s='';for(let i=0;i<n;i++){const row=i<ncols?0:1,col=i<ncols?i:i-ncols;const cx=ox+col*CW+CW/2,cy=oy+row*CH+CH/2;s+=` ${circPath(cx,cy,CR)}`;}return s;}
+  // Hole outlines drawn on top (ring border around each cutout) + optional count badges
+  function holeCircles(n,ox,oy,sc,baseCount){let s='';const br=Math.max(7,Math.round(CR*0.45)),bfs=Math.max(9,Math.round(br*1.25));const ncols=Math.ceil(n/2);for(let i=0;i<n;i++){const row=i<ncols?0:1,col=i<ncols?i:i-ncols;const cx=ox+col*CW+CW/2,cy=oy+row*CH+CH/2;s+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${CR}" fill="none" stroke="${sc}" stroke-width="1.5"/>`;if(baseCount!=null){const bx=cx.toFixed(1),by=cy.toFixed(1);s+=`<circle cx="${bx}" cy="${by}" r="${br}" fill="#2E7D5E" stroke="#fff" stroke-width="2"/>`;s+=`<text x="${bx}" y="${by}" dominant-baseline="central" text-anchor="middle" font-family="${NR_FONT}" font-weight="700" font-size="${bfs}" fill="#fff">${baseCount+i}</text>`;}}return s;}
   function pW(n){return(Math.floor(n/2)+n%2)*CW;} function pH(n){return n===1?CH:2*CH;}
   let paths='', circs='', svgW, svgH;
   const doSplit=niSplitOn&&niSplit>0&&niSplit<N, N1=doSplit?niSplit:(N<=10?N:10), N2=doSplit?(N-niSplit):(N<=10?0:N-10);
-  if(N2===0){const c1=niColour(N1),o1=nrDarkenHex(c1);paths=`<path d="${piecePath(N1,PAD,PAD)}" fill="${c1}" stroke="${o1}" stroke-width="2"/>`;circs=holes(N1,PAD,PAD,o1);svgW=pW(N1)+PAD*2;svgH=pH(N1)+PAD*2;}
-  else if(N1+N2===10){const gcx=PAD+2.5*CW,gcy=PAD+CH,c1=niColour(N1),o1=nrDarkenHex(c1),c2=niColour(N2),o2=nrDarkenHex(c2);paths=`<path d="${piecePath(N1,PAD,PAD)}" fill="${c1}" stroke="${o1}" stroke-width="2"/><g transform="rotate(180,${gcx},${gcy})"><path d="${piecePath(N2,PAD,PAD)}" fill="${c2}" stroke="${o2}" stroke-width="2"/></g>`;circs=holes(N1,PAD,PAD,o1)+`<g transform="rotate(180,${gcx},${gcy})">${holes(N2,PAD,PAD,o2)}</g>`;svgW=5*CW+PAD*2;svgH=2*CH+PAD*2;}
-  else{const p2x=PAD+pW(N1)+PIECE_GAP,c1=niColour(N1),o1=nrDarkenHex(c1),c2=niColour(N2),o2=nrDarkenHex(c2);paths=`<path d="${piecePath(N1,PAD,PAD)}" fill="${c1}" stroke="${o1}" stroke-width="2"/><path d="${piecePath(N2,p2x,PAD)}" fill="${c2}" stroke="${o2}" stroke-width="2"/>`;circs=holes(N1,PAD,PAD,o1)+holes(N2,p2x,PAD,o2);svgW=p2x+pW(N2)+PAD;svgH=Math.max(pH(N1),pH(N2))+PAD*2;}
+  if(N2===0){const c1=niColour(N1),o1=nrDarkenHex(c1);svgW=pW(N1)+PAD*2;svgH=pH(N1)+PAD*2;paths=`<path d="${piecePath(N1,PAD,PAD)}${holePaths(N1,PAD,PAD)}" fill="${c1}" fill-rule="evenodd" stroke="${o1}" stroke-width="2"/>`;circs=holeCircles(N1,PAD,PAD,o1,showCount?1:null);}
+  else if(N1+N2===10){const gcx=PAD+2.5*CW,gcy=PAD+CH,c1=niColour(N1),o1=nrDarkenHex(c1),c2=niColour(N2),o2=nrDarkenHex(c2);svgW=5*CW+PAD*2;svgH=2*CH+PAD*2;paths=`<path d="${piecePath(N1,PAD,PAD)}${holePaths(N1,PAD,PAD)}" fill="${c1}" fill-rule="evenodd" stroke="${o1}" stroke-width="2"/><g transform="rotate(180,${gcx},${gcy})"><path d="${piecePath(N2,PAD,PAD)}${holePaths(N2,PAD,PAD)}" fill="${c2}" fill-rule="evenodd" stroke="${o2}" stroke-width="2"/></g>`;circs=holeCircles(N1,PAD,PAD,o1,showCount?1:null)+`<g transform="rotate(180,${gcx},${gcy})">${holeCircles(N2,PAD,PAD,o2)}</g>`;}
+  else{const p2x=PAD+pW(N1)+PIECE_GAP,c1=niColour(N1),o1=nrDarkenHex(c1),c2=niColour(N2),o2=nrDarkenHex(c2);svgW=p2x+pW(N2)+PAD;svgH=Math.max(pH(N1),pH(N2))+PAD*2;paths=`<path d="${piecePath(N1,PAD,PAD)}${holePaths(N1,PAD,PAD)}" fill="${c1}" fill-rule="evenodd" stroke="${o1}" stroke-width="2"/><path d="${piecePath(N2,p2x,PAD)}${holePaths(N2,p2x,PAD)}" fill="${c2}" fill-rule="evenodd" stroke="${o2}" stroke-width="2"/>`;circs=holeCircles(N1,PAD,PAD,o1,showCount?1:null)+holeCircles(N2,p2x,PAD,o2,showCount?N1+1:null);}
   return `<svg viewBox="0 0 ${svgW} ${svgH}" xmlns="http://www.w3.org/2000/svg" style="width:${svgW}px;height:auto;max-width:100%">${paths}${circs}</svg>`;
 }
 
