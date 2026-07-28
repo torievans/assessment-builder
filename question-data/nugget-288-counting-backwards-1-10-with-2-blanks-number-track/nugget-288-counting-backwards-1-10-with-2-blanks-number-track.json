@@ -87,7 +87,7 @@
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "10,9,8_,_,?",
+        "sequence": "10,9,8,_,_,?",
         "shape": "square",
         "layout": "straight",
         "colourMode": "full"
