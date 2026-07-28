@@ -44,7 +44,7 @@
     {
       "id": 19004,
       "text": "What number should go at the end?",
-      "answer": "16",
+      "answer": "15",
       "type": "exact",
       "visualType": "nt",
       "image": "",
@@ -53,8 +53,7 @@
         "sequence": "19,18,17,_,?",
         "shape": "circle",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
