@@ -19,8 +19,8 @@
         "colourMode": "full",
         "colourOffset": 0
       },
-      "updatedAt": "2026-07-27",
-      "createdAt": "2026-07-27"
+      "updatedAt": "2026-07-28",
+      "createdAt": "2026-07-28"
     },
     {
       "id": 288007,
@@ -38,8 +38,8 @@
         "colourMode": "full",
         "colourOffset": 1
       },
-      "updatedAt": "2026-07-27",
-      "createdAt": "2026-07-27"
+      "updatedAt": "2026-07-28",
+      "createdAt": "2026-07-28"
     },
     {
       "id": 288008,
@@ -57,8 +57,8 @@
         "colourMode": "full",
         "colourOffset": 2
       },
-      "updatedAt": "2026-07-27",
-      "createdAt": "2026-07-27"
+      "updatedAt": "2026-07-28",
+      "createdAt": "2026-07-28"
     },
     {
       "id": 288009,
@@ -76,27 +76,26 @@
         "colourMode": "full",
         "colourOffset": 3
       },
-      "updatedAt": "2026-07-27",
-      "createdAt": "2026-07-27"
+      "updatedAt": "2026-07-28",
+      "createdAt": "2026-07-28"
     },
     {
       "id": 288010,
       "text": "What number should go at the end?",
-      "answer": "87",
+      "answer": "88",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "nt",
       "cfg": {
-        "sequence": "83,84,84,_,_,?",
+        "sequence": "83,84,85,_,_,?",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 4
+        "colourMode": "full"
       },
-      "updatedAt": "2026-07-27",
-      "createdAt": "2026-07-27"
+      "updatedAt": "2026-07-28",
+      "createdAt": "2026-07-28"
     }
   ]
 }
