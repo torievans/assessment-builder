@@ -92,7 +92,8 @@
         "sequence": "83,84,85,_,_,?",
         "shape": "square",
         "layout": "straight",
-        "colourMode": "full"
+        "colourMode": "full",
+        "colourOffset": 4
       },
       "updatedAt": "2026-07-28",
       "createdAt": "2026-07-28"
