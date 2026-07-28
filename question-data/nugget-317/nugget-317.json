@@ -6,17 +6,16 @@
     {
       "id": 317001,
       "text": "What number is missing?",
-      "answer": "30",
+      "answer": "40",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "31,?,29,28",
+        "sequence": "41,?,39,38",
         "shape": "balloon",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 0
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
