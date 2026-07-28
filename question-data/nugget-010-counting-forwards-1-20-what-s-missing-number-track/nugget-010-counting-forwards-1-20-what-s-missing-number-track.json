@@ -1,0 +1,101 @@
+{
+  "nuggetId": 10,
+  "status": "ready-for-qa",
+  "nextQId": 319006,
+  "questions": [
+    {
+      "id": 5024,
+      "text": "What number is missing?",
+      "answer": "15",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "13,14,?,16,17",
+        "shape": "cloud",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 1
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5025,
+      "text": "What number is missing?",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "11,12,?,14,15",
+        "shape": "cloud",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 2
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5026,
+      "text": "What number is missing?",
+      "answer": "11",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "9,10,?,12,13",
+        "shape": "cloud",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 3
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5027,
+      "text": "What number is missing?",
+      "answer": "16",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "14,15,?,17,18",
+        "shape": "cloud",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    },
+    {
+      "id": 5028,
+      "text": "What number is missing?",
+      "answer": "18",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "16,17,?,19,20",
+        "shape": "cloud",
+        "layout": "straight",
+        "colourMode": "full",
+        "colourOffset": 5
+      },
+      "updatedAt": "2026-07-27",
+      "createdAt": "2026-07-27"
+    }
+  ]
+}
