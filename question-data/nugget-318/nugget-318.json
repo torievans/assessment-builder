@@ -60,17 +60,16 @@
     {
       "id": 318004,
       "text": "What number should go at the end?",
-      "answer": "59",
+      "answer": "79",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "63,62,61,_,?",
+        "sequence": "83,82,81,_,?",
         "shape": "star",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 3
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
