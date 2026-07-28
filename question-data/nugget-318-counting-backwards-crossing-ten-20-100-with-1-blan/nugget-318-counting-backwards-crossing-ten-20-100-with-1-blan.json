@@ -6,13 +6,13 @@
     {
       "id": 318001,
       "text": "What number should go at the end?",
-      "answer": "29",
+      "answer": "39",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "33,32,31,_,?",
+        "sequence": "43,42,41,_,?",
         "shape": "star",
         "layout": "straight",
         "colourMode": "full"
