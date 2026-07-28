@@ -15,8 +15,7 @@
         "sequence": "47,46,45,_,_,?",
         "shape": "cloud",
         "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 0
+        "colourMode": "full"
       },
       "qaComment": "",
       "createdAt": "2026-07-27",
