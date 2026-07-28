@@ -24,13 +24,13 @@
     {
       "id": 316002,
       "text": "What number comes next?",
-      "answer": "38",
+      "answer": "48",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "41,40,39,?",
+        "sequence": "51,50,49,?",
         "shape": "circle",
         "layout": "straight",
         "colourMode": "full"
