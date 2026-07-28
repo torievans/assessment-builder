@@ -1,6 +1,6 @@
 {
   "nuggetId": 89,
-  "status": "in-progress",
+  "status": "ready-for-qa",
   "nextQId": 319006,
   "questions": [
     {
@@ -110,13 +110,13 @@
     {
       "id": 8905,
       "text": "How many ones blocks are there?",
-      "answer": "10",
+      "answer": "9",
       "type": "exact",
       "visualType": "pv",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "n": 10,
+        "n": 9,
         "repType": "blocks",
         "dispMode": "standalone",
         "numEqMode": "none",
