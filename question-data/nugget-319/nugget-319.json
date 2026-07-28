@@ -1,11 +1,11 @@
 {
   "nuggetId": 319,
-  "status": "in-progress",
+  "status": "ready-for-qa",
   "nextQId": 319006,
   "questions": [
     {
       "id": 319001,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "28",
       "type": "exact",
       "visualType": "nt",
@@ -24,7 +24,7 @@
     },
     {
       "id": 319002,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "39",
       "type": "exact",
       "visualType": "nt",
@@ -42,7 +42,7 @@
     },
     {
       "id": 319003,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "48",
       "type": "exact",
       "visualType": "nt",
@@ -61,7 +61,7 @@
     },
     {
       "id": 319004,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "59",
       "type": "exact",
       "visualType": "nt",
@@ -79,7 +79,7 @@
     },
     {
       "id": 319005,
-      "text": "What number comes next?",
+      "text": "What number should go at the end?",
       "answer": "67",
       "type": "exact",
       "visualType": "nt",
