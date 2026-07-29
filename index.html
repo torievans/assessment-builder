@@ -339,6 +339,21 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .q-card.drop-above{border-top:2px solid #3B82F6}
 .q-card.drop-below{border-bottom:2px solid #3B82F6}
 .q-card.editing{outline:2px solid #3B82F6;outline-offset:1px}
+/* ── Example card ── */
+.example-card{grid-column:1/-1;border:2px solid #319375}
+.example-head{background:#319375}
+.example-head .q-num{font-size:10px;letter-spacing:1.5px;color:white;font-weight:700}
+.example-view-btn{text-decoration:none;font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;background:rgba(255,255,255,.2);color:white;white-space:nowrap;transition:background .12s}
+.example-view-btn:hover{background:rgba(255,255,255,.35)}
+.ex-edit{padding:10px 14px 14px;border-top:1px solid #e5f5ef;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ex-edit-full{grid-column:1/-1}
+.ex-section-lbl{font-size:10px;font-weight:700;color:#319375;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.ex-field-lbl{font-size:11px;color:var(--muted);display:block;margin-bottom:3px}
+.ex-field-input{width:100%;padding:6px 9px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:var(--font);background:#faf9f7;color:var(--text);outline:none;margin-bottom:6px}
+.ex-field-input:focus{border-color:#319375}
+.ex-save-btn{background:#319375;color:white;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)}
+.ex-save-btn:hover{background:#277a62}
+.example-none{font-size:12px;color:var(--muted);padding:12px 14px;font-style:italic}
 /* Rename nugget */
 .nd-rename-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:14px;padding:2px 6px;border-radius:4px;line-height:1;transition:color .12s;vertical-align:middle;margin-left:4px}
 .nd-rename-btn:hover{color:var(--blue)}
@@ -1147,7 +1162,7 @@ async function saveNuggetToFile(nid){
   const idSlug=`nugget-${String(nid).padStart(3,'0')}`;  // ID-only canonical path
   const today=new Date().toISOString().slice(0,10);
   const customName=nuggetState[nid]?.customName;
-  const data={nuggetId:nid,status:ns.status,nextQId,questions:ns.questions.map(q=>({...q,updatedAt:q.updatedAt||today,createdAt:q.createdAt||today})),...(customName&&{customName})};
+  const data={nuggetId:nid,status:ns.status,nextQId,questions:ns.questions.map(q=>({...q,updatedAt:q.updatedAt||today,createdAt:q.createdAt||today})),...(customName&&{customName}),...(ns.exampleOverride&&{exampleOverride:ns.exampleOverride})};
   const json=JSON.stringify(data,null,2);
   let localOk=false,ghOk=false;
   // Save to local folder (name-based path only — readable on disk)
@@ -1407,7 +1422,7 @@ async function selectNugget(id){
   if(!hasLocalData){
     const fileData=await loadNuggetFromFile(id);
     if(fileData){
-      nuggetState[id]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined};
+      nuggetState[id]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined,exampleOverride:fileData.exampleOverride||null};
       if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
       save(); // persist to localStorage so the next page-load uses this data
       renderSidebar(); // update sidebar dot to reflect file status
@@ -1427,7 +1442,7 @@ async function refreshNugget(){
   if(btn){btn.style.opacity='0.4';btn.style.pointerEvents='none';}
   const fileData=await loadNuggetFromFile(activeId);
   if(fileData){
-    nuggetState[activeId]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined};
+    nuggetState[activeId]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined,exampleOverride:fileData.exampleOverride||null};
     if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
     document.getElementById('nd-title').textContent=nuggetDisplayName(activeId);
     renderWorkflow();renderQuestions();renderSidebar();
@@ -1655,12 +1670,71 @@ function renderQVisual(q){
   if(imgSrc)return`<div class="q-img" style="padding:0 14px 8px;text-align:center"><img src="${esc(imgSrc)}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'q-img-ph\\'>🖼 ${esc(imgSrc.split('/').pop())}</div>'"></div>`;
   return'';
 }
+function renderExampleCard(nid){
+  if(!nid)return'';
+  const ns=nuggetState[nid];if(!ns)return'';
+  const q0=ns.questions[0];
+  const vtype=q0?.visualType;
+  const ex=ns.exampleOverride||{};
+  const cfg=ex.cfg||{};
+  const expl=(ex.explanation||[]).join('\n');
+  let fieldsHtml='';
+  if(vtype==='nt'){
+    fieldsHtml=`<div><label class="ex-field-lbl">Sequence (comma-separated, use ? for blank)</label><input class="ex-field-input" id="ex-seq" value="${esc((cfg.sequence||[]).join(', '))}" placeholder="e.g. 3, 4, ?, 6"></div><div><label class="ex-field-lbl">Answer</label><input class="ex-field-input" id="ex-ans" value="${esc(cfg.answer!=null?cfg.answer:'')}" placeholder="e.g. 5"></div>`;
+  }else if(vtype==='nl'){
+    fieldsHtml=`<div><label class="ex-field-lbl">Answer</label><input class="ex-field-input" id="ex-ans" value="${esc(cfg.answer!=null?cfg.answer:'')}" placeholder="e.g. 7"></div><div><label class="ex-field-lbl">Start</label><input class="ex-field-input" id="ex-start" value="${esc(cfg.start!=null?cfg.start:'')}" placeholder="e.g. 0"></div><div><label class="ex-field-lbl">End</label><input class="ex-field-input" id="ex-end" value="${esc(cfg.end!=null?cfg.end:'')}" placeholder="e.g. 10"></div>`;
+  }else if(vtype==='nr'||vtype==='pv'){
+    fieldsHtml=`<div class="ex-edit-full"><label class="ex-field-lbl">n (value shown)</label><input class="ex-field-input" id="ex-n" value="${esc(cfg.n!=null?cfg.n:'')}" placeholder="e.g. 4"></div>`;
+  }else if(vtype==='pr'){
+    fieldsHtml=`<div class="ex-edit-full"><label class="ex-field-lbl">Count A</label><input class="ex-field-input" id="ex-countA" value="${esc(cfg.countA!=null?cfg.countA:'')}" placeholder="e.g. 3"></div>`;
+  }else{
+    fieldsHtml=`<div class="ex-edit-full example-none">Add questions first to enable example fields.</div>`;
+  }
+  const hasOverride=!!(ns.exampleOverride&&ns.exampleOverride.cfg);
+  return `<div class="q-card example-card" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div style="margin-left:auto;display:flex;align-items:center;gap:8px">${hasOverride?'<span style="font-size:10px;color:#a8e6d4;letter-spacing:0.5px">custom</span>':''}<a class="example-view-btn" href="http://localhost:3456" target="_blank" title="Open slide editor">View slide ↗</a></div></div><div class="ex-edit"><div class="ex-section-lbl ex-edit-full">Example config</div>${fieldsHtml}<div class="ex-edit-full"><label class="ex-field-lbl">Explanation lines (one per line)</label><textarea class="ex-field-input" id="ex-expl" rows="3" placeholder="e.g. Count forwards from 3">${esc(expl)}</textarea></div><div class="ex-edit-full" style="display:flex;gap:8px;justify-content:flex-end;margin-top:2px"><button class="ex-save-btn" onclick="saveExampleCard()">Save</button>${hasOverride?'<button class="ex-save-btn" style="background:#aaa" onclick="clearExampleCard()">Clear</button>':''}</div></div></div>`;
+}
+function saveExampleCard(){
+  if(!activeId)return;
+  const ns=nuggetState[activeId];if(!ns)return;
+  const q0=ns.questions[0];const vtype=q0?.visualType;const refCfg=q0?.cfg||{};
+  let cfg={...refCfg};
+  const get=id=>{const el=document.getElementById(id);return el?el.value.trim():null;};
+  const toNum=v=>v===''||v===null?null:(isNaN(v)?v:Number(v));
+  if(vtype==='nt'){
+    const seqStr=get('ex-seq');const ans=get('ex-ans');
+    if(seqStr){cfg.sequence=seqStr.split(',').map(s=>s.trim()).map(s=>s==='?'?'?':toNum(s));}
+    const a=toNum(ans);if(a!==null)cfg.answer=a;
+  }else if(vtype==='nl'){
+    const ans=toNum(get('ex-ans'));const start=toNum(get('ex-start'));const end=toNum(get('ex-end'));
+    if(ans!==null)cfg.answer=ans;
+    if(start!==null)cfg.start=start;
+    if(end!==null)cfg.end=end;
+    if(cfg.answer!=null&&cfg.start!=null&&cfg.end!=null){
+      const hideOff=1;cfg.hideFrom=Math.max(cfg.start+1,Math.min(cfg.answer-hideOff,cfg.end));cfg.hideTo=cfg.hideFrom;
+    }
+  }else if(vtype==='nr'||vtype==='pv'){
+    const n=toNum(get('ex-n'));if(n!==null)cfg.n=n;
+  }else if(vtype==='pr'){
+    const countA=toNum(get('ex-countA'));if(countA!==null)cfg.countA=countA;
+  }
+  const explRaw=(document.getElementById('ex-expl')?.value||'').trim();
+  const explanation=explRaw?explRaw.split('\n').map(l=>l.trim()).filter(Boolean):[];
+  ns.exampleOverride={cfg,...(explanation.length&&{explanation})};
+  save();saveNuggetToFile(activeId);renderQuestions();showToast('Example saved');
+}
+function clearExampleCard(){
+  if(!activeId)return;
+  if(!confirm('Clear example override for this nugget?'))return;
+  nuggetState[activeId].exampleOverride=null;
+  save();saveNuggetToFile(activeId);renderQuestions();showToast('Example cleared');
+}
 function renderQuestions(){
   if(!activeId)return;const qs=nuggetState[activeId]?.questions||[];const el=document.getElementById('q-grid');
-  if(!qs.length){el.innerHTML='<div class="q-empty-grid">No questions yet — use the tools above to add questions for this nugget.</div>';return;}
+  const exHtml=renderExampleCard(activeId);
+  if(!qs.length){el.innerHTML=exHtml+'<div class="q-empty-grid">No questions yet — use the tools above to add questions for this nugget.</div>';return;}
   const hasNT=qs.some(q=>q.visualType==='nt');
   const hdr=hasNT?`<div style="grid-column:1/-1;display:flex;justify-content:flex-end;margin-bottom:4px"><button class="wfbtn wfbtn-ghost" style="font-size:11px;padding:3px 10px" onclick="resequenceNTColours()" title="Assign a different starting colour to each number track question">🎨 Vary track colours</button></div>`:'';
-  el.innerHTML=hdr+qs.map((q,i)=>{
+  el.innerHTML=exHtml+hdr+qs.map((q,i)=>{
     return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}" ondragover="dndOver(event,${q.id})" ondragleave="dndLeave(event)" ondrop="dndDrop(event,${q.id})"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions">${qHasImage(q)?'<button class="q-dl-btn" onclick="downloadQuestionImage('+q.id+')" title="Download image">⬇</button>':''}<button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button><div class="q-drag-handle" draggable="true" ondragstart="dndStart(event,${q.id})" ondragend="dndEnd(event)" title="Drag to reorder">⠿</div></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
   }).join('');
 }
@@ -1691,7 +1765,7 @@ async function downloadQuestionImage(qid){
     }else if(q.visualType==='pv'&&q.cfg&&q.cfg.n!=null){
       blob=await pvGetPngBlob(q.cfg);
     }else{showToast('⚠ No image for this question');return;}
-    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click();URL.revokeObjectURL(a.href);
+    const _url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=_url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(_url),1000);
     showToast(`↓ Downloaded ${filename}`);
   }catch(e){console.error(e);showToast('⚠ Image download failed');}
 }
@@ -1848,7 +1922,7 @@ function renderCurriculum(){
 /* ── Export / Import ── */
 function handleExportImport(){document.getElementById('ei-modal').classList.remove('hidden');}
 function closeEIModal(e){if(!e||e.target===document.getElementById('ei-modal'))document.getElementById('ei-modal').classList.add('hidden');}
-function downloadJSON(){const blob=new Blob([JSON.stringify(getState(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`assessment-state-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href);}
+function downloadJSON(){const blob=new Blob([JSON.stringify(getState(),null,2)],{type:'application/json'});const _u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=_u;a.download=`assessment-state-${new Date().toISOString().slice(0,10)}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(_u),1000);}
 function handleJSONUpload(input){const file=input.files[0];if(!file)return;const r=new FileReader();r.onload=e=>{try{applyState(JSON.parse(e.target.result));save();renderSidebar();if(activeId)selectNugget(activeId);document.getElementById('ei-modal').classList.add('hidden');alert('State loaded.');}catch(err){alert('Failed: '+err.message);}input.value='';};r.readAsText(file);}
 
 /* ── QTI export ── */
@@ -2121,7 +2195,7 @@ async function batchExport(){
         zip.file(`${folder}/${slug}-q${qPad}.xml`,qtiXML(q,imgFile,n.name,i+1));
       }
     }
-    const blob=await zip.generateAsync({type:'blob'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`y1-maths-qti-${new Date().toISOString().slice(0,10)}.zip`;a.click();URL.revokeObjectURL(a.href);
+    const blob=await zip.generateAsync({type:'blob'});const _u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=_u;a.download=`y1-maths-qti-${new Date().toISOString().slice(0,10)}.zip`;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(()=>URL.revokeObjectURL(_u),1000);
     prog.textContent=`✓ ${checked.length} nugget${checked.length!==1?'s':''} exported`;setTimeout(()=>prog.textContent='',4000);
   }catch(e){prog.textContent='Error: '+e.message;}finally{btn.disabled=false;}
 }
