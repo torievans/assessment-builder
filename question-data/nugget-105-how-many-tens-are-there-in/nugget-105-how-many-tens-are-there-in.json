@@ -4,32 +4,6 @@
   "nextQId": 319012,
   "questions": [
     {
-      "id": 319010,
-      "text": "what is the number?",
-      "answer": "32",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "pv",
-      "cfg": {
-        "n": 32,
-        "repType": "blocks",
-        "dispMode": "standalone",
-        "numEqMode": "none",
-        "missingVals": [],
-        "blkColors": {
-          "1": "#C86464",
-          "10": "#F0B478",
-          "100": "#50B4A0",
-          "1000": "#788CB4"
-        },
-        "pvColors": {}
-      },
-      "updatedAt": "2026-07-29",
-      "createdAt": "2026-07-29"
-    },
-    {
       "id": 319011,
       "text": "what is the number?",
       "answer": "34",
