@@ -1674,8 +1674,8 @@ function renderExampleCard(nid){
   if(!nid)return'';
   const ns=nuggetState[nid];if(!ns)return'';
   const q0=ns.questions[0];
-  const vtype=q0?.visualType;
   const ex=ns.exampleOverride||{};
+  const vtype=q0?.visualType||ex.visualType;
   const cfg=ex.cfg||{};
   const expl=(ex.explanation||[]).join('\n');
   let fieldsHtml='';
@@ -1688,7 +1688,7 @@ function renderExampleCard(nid){
   }else if(vtype==='pr'){
     fieldsHtml=`<div class="ex-edit-full"><label class="ex-field-lbl">Count A</label><input class="ex-field-input" id="ex-countA" value="${esc(cfg.countA!=null?cfg.countA:'')}" placeholder="e.g. 3"></div>`;
   }else{
-    fieldsHtml=`<div class="ex-edit-full example-none">Add questions first to enable example fields.</div>`;
+    fieldsHtml=`<div class="ex-edit-full example-none">Use a tool above to add the example question — it will appear here once set.</div>`;
   }
   const hasOverride=!!(ns.exampleOverride&&ns.exampleOverride.cfg);
   return `<div class="q-card example-card" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div style="margin-left:auto;display:flex;align-items:center;gap:8px">${hasOverride?'<span style="font-size:10px;color:#a8e6d4;letter-spacing:0.5px">custom</span>':''}<a class="example-view-btn" href="http://localhost:3456" target="_blank" title="Open slide editor">View slide ↗</a></div></div><div class="ex-edit"><div class="ex-section-lbl ex-edit-full">Example config</div>${fieldsHtml}<div class="ex-edit-full"><label class="ex-field-lbl">Explanation lines (one per line)</label><textarea class="ex-field-input" id="ex-expl" rows="3" placeholder="e.g. Count forwards from 3">${esc(expl)}</textarea></div><div class="ex-edit-full" style="display:flex;gap:8px;justify-content:flex-end;margin-top:2px"><button class="ex-save-btn" onclick="saveExampleCard()">Save</button>${hasOverride?'<button class="ex-save-btn" style="background:#aaa" onclick="clearExampleCard()">Clear</button>':''}</div></div></div>`;
@@ -1696,7 +1696,7 @@ function renderExampleCard(nid){
 function saveExampleCard(){
   if(!activeId)return;
   const ns=nuggetState[activeId];if(!ns)return;
-  const q0=ns.questions[0];const vtype=q0?.visualType;const refCfg=q0?.cfg||{};
+  const q0=ns.questions[0];const ex2=ns.exampleOverride||{};const vtype=q0?.visualType||ex2.visualType;const refCfg=ex2.cfg||q0?.cfg||{};
   let cfg={...refCfg};
   const get=id=>{const el=document.getElementById(id);return el?el.value.trim():null;};
   const toNum=v=>v===''||v===null?null:(isNaN(v)?v:Number(v));
@@ -1728,12 +1728,31 @@ function clearExampleCard(){
   nuggetState[activeId].exampleOverride=null;
   save();saveNuggetToFile(activeId);renderQuestions();showToast('Example cleared');
 }
+// Returns true when the next question created should become the example
+function isExampleMode(){
+  if(!activeId)return false;
+  const ns=nuggetState[activeId];
+  return !ns?.exampleOverride&&!(ns?.questions?.length);
+}
+// Update all tool Add-Question buttons and show/hide "Create more like this"
+function updateToolBtns(){
+  if(!activeId)return;
+  const isEx=isExampleMode();
+  ['add-q-btn-nl','add-q-btn-nt','add-q-btn-nr','add-q-btn-pv','add-q-btn-pr','add-q-btn-text','add-q-btn-custom'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&!el.dataset.editing)el.textContent=isEx?'+ Example question':'+ Question';
+  });
+  // Only show "Create more like this" once an example exists
+  const hasEx=!!(nuggetState[activeId]?.exampleOverride?.cfg);
+  document.querySelectorAll('.btn-create-more').forEach(b=>{b.style.display=hasEx?'':'none';});
+}
 function renderQuestions(){
   if(!activeId)return;const qs=nuggetState[activeId]?.questions||[];const el=document.getElementById('q-grid');
   const exHtml=renderExampleCard(activeId);
-  if(!qs.length){el.innerHTML=exHtml+'<div class="q-empty-grid">No questions yet — use the tools above to add questions for this nugget.</div>';return;}
+  if(!qs.length){el.innerHTML=exHtml+'<div class="q-empty-grid">No questions yet — use the tools above to add questions for this nugget.</div>';updateToolBtns();return;}
   const hasNT=qs.some(q=>q.visualType==='nt');
   const hdr=hasNT?`<div style="grid-column:1/-1;display:flex;justify-content:flex-end;margin-bottom:4px"><button class="wfbtn wfbtn-ghost" style="font-size:11px;padding:3px 10px" onclick="resequenceNTColours()" title="Assign a different starting colour to each number track question">🎨 Vary track colours</button></div>`:'';
+  updateToolBtns();
   el.innerHTML=exHtml+hdr+qs.map((q,i)=>{
     return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}" ondragover="dndOver(event,${q.id})" ondragleave="dndLeave(event)" ondrop="dndDrop(event,${q.id})"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions">${qHasImage(q)?'<button class="q-dl-btn" onclick="downloadQuestionImage('+q.id+')" title="Download image">⬇</button>':''}<button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button><div class="q-drag-handle" draggable="true" ondragstart="dndStart(event,${q.id})" ondragend="dndEnd(event)" title="Drag to reorder">⠿</div></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
   }).join('');
@@ -1824,6 +1843,7 @@ function openTool(type){
   else if(type==='nt'){document.getElementById('nt-text').value='';document.getElementById('nt-answer').value='';document.getElementById('nt-seq').value='1,2,3,?,5,6';ntShape='square';ntLayout='straight';ntColourMode='full';document.querySelectorAll('[data-ntshape]').forEach(b=>b.classList.toggle('active',b.dataset.ntshape==='square'));document.querySelectorAll('[data-ntlayout]').forEach(b=>b.classList.toggle('active',b.dataset.ntlayout==='straight'));document.querySelectorAll('[data-ntcolmode]').forEach(b=>b.classList.toggle('active',b.dataset.ntcolmode==='full'));autoPreviewNT();}
   else if(type==='nr'){document.getElementById('nr-text').value='';document.getElementById('nr-answer').value='';nrResetState();autoPreviewNR();}
   else if(type==='pv'){document.getElementById('pv-text').value='';document.getElementById('pv-answer').value='';pvResetState();}
+  updateToolBtns();
 }
 function closeTool(){
   if(activeTool){document.getElementById('tool-panel-'+activeTool).classList.add('hidden');}
@@ -1876,6 +1896,14 @@ function addToolQuestion(type){
       saveImageToFile(activeId,fname,customImageDataURL);
       q.imagePath=imagePath;q.image='';
     }
+  }
+  // First question on a blank nugget becomes the example
+  if(isExampleMode()){
+    nuggetState[activeId].exampleOverride={cfg:q.cfg,visualType:q.visualType,answer:q.answer};
+    if(nuggetState[activeId].status==='not-started'){nuggetState[activeId].status='in-progress';saveStatusMap();}
+    save();saveNuggetToFile(activeId);renderQuestions();renderSidebar();renderWorkflow();closeTool();
+    showToast('Example question saved — now add your questions');
+    return;
   }
   if(nuggetState[activeId].status==='not-started'){nuggetState[activeId].status='in-progress';saveStatusMap();}
   nuggetState[activeId].questions.push(q);
@@ -2376,6 +2404,14 @@ function openSharedBatch(tool){
   else if(tool==='pv'){seed.n=sharedBatchStructure.n;seed.answer=document.getElementById('pv-answer').value.trim();seed.text=document.getElementById('pv-text').value.trim();}
   else if(tool==='text'){seed.answer=document.getElementById('text-answer').value.trim();seed.text=document.getElementById('text-q-text').value.trim();}
   else if(tool==='pr'){const mode=sharedBatchStructure.mode;if(mode==='count')seed.countA=sharedBatchStructure.countA;else if(mode==='addsub'){seed.countA=sharedBatchStructure.countA;seed.countB=sharedBatchStructure.countB;}else if(mode==='multiply'){seed.mrows=sharedBatchStructure.mrows;seed.mcols=sharedBatchStructure.mcols;}seed.answer=document.getElementById('pr-answer')?.value.trim()??'';seed.text=document.getElementById('pr-text')?.value.trim()??'';}
+  // Override seed with example values when example exists
+  const _exOv=nuggetState[activeId]?.exampleOverride;
+  if(_exOv?.cfg){
+    if(tool==='nt'&&_exOv.cfg.sequence)seed.seq=(_exOv.cfg.sequence||[]).join(', ');
+    else if((tool==='pv'||tool==='nr')&&_exOv.cfg.n!=null)seed.n=_exOv.cfg.n;
+    else if(tool==='pr'&&_exOv.cfg.countA!=null)seed.countA=_exOv.cfg.countA;
+    if(_exOv.answer)seed.answer=String(_exOv.answer);
+  }
   addSharedBatchRow(seed);
   const panel=document.getElementById('shared-batch-panel');panel.style.display='block';
   panel.scrollIntoView({behavior:'smooth',block:'start'});
