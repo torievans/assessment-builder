@@ -1670,62 +1670,78 @@ function renderQVisual(q){
   if(imgSrc)return`<div class="q-img" style="padding:0 14px 8px;text-align:center"><img src="${esc(imgSrc)}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'q-img-ph\\'>🖼 ${esc(imgSrc.split('/').pop())}</div>'"></div>`;
   return'';
 }
+function editExample(){editingExample=true;renderQuestions();}
+function cancelEditExample(){editingExample=false;renderQuestions();}
 function renderExampleCard(nid){
   if(!nid)return'';
   const ns=nuggetState[nid];if(!ns)return'';
   const q0=ns.questions[0];
   const ex=ns.exampleOverride||{};
+  const hasOverride=!!(ns.exampleOverride&&ns.exampleOverride.cfg);
   const vtype=q0?.visualType||ex.visualType;
   const cfg=ex.cfg||{};
+  const ansVal=ex.answer!=null?ex.answer:'';
+  const textVal=ex.text||'';
+  if(!hasOverride){
+    return `<div class="q-card example-card" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div></div><div class="ex-edit"><div class="example-none ex-edit-full">Use a tool above to add the example question — it will appear here once set.</div></div></div>`;
+  }
+  if(!editingExample){
+    // VIEW MODE
+    const pseudoQ={visualType:vtype,cfg,imagePath:ex.imagePath||'',image:''};
+    return `<div class="q-card example-card" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div class="q-card-actions" style="margin-left:auto"><a class="example-view-btn" href="http://localhost:3456" target="_blank" title="Open slide editor">View slide ↗</a><button class="q-edit-btn" onclick="editExample()" title="Edit example">✏</button><button class="q-del-btn" onclick="clearExampleCard()" title="Clear example">✕</button></div></div>${renderQVisual(pseudoQ)}<div class="q-body"><div class="q-text">${esc(textVal)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(String(ansVal))}</div></div></div>`;
+  }
+  // EDIT MODE
+  const seqStr=Array.isArray(cfg.sequence)?cfg.sequence.join(', '):(cfg.sequence||'');
   const expl=(ex.explanation||[]).join('\n');
   let fieldsHtml='';
   if(vtype==='nt'){
-    fieldsHtml=`<div><label class="ex-field-lbl">Sequence (comma-separated, use ? for blank)</label><input class="ex-field-input" id="ex-seq" value="${esc((cfg.sequence||[]).join(', '))}" placeholder="e.g. 3, 4, ?, 6"></div><div><label class="ex-field-lbl">Answer</label><input class="ex-field-input" id="ex-ans" value="${esc(cfg.answer!=null?cfg.answer:'')}" placeholder="e.g. 5"></div>`;
+    fieldsHtml=`<div><label class="ex-field-lbl">Sequence (comma-separated, use ? for answer blank, _ for other blank)</label><input class="ex-field-input" id="ex-seq" value="${esc(seqStr)}" placeholder="e.g. 3, 4, _, _, ?"></div><div><label class="ex-field-lbl">Answer</label><input class="ex-field-input" id="ex-ans" value="${esc(ansVal)}" placeholder="e.g. 8"></div>`;
   }else if(vtype==='nl'){
-    fieldsHtml=`<div><label class="ex-field-lbl">Answer</label><input class="ex-field-input" id="ex-ans" value="${esc(cfg.answer!=null?cfg.answer:'')}" placeholder="e.g. 7"></div><div><label class="ex-field-lbl">Start</label><input class="ex-field-input" id="ex-start" value="${esc(cfg.start!=null?cfg.start:'')}" placeholder="e.g. 0"></div><div><label class="ex-field-lbl">End</label><input class="ex-field-input" id="ex-end" value="${esc(cfg.end!=null?cfg.end:'')}" placeholder="e.g. 10"></div>`;
+    fieldsHtml=`<div><label class="ex-field-lbl">Answer</label><input class="ex-field-input" id="ex-ans" value="${esc(ansVal)}" placeholder="e.g. 7"></div><div><label class="ex-field-lbl">Start</label><input class="ex-field-input" id="ex-start" value="${esc(cfg.start!=null?cfg.start:'')}" placeholder="e.g. 0"></div><div><label class="ex-field-lbl">End</label><input class="ex-field-input" id="ex-end" value="${esc(cfg.end!=null?cfg.end:'')}" placeholder="e.g. 10"></div>`;
   }else if(vtype==='nr'||vtype==='pv'){
     fieldsHtml=`<div class="ex-edit-full"><label class="ex-field-lbl">n (value shown)</label><input class="ex-field-input" id="ex-n" value="${esc(cfg.n!=null?cfg.n:'')}" placeholder="e.g. 4"></div>`;
   }else if(vtype==='pr'){
     fieldsHtml=`<div class="ex-edit-full"><label class="ex-field-lbl">Count A</label><input class="ex-field-input" id="ex-countA" value="${esc(cfg.countA!=null?cfg.countA:'')}" placeholder="e.g. 3"></div>`;
-  }else{
-    fieldsHtml=`<div class="ex-edit-full example-none">Use a tool above to add the example question — it will appear here once set.</div>`;
   }
-  const hasOverride=!!(ns.exampleOverride&&ns.exampleOverride.cfg);
-  return `<div class="q-card example-card" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div style="margin-left:auto;display:flex;align-items:center;gap:8px">${hasOverride?'<span style="font-size:10px;color:#a8e6d4;letter-spacing:0.5px">custom</span>':''}<a class="example-view-btn" href="http://localhost:3456" target="_blank" title="Open slide editor">View slide ↗</a></div></div><div class="ex-edit"><div class="ex-section-lbl ex-edit-full">Example config</div>${fieldsHtml}<div class="ex-edit-full"><label class="ex-field-lbl">Explanation lines (one per line)</label><textarea class="ex-field-input" id="ex-expl" rows="3" placeholder="e.g. Count forwards from 3">${esc(expl)}</textarea></div><div class="ex-edit-full" style="display:flex;gap:8px;justify-content:flex-end;margin-top:2px"><button class="ex-save-btn" onclick="saveExampleCard()">Save</button>${hasOverride?'<button class="ex-save-btn" style="background:#aaa" onclick="clearExampleCard()">Clear</button>':''}</div></div></div>`;
+  return `<div class="q-card example-card editing" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div style="margin-left:auto;display:flex;gap:8px"><button class="ex-save-btn" onclick="saveExampleCard()">Save</button><button class="ex-save-btn" style="background:#aaa" onclick="cancelEditExample()">Cancel</button></div></div><div class="ex-edit"><div class="ex-section-lbl ex-edit-full">Example config</div>${fieldsHtml}<div class="ex-edit-full"><label class="ex-field-lbl">Question text</label><input class="ex-field-input" id="ex-text" value="${esc(textVal)}" placeholder="e.g. What number should go at the end?"></div><div class="ex-edit-full"><label class="ex-field-lbl">Explanation lines (one per line)</label><textarea class="ex-field-input" id="ex-expl" rows="3" placeholder="e.g. Count forwards from 3">${esc(expl)}</textarea></div><div class="ex-edit-full" style="display:flex;gap:8px;justify-content:flex-end;margin-top:2px"><button class="ex-save-btn" onclick="saveExampleCard()">Save</button><button class="ex-save-btn" style="background:#aaa" onclick="cancelEditExample()">Cancel</button></div></div></div>`;
 }
 function saveExampleCard(){
   if(!activeId)return;
   const ns=nuggetState[activeId];if(!ns)return;
   const q0=ns.questions[0];const ex2=ns.exampleOverride||{};const vtype=q0?.visualType||ex2.visualType;const refCfg=ex2.cfg||q0?.cfg||{};
   let cfg={...refCfg};
+  let answer=ex2.answer;
   const get=id=>{const el=document.getElementById(id);return el?el.value.trim():null;};
   const toNum=v=>v===''||v===null?null:(isNaN(v)?v:Number(v));
   if(vtype==='nt'){
     const seqStr=get('ex-seq');const ans=get('ex-ans');
-    if(seqStr){cfg.sequence=seqStr.split(',').map(s=>s.trim()).map(s=>s==='?'?'?':toNum(s));}
-    const a=toNum(ans);if(a!==null)cfg.answer=a;
+    if(seqStr!==null)cfg.sequence=seqStr.split(',').map(s=>s.trim()).join(',');
+    const a=toNum(ans);if(a!==null)answer=a;
   }else if(vtype==='nl'){
     const ans=toNum(get('ex-ans'));const start=toNum(get('ex-start'));const end=toNum(get('ex-end'));
-    if(ans!==null)cfg.answer=ans;
+    if(ans!==null)answer=ans;
     if(start!==null)cfg.start=start;
     if(end!==null)cfg.end=end;
-    if(cfg.answer!=null&&cfg.start!=null&&cfg.end!=null){
-      const hideOff=1;cfg.hideFrom=Math.max(cfg.start+1,Math.min(cfg.answer-hideOff,cfg.end));cfg.hideTo=cfg.hideFrom;
+    if(answer!=null&&cfg.start!=null&&cfg.end!=null){
+      const hideOff=1;cfg.hideFrom=Math.max(cfg.start+1,Math.min(answer-hideOff,cfg.end));cfg.hideTo=cfg.hideFrom;
     }
   }else if(vtype==='nr'||vtype==='pv'){
     const n=toNum(get('ex-n'));if(n!==null)cfg.n=n;
   }else if(vtype==='pr'){
     const countA=toNum(get('ex-countA'));if(countA!==null)cfg.countA=countA;
   }
+  const text=get('ex-text')||ex2.text||'';
   const explRaw=(document.getElementById('ex-expl')?.value||'').trim();
   const explanation=explRaw?explRaw.split('\n').map(l=>l.trim()).filter(Boolean):[];
-  ns.exampleOverride={cfg,...(explanation.length&&{explanation})};
+  ns.exampleOverride={cfg,visualType:vtype,answer,...(text&&{text}),...(ex2.imagePath&&{imagePath:ex2.imagePath}),...(explanation.length&&{explanation})};
+  editingExample=false;
   save();saveNuggetToFile(activeId);renderQuestions();showToast('Example saved');
 }
 function clearExampleCard(){
   if(!activeId)return;
   if(!confirm('Clear example override for this nugget?'))return;
   nuggetState[activeId].exampleOverride=null;
+  editingExample=false;
   save();saveNuggetToFile(activeId);renderQuestions();showToast('Example cleared');
 }
 // Returns true when the next question created should become the example
@@ -1827,7 +1843,7 @@ async function deleteImageFile(imagePath){
 }
 
 /* ── Tool panel ── */
-let activeTool=null,editingQId=null;
+let activeTool=null,editingQId=null,editingExample=false;
 
 function openTool(type){
   if(activeTool===type){closeTool();return;}
@@ -1899,7 +1915,7 @@ function addToolQuestion(type){
   }
   // First question on a blank nugget becomes the example
   if(isExampleMode()){
-    nuggetState[activeId].exampleOverride={cfg:q.cfg,visualType:q.visualType,answer:q.answer};
+    nuggetState[activeId].exampleOverride={cfg:q.cfg,visualType:q.visualType,answer:q.answer,text:q.text,...(q.imagePath&&{imagePath:q.imagePath})};
     if(nuggetState[activeId].status==='not-started'){nuggetState[activeId].status='in-progress';saveStatusMap();}
     save();saveNuggetToFile(activeId);renderQuestions();renderSidebar();renderWorkflow();closeTool();
     showToast('Example question saved — now add your questions');
