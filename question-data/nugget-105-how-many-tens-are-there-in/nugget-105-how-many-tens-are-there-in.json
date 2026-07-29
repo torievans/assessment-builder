@@ -1,0 +1,24 @@
+{
+  "nuggetId": 105,
+  "status": "in-progress",
+  "nextQId": 319008,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "n": 24,
+      "repType": "blocks",
+      "dispMode": "standalone",
+      "numEqMode": "none",
+      "missingVals": [],
+      "blkColors": {
+        "1": "#C86464",
+        "10": "#F0B478",
+        "100": "#50B4A0",
+        "1000": "#788CB4"
+      },
+      "pvColors": {}
+    },
+    "visualType": "pv",
+    "answer": "2"
+  }
+}
