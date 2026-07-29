@@ -1670,8 +1670,26 @@ function renderQVisual(q){
   if(imgSrc)return`<div class="q-img" style="padding:0 14px 8px;text-align:center"><img src="${esc(imgSrc)}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'q-img-ph\\'>🖼 ${esc(imgSrc.split('/').pop())}</div>'"></div>`;
   return'';
 }
-function editExample(){editingExample=true;renderQuestions();}
-function cancelEditExample(){editingExample=false;renderQuestions();}
+function editExample(){
+  if(!activeId)return;
+  const ex=nuggetState[activeId]?.exampleOverride;if(!ex||!ex.cfg)return;
+  const type=ex.visualType;if(!type)return;
+  if(activeTool&&activeTool!==type)closeTool();
+  if(activeTool!==type){
+    activeTool=type;
+    document.querySelectorAll('.tool-tab').forEach(b=>b.classList.toggle('active',b.dataset.tool===type));
+    document.getElementById('tool-panel-'+type)?.classList.remove('hidden');
+  }
+  if(type==='nl'){document.getElementById('nl-text').value=ex.text||'';document.getElementById('nl-answer').value=ex.answer!=null?ex.answer:'';restoreNLConfig(ex.cfg||{});}
+  else if(type==='nt'){document.getElementById('nt-text').value=ex.text||'';document.getElementById('nt-answer').value=ex.answer!=null?ex.answer:'';restoreNTConfig(ex.cfg||{});}
+  else if(type==='nr'){document.getElementById('nr-text').value=ex.text||'';document.getElementById('nr-answer').value=ex.answer!=null?ex.answer:'';restoreNRConfig(ex.cfg||{});}
+  else if(type==='pv'){document.getElementById('pv-text').value=ex.text||'';document.getElementById('pv-answer').value=ex.answer!=null?ex.answer:'';restorePVConfig(ex.cfg||{});}
+  else if(type==='pr'){document.getElementById('pr-text').value=ex.text||'';document.getElementById('pr-answer').value=ex.answer!=null?ex.answer:'';restorePRConfig(ex.cfg||{});}
+  editingExample=true;
+  setEditMode(true,type);
+  renderQuestions();
+  document.getElementById('tool-panel-'+type)?.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
 function renderExampleCard(nid){
   if(!nid)return'';
   const ns=nuggetState[nid];if(!ns)return'';
@@ -1685,57 +1703,8 @@ function renderExampleCard(nid){
   if(!hasOverride){
     return `<div class="q-card example-card" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div></div><div class="ex-edit"><div class="example-none ex-edit-full">Use a tool above to add the example question — it will appear here once set.</div></div></div>`;
   }
-  if(!editingExample){
-    // VIEW MODE
-    const pseudoQ={visualType:vtype,cfg,imagePath:ex.imagePath||'',image:''};
-    return `<div class="q-card example-card" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div class="q-card-actions" style="margin-left:auto"><a class="example-view-btn" href="http://localhost:3456" target="_blank" title="Open slide editor">View slide ↗</a><button class="q-edit-btn" onclick="editExample()" title="Edit example">✏</button><button class="q-del-btn" onclick="clearExampleCard()" title="Clear example">✕</button></div></div>${renderQVisual(pseudoQ)}<div class="q-body"><div class="q-text">${esc(textVal)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(String(ansVal))}</div></div></div>`;
-  }
-  // EDIT MODE
-  const seqStr=Array.isArray(cfg.sequence)?cfg.sequence.join(', '):(cfg.sequence||'');
-  const expl=(ex.explanation||[]).join('\n');
-  let fieldsHtml='';
-  if(vtype==='nt'){
-    fieldsHtml=`<div><label class="ex-field-lbl">Sequence (comma-separated, use ? for answer blank, _ for other blank)</label><input class="ex-field-input" id="ex-seq" value="${esc(seqStr)}" placeholder="e.g. 3, 4, _, _, ?"></div><div><label class="ex-field-lbl">Answer</label><input class="ex-field-input" id="ex-ans" value="${esc(ansVal)}" placeholder="e.g. 8"></div>`;
-  }else if(vtype==='nl'){
-    fieldsHtml=`<div><label class="ex-field-lbl">Answer</label><input class="ex-field-input" id="ex-ans" value="${esc(ansVal)}" placeholder="e.g. 7"></div><div><label class="ex-field-lbl">Start</label><input class="ex-field-input" id="ex-start" value="${esc(cfg.start!=null?cfg.start:'')}" placeholder="e.g. 0"></div><div><label class="ex-field-lbl">End</label><input class="ex-field-input" id="ex-end" value="${esc(cfg.end!=null?cfg.end:'')}" placeholder="e.g. 10"></div>`;
-  }else if(vtype==='nr'||vtype==='pv'){
-    fieldsHtml=`<div class="ex-edit-full"><label class="ex-field-lbl">n (value shown)</label><input class="ex-field-input" id="ex-n" value="${esc(cfg.n!=null?cfg.n:'')}" placeholder="e.g. 4"></div>`;
-  }else if(vtype==='pr'){
-    fieldsHtml=`<div class="ex-edit-full"><label class="ex-field-lbl">Count A</label><input class="ex-field-input" id="ex-countA" value="${esc(cfg.countA!=null?cfg.countA:'')}" placeholder="e.g. 3"></div>`;
-  }
-  return `<div class="q-card example-card editing" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div style="margin-left:auto;display:flex;gap:8px"><button class="ex-save-btn" onclick="saveExampleCard()">Save</button><button class="ex-save-btn" style="background:#aaa" onclick="cancelEditExample()">Cancel</button></div></div><div class="ex-edit"><div class="ex-section-lbl ex-edit-full">Example config</div>${fieldsHtml}<div class="ex-edit-full"><label class="ex-field-lbl">Question text</label><input class="ex-field-input" id="ex-text" value="${esc(textVal)}" placeholder="e.g. What number should go at the end?"></div><div class="ex-edit-full"><label class="ex-field-lbl">Explanation lines (one per line)</label><textarea class="ex-field-input" id="ex-expl" rows="3" placeholder="e.g. Count forwards from 3">${esc(expl)}</textarea></div><div class="ex-edit-full" style="display:flex;gap:8px;justify-content:flex-end;margin-top:2px"><button class="ex-save-btn" onclick="saveExampleCard()">Save</button><button class="ex-save-btn" style="background:#aaa" onclick="cancelEditExample()">Cancel</button></div></div></div>`;
-}
-function saveExampleCard(){
-  if(!activeId)return;
-  const ns=nuggetState[activeId];if(!ns)return;
-  const q0=ns.questions[0];const ex2=ns.exampleOverride||{};const vtype=q0?.visualType||ex2.visualType;const refCfg=ex2.cfg||q0?.cfg||{};
-  let cfg={...refCfg};
-  let answer=ex2.answer;
-  const get=id=>{const el=document.getElementById(id);return el?el.value.trim():null;};
-  const toNum=v=>v===''||v===null?null:(isNaN(v)?v:Number(v));
-  if(vtype==='nt'){
-    const seqStr=get('ex-seq');const ans=get('ex-ans');
-    if(seqStr!==null)cfg.sequence=seqStr.split(',').map(s=>s.trim()).join(',');
-    const a=toNum(ans);if(a!==null)answer=a;
-  }else if(vtype==='nl'){
-    const ans=toNum(get('ex-ans'));const start=toNum(get('ex-start'));const end=toNum(get('ex-end'));
-    if(ans!==null)answer=ans;
-    if(start!==null)cfg.start=start;
-    if(end!==null)cfg.end=end;
-    if(answer!=null&&cfg.start!=null&&cfg.end!=null){
-      const hideOff=1;cfg.hideFrom=Math.max(cfg.start+1,Math.min(answer-hideOff,cfg.end));cfg.hideTo=cfg.hideFrom;
-    }
-  }else if(vtype==='nr'||vtype==='pv'){
-    const n=toNum(get('ex-n'));if(n!==null)cfg.n=n;
-  }else if(vtype==='pr'){
-    const countA=toNum(get('ex-countA'));if(countA!==null)cfg.countA=countA;
-  }
-  const text=get('ex-text')||ex2.text||'';
-  const explRaw=(document.getElementById('ex-expl')?.value||'').trim();
-  const explanation=explRaw?explRaw.split('\n').map(l=>l.trim()).filter(Boolean):[];
-  ns.exampleOverride={cfg,visualType:vtype,answer,...(text&&{text}),...(ex2.imagePath&&{imagePath:ex2.imagePath}),...(explanation.length&&{explanation})};
-  editingExample=false;
-  save();saveNuggetToFile(activeId);renderQuestions();showToast('Example saved');
+  const pseudoQ={visualType:vtype,cfg,imagePath:ex.imagePath||'',image:''};
+  return `<div class="q-card example-card${editingExample?' editing':''}" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div class="q-card-actions" style="margin-left:auto"><a class="example-view-btn" href="http://localhost:3456" target="_blank" title="Open slide editor">View slide ↗</a><button class="q-edit-btn" onclick="editExample()" title="Edit example">✏</button><button class="q-del-btn" onclick="clearExampleCard()" title="Clear example">✕</button></div></div>${renderQVisual(pseudoQ)}<div class="q-body"><div class="q-text">${esc(textVal)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(String(ansVal))}</div></div></div>`;
 }
 function clearExampleCard(){
   if(!activeId)return;
@@ -1753,6 +1722,7 @@ function isExampleMode(){
 // Update all tool Add-Question buttons and show/hide "Create more like this"
 function updateToolBtns(){
   if(!activeId)return;
+  if(editingQId!==null||editingExample)return;
   const isEx=isExampleMode();
   ['add-q-btn-nl','add-q-btn-nt','add-q-btn-nr','add-q-btn-pv','add-q-btn-pr','add-q-btn-text','add-q-btn-custom'].forEach(id=>{
     const el=document.getElementById(id);
@@ -1864,6 +1834,7 @@ function openTool(type){
 function closeTool(){
   if(activeTool){document.getElementById('tool-panel-'+activeTool).classList.add('hidden');}
   if(editingQId!==null){editingQId=null;setEditMode(false);renderQuestions();}
+  if(editingExample){editingExample=false;setEditMode(false);renderQuestions();}
   activeTool=null;
   document.querySelectorAll('.tool-tab').forEach(b=>b.classList.remove('active'));
 }
@@ -1894,6 +1865,22 @@ function addToolQuestion(type){
       else if(type==='custom'&&customImageDataURL){const fname=`q-${String(editingQId).padStart(4,'0')}.png`;const imagePath=`question-data/${nuggetSlug(activeId)}/${fname}`;saveImageToFile(activeId,fname,customImageDataURL);q.imagePath=imagePath;q.image='';}
     }
     editingQId=null;setEditMode(false,type);save();renderQuestions();renderSidebar();renderWorkflow();closeTool();return;
+  }
+  // ── Edit example mode: update exampleOverride ────────────────────────
+  if(editingExample){
+    const ex=nuggetState[activeId].exampleOverride||{};
+    let cfg={};
+    if(type==='nl'){cfg=getNLConfig()||{};}
+    else if(type==='nt'){cfg=getNTConfig()||{};}
+    else if(type==='nr'){cfg=getNRConfig();}
+    else if(type==='pv'){cfg=getPVConfig();}
+    else if(type==='pr'){cfg=getPRConfig();}
+    nuggetState[activeId].exampleOverride={cfg,visualType:type,answer,...(text&&{text}),...(ex.imagePath&&{imagePath:ex.imagePath}),...(ex.explanation&&{explanation:ex.explanation})};
+    editingExample=false;
+    setEditMode(false,type);
+    save();saveNuggetToFile(activeId);renderQuestions();renderSidebar();renderWorkflow();closeTool();
+    showToast('Example updated');
+    return;
   }
   const id=nextQId++;
   const q={id,text,answer,type:'exact',image:'',display:'',qaComment:'',visualType:type==='text'?'text':type,cfg:{}};
@@ -2326,7 +2313,9 @@ function setEditMode(editing,type){
   const types=type?[type]:['nl','bm','text','custom','nt','nr','pv','pr'];
   types.forEach(t=>{
     const btn=document.getElementById('add-q-btn-'+t);if(!btn)return;
-    btn.textContent=editing?'✓ Update Question':'+ Add Question';
+    if(!editing)btn.textContent='+ Add Question';
+    else if(editingExample)btn.textContent='✓ Update Example';
+    else btn.textContent='✓ Update Question';
   });
 }
 function applyTextToAll(inputId){
