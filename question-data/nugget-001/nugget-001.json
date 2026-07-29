@@ -1,7 +1,7 @@
 {
   "nuggetId": 1,
-  "status": "not-started",
-  "nextQId": 5040,
+  "status": "in-progress",
+  "nextQId": 319007,
   "questions": [
     {
       "id": 1032,
@@ -435,6 +435,24 @@
       "updatedAt": "2026-07-21",
       "createdAt": "2026-07-21",
       "groupId": "b351fcb5-cba5-40c9-a5a3-8ff9844c7d49"
+    },
+    {
+      "id": 319006,
+      "text": "What number comes next?",
+      "answer": "11",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "7,8,9,10,?",
+        "shape": "square",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-07-29",
+      "createdAt": "2026-07-29"
     }
   ]
 }
