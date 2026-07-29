@@ -1915,8 +1915,14 @@ function addToolQuestion(type){
   if(isExampleMode()){
     nuggetState[activeId].exampleOverride={cfg:q.cfg,visualType:q.visualType,answer:q.answer,text:q.text,...(q.imagePath&&{imagePath:q.imagePath})};
     if(nuggetState[activeId].status==='not-started'){nuggetState[activeId].status='in-progress';saveStatusMap();}
-    save();saveNuggetToFile(activeId);renderQuestions();renderSidebar();renderWorkflow();closeTool();
-    showToast('Example question saved — now add your questions');
+    save();saveNuggetToFile(activeId);renderQuestions();renderSidebar();renderWorkflow();
+    // Keep tool open — clear text/answer so user can immediately add questions
+    if(type==='nt'){document.getElementById('nt-text').value='';document.getElementById('nt-answer').value='';}
+    else if(type==='nl'){document.getElementById('nl-text').value='';document.getElementById('nl-answer').value='';}
+    else if(type==='nr'){document.getElementById('nr-text').value='';document.getElementById('nr-answer').value='';}
+    else if(type==='pv'){document.getElementById('pv-text').value='';document.getElementById('pv-answer').value='';}
+    else if(type==='pr'){document.getElementById('pr-text').value='';document.getElementById('pr-answer').value='';}
+    showToast('Example saved — now add your questions');
     return;
   }
   if(nuggetState[activeId].status==='not-started'){nuggetState[activeId].status='in-progress';saveStatusMap();}
@@ -2423,7 +2429,7 @@ function openSharedBatch(tool){
   // Override seed with example values when example exists
   const _exOv=nuggetState[activeId]?.exampleOverride;
   if(_exOv?.cfg){
-    if(tool==='nt'&&_exOv.cfg.sequence)seed.seq=(_exOv.cfg.sequence||[]).join(', ');
+    if(tool==='nt'&&_exOv.cfg.sequence){const _seq=_exOv.cfg.sequence;seed.seq=Array.isArray(_seq)?_seq.join(', '):_seq;}
     else if((tool==='pv'||tool==='nr')&&_exOv.cfg.n!=null)seed.n=_exOv.cfg.n;
     else if(tool==='pr'&&_exOv.cfg.countA!=null)seed.countA=_exOv.cfg.countA;
     if(_exOv.answer)seed.answer=String(_exOv.answer);
