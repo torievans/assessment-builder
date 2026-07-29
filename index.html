@@ -1704,7 +1704,8 @@ function renderExampleCard(nid){
     return `<div class="q-card example-card" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div></div><div class="ex-edit"><div class="example-none ex-edit-full">Use a tool above to add the example question — it will appear here once set.</div></div></div>`;
   }
   const pseudoQ={visualType:vtype,cfg,imagePath:ex.imagePath||'',image:''};
-  return `<div class="q-card example-card${editingExample?' editing':''}" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div class="q-card-actions" style="margin-left:auto"><a class="example-view-btn" href="http://localhost:3456" target="_blank" title="Open slide editor">View slide ↗</a><button class="q-edit-btn" onclick="editExample()" title="Edit example">✏</button><button class="q-del-btn" onclick="clearExampleCard()" title="Clear example">✕</button></div></div>${renderQVisual(pseudoQ)}<div class="q-body"><div class="q-text">${esc(textVal)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(String(ansVal))}</div></div></div>`;
+  const explText=(ex.explanation||[]).join('\n');
+  return `<div class="q-card example-card${editingExample?' editing':''}" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div class="q-card-actions" style="margin-left:auto"><a class="example-view-btn" href="http://localhost:3456" target="_blank" title="Open slide editor">View slide ↗</a><button class="q-edit-btn" onclick="editExample()" title="Edit example">✏</button><button class="q-del-btn" onclick="clearExampleCard()" title="Clear example">✕</button></div></div>${renderQVisual(pseudoQ)}<div class="q-body"><div class="q-text">${esc(textVal)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(String(ansVal))}</div></div><div class="q-qa"><div class="q-qa-lbl">📝 Explanation (one per line)</div><textarea class="q-qa-ta" rows="2" placeholder="e.g. Count on to find out: 3, 4, 5…" onchange="saveExampleExplanation(this.value)">${esc(explText)}</textarea></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveExampleQA(this.value)">${esc(ex.qaComment||'')}</textarea></div></div>`;
 }
 function clearExampleCard(){
   if(!activeId)return;
@@ -1712,6 +1713,16 @@ function clearExampleCard(){
   nuggetState[activeId].exampleOverride=null;
   editingExample=false;
   save();saveNuggetToFile(activeId);renderQuestions();showToast('Example cleared');
+}
+function saveExampleExplanation(val){
+  if(!activeId)return;const ex=nuggetState[activeId].exampleOverride;if(!ex)return;
+  const lines=val.trim()?val.split('\n').map(l=>l.trim()).filter(Boolean):[];
+  if(lines.length)ex.explanation=lines;else delete ex.explanation;
+  save();saveNuggetToFile(activeId);
+}
+function saveExampleQA(val){
+  if(!activeId)return;const ex=nuggetState[activeId].exampleOverride;if(!ex)return;
+  ex.qaComment=val;save();saveNuggetToFile(activeId);
 }
 // Returns true when the next question created should become the example
 function isExampleMode(){
