@@ -2,40 +2,5 @@
   "nuggetId": 105,
   "status": "in-progress",
   "nextQId": 319015,
-  "questions": [
-    {
-      "id": 319014,
-      "text": "asdasda",
-      "answer": "weqw",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nr",
-      "cfg": {
-        "n": 5,
-        "rep": "frames",
-        "fType": "5",
-        "fc1": 0,
-        "fc2": 4,
-        "fSplitOn": false,
-        "fSplit": 5,
-        "bg": 5,
-        "ba": 4,
-        "bb": 0,
-        "beadPreset": "colour",
-        "mc": 4,
-        "mc2": 0,
-        "mlRows": "10",
-        "mlFill": "row",
-        "mlGap": false,
-        "mlSplitOn": false,
-        "mlSplit": 5,
-        "niSplitOn": false,
-        "niSplit": 5
-      },
-      "updatedAt": "2026-07-29",
-      "createdAt": "2026-07-29"
-    }
-  ]
+  "questions": []
 }
