@@ -31,6 +31,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 #topbar{background:#fff;border-bottom:1px solid #e2e5ea;padding:12px 24px;display:flex;align-items:center;gap:12px;flex-shrink:0}
 #nug-badge{background:#293039;color:#fff;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
 #nug-title{font-size:17px;font-weight:600;color:#1a202c;flex:1}
+#dl-slide-btn{background:none;border:1.5px solid #d1d5db;border-radius:7px;padding:4px 10px;cursor:pointer;font-size:15px;color:#4b5563;line-height:1;transition:background .12s,border-color .12s;flex-shrink:0;display:none}
+#dl-slide-btn:hover{background:#f3f4f6;border-color:#9ca3af}
 #nav-btns{display:flex;gap:8px;flex-shrink:0}
 .nav-btn{background:#fff;border:1px solid #d1d5db;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;color:#374151;font-weight:500;transition:background .12s}
 .nav-btn:hover{background:#f3f4f6}
@@ -68,6 +70,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div id="topbar">
     <div id="nug-badge">#-</div>
     <div id="nug-title">Select a nugget</div>
+    <button id="dl-slide-btn" onclick="downloadSlide()" title="Download slide image">⬇</button>
     <div id="nav-btns">
       <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>&#8592; Prev</button>
       <button class="nav-btn" id="btn-next" onclick="navigate(1)">Next &#8594;</button>
@@ -127,6 +130,7 @@ function selectIdx(idx){
   const img=document.getElementById('slide-img');
   img.style.display='block';
   img.src='example-slides/'+(SLIDE_FILENAMES[n.id]||('nugget-'+String(n.id).padStart(3,'0')+'.jpg'));
+  document.getElementById('dl-slide-btn').style.display='inline-flex';
   const ns=nuggetState(n.id);
   renderStatus(ns.status);
   document.getElementById('comment-box').value=ns.comment||'';
@@ -156,6 +160,12 @@ function saveComment(val){
   state[n.id].comment=val;save();
 }
 function navigate(dir){const next=currentIdx+dir;if(next>=0&&next<NUGGETS.length)selectIdx(next);}
+function downloadSlide(){
+  const n=NUGGETS[currentIdx];if(!n)return;
+  const fname=SLIDE_FILENAMES[n.id]||('nugget-'+String(n.id).padStart(3,'0')+'.jpg');
+  const img=document.getElementById('slide-img');if(!img||!img.src)return;
+  const a=document.createElement('a');a.href=img.src;a.download=fname;document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
 function updateStats(){
   let approved=0,changes=0,pending=0;
   NUGGETS.forEach(n=>{const s=nuggetState(n.id).status;if(s==='approved')approved++;else if(s==='changes')changes++;else pending++;});
