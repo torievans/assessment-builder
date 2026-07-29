@@ -1,6 +1,17 @@
 {
   "nuggetId": 105,
-  "status": "not-started",
-  "nextQId": 319012,
-  "questions": []
+  "status": "in-progress",
+  "nextQId": 319013,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "sequence": "1,2,3,?,5,6",
+      "shape": "square",
+      "layout": "straight",
+      "colourMode": "full"
+    },
+    "visualType": "nt",
+    "answer": "4",
+    "text": "wqeqweqw"
+  }
 }
