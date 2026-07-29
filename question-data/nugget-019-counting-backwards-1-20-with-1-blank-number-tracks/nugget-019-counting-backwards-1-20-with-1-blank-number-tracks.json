@@ -1,18 +1,18 @@
 {
   "nuggetId": 19,
-  "status": "ready-for-qa",
-  "nextQId": 319006,
+  "status": "in-progress",
+  "nextQId": 19006,
   "questions": [
     {
       "id": 19001,
       "text": "What number should go at the end?",
-      "answer": "16",
+      "answer": "6",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "20,19,18,_,?",
+        "sequence": "10,9,8,_,?",
         "shape": "circle",
         "layout": "straight",
         "colourMode": "full",
@@ -42,25 +42,6 @@
       "updatedAt": "2026-07-27"
     },
     {
-      "id": 19004,
-      "text": "What number should go at the end?",
-      "answer": "16",
-      "type": "exact",
-      "visualType": "nt",
-      "image": "",
-      "imagePath": "",
-      "cfg": {
-        "sequence": "20,19,18,_,?",
-        "shape": "circle",
-        "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
-      },
-      "qaComment": "",
-      "createdAt": "2026-07-27",
-      "updatedAt": "2026-07-27"
-    },
-    {
       "id": 19003,
       "text": "What number should go at the end?",
       "answer": "14",
@@ -73,6 +54,25 @@
         "shape": "circle",
         "layout": "straight",
         "colourMode": "full",
+        "colourOffset": 2
+      },
+      "qaComment": "",
+      "createdAt": "2026-07-27",
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": 19004,
+      "text": "What number should go at the end?",
+      "answer": "16",
+      "type": "exact",
+      "visualType": "nt",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "sequence": "20,19,18,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full",
         "colourOffset": 3
       },
       "qaComment": "",
@@ -82,13 +82,13 @@
     {
       "id": 19005,
       "text": "What number should go at the end?",
-      "answer": "12",
+      "answer": "10",
       "type": "exact",
       "visualType": "nt",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "sequence": "16,15,14,_,?",
+        "sequence": "14,13,12,_,?",
         "shape": "circle",
         "layout": "straight",
         "colourMode": "full",
@@ -98,5 +98,16 @@
       "createdAt": "2026-07-27",
       "updatedAt": "2026-07-27"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "sequence": "14,13,12,_,?",
+      "shape": "circle",
+      "layout": "straight",
+      "colourMode": "full",
+      "colourOffset": 4
+    },
+    "visualType": "nt",
+    "answer": "10"
+  }
 }
