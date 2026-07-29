@@ -46,7 +46,7 @@ DIV_H = 4 * S
 
 FS_PROMPT = 100   # effective 50px at 1080p
 FS_LABEL  = 76
-FS_EXPL   = 58
+FS_EXPL   = 76
 
 bg_raw  = Image.open(BG_PATH).convert('RGBA')
 bg_full = bg_raw.resize((W, H), Image.LANCZOS)
