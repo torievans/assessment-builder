@@ -191,6 +191,18 @@ document.addEventListener('keydown',e=>{
   if(e.key==='a')setStatus('approved');if(e.key==='c')setStatus('changes');if(e.key==='p')setStatus('pending');
 });
 buildSidebar();selectIdx(0);
+
+// Embedded mode: hide own sidebar when running inside the builder iframe
+if(window.self!==window.top){
+  document.getElementById('sidebar').style.display='none';
+}
+// Listen for nugget navigation from parent builder
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.type==='selectNugget'){
+    const idx=NUGGETS.findIndex(n=>n.id===Number(e.data.nuggetId));
+    if(idx>=0)selectIdx(idx);
+  }
+});
 </script>
 </body>
 </html>
