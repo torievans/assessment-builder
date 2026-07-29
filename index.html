@@ -1337,7 +1337,7 @@ function save(){
 function loadStorage(){try{const d=localStorage.getItem(STORE);if(d){_statusHadLocalState=true;applyState(JSON.parse(d));}else nextQId=SEED_NEXT;}catch(e){}}
 
 /* ── Tab / view switching ── */
-function switchTab(t){activeTab=t;['builder','curriculum','slides'].forEach(v=>{document.getElementById('view-'+v)?.classList.toggle('hidden',t!==v);document.getElementById('tab-'+v)?.classList.toggle('active',t===v);});document.getElementById('view-export').classList.add('hidden');document.getElementById('view-scaffold').classList.add('hidden');if(t==='curriculum')renderCurriculum();if(t==='slides'){const fr=document.getElementById('slides-iframe');if(!fr.src||fr.src===window.location.href)fr.src='example-slides-review.html';}}
+function switchTab(t){activeTab=t;['builder','curriculum','slides'].forEach(v=>{document.getElementById('view-'+v)?.classList.toggle('hidden',t!==v);document.getElementById('tab-'+v)?.classList.toggle('active',t===v);});document.getElementById('view-export').classList.add('hidden');document.getElementById('view-scaffold').classList.add('hidden');if(t==='curriculum')renderCurriculum();if(t==='slides'){const fr=document.getElementById('slides-iframe');if(!fr.src||fr.src===window.location.href)fr.src='example-slides-review.html';if(activeId){const sendNav=()=>fr.contentWindow?.postMessage({type:'selectNugget',nuggetId:Number(activeId)},'*');if(fr.contentDocument?.readyState==='complete')sendNav();else fr.addEventListener('load',sendNav,{once:true});}}}
 function switchView(v){['builder','curriculum'].forEach(vv=>document.getElementById('view-'+vv).classList.add('hidden'));document.getElementById('view-export').classList.toggle('hidden',v!=='export');document.getElementById('view-scaffold').classList.toggle('hidden',v!=='scaffold');['builder','curriculum'].forEach(t=>document.getElementById('tab-'+t).classList.remove('active'));if(v==='export')renderExportView();if(v==='scaffold')renderScaffoldView();}
 
 /* ── Sidebar ── */
@@ -1415,7 +1415,7 @@ function updateStats(){
 
 /* ── Nugget detail ── */
 async function selectNugget(id){
-  activeId=id;if(activeTab!=='builder')switchTab('builder');
+  activeId=id;if(activeTab!=='builder'&&activeTab!=='slides')switchTab('builder');
   closeTool();renderSidebar();
   // Only load from file if there is no local data for this nugget yet.
   // Once a nugget has been opened (questions or a non-default status exist in
@@ -1440,6 +1440,10 @@ async function selectNugget(id){
   document.getElementById('nd-title').textContent=nuggetDisplayName(id);
   document.getElementById('nd-obj').textContent=n.obj;
   renderWorkflow();renderQuestions();
+  if(activeTab==='slides'){
+    const fr=document.getElementById('slides-iframe');
+    fr?.contentWindow?.postMessage({type:'selectNugget',nuggetId:Number(id)},'*');
+  }
 }
 async function refreshNugget(){
   if(!activeId)return;
