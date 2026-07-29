@@ -380,6 +380,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 <div class="tabs">
   <button class="tab active" id="tab-builder" onclick="switchTab('builder')">📓 Builder</button>
   <button class="tab" id="tab-curriculum" onclick="switchTab('curriculum')">🗺 Curriculum mapping</button>
+  <button class="tab" id="tab-slides" onclick="switchTab('slides')">🖼 Slide review</button>
 </div>
 
 <div class="app">
@@ -526,6 +527,10 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 
     <div class="view hidden" id="view-curriculum">
       <div class="cm-wrap" id="cm-wrap"></div>
+    </div>
+
+    <div class="view hidden" id="view-slides">
+      <iframe id="slides-iframe" src="" style="width:100%;height:100%;border:none;display:block"></iframe>
     </div>
 
     <div class="view hidden" id="view-export">
@@ -1332,7 +1337,7 @@ function save(){
 function loadStorage(){try{const d=localStorage.getItem(STORE);if(d){_statusHadLocalState=true;applyState(JSON.parse(d));}else nextQId=SEED_NEXT;}catch(e){}}
 
 /* ── Tab / view switching ── */
-function switchTab(t){activeTab=t;['builder','curriculum'].forEach(v=>{document.getElementById('view-'+v).classList.toggle('hidden',t!==v);document.getElementById('tab-'+v).classList.toggle('active',t===v);});document.getElementById('view-export').classList.add('hidden');document.getElementById('view-scaffold').classList.add('hidden');if(t==='curriculum')renderCurriculum();}
+function switchTab(t){activeTab=t;['builder','curriculum','slides'].forEach(v=>{document.getElementById('view-'+v)?.classList.toggle('hidden',t!==v);document.getElementById('tab-'+v)?.classList.toggle('active',t===v);});document.getElementById('view-export').classList.add('hidden');document.getElementById('view-scaffold').classList.add('hidden');if(t==='curriculum')renderCurriculum();if(t==='slides'){const fr=document.getElementById('slides-iframe');if(!fr.src||fr.src===window.location.href)fr.src='example-slides-review.html';}}
 function switchView(v){['builder','curriculum'].forEach(vv=>document.getElementById('view-'+vv).classList.add('hidden'));document.getElementById('view-export').classList.toggle('hidden',v!=='export');document.getElementById('view-scaffold').classList.toggle('hidden',v!=='scaffold');['builder','curriculum'].forEach(t=>document.getElementById('tab-'+t).classList.remove('active'));if(v==='export')renderExportView();if(v==='scaffold')renderScaffoldView();}
 
 /* ── Sidebar ── */
@@ -1705,7 +1710,7 @@ function renderExampleCard(nid){
   }
   const pseudoQ={visualType:vtype,cfg,imagePath:ex.imagePath||'',image:''};
   const explText=(ex.explanation||[]).join('\n');
-  return `<div class="q-card example-card${editingExample?' editing':''}" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div class="q-card-actions" style="margin-left:auto"><a class="example-view-btn" href="example-slides-review.html" target="_blank" title="Open slide reviewer">View slides ↗</a><button class="q-edit-btn" onclick="editExample()" title="Edit example">✏</button><button class="q-del-btn" onclick="clearExampleCard()" title="Clear example">✕</button></div></div>${renderQVisual(pseudoQ)}<div class="q-body"><div class="q-text">${esc(textVal)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(String(ansVal))}</div></div><div class="q-qa"><div class="q-qa-lbl">📝 Explanation (one per line)</div><textarea class="q-qa-ta" rows="2" placeholder="e.g. Count on to find out: 3, 4, 5…" onchange="saveExampleExplanation(this.value)">${esc(explText)}</textarea></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveExampleQA(this.value)">${esc(ex.qaComment||'')}</textarea></div></div>`;
+  return `<div class="q-card example-card${editingExample?' editing':''}" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div class="q-card-actions" style="margin-left:auto"><button class="example-view-btn" onclick="switchTab('slides')" title="Open slide reviewer">View slides ↗</button><button class="q-edit-btn" onclick="editExample()" title="Edit example">✏</button><button class="q-del-btn" onclick="clearExampleCard()" title="Clear example">✕</button></div></div>${renderQVisual(pseudoQ)}<div class="q-body"><div class="q-text">${esc(textVal)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(String(ansVal))}</div></div><div class="q-qa"><div class="q-qa-lbl">📝 Explanation (one per line)</div><textarea class="q-qa-ta" rows="2" placeholder="e.g. Count on to find out: 3, 4, 5…" onchange="saveExampleExplanation(this.value)">${esc(explText)}</textarea></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveExampleQA(this.value)">${esc(ex.qaComment||'')}</textarea></div></div>`;
 }
 function clearExampleCard(){
   if(!activeId)return;
