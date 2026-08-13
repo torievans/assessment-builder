@@ -4,44 +4,6 @@
   "nextQId": 319021,
   "questions": [
     {
-      "id": 319018,
-      "text": "ad",
-      "answer": "ad",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nt",
-      "cfg": {
-        "sequence": "1,2,3,?,5",
-        "shape": "square",
-        "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 2
-      },
-      "updatedAt": "2026-07-29",
-      "createdAt": "2026-07-29"
-    },
-    {
-      "id": 319019,
-      "text": "ad",
-      "answer": "ad",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nt",
-      "cfg": {
-        "sequence": "1,2,3",
-        "shape": "square",
-        "layout": "straight",
-        "colourMode": "full",
-        "colourOffset": 3
-      },
-      "updatedAt": "2026-07-29",
-      "createdAt": "2026-07-29"
-    },
-    {
       "id": 319020,
       "text": "ad",
       "answer": "5",
