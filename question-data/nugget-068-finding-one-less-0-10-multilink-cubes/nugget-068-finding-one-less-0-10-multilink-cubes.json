@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 319069,
-      "text": "Count the number of cubes, then find *one less*.",
+      "text": "Count the number of cubes, then find **one less**.",
       "answer": "2",
       "type": "exact",
       "image": "",
@@ -39,7 +39,7 @@
     },
     {
       "id": 319070,
-      "text": "Count the number of cubes, then find *one less*.",
+      "text": "Count the number of cubes, then find **one less**.",
       "answer": "5",
       "type": "exact",
       "image": "",
@@ -73,7 +73,7 @@
     },
     {
       "id": 319071,
-      "text": "Count the number of cubes, then find *one less*.",
+      "text": "Count the number of cubes, then find **one less**.",
       "answer": "7",
       "type": "exact",
       "image": "",
@@ -107,7 +107,7 @@
     },
     {
       "id": 319072,
-      "text": "Count the number of cubes, then find *one less*.",
+      "text": "Count the number of cubes, then find **one less**.",
       "answer": "4",
       "type": "exact",
       "image": "",
@@ -141,7 +141,7 @@
     },
     {
       "id": 319073,
-      "text": "Count the number of cubes, then find *one less*.",
+      "text": "Count the number of cubes, then find **one less**.",
       "answer": "9",
       "type": "exact",
       "image": "",
