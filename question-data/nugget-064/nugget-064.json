@@ -1,24 +1,25 @@
 {
   "nuggetId": 64,
   "status": "in-progress",
-  "nextQId": 319060,
+  "nextQId": 319099,
   "questions": [
     {
       "id": 319049,
-      "text": "What is one more than 5?",
-      "answer": "6",
+      "text": "What is one more than 15?",
+      "answer": "16",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "one more than 5",
-        "wbBorder": "#319377",
+        "wbText": "one more than 15",
+        "wbBorder": "#D46B55",
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319050,
@@ -31,8 +32,8 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 13",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#7898F0",
+        "wbSkin": "#6b3520"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
@@ -48,8 +49,8 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 17",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
@@ -65,7 +66,7 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 3",
-        "wbBorder": "#319377",
+        "wbBorder": "#FC7E91",
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
@@ -82,8 +83,8 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 19",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#AAAAAA",
+        "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
