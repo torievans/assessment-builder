@@ -88,11 +88,5 @@
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
     }
-  ],
-  "exampleOverride": {
-    "cfg": {},
-    "visualType": "custom",
-    "answer": "12",
-    "text": "What is **one more** than 11?"
-  }
+  ]
 }
