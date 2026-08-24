@@ -2407,7 +2407,7 @@ function customDrop(e){e.preventDefault();document.getElementById('custom-drop-z
 function editQuestion(qid){
   if(!activeId)return;
   const q=nuggetState[activeId].questions.find(q=>q.id===qid);if(!q)return;
-  const type=q.visualType==='text'?'text':q.visualType; // nl | bm | text | custom | nt
+  const type=q.visualType==='text'?'text':(q.visualType==='wb'?'custom':q.visualType); // nl | bm | text | custom | nt | wb→custom
   // Open the correct tool panel without resetting fields
   if(activeTool&&activeTool!==type)closeTool();
   if(activeTool!==type){
@@ -2446,11 +2446,21 @@ function editQuestion(qid){
   } else if(type==='custom'){
     document.getElementById('custom-q-text').value=q.text;
     document.getElementById('custom-answer').value=q.answer||'';
-    customResetImage();
-    // Show a placeholder so the user knows an image already exists
-    if(q.imagePath){
-      const inner=document.getElementById('custom-drop-inner');
-      inner.innerHTML=`<div class="drop-icon">🖼</div><p style="font-size:12px;color:var(--muted)">Existing image kept — drop a new one to replace</p>`;
+    if(q.visualType==='wb'){
+      customWBBorderColour=(q.cfg||{}).wbBorder||'#319377';
+      customWBSkinColour=(q.cfg||{}).wbSkin||'#ffa99c';
+      const wbt=document.getElementById('custom-wb-text');
+      if(wbt)wbt.value=(q.cfg||{}).wbText||'';
+      setCustomMode('whiteboard');
+      initCustomWBSwatches();
+    } else {
+      customResetImage();
+      setCustomMode('upload');
+      initCustomWBSwatches();
+      if(q.imagePath){
+        const inner=document.getElementById('custom-drop-inner');
+        inner.innerHTML=`<div class="drop-icon">🖼</div><p style="font-size:12px;color:var(--muted)">Existing image kept — drop a new one to replace</p>`;
+      }
     }
   }
   editingQId=qid;
