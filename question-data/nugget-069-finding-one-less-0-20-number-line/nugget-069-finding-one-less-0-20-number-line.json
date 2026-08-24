@@ -112,7 +112,7 @@
         "answer": "12",
         "lineStyle": "terminate",
         "colour": "red",
-        "answerCircle": 3,
+        "answerCircle": 13,
         "revealAnswer": true
       },
       "updatedAt": "2026-08-24",
