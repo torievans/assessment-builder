@@ -57,20 +57,21 @@
     },
     {
       "id": 319052,
-      "text": "What is one more than 3?",
-      "answer": "4",
+      "text": "What is one more than 15?",
+      "answer": "16",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "one more than 3",
+        "wbText": "one more than 15",
         "wbBorder": "#FC7E91",
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319053,
