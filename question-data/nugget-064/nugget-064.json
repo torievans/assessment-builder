@@ -41,7 +41,7 @@
     },
     {
       "id": 319051,
-      "text": "What is one more than 17?",
+      "text": "What is **one more** than 17?",
       "answer": "18",
       "type": "exact",
       "image": "",
@@ -54,7 +54,8 @@
         "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319052,
