@@ -98,7 +98,7 @@
     {
       "id": 319043,
       "text": "What is one more than 2?",
-      "answer": "3",
+      "answer": "18",
       "type": "exact",
       "image": "",
       "display": "",
@@ -109,10 +109,10 @@
         "end": 20,
         "partitions": 20,
         "valuesGivenEvery": null,
-        "answer": "3",
+        "answer": "18",
         "lineStyle": "terminate",
         "colour": "purple",
-        "answerCircle": 2,
+        "answerCircle": 17,
         "revealAnswer": true
       },
       "updatedAt": "2026-08-24",
