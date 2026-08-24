@@ -73,29 +73,6 @@
       "createdAt": "2026-08-24"
     },
     {
-      "id": 319128,
-      "text": "What is **one more** than 82?",
-      "answer": "83",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nl",
-      "cfg": {
-        "start": 80,
-        "end": 90,
-        "partitions": 10,
-        "valuesGivenEvery": null,
-        "answer": "83",
-        "lineStyle": "through",
-        "colour": "green",
-        "answerCircle": 82,
-        "revealAnswer": true
-      },
-      "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
-    },
-    {
       "id": 319127,
       "text": "What is **one less** than 67?",
       "answer": "66",
@@ -113,6 +90,29 @@
         "lineStyle": "through",
         "colour": "green",
         "answerCircle": 67,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319128,
+      "text": "What is **one more** than 82?",
+      "answer": "83",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 80,
+        "end": 90,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "83",
+        "lineStyle": "through",
+        "colour": "green",
+        "answerCircle": 82,
         "revealAnswer": true
       },
       "updatedAt": "2026-08-24",
