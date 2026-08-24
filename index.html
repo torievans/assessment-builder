@@ -1751,8 +1751,8 @@ function setCustomMode(mode){
   customWBMode=(mode==='whiteboard');
   document.getElementById('custom-mode-upload')?.classList.toggle('active',!customWBMode);
   document.getElementById('custom-mode-wb')?.classList.toggle('active',customWBMode);
-  document.getElementById('custom-upload-section').style.display=customWBMode?'none':'';
-  document.getElementById('custom-wb-section').style.display=customWBMode?'':'none';
+  const ups=document.getElementById('custom-upload-section');if(ups)ups.style.display=customWBMode?'none':'';
+  const wbs=document.getElementById('custom-wb-section');if(wbs)wbs.style.display=customWBMode?'':'none';
   if(customWBMode)initCustomWBSwatches();
 }
 
