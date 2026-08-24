@@ -1,7 +1,7 @@
 {
   "nuggetId": 71,
   "status": "in-progress",
-  "nextQId": 319089,
+  "nextQId": 319099,
   "questions": [
     {
       "id": 319084,
@@ -91,12 +91,12 @@
   ],
   "exampleOverride": {
     "cfg": {
-      "wbText": "one less than 2",
+      "wbText": "one less than 12",
       "wbBorder": "#319377",
       "wbSkin": "#b06530"
     },
     "visualType": "wb",
-    "answer": "1",
-    "text": "What is one less than 2?"
+    "answer": "11",
+    "text": "What is one less than 12?"
   }
 }
