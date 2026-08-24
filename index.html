@@ -1157,6 +1157,16 @@ async function loadStatusMap(){
     } else if(ns.status==='not-started'&&(!ns.questions||!ns.questions.length)){
       // Local state exists: only seed nuggets with no local data
       nuggetState[nid].status=status;changed=true;
+    } else if(status==='uploaded-to-cms'||ns.status==='uploaded-to-cms'){
+      // status.json is always authoritative for uploaded-to-cms (sets and clears it)
+      nuggetState[nid].status=status;changed=true;
+    }
+  });
+  // Clear uploaded-to-cms from any nugget not present in the status map
+  Object.keys(nuggetState).forEach(id=>{
+    const nid=parseInt(id);
+    if(nuggetState[nid].status==='uploaded-to-cms'&&map[id]===undefined){
+      nuggetState[nid].status='ready-for-qti';changed=true;
     }
   });
   if(changed){save();renderSidebar();}
