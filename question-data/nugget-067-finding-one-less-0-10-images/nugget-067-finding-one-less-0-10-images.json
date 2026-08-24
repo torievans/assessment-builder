@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 319064,
-      "text": "Count the number of apples, then **take one away.**",
+      "text": "Count the number of lemons, then find **one less.**",
       "answer": "3",
       "type": "exact",
       "image": "",
@@ -36,7 +36,7 @@
     },
     {
       "id": 319065,
-      "text": "Count the number of giraffes, then **take one away.**",
+      "text": "Count the number of lemons, then find **one less.**",
       "answer": "6",
       "type": "exact",
       "image": "",
@@ -67,7 +67,7 @@
     },
     {
       "id": 319066,
-      "text": "Count the number of carrots, then **take one away.**",
+      "text": "Count the number of lemons, then find **one less.**",
       "answer": "4",
       "type": "exact",
       "image": "",
@@ -98,7 +98,7 @@
     },
     {
       "id": 319067,
-      "text": "Count the number of moons, then **take one away.**",
+      "text": "Count the number of lemons, then find **one less.**",
       "answer": "1",
       "type": "exact",
       "image": "",
@@ -129,7 +129,7 @@
     },
     {
       "id": 319068,
-      "text": "Count the number of flamingos, then **take one away.**",
+      "text": "Count the number of lemons, then find **one less.**",
       "answer": "8",
       "type": "exact",
       "image": "",
