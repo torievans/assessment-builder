@@ -45,7 +45,9 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .stat.af{background:rgba(255,255,255,.09)}
 .stat-n{font-size:17px;font-weight:700;line-height:1;margin-bottom:2px}
 .stat-l{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.35)}
-.s-ns .stat-n{color:#9CA3AF}.s-ip .stat-n{color:#F59E0B}.s-qa .stat-n{color:#60A5FA}.s-rd .stat-n{color:#34D399}.s-up .stat-n{color:#2DD4BF}
+.s-ns .stat-n{color:#9CA3AF}
+.bold-live-preview{display:none;font-size:12px;color:rgba(255,255,255,.55);margin-top:4px;padding:4px 8px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid rgba(255,255,255,.12);line-height:1.4}
+.bold-live-preview strong{color:#fff;font-weight:600}.s-ip .stat-n{color:#F59E0B}.s-qa .stat-n{color:#60A5FA}.s-rd .stat-n{color:#34D399}.s-up .stat-n{color:#2DD4BF}
 .sb-srch{padding:8px;border-bottom:1px solid rgba(255,255,255,.04);flex-shrink:0}
 .sb-srch input{width:100%;padding:5px 10px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.07);border-radius:6px;color:rgba(255,255,255,.8);font-size:12.5px;font-family:var(--font)}
 .sb-srch input::placeholder{color:rgba(255,255,255,.22)}
@@ -2640,6 +2642,22 @@ document.querySelector('#tool-panel-pv .form-card').innerHTML = pvPanelHTML();
 document.querySelector('#tool-panel-pr .form-card').innerHTML = prPanelHTML();
 initState();loadStorage();loadPanel();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();loadStatusMap().then(()=>saveStatusMap());loadPanelMap().then(()=>{if(_panelHadLocalState)savePanelMap();});
 document.getElementById('qabot-modal-body').addEventListener('click',e=>{const b=e.target.closest('[data-accept]');if(b)qaAcceptIssue(b.getAttribute('data-accept'));});
+
+// Live bold preview under question text inputs
+document.addEventListener('input',function(e){
+  const el=e.target;
+  if(!el||el.tagName!=='INPUT'||!el.id||!/-text$/.test(el.id))return;
+  const val=el.value||'';
+  const hasBold=/\*\*[^*\n]+\*\*/.test(val);
+  let preview=el.parentElement&&el.parentElement.querySelector('.bold-live-preview');
+  if(hasBold){
+    if(!preview){preview=document.createElement('div');preview.className='bold-live-preview';el.parentElement.appendChild(preview);}
+    preview.innerHTML=renderBold(val);
+    preview.style.display='block';
+  } else if(preview){
+    preview.style.display='none';
+  }
+});
 
 // Ctrl+B / Cmd+B bold shortcut for question text inputs
 document.addEventListener('keydown',function(e){
