@@ -1683,7 +1683,7 @@ function renderQABotModal(flagged,total){
       }).join('');
       html+=`<div data-qacard style="background:${bg};border:1px solid ${bd};border-radius:10px;padding:12px 14px;margin-bottom:10px;transition:background .3s,border-color .3s">
         <div style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Q${num}</div>
-        <div style="font-size:13.5px;color:#1A1A2E;margin-bottom:8px;line-height:1.4;font-weight:500">${esc(q.text)||'<em style="color:#9CA3AF">(empty)</em>'}</div>
+        <div style="font-size:13.5px;color:#1A1A2E;margin-bottom:8px;line-height:1.4;font-weight:500">${renderBold(q.text)||'<em style="color:#9CA3AF">(empty)</em>'}</div>
         ${rows}</div>`;
     });
   }
@@ -1738,7 +1738,7 @@ function renderExampleCard(nid){
   }
   const pseudoQ={visualType:vtype,cfg,imagePath:ex.imagePath||'',image:''};
   const explText=(ex.explanation||[]).join('\n');
-  return `<div class="q-card example-card${editingExample?' editing':''}" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div class="q-card-actions" style="margin-left:auto"><button class="example-view-btn" onclick="switchTab('slides')" title="Open slide reviewer">View slides ↗</button><button class="q-edit-btn" onclick="editExample()" title="Edit example">✏</button><button class="q-del-btn" onclick="clearExampleCard()" title="Clear example">✕</button></div></div>${renderQVisual(pseudoQ)}<div class="q-body"><div class="q-text">${esc(textVal)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(String(ansVal))}</div></div><div class="q-qa"><div class="q-qa-lbl">📝 Explanation (one per line)</div><textarea class="q-qa-ta" rows="2" placeholder="e.g. Count on to find out: 3, 4, 5…" onchange="saveExampleExplanation(this.value)">${esc(explText)}</textarea></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveExampleQA(this.value)">${esc(ex.qaComment||'')}</textarea></div></div>`;
+  return `<div class="q-card example-card${editingExample?' editing':''}" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div class="q-card-actions" style="margin-left:auto"><button class="example-view-btn" onclick="switchTab('slides')" title="Open slide reviewer">View slides ↗</button><button class="q-edit-btn" onclick="editExample()" title="Edit example">✏</button><button class="q-del-btn" onclick="clearExampleCard()" title="Clear example">✕</button></div></div>${renderQVisual(pseudoQ)}<div class="q-body"><div class="q-text">${renderBold(textVal)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(String(ansVal))}</div></div><div class="q-qa"><div class="q-qa-lbl">📝 Explanation (one per line)</div><textarea class="q-qa-ta" rows="2" placeholder="e.g. Count on to find out: 3, 4, 5…" onchange="saveExampleExplanation(this.value)">${esc(explText)}</textarea></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveExampleQA(this.value)">${esc(ex.qaComment||'')}</textarea></div></div>`;
 }
 function clearExampleCard(){
   if(!activeId)return;
@@ -1784,7 +1784,7 @@ function renderQuestions(){
   const hdr=hasNT?`<div style="grid-column:1/-1;display:flex;justify-content:flex-end;margin-bottom:4px"><button class="wfbtn wfbtn-ghost" style="font-size:11px;padding:3px 10px" onclick="resequenceNTColours()" title="Assign a different starting colour to each number track question">🎨 Vary track colours</button></div>`:'';
   updateToolBtns();
   el.innerHTML=exHtml+hdr+qs.map((q,i)=>{
-    return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}" ondragover="dndOver(event,${q.id})" ondragleave="dndLeave(event)" ondrop="dndDrop(event,${q.id})"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions">${qHasImage(q)?'<button class="q-dl-btn" onclick="downloadQuestionImage('+q.id+')" title="Download image">⬇</button>':''}<button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button><div class="q-drag-handle" draggable="true" ondragstart="dndStart(event,${q.id})" ondragend="dndEnd(event)" title="Drag to reorder">⠿</div></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
+    return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}" ondragover="dndOver(event,${q.id})" ondragleave="dndLeave(event)" ondrop="dndDrop(event,${q.id})"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions">${qHasImage(q)?'<button class="q-dl-btn" onclick="downloadQuestionImage('+q.id+')" title="Download image">⬇</button>':''}<button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button><div class="q-drag-handle" draggable="true" ondragstart="dndStart(event,${q.id})" ondragend="dndEnd(event)" title="Drag to reorder">⠿</div></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${renderBold(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
   }).join('');
 }
 function saveQA(qid,val){if(!activeId)return;const q=nuggetState[activeId].questions.find(q=>q.id===qid);if(q){q.qaComment=val;save();}}
@@ -2018,6 +2018,7 @@ function renderExportView(){
 function updateExCount(){const total=document.querySelectorAll('.ex-cb').length,sel=document.querySelectorAll('.ex-cb:checked').length;const el=document.getElementById('ex-count');if(el)el.textContent=sel+' of '+total+' selected';}
 function selectAllEx(v){document.querySelectorAll('.ex-cb').forEach(c=>c.checked=v);updateExCount();}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function renderBold(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\*\*([^*\n]+)\*\*/g,'<strong>$1</strong>');}
 function qtiXML(q,imgFile,nuggetTitle,qNum){
   const rid=`RESPONSE-${10000+q.id}`;
   const title=`${nuggetTitle} - Q${String(qNum).padStart(2,'0')}`;
@@ -2639,6 +2640,26 @@ document.querySelector('#tool-panel-pv .form-card').innerHTML = pvPanelHTML();
 document.querySelector('#tool-panel-pr .form-card').innerHTML = prPanelHTML();
 initState();loadStorage();loadPanel();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();loadStatusMap().then(()=>saveStatusMap());loadPanelMap().then(()=>{if(_panelHadLocalState)savePanelMap();});
 document.getElementById('qabot-modal-body').addEventListener('click',e=>{const b=e.target.closest('[data-accept]');if(b)qaAcceptIssue(b.getAttribute('data-accept'));});
+
+// Ctrl+B / Cmd+B bold shortcut for question text inputs
+document.addEventListener('keydown',function(e){
+  if((e.ctrlKey||e.metaKey)&&e.key==='b'){
+    const el=document.activeElement;
+    if(el&&(el.tagName==='INPUT'||el.tagName==='TEXTAREA')&&!el.readOnly&&!el.disabled){
+      e.preventDefault();
+      const s=el.selectionStart,end=el.selectionEnd,v=el.value,sel=v.slice(s,end);
+      if(sel.length){
+        el.value=v.slice(0,s)+'**'+sel+'**'+v.slice(end);
+        el.selectionStart=el.selectionEnd=end+4;
+      } else {
+        el.value=v.slice(0,s)+'****'+v.slice(end);
+        el.selectionStart=el.selectionEnd=s+2;
+      }
+      el.dispatchEvent(new Event('input',{bubbles:true}));
+      el.dispatchEvent(new Event('change',{bubbles:true}));
+    }
+  }
+});
 </script>
 </body>
 </html>
