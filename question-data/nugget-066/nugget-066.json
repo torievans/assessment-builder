@@ -1,8 +1,94 @@
 {
   "nuggetId": 66,
   "status": "in-progress",
-  "nextQId": 319029,
-  "questions": [],
+  "nextQId": 319064,
+  "questions": [
+    {
+      "id": 319059,
+      "text": "What is one more than 24?",
+      "answer": "25",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one more than 24",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319060,
+      "text": "What is one more than 49?",
+      "answer": "50",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one more than 49",
+        "wbBorder": "#D46B55",
+        "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319061,
+      "text": "What is one more than 63?",
+      "answer": "64",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one more than 63",
+        "wbBorder": "#7898F0",
+        "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319062,
+      "text": "What is one more than 75?",
+      "answer": "76",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one more than 75",
+        "wbBorder": "#F5995B",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319063,
+      "text": "What is one more than 91?",
+      "answer": "92",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one more than 91",
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#b06530"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "wbText": "one more than 37",
