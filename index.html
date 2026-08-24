@@ -1171,6 +1171,17 @@ async function loadStatusMap(){
       nuggetState[nid].status=(ns2.questions&&ns2.questions.length>0)?'in-progress':'not-started';changed=true;
     }
   });
+  // One-time versioned reset: clear any ready-for-qti that was set by bulk operations
+  const resetKey='statusReset_'+(map._reset||'v1');
+  if(map._reset&&!localStorage.getItem(resetKey)){
+    Object.keys(nuggetState).forEach(id=>{
+      const nid=parseInt(id);
+      if(nuggetState[nid]&&nuggetState[nid].status==='ready-for-qti'){
+        nuggetState[nid].status='not-started';changed=true;
+      }
+    });
+    localStorage.setItem(resetKey,'1');
+  }
   if(changed){save();renderSidebar();}
 }
 async function saveNuggetToFile(nid){
