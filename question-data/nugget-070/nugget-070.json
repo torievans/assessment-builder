@@ -1,0 +1,102 @@
+{
+  "nuggetId": 70,
+  "status": "in-progress",
+  "nextQId": 319084,
+  "questions": [
+    {
+      "id": 319079,
+      "text": "What is** one less** than 3?",
+      "answer": "2",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 3",
+        "wbBorder": "#319377",
+        "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319080,
+      "text": "What is** one less** than 7?",
+      "answer": "6",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 7",
+        "wbBorder": "#D46B55",
+        "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319081,
+      "text": "What is** one less** than 1?",
+      "answer": "0",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 1",
+        "wbBorder": "#7898F0",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319082,
+      "text": "What is** one less** than 9?",
+      "answer": "8",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 9",
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319083,
+      "text": "What is** one less** than 5?",
+      "answer": "4",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 5",
+        "wbBorder": "#847AC9",
+        "wbSkin": "#b06530"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    }
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "one less than 4",
+      "wbBorder": "#319377",
+      "wbSkin": "#ffa99c"
+    },
+    "visualType": "wb",
+    "answer": "3",
+    "text": "What is** one less** than 4?"
+  }
+}
