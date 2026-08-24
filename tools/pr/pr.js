@@ -100,6 +100,7 @@ const PR_IMAGE_BANK = [
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let pr_mode         = 'count';
+let pr_groupSize    = 1;
 let pr_display      = 'array';    // 'array' | 'frame' | 'clustered'
 let pr_align        = 'left';     // 'left' | 'centre'  (array only)
 let pr_countA       = 7;
@@ -444,6 +445,16 @@ function prPanelHTML() {
             <button class="tog-btn" onclick="prDelta('A',1)"  style="width:30px;height:30px;padding:0">+</button>
           </div>
         </div>
+        <div class="field" id="pr-group-size-field" style="display:none">
+          <label>Group size</label>
+          <div style="display:flex;align-items:center;gap:4px">
+            <button class="tog-btn" onclick="prDeltaGroup(-1)" style="width:30px;height:30px;padding:0">−</button>
+            <input type="number" id="pr-group-size" min="1" max="10" value="1"
+              style="width:52px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:4px;font-size:14px;font-family:var(--font)"
+              oninput="pr_groupSize=prClamp(+this.value,1,10);prUpdateMode();autoPreviewPR()">
+            <button class="tog-btn" onclick="prDeltaGroup(1)"  style="width:30px;height:30px;padding:0">+</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -612,7 +623,9 @@ function prUpdateMode() {
   show('pr-layout-row',     !isMultiply);
   show('pr-bank-group-sel', isAddSub);
   const isArray = pr_display === 'array' && !isMultiply;
-  show('pr-cols-field',  isArray);
+  // Show cols (per-row) only when not grouped; show group-size only in count+array mode
+  show('pr-cols-field',       isArray && !(pr_mode === 'count' && pr_groupSize > 1));
+  show('pr-group-size-field', isArray && pr_mode === 'count');
   show('pr-align-field', !isMultiply);
   // Show outline toggle whenever any illustration is in use or selected in bank
   const hasIllus = pr_imageA.startsWith('illus:') || pr_imageB.startsWith('illus:')
@@ -627,7 +640,8 @@ function prSetDisplay(btn) {
     b.classList.toggle('active', b.dataset.prd === pr_display));
   const isArray = pr_display === 'array' && pr_mode !== 'multiply';
   const showEl = (id, v) => { const e = document.getElementById(id); if (e) e.style.display = v ? '' : 'none'; };
-  showEl('pr-cols-field',  isArray);
+  showEl('pr-cols-field',       isArray && !(pr_mode === 'count' && pr_groupSize > 1));
+  showEl('pr-group-size-field', isArray && pr_mode === 'count');
   showEl('pr-align-field', pr_mode !== 'multiply');
   autoPreviewPR();
 }
@@ -700,6 +714,13 @@ function prDeltaCols(d) {
   autoPreviewPR();
 }
 
+function prDeltaGroup(d) {
+  pr_groupSize = prClamp(pr_groupSize + d, 1, 10);
+  const e = document.getElementById('pr-group-size'); if (e) e.value = pr_groupSize;
+  prUpdateMode();
+  autoPreviewPR();
+}
+
 function prComputeAnswer() {
   if (pr_mode === 'count') return pr_countA;
   if (pr_mode === 'multiply') return pr_mrows * pr_mcols;
@@ -749,6 +770,7 @@ function getPRConfig() {
     mcols:        pr_mcols,
     illusOutline: pr_illusOutline,
     imgScale:     pr_imgScale,
+    groupSize:    pr_groupSize,
     numA:         pr_numA,
     numB:         pr_numB,
     showEq:       pr_showEq,
@@ -771,6 +793,7 @@ function restorePRConfig(cfg) {
   pr_mcols        = cfg.mcols        || 5;
   pr_illusOutline = cfg.illusOutline !== false;
   pr_imgScale     = cfg.imgScale ?? 1.0;
+  pr_groupSize    = cfg.groupSize    || 1;
   pr_numA         = !!cfg.numA;
   pr_numB         = !!cfg.numB;
   pr_showEq       = !!cfg.showEq;
@@ -784,6 +807,7 @@ function restorePRConfig(cfg) {
   sv('pr-addsub-cb', pr_countB);
   sv('pr-mrows', pr_mrows);     sv('pr-mcols', pr_mcols);
   sv('pr-cols-in', pr_cols);
+  sv('pr-group-size', pr_groupSize);
   sv('pr-img-scale', pr_imgScale);
   const scaleVal = document.getElementById('pr-img-scale-val');
   if (scaleVal) scaleVal.textContent = Math.round(pr_imgScale * 100) + '%';
@@ -812,6 +836,7 @@ function prResetState() {
   pr_op = 'add'; pr_subMode = 'crossed';
   pr_cols = 5; pr_mrows = 2; pr_mcols = 5;
   pr_illusOutline = true;
+  pr_groupSize = 1;
   pr_numA = false; pr_numB = false; pr_showEq = false;
   pr_bankA = 'illus'; pr_bankB = 'illus'; pr_bankGroupSel = 'A';
   pr_counterA = {s:0, f:0, c:0}; pr_counterB = {s:1, f:2, c:3};
@@ -831,6 +856,7 @@ function pictorialSVG(cfg) {
     mrows       = 2,  mcols = 5,
     illusOutline = true,
     imgScale = 1.0,
+    groupSize = 1,
     numA    = false,
     numB    = false,
     showEq  = false,
@@ -1005,6 +1031,23 @@ function pictorialSVG(cfg) {
     }
   }
 
+  // ── Render items in groups with visual gap between each group ────────────
+  // Group gap = one item-slot (S), so groupStep = (groupSize+1)*S - GAP
+  function renderGroupedCount(total, groupSz, img, ox, oy, parts) {
+    const numGroups = Math.ceil(total / groupSz);
+    const groupStep = (groupSz + 1) * S - GAP;
+    let totalW = 0;
+    for (let g = 0; g < numGroups; g++) {
+      const gx = ox + g * groupStep;
+      const inThisGroup = Math.min(groupSz, total - g * groupSz);
+      for (let k = 0; k < inThisGroup; k++) {
+        parts.push(renderItem(img, gx + k * S + R, oy + R));
+      }
+      totalW = gx - ox + inThisGroup * S - GAP;
+    }
+    return { w: totalW, h: S - GAP };
+  }
+
   // ── Render two groups side by side ────────────────────────────────────────
   function renderTwoGroups(parts, crossedB) {
     const OP_W = 54;
@@ -1080,7 +1123,9 @@ function pictorialSVG(cfg) {
   let svgW, svgH;
 
   if (mode === 'count') {
-    const {w, h} = renderGroup(countA, imgA, PAD, PAD, parts);
+    const {w, h} = groupSize > 1
+      ? renderGroupedCount(countA, groupSize, imgA, PAD, PAD, parts)
+      : renderGroup(countA, imgA, PAD, PAD, parts);
     svgW = w + PAD * 2; svgH = h + PAD * 2;
 
   } else if (mode === 'addsub') {
