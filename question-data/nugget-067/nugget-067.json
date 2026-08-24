@@ -5,8 +5,8 @@
   "questions": [
     {
       "id": 319064,
-      "text": "Count the number of lemons, then find **one less.**",
-      "answer": "4",
+      "text": "Count the number of rhinos, then find **one less.**",
+      "answer": "5",
       "type": "exact",
       "image": "",
       "display": "",
@@ -17,7 +17,7 @@
         "display": "array",
         "align": "left",
         "countA": 5,
-        "imageIdA": "illus:food/fruit/apple_green",
+        "imageIdA": "illus:animals/rhinoceros_grey",
         "countB": 3,
         "imageIdB": "illus:food/fruit/apple_green",
         "op": "add",
