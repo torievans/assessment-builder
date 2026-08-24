@@ -1431,7 +1431,7 @@ function renderSidebar(){
 }
 function updateStats(){
   const c={'not-started':0,'in-progress':0,'ready-for-qa':0,'ready-for-qti':0,'uploaded-to-cms':0};
-  NUGGETS.forEach(n=>{const s=nuggetState[n.id]?.status;if(c[s]!==undefined)c[s]++;});
+  NUGGETS.forEach(n=>{if(!panelIds.has(n.id))return;const s=nuggetState[n.id]?.status;if(c[s]!==undefined)c[s]++;});
   document.getElementById('sn-ns').textContent=c['not-started'];document.getElementById('sn-ip').textContent=c['in-progress'];document.getElementById('sn-qa').textContent=c['ready-for-qa'];document.getElementById('sn-rd').textContent=c['ready-for-qti'];document.getElementById('sn-up').textContent=c['uploaded-to-cms'];
   ['not-started','in-progress','ready-for-qa','ready-for-qti','uploaded-to-cms'].forEach((s,i)=>{const ids=['ns','ip','qa','rd','up'];document.getElementById('stat-'+ids[i]).classList.toggle('af',filter===s);});
   document.getElementById('upload-ctr').innerHTML=`<strong>${c['uploaded-to-cms']}</strong> of ${NUGGETS.length} uploaded`;
