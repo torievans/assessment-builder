@@ -1,7 +1,7 @@
 {
   "nuggetId": 64,
   "status": "in-progress",
-  "nextQId": 319059,
+  "nextQId": 319060,
   "questions": [
     {
       "id": 319049,
@@ -88,5 +88,15 @@
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "one more than 2",
+      "wbBorder": "#319377",
+      "wbSkin": "#b06530"
+    },
+    "visualType": "wb",
+    "answer": "3",
+    "text": "What is one more than 2?"
+  }
 }
