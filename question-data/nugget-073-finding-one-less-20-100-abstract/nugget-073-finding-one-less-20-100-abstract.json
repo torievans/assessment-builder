@@ -41,7 +41,7 @@
     },
     {
       "id": 319096,
-      "text": "What is one less than 72?",
+      "text": "What is **one less** than 72?",
       "answer": "71",
       "type": "exact",
       "image": "",
@@ -54,7 +54,8 @@
         "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319097,
