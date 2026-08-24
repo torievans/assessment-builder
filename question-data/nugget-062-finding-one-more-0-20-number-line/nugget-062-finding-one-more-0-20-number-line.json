@@ -1,0 +1,22 @@
+{
+  "nuggetId": 62,
+  "status": "in-progress",
+  "nextQId": 319024,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 20,
+      "partitions": 20,
+      "valuesGivenEvery": null,
+      "answer": "13",
+      "lineStyle": "terminate",
+      "colour": "red",
+      "answerCircle": 12,
+      "revealAnswer": true
+    },
+    "visualType": "nl",
+    "answer": "13",
+    "text": "*What is **one more** than 12?"
+  }
+}
