@@ -31,8 +31,8 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one less than 8",
-        "wbBorder": "#7986cb",
-        "wbSkin": "#ffe0b2"
+        "wbBorder": "#7898F0",
+        "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
@@ -48,8 +48,8 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 6",
-        "wbBorder": "#e57373",
-        "wbSkin": "#c8e6c9"
+        "wbBorder": "#D46B55",
+        "wbSkin": "#6b3520"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
@@ -65,8 +65,8 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one less than 2",
-        "wbBorder": "#ff8f00",
-        "wbSkin": "#b3e5fc"
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
@@ -82,8 +82,8 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 9",
-        "wbBorder": "#26c6da",
-        "wbSkin": "#f8bbd0"
+        "wbBorder": "#847AC9",
+        "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
@@ -92,8 +92,8 @@
   "exampleOverride": {
     "cfg": {
       "wbText": "one more than 4",
-      "wbBorder": "#319377",
-      "wbSkin": "#ffa99c"
+      "wbBorder": "#F5995B",
+      "wbSkin": "#d4895a"
     },
     "visualType": "wb",
     "answer": "5",
