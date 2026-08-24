@@ -59,7 +59,7 @@
     },
     {
       "id": 319097,
-      "text": "What is one less than 85?",
+      "text": "What is **one less** than 85?",
       "answer": "84",
       "type": "exact",
       "image": "",
@@ -72,7 +72,8 @@
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319098,
