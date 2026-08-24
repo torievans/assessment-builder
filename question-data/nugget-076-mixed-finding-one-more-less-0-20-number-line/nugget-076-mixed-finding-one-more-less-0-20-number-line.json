@@ -1,0 +1,138 @@
+{
+  "nuggetId": 76,
+  "status": "in-progress",
+  "nextQId": 319114,
+  "questions": [
+    {
+      "id": 319109,
+      "text": "What is **one more** than 13?",
+      "answer": "14",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "14",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": 13,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319110,
+      "text": "What is **one less** than 18?",
+      "answer": "17",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "17",
+        "lineStyle": "terminate",
+        "colour": "blue",
+        "answerCircle": 18,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319111,
+      "text": "What is **one more** than 11?",
+      "answer": "12",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "12",
+        "lineStyle": "terminate",
+        "colour": "purple",
+        "answerCircle": 11,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319112,
+      "text": "What is **one less** than 16?",
+      "answer": "15",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "15",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": 16,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319113,
+      "text": "What is **one more** than 19?",
+      "answer": "20",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "20",
+        "lineStyle": "terminate",
+        "colour": "blue",
+        "answerCircle": 19,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    }
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 20,
+      "partitions": 20,
+      "valuesGivenEvery": null,
+      "answer": "16",
+      "lineStyle": "terminate",
+      "colour": "green",
+      "answerCircle": 15,
+      "revealAnswer": true
+    },
+    "visualType": "nl",
+    "answer": "16",
+    "text": "What is **one more** than 15?"
+  }
+}
