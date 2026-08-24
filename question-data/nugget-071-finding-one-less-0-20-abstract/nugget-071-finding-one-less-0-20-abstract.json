@@ -57,20 +57,21 @@
     },
     {
       "id": 319087,
-      "text": "What is one less than 4?",
-      "answer": "3",
+      "text": "What is one less than 14?",
+      "answer": "13",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "one less than 4",
+        "wbText": "one less than 14",
         "wbBorder": "#847AC9",
         "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319088,
