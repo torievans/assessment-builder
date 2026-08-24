@@ -1,8 +1,124 @@
 {
   "nuggetId": 65,
-  "status": "in-progress",
-  "nextQId": 319028,
-  "questions": [],
+  "status": "ready-for-qa",
+  "nextQId": 319099,
+  "questions": [
+    {
+      "id": 319054,
+      "text": "What is one more than 24?",
+      "answer": "25",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 20,
+        "end": 30,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "25",
+        "lineStyle": "through",
+        "colour": "green",
+        "answerCircle": 24,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319055,
+      "text": "What is one more than 45?",
+      "answer": "46",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 40,
+        "end": 50,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "46",
+        "lineStyle": "through",
+        "colour": "green",
+        "answerCircle": 45,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319056,
+      "text": "What is one more than 53?",
+      "answer": "54",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 50,
+        "end": 60,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "54",
+        "lineStyle": "through",
+        "colour": "green",
+        "answerCircle": 53,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319057,
+      "text": "What is one more than 71?",
+      "answer": "72",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 70,
+        "end": 80,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "72",
+        "lineStyle": "through",
+        "colour": "green",
+        "answerCircle": 71,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319058,
+      "text": "What is one more than 86?",
+      "answer": "87",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 80,
+        "end": 90,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "87",
+        "lineStyle": "through",
+        "colour": "green",
+        "answerCircle": 86,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "start": 30,
