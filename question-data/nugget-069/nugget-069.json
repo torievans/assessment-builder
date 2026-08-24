@@ -1,12 +1,12 @@
 {
   "nuggetId": 69,
   "status": "in-progress",
-  "nextQId": 319079,
+  "nextQId": 319099,
   "questions": [
     {
       "id": 319074,
-      "text": "What is **one less** than 7?",
-      "answer": "6",
+      "text": "What is **one less** than 17?",
+      "answer": "16",
       "type": "exact",
       "image": "",
       "display": "",
@@ -17,7 +17,7 @@
         "end": 20,
         "partitions": 20,
         "valuesGivenEvery": null,
-        "answer": "6",
+        "answer": "16",
         "lineStyle": "terminate",
         "colour": "red",
         "answerCircle": 7,
