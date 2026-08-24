@@ -1,0 +1,102 @@
+{
+  "nuggetId": 78,
+  "status": "ready-for-qa",
+  "nextQId": 319134,
+  "questions": [
+    {
+      "id": 319119,
+      "text": "What is **one more** than 13?",
+      "answer": "14",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one more than 13",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319120,
+      "text": "What is **one less** than 17?",
+      "answer": "16",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 17",
+        "wbBorder": "#7898F0",
+        "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319121,
+      "text": "What is **one more** than 11?",
+      "answer": "12",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one more than 11",
+        "wbBorder": "#D46B55",
+        "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319122,
+      "text": "What is **one less** than 20?",
+      "answer": "19",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 20",
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319123,
+      "text": "What is **one more** than 14?",
+      "answer": "15",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one more than 14",
+        "wbBorder": "#847AC9",
+        "wbSkin": "#b06530"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    }
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "one more than 15",
+      "wbBorder": "#F5995B",
+      "wbSkin": "#d4895a"
+    },
+    "visualType": "wb",
+    "answer": "16",
+    "text": "What is **one more** than 15?"
+  }
+}
