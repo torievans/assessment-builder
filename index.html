@@ -1943,12 +1943,17 @@ function addToolQuestion(type){
   if(editingExample){
     const ex=nuggetState[activeId].exampleOverride||{};
     let cfg={};
+    let exVisualType=type;
     if(type==='nl'){cfg=getNLConfig()||{};}
     else if(type==='nt'){cfg=getNTConfig()||{};}
     else if(type==='nr'){cfg=getNRConfig();}
     else if(type==='pv'){cfg=getPVConfig();}
     else if(type==='pr'){cfg=getPRConfig();}
-    nuggetState[activeId].exampleOverride={cfg,visualType:type,answer,...(text&&{text}),...(ex.imagePath&&{imagePath:ex.imagePath}),...(ex.explanation&&{explanation:ex.explanation})};
+    else if(type==='custom'&&customWBMode==='whiteboard'){
+      exVisualType='wb';
+      cfg={wbText:(document.getElementById('custom-wb-text')||{value:''}).value||'',wbBorder:customWBBorderColour,wbSkin:customWBSkinColour};
+    }
+    nuggetState[activeId].exampleOverride={cfg,visualType:exVisualType,answer,...(text&&{text}),...(ex.imagePath&&{imagePath:ex.imagePath}),...(ex.explanation&&{explanation:ex.explanation})};
     editingExample=false;
     setEditMode(false,type);
     save();saveNuggetToFile(activeId);renderQuestions();renderSidebar();renderWorkflow();closeTool();
