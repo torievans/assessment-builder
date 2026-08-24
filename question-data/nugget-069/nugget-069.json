@@ -88,7 +88,7 @@
         "valuesGivenEvery": null,
         "answer": "18",
         "lineStyle": "terminate",
-        "colour": "red",
+        "colour": "green",
         "answerCircle": 19,
         "revealAnswer": true
       },
