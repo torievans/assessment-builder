@@ -1,7 +1,7 @@
 {
   "nuggetId": 63,
   "status": "in-progress",
-  "nextQId": 319059,
+  "nextQId": 319099,
   "questions": [
     {
       "id": 319044,
@@ -39,20 +39,21 @@
     },
     {
       "id": 319046,
-      "text": "What is** one more** than 0?",
-      "answer": "1",
+      "text": "What is** one more** than 3?",
+      "answer": "4",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "one more than 0",
+        "wbText": "one more than 3",
         "wbBorder": "#FECC6B",
-        "wbSkin": "#ffa99c"
+        "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319047,
