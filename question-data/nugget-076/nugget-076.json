@@ -50,29 +50,6 @@
       "createdAt": "2026-08-24"
     },
     {
-      "id": 319111,
-      "text": "What is **one more** than 11?",
-      "answer": "12",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nl",
-      "cfg": {
-        "start": 0,
-        "end": 20,
-        "partitions": 20,
-        "valuesGivenEvery": null,
-        "answer": "12",
-        "lineStyle": "terminate",
-        "colour": "purple",
-        "answerCircle": 11,
-        "revealAnswer": true
-      },
-      "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
-    },
-    {
       "id": 319112,
       "text": "What is **one less** than 16?",
       "answer": "15",
@@ -90,6 +67,29 @@
         "lineStyle": "terminate",
         "colour": "red",
         "answerCircle": 16,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319111,
+      "text": "What is **one more** than 11?",
+      "answer": "12",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "12",
+        "lineStyle": "terminate",
+        "colour": "purple",
+        "answerCircle": 11,
         "revealAnswer": true
       },
       "updatedAt": "2026-08-24",
