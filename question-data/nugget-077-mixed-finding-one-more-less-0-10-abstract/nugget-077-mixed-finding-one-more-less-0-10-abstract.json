@@ -1,7 +1,7 @@
 {
   "nuggetId": 77,
   "status": "in-progress",
-  "nextQId": 319119,
+  "nextQId": 319134,
   "questions": [
     {
       "id": 319114,
@@ -55,23 +55,6 @@
       "createdAt": "2026-08-24"
     },
     {
-      "id": 319117,
-      "text": "What is **one less** than 2?",
-      "answer": "1",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "one less than 2",
-        "wbBorder": "#FECC6B",
-        "wbSkin": "#ffa99c"
-      },
-      "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
-    },
-    {
       "id": 319118,
       "text": "What is **one more** than 9?",
       "answer": "10",
@@ -84,6 +67,23 @@
         "wbText": "one more than 9",
         "wbBorder": "#847AC9",
         "wbSkin": "#b06530"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319117,
+      "text": "What is **one less** than 2?",
+      "answer": "1",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 2",
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
