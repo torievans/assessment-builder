@@ -45,7 +45,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .stat.af{background:rgba(255,255,255,.09)}
 .stat-n{font-size:17px;font-weight:700;line-height:1;margin-bottom:2px}
 .stat-l{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.35)}
-.s-ip .stat-n{color:#F59E0B}.s-qa .stat-n{color:#60A5FA}.s-rd .stat-n{color:#34D399}.s-up .stat-n{color:#2DD4BF}
+.s-ns .stat-n{color:#9CA3AF}.s-ip .stat-n{color:#F59E0B}.s-qa .stat-n{color:#60A5FA}.s-rd .stat-n{color:#34D399}.s-up .stat-n{color:#2DD4BF}
 .sb-srch{padding:8px;border-bottom:1px solid rgba(255,255,255,.04);flex-shrink:0}
 .sb-srch input{width:100%;padding:5px 10px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.07);border-radius:6px;color:rgba(255,255,255,.8);font-size:12.5px;font-family:var(--font)}
 .sb-srch input::placeholder{color:rgba(255,255,255,.22)}
@@ -386,6 +386,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 <div class="app">
   <aside class="sb">
     <div class="sb-stats">
+      <div class="stat s-ns" id="stat-ns" onclick="setFilter('not-started')"><div class="stat-n" id="sn-ns">0</div><div class="stat-l">Not Started</div></div>
       <div class="stat s-ip" id="stat-ip" onclick="setFilter('in-progress')"><div class="stat-n" id="sn-ip">0</div><div class="stat-l">In Progress</div></div>
       <div class="stat s-qa" id="stat-qa" onclick="setFilter('ready-for-qa')"><div class="stat-n" id="sn-qa">0</div><div class="stat-l">In QA</div></div>
       <div class="stat s-rd" id="stat-rd" onclick="setFilter('ready-for-qti')"><div class="stat-n" id="sn-rd">0</div><div class="stat-l">Ready</div></div>
@@ -1429,10 +1430,10 @@ function renderSidebar(){
   updateStats();
 }
 function updateStats(){
-  const c={'in-progress':0,'ready-for-qa':0,'ready-for-qti':0,'uploaded-to-cms':0};
+  const c={'not-started':0,'in-progress':0,'ready-for-qa':0,'ready-for-qti':0,'uploaded-to-cms':0};
   NUGGETS.forEach(n=>{const s=nuggetState[n.id]?.status;if(c[s]!==undefined)c[s]++;});
-  document.getElementById('sn-ip').textContent=c['in-progress'];document.getElementById('sn-qa').textContent=c['ready-for-qa'];document.getElementById('sn-rd').textContent=c['ready-for-qti'];document.getElementById('sn-up').textContent=c['uploaded-to-cms'];
-  ['in-progress','ready-for-qa','ready-for-qti','uploaded-to-cms'].forEach((s,i)=>{const ids=['ip','qa','rd','up'];document.getElementById('stat-'+ids[i]).classList.toggle('af',filter===s);});
+  document.getElementById('sn-ns').textContent=c['not-started'];document.getElementById('sn-ip').textContent=c['in-progress'];document.getElementById('sn-qa').textContent=c['ready-for-qa'];document.getElementById('sn-rd').textContent=c['ready-for-qti'];document.getElementById('sn-up').textContent=c['uploaded-to-cms'];
+  ['not-started','in-progress','ready-for-qa','ready-for-qti','uploaded-to-cms'].forEach((s,i)=>{const ids=['ns','ip','qa','rd','up'];document.getElementById('stat-'+ids[i]).classList.toggle('af',filter===s);});
   document.getElementById('upload-ctr').innerHTML=`<strong>${c['uploaded-to-cms']}</strong> of ${NUGGETS.length} uploaded`;
 }
 
