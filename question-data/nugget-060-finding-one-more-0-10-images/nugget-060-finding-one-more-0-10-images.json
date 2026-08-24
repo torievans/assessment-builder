@@ -1,0 +1,30 @@
+{
+  "nuggetId": 60,
+  "status": "in-progress",
+  "nextQId": 319022,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "mode": "count",
+      "display": "array",
+      "align": "left",
+      "countA": 3,
+      "imageIdA": "illus:sports/ball_football_teal",
+      "countB": 3,
+      "imageIdB": "illus:space/crescent_moon_yellow",
+      "op": "add",
+      "subMode": "crossed",
+      "cols": 10,
+      "mrows": 2,
+      "mcols": 5,
+      "illusOutline": true,
+      "imgScale": 1,
+      "numA": false,
+      "numB": false,
+      "showEq": false
+    },
+    "visualType": "pr",
+    "answer": "4",
+    "text": "Count how many balls there are then **add one more.**"
+  }
+}
