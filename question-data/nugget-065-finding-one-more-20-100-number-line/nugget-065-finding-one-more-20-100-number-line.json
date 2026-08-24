@@ -1,0 +1,22 @@
+{
+  "nuggetId": 65,
+  "status": "in-progress",
+  "nextQId": 319028,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "start": 30,
+      "end": 40,
+      "partitions": 10,
+      "valuesGivenEvery": null,
+      "answer": "38",
+      "lineStyle": "through",
+      "colour": "green",
+      "answerCircle": 37,
+      "revealAnswer": true
+    },
+    "visualType": "nl",
+    "answer": "38",
+    "text": "What is **one more** than 37?"
+  }
+}
