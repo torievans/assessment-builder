@@ -1,7 +1,7 @@
 {
   "nuggetId": 70,
   "status": "in-progress",
-  "nextQId": 319084,
+  "nextQId": 319099,
   "questions": [
     {
       "id": 319079,
@@ -39,20 +39,21 @@
     },
     {
       "id": 319081,
-      "text": "What is** one less** than 1?",
-      "answer": "0",
+      "text": "What is** one less** than 6?",
+      "answer": "5",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "one less than 1",
+        "wbText": "one less than 6",
         "wbBorder": "#7898F0",
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319082,
