@@ -92,12 +92,12 @@
   ],
   "exampleOverride": {
     "cfg": {
-      "wbText": "one more than 2",
+      "wbText": "one more than 12",
       "wbBorder": "#319377",
       "wbSkin": "#b06530"
     },
     "visualType": "wb",
-    "answer": "3",
-    "text": "What is one more than 2?"
+    "answer": "13",
+    "text": "What is one more than 12?"
   }
 }
