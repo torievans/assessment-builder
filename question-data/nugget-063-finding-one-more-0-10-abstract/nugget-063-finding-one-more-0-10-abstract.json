@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 319044,
-      "text": "What is one more than 2?",
+      "text": "What is** one more** than 2?",
       "answer": "3",
       "type": "exact",
       "image": "",
@@ -14,15 +14,15 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 2",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#D46B55",
+        "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
     },
     {
       "id": 319045,
-      "text": "What is one more than 6?",
+      "text": "What is** one more** than 6?",
       "answer": "7",
       "type": "exact",
       "image": "",
@@ -31,15 +31,15 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 6",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#7898F0",
+        "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
     },
     {
       "id": 319046,
-      "text": "What is one more than 0?",
+      "text": "What is** one more** than 0?",
       "answer": "1",
       "type": "exact",
       "image": "",
@@ -48,7 +48,7 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 0",
-        "wbBorder": "#319377",
+        "wbBorder": "#FECC6B",
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
@@ -56,7 +56,7 @@
     },
     {
       "id": 319047,
-      "text": "What is one more than 8?",
+      "text": "What is** one more** than 8?",
       "answer": "9",
       "type": "exact",
       "image": "",
@@ -65,15 +65,15 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 8",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#847AC9",
+        "wbSkin": "#6b3520"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
     },
     {
       "id": 319048,
-      "text": "What is one more than 9?",
+      "text": "What is** one more** than 9?",
       "answer": "10",
       "type": "exact",
       "image": "",
@@ -82,8 +82,8 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 9",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#F5995B",
+        "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
