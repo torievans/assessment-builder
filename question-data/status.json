@@ -1,4 +1,5 @@
 {
+  "1": "in-progress",
   "2": "uploaded-to-cms",
   "3": "uploaded-to-cms",
   "4": "uploaded-to-cms",
@@ -15,6 +16,7 @@
   "19": "uploaded-to-cms",
   "20": "uploaded-to-cms",
   "22": "uploaded-to-cms",
+  "23": "in-progress",
   "24": "uploaded-to-cms",
   "25": "uploaded-to-cms",
   "26": "uploaded-to-cms",
@@ -26,6 +28,7 @@
   "85": "uploaded-to-cms",
   "86": "uploaded-to-cms",
   "87": "uploaded-to-cms",
+  "88": "in-progress",
   "89": "uploaded-to-cms",
   "90": "uploaded-to-cms",
   "91": "uploaded-to-cms",
@@ -35,6 +38,7 @@
   "95": "uploaded-to-cms",
   "96": "uploaded-to-cms",
   "97": "uploaded-to-cms",
+  "99": "in-progress",
   "100": "uploaded-to-cms",
   "101": "uploaded-to-cms",
   "102": "uploaded-to-cms",
@@ -46,6 +50,7 @@
   "306": "uploaded-to-cms",
   "307": "uploaded-to-cms",
   "308": "uploaded-to-cms",
+  "309": "in-progress",
   "310": "uploaded-to-cms",
   "311": "uploaded-to-cms",
   "312": "uploaded-to-cms",
@@ -55,6 +60,5 @@
   "316": "uploaded-to-cms",
   "317": "uploaded-to-cms",
   "318": "uploaded-to-cms",
-  "319": "uploaded-to-cms",
-  "_reset": "v2"
+  "319": "uploaded-to-cms"
 }
