@@ -105,7 +105,10 @@ function numberLineSVG(config) {
   const circleLblLen = circleVal !== null ? String(Math.round(circleVal)).length : 1;
   const crMin = circleLblLen <= 1 ? 9 : 11;
   const cr = hasCircle ? Math.min(Math.max(crMin, Math.floor(pxPerUnit * 0.32)), 18) : 0;
-  const hasAnswerCircle = answerCircle && answerNum !== null;
+  const circleTarget = (answerCircle === true || answerCircle === 'answer')
+    ? answerNum
+    : (typeof answerCircle === 'number' && !isNaN(answerCircle) ? answerCircle : null);
+  const hasAnswerCircle = circleTarget !== null;
   const acr = hasAnswerCircle ? Math.min(Math.max(9, Math.floor(pxPerUnit * 0.32)), 18) : 0;
 
   const EXTEND    = terminate ? 0 : 20;
@@ -173,7 +176,7 @@ function numberLineSVG(config) {
         const circleCy = (parseFloat(ly) + 4).toFixed(1);
         s += `<circle cx="${x.toFixed(1)}" cy="${circleCy}" r="${cr}" fill="none" stroke="${JC1}" stroke-width="2"/>`;
       }
-      if (isAnswer && hasAnswerCircle) {
+      if (hasAnswerCircle && circleTarget !== null && Math.abs(value - circleTarget) < 0.001) {
         const circleCy = (parseFloat(ly) + 4).toFixed(1);
         s += `<circle cx="${x.toFixed(1)}" cy="${circleCy}" r="${acr}" fill="none" stroke="${LABEL_COLOR}" stroke-width="2"/>`;
       }
