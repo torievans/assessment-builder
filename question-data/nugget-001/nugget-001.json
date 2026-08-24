@@ -1,7 +1,7 @@
 {
   "nuggetId": 1,
   "status": "in-progress",
-  "nextQId": 319007,
+  "nextQId": 319025,
   "questions": [
     {
       "id": 1032,
@@ -451,8 +451,25 @@
         "layout": "straight",
         "colourMode": "full"
       },
-      "updatedAt": "2026-07-29",
-      "createdAt": "2026-07-29"
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319024,
+      "text": "What is one more than 3?",
+      "answer": "4",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one more than 3",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
     }
   ]
 }
