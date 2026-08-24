@@ -57,15 +57,15 @@
     },
     {
       "id": 319052,
-      "text": "What is one more than 15?",
-      "answer": "16",
+      "text": "What is one more than 11?",
+      "answer": "12",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "one more than 15",
+        "wbText": "one more than 11",
         "wbBorder": "#FC7E91",
         "wbSkin": "#ffa99c"
       },
