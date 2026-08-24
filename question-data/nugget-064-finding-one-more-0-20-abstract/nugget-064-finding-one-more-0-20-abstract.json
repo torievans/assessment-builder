@@ -77,7 +77,7 @@
     },
     {
       "id": 319053,
-      "text": "What is one more than 19?",
+      "text": "What is **one more** than 19?",
       "answer": "20",
       "type": "exact",
       "image": "",
@@ -90,7 +90,8 @@
         "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     }
   ],
   "exampleOverride": {
