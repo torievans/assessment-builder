@@ -1,7 +1,7 @@
 {
   "nuggetId": 74,
-  "status": "in-progress",
-  "nextQId": 319104,
+  "status": "ready-for-qa",
+  "nextQId": 319134,
   "questions": [
     {
       "id": 319099,
@@ -66,9 +66,9 @@
       "createdAt": "2026-08-24"
     },
     {
-      "id": 319101,
-      "text": "Count the number of giraffes, then find **one more**.",
-      "answer": "6",
+      "id": 319102,
+      "text": "Count the number of toucans, then find **one less**.",
+      "answer": "5",
       "type": "exact",
       "image": "",
       "display": "",
@@ -78,8 +78,8 @@
         "mode": "count",
         "display": "array",
         "align": "left",
-        "countA": 5,
-        "imageIdA": "illus:animals/giraffe_orange",
+        "countA": 6,
+        "imageIdA": "illus:animals/toucan_black",
         "countB": 0,
         "imageIdB": "",
         "op": "add",
@@ -97,9 +97,9 @@
       "createdAt": "2026-08-24"
     },
     {
-      "id": 319102,
-      "text": "Count the number of toucans, then find **one less**.",
-      "answer": "5",
+      "id": 319101,
+      "text": "Count the number of giraffes, then find **one more**.",
+      "answer": "6",
       "type": "exact",
       "image": "",
       "display": "",
@@ -109,8 +109,8 @@
         "mode": "count",
         "display": "array",
         "align": "left",
-        "countA": 6,
-        "imageIdA": "illus:animals/toucan_black",
+        "countA": 5,
+        "imageIdA": "illus:animals/giraffe_orange",
         "countB": 0,
         "imageIdB": "",
         "op": "add",
