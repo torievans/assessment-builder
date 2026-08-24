@@ -1,7 +1,7 @@
 {
   "nuggetId": 67,
   "status": "in-progress",
-  "nextQId": 319069,
+  "nextQId": 319099,
   "questions": [
     {
       "id": 319064,
@@ -180,7 +180,7 @@
       "showEq": false
     },
     "visualType": "pr",
-    "answer": "4",
+    "answer": "3",
     "text": "Count the number of balls, then find **one less.**"
   }
 }
