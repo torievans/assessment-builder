@@ -1486,11 +1486,22 @@ async function selectNugget(id){
     fr?.contentWindow?.postMessage({type:'selectNugget',nuggetId:Number(id)},'*');
   }
 }
+async function loadNuggetFromGitHub(nid){
+  // Fetch directly from GitHub Pages, bypassing any connected local folder.
+  const slug=nuggetSlug(nid);
+  const idSlug=`nugget-${String(nid).padStart(3,'0')}`;
+  const lSlug=legacySlug(nid);
+  const candidates=[slug,idSlug,...(lSlug?[lSlug]:[])].filter((s,i,a)=>a.indexOf(s)===i);
+  for(const s of candidates){
+    try{const r=await fetch(`question-data/${s}/${s}.json`,{cache:'no-store'});if(r.ok)return await r.json();}catch(e){}
+  }
+  return null;
+}
 async function refreshNugget(){
   if(!activeId)return;
   const btn=document.getElementById('nd-refresh-btn');
   if(btn){btn.style.opacity='0.4';btn.style.pointerEvents='none';}
-  const fileData=await loadNuggetFromFile(activeId);
+  const fileData=await loadNuggetFromGitHub(activeId);
   if(fileData){
     nuggetState[activeId]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined,exampleOverride:fileData.exampleOverride||null};
     if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
