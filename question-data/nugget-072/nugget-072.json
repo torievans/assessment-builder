@@ -1,0 +1,138 @@
+{
+  "nuggetId": 72,
+  "status": "in-progress",
+  "nextQId": 319094,
+  "questions": [
+    {
+      "id": 319089,
+      "text": "What is **one less** than 27?",
+      "answer": "26",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 20,
+        "end": 30,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "26",
+        "lineStyle": "through",
+        "colour": "green",
+        "answerCircle": 27,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319090,
+      "text": "What is **one less** than 43?",
+      "answer": "42",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 40,
+        "end": 50,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "42",
+        "lineStyle": "through",
+        "colour": "green",
+        "answerCircle": 43,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319091,
+      "text": "What is **one less** than 56?",
+      "answer": "55",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 50,
+        "end": 60,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "55",
+        "lineStyle": "through",
+        "colour": "green",
+        "answerCircle": 56,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319092,
+      "text": "What is **one less** than 68?",
+      "answer": "67",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 60,
+        "end": 70,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "67",
+        "lineStyle": "through",
+        "colour": "green",
+        "answerCircle": 68,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319093,
+      "text": "What is **one less** than 89?",
+      "answer": "88",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 80,
+        "end": 90,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "88",
+        "lineStyle": "through",
+        "colour": "green",
+        "answerCircle": 89,
+        "revealAnswer": true
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    }
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "start": 30,
+      "end": 40,
+      "partitions": 10,
+      "valuesGivenEvery": null,
+      "answer": "36",
+      "lineStyle": "through",
+      "colour": "green",
+      "answerCircle": 37,
+      "revealAnswer": true
+    },
+    "visualType": "nl",
+    "answer": "36",
+    "text": "What is **one less** than 37?"
+  }
+}
