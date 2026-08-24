@@ -199,6 +199,6 @@
     },
     "visualType": "nr",
     "answer": "4",
-    "text": "Count the number of cubes, then find *one less*."
+    "text": "Count the number of cubes, then find **one less**."
   }
 }
