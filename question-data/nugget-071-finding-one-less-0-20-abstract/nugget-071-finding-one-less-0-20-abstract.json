@@ -5,20 +5,21 @@
   "questions": [
     {
       "id": 319084,
-      "text": "What is one less than 7?",
-      "answer": "6",
+      "text": "What is one less than 17?",
+      "answer": "16",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "one less than 7",
+        "wbText": "one less than 17",
         "wbBorder": "#D46B55",
         "wbSkin": "#6b3520"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319085,
