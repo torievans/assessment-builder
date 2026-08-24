@@ -98,8 +98,8 @@
     },
     {
       "id": 319067,
-      "text": "Count the number of lemons, then find **one less.**",
-      "answer": "1",
+      "text": "Count the number of moons, then find **one less.**",
+      "answer": "2",
       "type": "exact",
       "image": "",
       "display": "",
