@@ -1,8 +1,114 @@
 {
   "nuggetId": 62,
   "status": "in-progress",
-  "nextQId": 319024,
-  "questions": [],
+  "nextQId": 319044,
+  "questions": [
+    {
+      "id": 319039,
+      "text": "What is one more than 4?",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "5",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": 4,
+        "revealAnswer": true
+      }
+    },
+    {
+      "id": 319040,
+      "text": "What is one more than 8?",
+      "answer": "9",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "9",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": 8,
+        "revealAnswer": true
+      }
+    },
+    {
+      "id": 319041,
+      "text": "What is one more than 15?",
+      "answer": "16",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "16",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": 15,
+        "revealAnswer": true
+      }
+    },
+    {
+      "id": 319042,
+      "text": "What is one more than 17?",
+      "answer": "18",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "18",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": 17,
+        "revealAnswer": true
+      }
+    },
+    {
+      "id": 319043,
+      "text": "What is one more than 2?",
+      "answer": "3",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": null,
+        "answer": "3",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": 2,
+        "revealAnswer": true
+      }
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "start": 0,
