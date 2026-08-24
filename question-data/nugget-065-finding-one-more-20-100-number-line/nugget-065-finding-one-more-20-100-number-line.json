@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 319054,
-      "text": "What is one more than 24?",
+      "text": "What is **one more** than 24?",
       "answer": "25",
       "type": "exact",
       "image": "",
@@ -26,7 +26,7 @@
     },
     {
       "id": 319055,
-      "text": "What is one more than 45?",
+      "text": "What is **one more** than 45?",
       "answer": "46",
       "type": "exact",
       "image": "",
@@ -47,7 +47,7 @@
     },
     {
       "id": 319056,
-      "text": "What is one more than 53?",
+      "text": "What is **one more** than 53?",
       "answer": "54",
       "type": "exact",
       "image": "",
@@ -68,7 +68,7 @@
     },
     {
       "id": 319057,
-      "text": "What is one more than 71?",
+      "text": "What is **one more** than 71?",
       "answer": "72",
       "type": "exact",
       "image": "",
@@ -89,7 +89,7 @@
     },
     {
       "id": 319058,
-      "text": "What is one more than 86?",
+      "text": "What is **one more** than 86?",
       "answer": "87",
       "type": "exact",
       "image": "",
