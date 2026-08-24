@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 319034,
-      "text": "How many cubes would there be if there was one more?",
+      "text": "Count the number of cubes, then **add one more**.",
       "answer": "2",
       "type": "exact",
       "image": "",
@@ -39,7 +39,7 @@
     },
     {
       "id": 319035,
-      "text": "How many cubes would there be if there was one more?",
+      "text": "Count the number of cubes, then **add one more**.",
       "answer": "4",
       "type": "exact",
       "image": "",
@@ -73,7 +73,7 @@
     },
     {
       "id": 319036,
-      "text": "How many cubes would there be if there was one more?",
+      "text": "Count the number of cubes, then **add one more**.",
       "answer": "7",
       "type": "exact",
       "image": "",
@@ -107,7 +107,7 @@
     },
     {
       "id": 319037,
-      "text": "How many cubes would there be if there was one more?",
+      "text": "Count the number of cubes, then **add one more**.",
       "answer": "9",
       "type": "exact",
       "image": "",
@@ -141,7 +141,7 @@
     },
     {
       "id": 319038,
-      "text": "How many cubes would there be if there was one more?",
+      "text": "Count the number of cubes, then **add one more**.",
       "answer": "10",
       "type": "exact",
       "image": "",
