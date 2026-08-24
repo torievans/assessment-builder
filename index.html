@@ -1724,7 +1724,8 @@ function renderQVisual(q){
 function editExample(){
   if(!activeId)return;
   const ex=nuggetState[activeId]?.exampleOverride;if(!ex||!ex.cfg)return;
-  const type=ex.visualType;if(!type)return;
+  const rawType=ex.visualType;if(!rawType)return;
+  const type=rawType==='wb'?'custom':rawType;
   if(activeTool&&activeTool!==type)closeTool();
   if(activeTool!==type){
     activeTool=type;
@@ -1736,6 +1737,16 @@ function editExample(){
   else if(type==='nr'){document.getElementById('nr-text').value=ex.text||'';document.getElementById('nr-answer').value=ex.answer!=null?ex.answer:'';restoreNRConfig(ex.cfg||{});}
   else if(type==='pv'){document.getElementById('pv-text').value=ex.text||'';document.getElementById('pv-answer').value=ex.answer!=null?ex.answer:'';restorePVConfig(ex.cfg||{});}
   else if(type==='pr'){document.getElementById('pr-text').value=ex.text||'';document.getElementById('pr-answer').value=ex.answer!=null?ex.answer:'';restorePRConfig(ex.cfg||{});}
+  else if(type==='custom'&&rawType==='wb'){
+    document.getElementById('custom-q-text').value=ex.text||'';
+    document.getElementById('custom-answer').value=ex.answer!=null?ex.answer:'';
+    customWBBorderColour=(ex.cfg||{}).wbBorder||'#319377';
+    customWBSkinColour=(ex.cfg||{}).wbSkin||'#ffa99c';
+    const wbt=document.getElementById('custom-wb-text');
+    if(wbt)wbt.value=(ex.cfg||{}).wbText||'';
+    setCustomMode('whiteboard');
+    initCustomWBSwatches();
+  }
   editingExample=true;
   setEditMode(true,type);
   renderQuestions();
