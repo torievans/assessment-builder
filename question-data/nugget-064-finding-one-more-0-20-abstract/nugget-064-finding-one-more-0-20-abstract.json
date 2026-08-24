@@ -59,7 +59,7 @@
     },
     {
       "id": 319052,
-      "text": "What is one more than 11?",
+      "text": "What is **one more** than 11?",
       "answer": "12",
       "type": "exact",
       "image": "",
