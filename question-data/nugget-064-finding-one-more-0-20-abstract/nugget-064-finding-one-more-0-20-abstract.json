@@ -14,7 +14,7 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 5",
-        "wbBorder": "#319377",
+        "wbBorder": "#D46B55",
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
@@ -31,8 +31,8 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 13",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#7898F0",
+        "wbSkin": "#6b3520"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
@@ -48,8 +48,8 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 17",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
@@ -65,7 +65,7 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 3",
-        "wbBorder": "#319377",
+        "wbBorder": "#FC7E91",
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
@@ -82,8 +82,8 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "one more than 19",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#AAAAAA",
+        "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
