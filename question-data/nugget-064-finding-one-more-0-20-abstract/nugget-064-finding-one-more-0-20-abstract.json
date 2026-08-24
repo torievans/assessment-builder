@@ -1,24 +1,25 @@
 {
   "nuggetId": 64,
   "status": "in-progress",
-  "nextQId": 319060,
+  "nextQId": 319099,
   "questions": [
     {
       "id": 319049,
-      "text": "What is one more than 5?",
-      "answer": "6",
+      "text": "What is one more than 15?",
+      "answer": "16",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "one more than 5",
+        "wbText": "one more than 15",
         "wbBorder": "#D46B55",
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319050,
