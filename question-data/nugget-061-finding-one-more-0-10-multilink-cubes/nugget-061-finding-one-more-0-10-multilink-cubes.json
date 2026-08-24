@@ -1,7 +1,7 @@
 {
   "nuggetId": 61,
   "status": "in-progress",
-  "nextQId": 319039,
+  "nextQId": 319099,
   "questions": [
     {
       "id": 319034,
@@ -13,13 +13,13 @@
       "qaComment": "",
       "visualType": "nr",
       "cfg": {
-        "n": 1,
+        "n": 2,
         "rep": "multilink",
         "fType": "5",
         "fc1": 0,
         "fc2": 4,
         "fSplitOn": false,
-        "fSplit": 5,
+        "fSplit": 1,
         "bg": 1,
         "ba": 0,
         "bb": 0,
@@ -30,9 +30,9 @@
         "mlFill": "row",
         "mlGap": false,
         "mlSplitOn": false,
-        "mlSplit": 5,
+        "mlSplit": 1,
         "niSplitOn": false,
-        "niSplit": 5
+        "niSplit": 1
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
