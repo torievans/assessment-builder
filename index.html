@@ -1165,8 +1165,10 @@ async function loadStatusMap(){
   // Clear uploaded-to-cms from any nugget not present in the status map
   Object.keys(nuggetState).forEach(id=>{
     const nid=parseInt(id);
-    if(nuggetState[nid].status==='uploaded-to-cms'&&map[id]===undefined){
-      nuggetState[nid].status='ready-for-qti';changed=true;
+    const ns2=nuggetState[nid];
+    if(ns2&&ns2.status==='uploaded-to-cms'&&map[id]===undefined){
+      // Reset: has questions → in-progress, no questions → not-started
+      nuggetState[nid].status=(ns2.questions&&ns2.questions.length>0)?'in-progress':'not-started';changed=true;
     }
   });
   if(changed){save();renderSidebar();}
