@@ -77,7 +77,7 @@
     },
     {
       "id": 319098,
-      "text": "What is one less than 48?",
+      "text": "What is **one less** than 48?",
       "answer": "47",
       "type": "exact",
       "image": "",
@@ -90,7 +90,8 @@
         "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     }
   ],
   "exampleOverride": {
