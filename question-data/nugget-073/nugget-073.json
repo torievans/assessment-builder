@@ -1,0 +1,102 @@
+{
+  "nuggetId": 73,
+  "status": "in-progress",
+  "nextQId": 319099,
+  "questions": [
+    {
+      "id": 319094,
+      "text": "What is one less than 36?",
+      "answer": "35",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 36",
+        "wbBorder": "#7898F0",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319095,
+      "text": "What is one less than 57?",
+      "answer": "56",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 57",
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319096,
+      "text": "What is one less than 72?",
+      "answer": "71",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 72",
+        "wbBorder": "#847AC9",
+        "wbSkin": "#b06530"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319097,
+      "text": "What is one less than 85?",
+      "answer": "84",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 85",
+        "wbBorder": "#F5995B",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    },
+    {
+      "id": 319098,
+      "text": "What is one less than 48?",
+      "answer": "47",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "one less than 48",
+        "wbBorder": "#FB115A",
+        "wbSkin": "#b06530"
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
+    }
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "one less than 37",
+      "wbBorder": "#847AC9",
+      "wbSkin": "#b06530"
+    },
+    "visualType": "wb",
+    "answer": "36",
+    "text": "What is one less than 37?"
+  }
+}
