@@ -16,7 +16,9 @@
         "wbText": "one more than 24",
         "wbBorder": "#319377",
         "wbSkin": "#ffa99c"
-      }
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
     },
     {
       "id": 319060,
@@ -31,7 +33,9 @@
         "wbText": "one more than 49",
         "wbBorder": "#D46B55",
         "wbSkin": "#d4895a"
-      }
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
     },
     {
       "id": 319061,
@@ -46,7 +50,9 @@
         "wbText": "one more than 63",
         "wbBorder": "#7898F0",
         "wbSkin": "#6b3520"
-      }
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
     },
     {
       "id": 319062,
@@ -61,7 +67,9 @@
         "wbText": "one more than 75",
         "wbBorder": "#F5995B",
         "wbSkin": "#ffa99c"
-      }
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
     },
     {
       "id": 319063,
@@ -76,7 +84,9 @@
         "wbText": "one more than 91",
         "wbBorder": "#FECC6B",
         "wbSkin": "#b06530"
-      }
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
     }
   ],
   "exampleOverride": {
