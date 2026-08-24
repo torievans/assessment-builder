@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 319029,
-      "text": "How many apples would there be if there was one more?",
+      "text": "Count the number of apples, then **add one more.**",
       "answer": "2",
       "type": "exact",
       "image": "",
@@ -36,7 +36,7 @@
     },
     {
       "id": 319030,
-      "text": "How many giraffes would there be if there was one more?",
+      "text": "Count the number of giraffes, then **add one more.**",
       "answer": "6",
       "type": "exact",
       "image": "",
@@ -67,7 +67,7 @@
     },
     {
       "id": 319031,
-      "text": "How many carrots would there be if there was one more?",
+      "text": "Count the number of carrots, then **add one more.**",
       "answer": "8",
       "type": "exact",
       "image": "",
@@ -98,7 +98,7 @@
     },
     {
       "id": 319032,
-      "text": "How many moons would there be if there was one more?",
+      "text": "Count the number of moons, then **add one more.**",
       "answer": "10",
       "type": "exact",
       "image": "",
@@ -129,7 +129,7 @@
     },
     {
       "id": 319033,
-      "text": "How many flamingos would there be if there was one more?",
+      "text": "Count the number of flamingos, then **add one more.**",
       "answer": "7",
       "type": "exact",
       "image": "",
