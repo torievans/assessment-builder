@@ -180,7 +180,7 @@
       "showEq": false
     },
     "visualType": "pr",
-    "answer": "4",
-    "text": "Count how many balls there are then **add one more.**"
+    "answer": "3",
+    "text": "Count the number of  balls then **add one more.**"
   }
 }
