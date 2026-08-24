@@ -1,11 +1,11 @@
 {
   "nuggetId": 62,
   "status": "in-progress",
-  "nextQId": 319044,
+  "nextQId": 319099,
   "questions": [
     {
       "id": 319039,
-      "text": "What is **one more** than 4?",
+      "text": "What is one more than 4?",
       "answer": "5",
       "type": "exact",
       "image": "",
@@ -19,14 +19,16 @@
         "valuesGivenEvery": null,
         "answer": "5",
         "lineStyle": "terminate",
-        "colour": "red",
+        "colour": "blue",
         "answerCircle": 4,
         "revealAnswer": true
-      }
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
     },
     {
       "id": 319040,
-      "text": "What is **one more** than 8?",
+      "text": "What is one more than 8?",
       "answer": "9",
       "type": "exact",
       "image": "",
@@ -43,11 +45,13 @@
         "colour": "red",
         "answerCircle": 8,
         "revealAnswer": true
-      }
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
     },
     {
       "id": 319041,
-      "text": "What is **one more** than 15?",
+      "text": "What is one more than 15?",
       "answer": "16",
       "type": "exact",
       "image": "",
@@ -64,11 +68,13 @@
         "colour": "red",
         "answerCircle": 15,
         "revealAnswer": true
-      }
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
     },
     {
       "id": 319042,
-      "text": "What is **one more** than 17?",
+      "text": "What is one more than 17?",
       "answer": "18",
       "type": "exact",
       "image": "",
@@ -85,11 +91,13 @@
         "colour": "red",
         "answerCircle": 17,
         "revealAnswer": true
-      }
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
     },
     {
       "id": 319043,
-      "text": "What is **one more** than 2?",
+      "text": "What is one more than 2?",
       "answer": "3",
       "type": "exact",
       "image": "",
@@ -106,7 +114,9 @@
         "colour": "red",
         "answerCircle": 2,
         "revealAnswer": true
-      }
+      },
+      "updatedAt": "2026-08-24",
+      "createdAt": "2026-08-24"
     }
   ],
   "exampleOverride": {
