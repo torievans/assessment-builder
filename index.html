@@ -1790,7 +1790,7 @@ function saveExampleQA(val){
 function isExampleMode(){
   if(!activeId)return false;
   const ns=nuggetState[activeId];
-  return !ns?.exampleOverride&&!(ns?.questions?.length);
+  return !ns?.exampleOverride?.cfg;
 }
 // Update all tool Add-Question buttons and show/hide "Create more like this"
 function updateToolBtns(){
