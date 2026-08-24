@@ -42,7 +42,7 @@
         "valuesGivenEvery": null,
         "answer": "10",
         "lineStyle": "terminate",
-        "colour": "red",
+        "colour": "orange",
         "answerCircle": 11,
         "revealAnswer": true
       },
