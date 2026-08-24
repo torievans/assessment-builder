@@ -74,20 +74,20 @@
     {
       "id": 319036,
       "text": "Count the number of cubes, then **add one more**.",
-      "answer": "7",
+      "answer": "5",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "nr",
       "cfg": {
-        "n": 6,
+        "n": 4,
         "rep": "multilink",
         "fType": "5",
         "fc1": 0,
         "fc2": 4,
         "fSplitOn": false,
-        "fSplit": 5,
+        "fSplit": 3,
         "bg": 6,
         "ba": 5,
         "bb": 0,
@@ -98,9 +98,9 @@
         "mlFill": "row",
         "mlGap": false,
         "mlSplitOn": false,
-        "mlSplit": 5,
+        "mlSplit": 3,
         "niSplitOn": false,
-        "niSplit": 5
+        "niSplit": 3
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
