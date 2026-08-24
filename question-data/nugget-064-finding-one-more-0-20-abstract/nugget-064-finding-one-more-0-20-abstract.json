@@ -1,0 +1,16 @@
+{
+  "nuggetId": 64,
+  "status": "in-progress",
+  "nextQId": 319027,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "one more than 11",
+      "wbBorder": "#319377",
+      "wbSkin": "#ffa99c"
+    },
+    "visualType": "wb",
+    "answer": "12",
+    "text": "What is one more than 11?"
+  }
+}
