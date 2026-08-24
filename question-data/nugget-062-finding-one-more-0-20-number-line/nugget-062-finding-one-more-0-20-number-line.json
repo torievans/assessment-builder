@@ -111,7 +111,7 @@
         "valuesGivenEvery": null,
         "answer": "3",
         "lineStyle": "terminate",
-        "colour": "red",
+        "colour": "purple",
         "answerCircle": 2,
         "revealAnswer": true
       },
