@@ -1,0 +1,33 @@
+{
+  "nuggetId": 61,
+  "status": "in-progress",
+  "nextQId": 319023,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "n": 5,
+      "rep": "multilink",
+      "fType": "5",
+      "fc1": 0,
+      "fc2": 4,
+      "fSplitOn": false,
+      "fSplit": 5,
+      "bg": 5,
+      "ba": 4,
+      "bb": 0,
+      "beadPreset": "colour",
+      "mc": 6,
+      "mc2": 0,
+      "mlRows": "10",
+      "mlFill": "row",
+      "mlGap": false,
+      "mlSplitOn": false,
+      "mlSplit": 5,
+      "niSplitOn": false,
+      "niSplit": 5
+    },
+    "visualType": "nr",
+    "answer": "6",
+    "text": "Count how many cubes there are then **add one more.**"
+  }
+}
