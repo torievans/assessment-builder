@@ -100,6 +100,7 @@ const PR_IMAGE_BANK = [
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let pr_mode         = 'count';
+let pr_groupSize    = 1;
 let pr_crayonCount  = 5;
 let pr_crayonBoxes  = 1;
 let pr_crayonFontSize = 148;
@@ -449,6 +450,16 @@ function prPanelHTML() {
             <button class="tog-btn" onclick="prDelta('A',1)"  style="width:30px;height:30px;padding:0">+</button>
           </div>
         </div>
+        <div class="field" id="pr-group-size-field" style="display:none">
+          <label>Group size</label>
+          <div style="display:flex;align-items:center;gap:4px">
+            <button class="tog-btn" onclick="prDeltaGroup(-1)" style="width:30px;height:30px;padding:0">−</button>
+            <input type="number" id="pr-group-size" min="1" max="10" value="1"
+              style="width:52px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:4px;font-size:14px;font-family:var(--font)"
+              oninput="pr_groupSize=prClamp(+this.value,1,10);prUpdateMode();autoPreviewPR()">
+            <button class="tog-btn" onclick="prDeltaGroup(1)"  style="width:30px;height:30px;padding:0">+</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -651,10 +662,12 @@ function prUpdateMode() {
   const isAddSub   = pr_mode === 'addsub';
   const show = (id, v) => { const e = document.getElementById(id); if (e) e.style.display = v ? '' : 'none'; };
   show('pr-count-wrap',     pr_mode === 'count');
+  show('pr-group-size-field', pr_mode === 'count');
   show('pr-addsub-wrap',    isAddSub);
   show('pr-multiply-wrap',  isMultiply);
   show('pr-crayon-wrap',    pr_mode === 'crayon');
   show('pr-layout-row',     !isMultiply && pr_mode !== 'crayon');
+  show('pr-cols-field',     isArray && !(pr_mode === 'count' && pr_groupSize > 1));
   show('pr-bank-panel',     pr_mode !== 'crayon');
   show('pr-bank-group-sel', isAddSub);
   const isArray = pr_display === 'array' && !isMultiply;
@@ -673,7 +686,7 @@ function prSetDisplay(btn) {
     b.classList.toggle('active', b.dataset.prd === pr_display));
   const isArray = pr_display === 'array' && pr_mode !== 'multiply';
   const showEl = (id, v) => { const e = document.getElementById(id); if (e) e.style.display = v ? '' : 'none'; };
-  showEl('pr-cols-field',  isArray);
+  showEl('pr-cols-field',  isArray && !(pr_mode === 'count' && pr_groupSize > 1));
   showEl('pr-align-field', pr_mode !== 'multiply');
   autoPreviewPR();
 }
@@ -753,6 +766,13 @@ function prDeltaCrayonFontSize(d) {
   autoPreviewPR();
 }
 
+function prDeltaGroup(d) {
+  pr_groupSize = prClamp(pr_groupSize + d, 1, 10);
+  const e = document.getElementById('pr-group-size'); if (e) e.value = pr_groupSize;
+  prUpdateMode();
+  autoPreviewPR();
+}
+
 function prDeltaCrayonBoxes(d) {
   pr_crayonBoxes = Math.max(1, Math.min(12, pr_crayonBoxes + d));
   const el = document.getElementById('pr-crayon-boxes');
@@ -813,6 +833,7 @@ function getPRConfig() {
     op:           pr_op,
     subMode:      pr_subMode,
     cols:         pr_cols,
+    groupSize:    pr_groupSize,
     mrows:        pr_mrows,
     mcols:        pr_mcols,
     illusOutline: pr_illusOutline,
@@ -839,6 +860,7 @@ function restorePRConfig(cfg) {
   pr_op           = cfg.op           || 'add';
   pr_subMode      = cfg.subMode      || 'crossed';
   pr_cols         = cfg.cols         || 5;
+  pr_groupSize    = cfg.groupSize    || 1;
   pr_mrows        = cfg.mrows        || 2;
   pr_crayonCount  = cfg.crayonCount  || 5;
   pr_crayonBoxes  = cfg.crayonBoxes  || 1;
@@ -869,6 +891,7 @@ function restorePRConfig(cfg) {
   sc('pr-num-b',   pr_numB);
   sc('pr-show-eq', pr_showEq);
   document.querySelectorAll('[data-prmode]').forEach(b => b.classList.toggle('active', b.dataset.prmode === pr_mode));
+  const gsEl = document.getElementById('pr-group-size'); if (gsEl) gsEl.value = pr_groupSize;
   const crEl = document.getElementById('pr-crayon-count'); if (crEl) crEl.value = pr_crayonCount;
   const crBx = document.getElementById('pr-crayon-boxes'); if (crBx) crBx.value = pr_crayonBoxes;
   const crFs = document.getElementById('pr-crayon-fontsize'); if (crFs) crFs.value = pr_crayonFontSize;
@@ -887,6 +910,7 @@ function restorePRConfig(cfg) {
 
 function prResetState() {
   pr_mode = 'count'; pr_display = 'array'; pr_align = 'left';
+  pr_groupSize = 1;
   pr_crayonCount = 5; pr_crayonBoxes = 1; pr_crayonFontSize = 148; pr_crayonLabel = '5 Crayons';
   pr_countA = 7; pr_imageA = 'illus:space/crescent_moon_yellow';
   pr_countB = 3; pr_imageB = 'illus:space/crescent_moon_yellow';
@@ -1001,6 +1025,7 @@ function pictorialSVG(cfg) {
     op          = 'add',
     subMode     = 'crossed',
     cols        = 5,
+    groupSize   = 1,
     mrows       = 2,  mcols = 5,
     illusOutline = true,
     imgScale = 1.0,
@@ -1192,6 +1217,33 @@ function pictorialSVG(cfg) {
     }
   }
 
+
+  // ── Render items in groups with visual gap between each group ────────────
+  // Items within each group wrap at 3 columns so groups stay compact when
+  // groupSz > 3 (e.g. groupSz=5 → 3 on row 0, 2 on row 1).
+  // Groups are placed side by side with a one-item-slot gap between them.
+  function renderGroupedCount(total, groupSz, img, ox, oy, parts) {
+    const GROUP_COLS = 3;
+    const groupCols  = Math.min(groupSz, GROUP_COLS);
+    const groupRows  = Math.ceil(groupSz / GROUP_COLS);
+    const groupStep  = (groupCols + 1) * S - GAP;   // group width + S gap to next group
+    const numGroups  = Math.ceil(total / groupSz);
+    let totalW = 0;
+    for (let g = 0; g < numGroups; g++) {
+      const gx = ox + g * groupStep;
+      const inThisGroup = Math.min(groupSz, total - g * groupSz);
+      for (let k = 0; k < inThisGroup; k++) {
+        const row    = Math.floor(k / GROUP_COLS);
+        const col    = k % GROUP_COLS;
+        const inRow  = Math.min(GROUP_COLS, inThisGroup - row * GROUP_COLS);
+        const rowOff = (groupCols - inRow) * S / 2;   // centre partial rows under full row
+        parts.push(renderItem(img, gx + rowOff + col * S + R, oy + row * S + R));
+      }
+      totalW = gx - ox + Math.min(inThisGroup, GROUP_COLS) * S - GAP;
+    }
+    return { w: totalW, h: groupRows * S - GAP };
+  }
+
   // ── Render two groups side by side ────────────────────────────────────────
   function renderTwoGroups(parts, crossedB) {
     const OP_W = 54;
@@ -1267,7 +1319,9 @@ function pictorialSVG(cfg) {
   let svgW, svgH;
 
   if (mode === 'count') {
-    const {w, h} = renderGroup(countA, imgA, PAD, PAD, parts);
+    const {w, h} = groupSize > 1
+      ? renderGroupedCount(countA, groupSize, imgA, PAD, PAD, parts)
+      : renderGroup(countA, imgA, PAD, PAD, parts);
     svgW = w + PAD * 2; svgH = h + PAD * 2;
 
   } else if (mode === 'addsub') {
