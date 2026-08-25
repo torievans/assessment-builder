@@ -1,8 +1,99 @@
 {
   "nuggetId": 42,
   "status": "in-progress",
-  "nextQId": 319141,
-  "questions": [],
+  "nextQId": 319185,
+  "questions": [
+    {
+      "id": 319180,
+      "text": "**Count in 2s** to find the number that should go at the end.",
+      "answer": "16",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "4,6,8,10,12,_,?",
+        "shape": "square",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319181,
+      "text": "**Count in 2s** to find the number that should go at the end.",
+      "answer": "18",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "6,8,10,12,14,_,?",
+        "shape": "square",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319182,
+      "text": "**Count in 2s** to find the number that should go at the end.",
+      "answer": "20",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "8,10,12,14,16,_,?",
+        "shape": "square",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319183,
+      "text": "**Count in 2s** to find the number that should go at the end.",
+      "answer": "22",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "10,12,14,16,18,_,?",
+        "shape": "square",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319184,
+      "text": "**Count in 2s** to find the number that should go at the end.",
+      "answer": "24",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "12,14,16,18,20,_,?",
+        "shape": "square",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "sequence": "0,2,4,6,8,10,_,?",
