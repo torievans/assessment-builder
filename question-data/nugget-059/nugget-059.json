@@ -3,7 +3,7 @@
   "status": "in-progress",
   "nextQId": 319248,
   "questions": [],
-  "customName": "Counting in Multiples of 10 0-100 (Number Track with 2 Blanks)",
+  "customName": "Counting in Multiples of 10 (Number Track with 2 Blanks)",
   "exampleOverride": {
     "cfg": {
       "sequence": "0,10,20,30,_,_,?",
