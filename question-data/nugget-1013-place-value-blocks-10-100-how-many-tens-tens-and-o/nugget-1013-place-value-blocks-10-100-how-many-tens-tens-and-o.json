@@ -1,7 +1,7 @@
 {
   "nuggetId": 1013,
   "status": "in-progress",
-  "nextQId": 6,
+  "nextQId": 319304,
   "questions": [
     {
       "id": 1,
@@ -14,11 +14,12 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "34",
-        "wbBorder": "#319377",
+        "wbBorder": "#847AC9",
         "wbSkin": "#ffa99c"
       },
-      "updatedAt": "2026-08-25T15:22:34.000Z",
-      "createdAt": "2026-08-25T15:22:34.000Z"
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z",
+      "imagePath": ""
     },
     {
       "id": 2,
@@ -31,11 +32,11 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "57",
-        "wbBorder": "#7898F0",
-        "wbSkin": "#d4895a"
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
       },
-      "updatedAt": "2026-08-25T15:22:34.000Z",
-      "createdAt": "2026-08-25T15:22:34.000Z"
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
     },
     {
       "id": 3,
@@ -48,11 +49,12 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "72",
-        "wbBorder": "#D46B55",
-        "wbSkin": "#b06530"
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#d4895a"
       },
-      "updatedAt": "2026-08-25T15:22:34.000Z",
-      "createdAt": "2026-08-25T15:22:34.000Z"
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z",
+      "imagePath": ""
     },
     {
       "id": 4,
@@ -65,11 +67,12 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "16",
-        "wbBorder": "#F5995B",
-        "wbSkin": "#6b3520"
+        "wbBorder": "#FC7E91",
+        "wbSkin": "#d4895a"
       },
-      "updatedAt": "2026-08-25T15:22:34.000Z",
-      "createdAt": "2026-08-25T15:22:34.000Z"
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z",
+      "imagePath": ""
     },
     {
       "id": 5,
@@ -82,11 +85,12 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "93",
-        "wbBorder": "#847AC9",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#7898F0",
+        "wbSkin": "#6b3520"
       },
-      "updatedAt": "2026-08-25T15:22:34.000Z",
-      "createdAt": "2026-08-25T15:22:34.000Z"
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z",
+      "imagePath": ""
     }
   ],
   "exampleOverride": {
