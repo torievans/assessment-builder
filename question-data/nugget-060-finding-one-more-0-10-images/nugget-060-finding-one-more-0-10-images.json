@@ -176,16 +176,21 @@
       "op": "add",
       "subMode": "crossed",
       "cols": 10,
+      "groupSize": 1,
       "mrows": 2,
       "mcols": 5,
-      "illusOutline": true,
+      "illusOutline": "individual",
       "imgScale": 1,
       "numA": false,
       "numB": false,
-      "showEq": false
+      "showEq": false,
+      "crayonCount": 5,
+      "crayonBoxes": 1,
+      "crayonFontSize": 148,
+      "crayonLabel": "5 Crayons"
     },
     "visualType": "pr",
-    "answer": "3",
+    "answer": "4",
     "text": "Count the number of  balls, then **add one more.**"
   }
 }
