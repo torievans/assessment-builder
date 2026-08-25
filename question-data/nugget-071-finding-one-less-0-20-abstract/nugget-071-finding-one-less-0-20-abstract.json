@@ -41,7 +41,7 @@
     },
     {
       "id": 319086,
-      "text": "What is one less than 16?",
+      "text": "What is **one less** than 16?",
       "answer": "15",
       "type": "exact",
       "image": "",
@@ -54,7 +54,8 @@
         "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319087,
