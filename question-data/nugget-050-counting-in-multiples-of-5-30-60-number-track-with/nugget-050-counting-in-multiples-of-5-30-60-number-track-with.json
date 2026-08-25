@@ -1,8 +1,99 @@
 {
   "nuggetId": 50,
   "status": "in-progress",
-  "nextQId": 319198,
-  "questions": [],
+  "nextQId": 319235,
+  "questions": [
+    {
+      "id": 319230,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "35",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "0,5,10,15,20,25,30,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319231,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "40",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "0,5,10,15,20,25,30,35,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319232,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "45",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "0,5,10,15,20,25,30,35,40,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319233,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "50",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "0,5,10,15,20,25,30,35,40,45,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319234,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "55",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "0,5,10,15,20,25,30,35,40,45,50,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "sequence": "0,5,10,15,20,_,?",
