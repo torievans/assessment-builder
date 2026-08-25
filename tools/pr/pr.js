@@ -663,6 +663,7 @@ function prSetMode(btn) {
 function prUpdateMode() {
   const isMultiply = pr_mode === 'multiply';
   const isAddSub   = pr_mode === 'addsub';
+  const isArray    = pr_display === 'array' && !isMultiply;
   const show = (id, v) => { const e = document.getElementById(id); if (e) e.style.display = v ? '' : 'none'; };
   show('pr-count-wrap',     pr_mode === 'count');
   show('pr-group-size-field', pr_mode === 'count');
@@ -673,8 +674,6 @@ function prUpdateMode() {
   show('pr-cols-field',     isArray && !(pr_mode === 'count' && pr_groupSize > 1));
   show('pr-bank-panel',     pr_mode !== 'crayon');
   show('pr-bank-group-sel', isAddSub);
-  const isArray = pr_display === 'array' && !isMultiply;
-  show('pr-cols-field',  isArray);
   show('pr-align-field', !isMultiply);
   // Show outline toggle whenever any illustration is in use or selected in bank
   const hasIllus = pr_imageA.startsWith('illus:') || pr_imageB.startsWith('illus:')
