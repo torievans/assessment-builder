@@ -1,12 +1,12 @@
 {
   "nuggetId": 37,
   "status": "in-progress",
-  "nextQId": 319160,
+  "nextQId": 319190,
   "questions": [
     {
       "id": 319155,
       "text": "**Count in 2s** to find out how many rhinos there are.",
-      "answer": "2",
+      "answer": "8",
       "type": "exact",
       "image": "",
       "display": "",
@@ -24,7 +24,7 @@
         "subMode": "crossed",
         "cols": 10,
         "mrows": 2,
-        "mcols": 1,
+        "mcols": 4,
         "illusOutline": true,
         "imgScale": 1,
         "groupSize": 2,
