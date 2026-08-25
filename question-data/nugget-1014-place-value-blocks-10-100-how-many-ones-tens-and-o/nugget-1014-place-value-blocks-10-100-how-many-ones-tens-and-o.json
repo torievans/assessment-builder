@@ -11,10 +11,14 @@
       "image": "",
       "display": "",
       "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-25T15:11:15.000Z",
-      "createdAt": "2026-08-25T15:11:15.000Z"
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "36",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
     },
     {
       "id": 2,
@@ -24,10 +28,14 @@
       "image": "",
       "display": "",
       "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-25T15:11:15.000Z",
-      "createdAt": "2026-08-25T15:11:15.000Z"
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "54",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
     },
     {
       "id": 3,
@@ -37,10 +45,14 @@
       "image": "",
       "display": "",
       "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-25T15:11:15.000Z",
-      "createdAt": "2026-08-25T15:11:15.000Z"
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "82",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
     },
     {
       "id": 4,
@@ -50,10 +62,14 @@
       "image": "",
       "display": "",
       "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-25T15:11:15.000Z",
-      "createdAt": "2026-08-25T15:11:15.000Z"
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "19",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
     },
     {
       "id": 5,
@@ -63,20 +79,24 @@
       "image": "",
       "display": "",
       "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-25T15:11:15.000Z",
-      "createdAt": "2026-08-25T15:11:15.000Z"
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "73",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
     }
   ],
   "exampleOverride": {
-    "cfg": {
-      "wbText": "26",
-      "wbBorder": "#847AC9",
-      "wbSkin": "#b06530"
-    },
     "visualType": "wb",
-    "answer": "6",
-    "text": "**How many ones** are there in 26?"
+    "text": "**How many ones** are there in 42?",
+    "answer": "2",
+    "cfg": {
+      "wbText": "42",
+      "wbBorder": "#319377",
+      "wbSkin": "#ffa99c"
+    }
   }
 }
