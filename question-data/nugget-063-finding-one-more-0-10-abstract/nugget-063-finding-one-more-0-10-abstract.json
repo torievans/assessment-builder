@@ -59,7 +59,7 @@
     },
     {
       "id": 319047,
-      "text": "What is** one more** than 8?",
+      "text": "What is **one more** than 8?",
       "answer": "9",
       "type": "exact",
       "image": "",
@@ -72,7 +72,8 @@
         "wbSkin": "#6b3520"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319048,
