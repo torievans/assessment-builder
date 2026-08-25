@@ -93,5 +93,16 @@
       "updatedAt": "2026-08-25",
       "createdAt": "2026-08-25"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "sequence": "0,5,10,15,20,_,?",
+      "shape": "circle",
+      "layout": "straight",
+      "colourMode": "full"
+    },
+    "visualType": "nt",
+    "answer": "30",
+    "text": "**Count in 5s** to find the missing number."
+  }
 }
