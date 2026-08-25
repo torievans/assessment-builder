@@ -1225,7 +1225,7 @@ function pictorialSVG(cfg) {
       return { w: maxX - ox, h: maxY - oy };
     } else {
       const {w, h} = arrayBox(count, cols);
-      const _OP = R * 0.3;
+      const _OP = Math.min(R * 0.3, GAP / 2 - 2);
       const _rx = (R * 0.45).toFixed(1);
       const _st = `rx="${_rx}" fill="none" stroke="#D1D5DB" stroke-width="2.5"`;
       if (illusOutline === 'row') {
@@ -1429,7 +1429,7 @@ function pictorialSVG(cfg) {
     const count = mrows * mcols;
     const {w, h} = arrayBox(count, mcols);
     svgW = w + PAD * 2; svgH = h + PAD * 2;
-    const _mOP = R * 0.3;
+    const _mOP = Math.min(R * 0.3, GAP / 2 - 2);
     const _mSt = `rx="${(R*0.45).toFixed(1)}" fill="none" stroke="#D1D5DB" stroke-width="2.5"`;
     if (illusOutline === 'row') {
       for (let r_ = 0; r_ < mrows; r_++) {
