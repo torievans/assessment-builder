@@ -1,7 +1,156 @@
 {
   "nuggetId": 1012,
-  "status": "not-started",
-  "nextQId": 319288,
-  "questions": [],
-  "exampleOverride": null
+  "status": "in-progress",
+  "nextQId": 6,
+  "questions": [
+    {
+      "id": 1,
+      "text": "How many **tens** are there in 23?",
+      "answer": "2",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 23,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 2,
+      "text": "How many **tens** are there in 45?",
+      "answer": "4",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 45,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 3,
+      "text": "How many **tens** are there in 61?",
+      "answer": "6",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 61,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 4,
+      "text": "How many **tens** are there in 37?",
+      "answer": "3",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 37,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 5,
+      "text": "How many **tens** are there in 82?",
+      "answer": "8",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 82,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    }
+  ],
+  "exampleOverride": {
+    "visualType": "pv",
+    "text": "How many **tens** are there in 34?",
+    "answer": "3",
+    "cfg": {
+      "n": 34,
+      "repType": "blocks",
+      "dispMode": "standalone",
+      "numEqMode": "none",
+      "missingVals": [],
+      "blkColors": {
+        "1": "#C86464",
+        "10": "#F0B478",
+        "100": "#50B4A0",
+        "1000": "#788CB4"
+      },
+      "pvColors": {}
+    }
+  }
 }
