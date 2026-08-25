@@ -102,6 +102,7 @@ const PR_IMAGE_BANK = [
 let pr_mode         = 'count';
 let pr_crayonCount  = 5;
 let pr_crayonBoxes  = 1;
+let pr_crayonFontSize = 148;
 let pr_crayonLabel  = '5 Crayons';
 let pr_display      = 'array';    // 'array' | 'frame' | 'clustered'
 let pr_align        = 'left';     // 'left' | 'centre'  (array only)
@@ -565,6 +566,17 @@ function prPanelHTML() {
             oninput="pr_crayonLabel=this.value;autoPreviewPR()">
         </div>
       </div>
+      <div class="form-row" style="margin-top:8px">
+        <div class="field"><label>Label size</label>
+          <div style="display:flex;align-items:center;gap:4px">
+            <button class="tog-btn" onclick="prDeltaCrayonFontSize(-10)" style="width:30px;height:30px;padding:0">−</button>
+            <input type="number" id="pr-crayon-fontsize" min="40" max="300" step="10" value="148"
+              style="width:52px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:4px;font-size:14px;font-family:var(--font)"
+              oninput="pr_crayonFontSize=Math.max(40,Math.min(300,+this.value||148));autoPreviewPR()">
+            <button class="tog-btn" onclick="prDeltaCrayonFontSize(10)"  style="width:30px;height:30px;padding:0">+</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="sec-hr"></div>
 
@@ -734,6 +746,13 @@ function prDeltaCols(d) {
   autoPreviewPR();
 }
 
+function prDeltaCrayonFontSize(d) {
+  pr_crayonFontSize = Math.max(40, Math.min(300, pr_crayonFontSize + d));
+  const el = document.getElementById('pr-crayon-fontsize');
+  if (el) el.value = pr_crayonFontSize;
+  autoPreviewPR();
+}
+
 function prDeltaCrayonBoxes(d) {
   pr_crayonBoxes = Math.max(1, Math.min(12, pr_crayonBoxes + d));
   const el = document.getElementById('pr-crayon-boxes');
@@ -803,6 +822,7 @@ function getPRConfig() {
     showEq:       pr_showEq,
     crayonCount:  pr_crayonCount,
     crayonBoxes:  pr_crayonBoxes,
+    crayonFontSize: pr_crayonFontSize,
     crayonLabel:  pr_crayonLabel,
   };
 }
@@ -822,6 +842,7 @@ function restorePRConfig(cfg) {
   pr_mrows        = cfg.mrows        || 2;
   pr_crayonCount  = cfg.crayonCount  || 5;
   pr_crayonBoxes  = cfg.crayonBoxes  || 1;
+  pr_crayonFontSize = cfg.crayonFontSize || 148;
   pr_crayonLabel  = cfg.crayonLabel  !== undefined ? cfg.crayonLabel : '5 Crayons';
   pr_mcols        = cfg.mcols        || 5;
   pr_illusOutline = cfg.illusOutline !== false;
@@ -850,6 +871,7 @@ function restorePRConfig(cfg) {
   document.querySelectorAll('[data-prmode]').forEach(b => b.classList.toggle('active', b.dataset.prmode === pr_mode));
   const crEl = document.getElementById('pr-crayon-count'); if (crEl) crEl.value = pr_crayonCount;
   const crBx = document.getElementById('pr-crayon-boxes'); if (crBx) crBx.value = pr_crayonBoxes;
+  const crFs = document.getElementById('pr-crayon-fontsize'); if (crFs) crFs.value = pr_crayonFontSize;
   const crLb = document.getElementById('pr-crayon-label'); if (crLb) crLb.value = pr_crayonLabel;
   document.querySelectorAll('[data-prd]').forEach(b => b.classList.toggle('active', b.dataset.prd === pr_display));
   document.querySelectorAll('[data-pralign]').forEach(b => b.classList.toggle('active', b.dataset.pralign === pr_align));
@@ -865,7 +887,7 @@ function restorePRConfig(cfg) {
 
 function prResetState() {
   pr_mode = 'count'; pr_display = 'array'; pr_align = 'left';
-  pr_crayonCount = 5; pr_crayonBoxes = 1; pr_crayonLabel = '5 Crayons';
+  pr_crayonCount = 5; pr_crayonBoxes = 1; pr_crayonFontSize = 148; pr_crayonLabel = '5 Crayons';
   pr_countA = 7; pr_imageA = 'illus:space/crescent_moon_yellow';
   pr_countB = 3; pr_imageB = 'illus:space/crescent_moon_yellow';
   pr_op = 'add'; pr_subMode = 'crossed';
@@ -880,7 +902,7 @@ function prResetState() {
 // ── Crayon Box SVG Builder ────────────────────────────────────────────────────
 const CRAYON_BOX_X = [3.24, 161.24, 322.02, 477.86, 634.52, 796.13, 954.44, 1111.93, 1267.91, 1425.40];
 
-function buildCrayonBoxSVG(n, label) {
+function buildCrayonBoxSVG(n, label, fontSize) {
   const COLORS = ['#7898f0','#319377','#847ac9','#f5995b','#fc7e91','#d46b55','#fecc6b','#efe5c5','#a8a6a5','#3f3f3f'];
   const DARK = '#1f1f1f';
   const CRAYON_W = 144.29, RIGHT_PAD = 4.16, VH = 1554.5, ORIG_W = 1573.85;
@@ -963,7 +985,7 @@ function buildCrayonBoxSVG(n, label) {
   parts.push(`<ellipse fill="#fff2d4" cx="${(W/2).toFixed(2)}" cy="1029.46" rx="${(556.95*W/ORIG_W).toFixed(2)}" ry="233"/>`);
   if (label) {
     const esc = label.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    parts.push(`<text fill="#333" text-anchor="middle" font-family="'Proxima Soft',sans-serif" font-size="147.94" font-weight="800" x="${(W/2).toFixed(2)}" y="1068.708">${esc}</text>`);
+    parts.push(`<text fill="#333" text-anchor="middle" font-family="'Proxima Soft',sans-serif" font-size="${fontSize || 148}" font-weight="800" x="${(W/2).toFixed(2)}" y="1068.708">${esc}</text>`);
   }
   return parts.join('');
 }
@@ -988,6 +1010,7 @@ function pictorialSVG(cfg) {
     showCount    = false,
     crayonCount  = 5,
     crayonBoxes  = 1,
+    crayonFontSize = 148,
     crayonLabel  = '5 Crayons',
   } = cfg;
 
@@ -1290,7 +1313,7 @@ function pictorialSVG(cfg) {
     }
 
   } else if (mode === 'crayon') {
-    const boxSVG  = buildCrayonBoxSVG(crayonCount, crayonLabel);
+    const boxSVG  = buildCrayonBoxSVG(crayonCount, crayonLabel, crayonFontSize);
     const VH      = 1554.5;
     const W       = CRAYON_BOX_X[Math.max(1,Math.min(10,crayonCount))-1] + 144.29 + 4.16;
     const displayH = 200;
