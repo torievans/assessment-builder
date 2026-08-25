@@ -1,6 +1,25 @@
 {
   "nuggetId": 105,
-  "status": "not-started",
-  "nextQId": 319298,
-  "questions": []
+  "status": "in-progress",
+  "nextQId": 319299,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "n": 50,
+      "repType": "blocks",
+      "dispMode": "standalone",
+      "numEqMode": "none",
+      "missingVals": [],
+      "blkColors": {
+        "1": "#C86464",
+        "10": "#F0B478",
+        "100": "#50B4A0",
+        "1000": "#788CB4"
+      },
+      "pvColors": {}
+    },
+    "visualType": "pv",
+    "answer": "5",
+    "text": "How many tens are there is 50?"
+  }
 }
