@@ -101,6 +101,7 @@ const PR_IMAGE_BANK = [
 // ── State ─────────────────────────────────────────────────────────────────────
 let pr_mode         = 'count';
 let pr_crayonCount  = 5;
+let pr_crayonBoxes  = 1;
 let pr_crayonLabel  = '5 Crayons';
 let pr_display      = 'array';    // 'array' | 'frame' | 'clustered'
 let pr_align        = 'left';     // 'left' | 'centre'  (array only)
@@ -549,6 +550,15 @@ function prPanelHTML() {
             <button class="tog-btn" onclick="prDeltaCrayon(1)"  style="width:30px;height:30px;padding:0">+</button>
           </div>
         </div>
+        <div class="field"><label>No. of boxes</label>
+          <div style="display:flex;align-items:center;gap:4px">
+            <button class="tog-btn" onclick="prDeltaCrayonBoxes(-1)" style="width:30px;height:30px;padding:0">−</button>
+            <input type="number" id="pr-crayon-boxes" min="1" max="12" value="1"
+              style="width:52px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:4px;font-size:14px;font-family:var(--font)"
+              oninput="pr_crayonBoxes=Math.max(1,Math.min(12,+this.value||1));autoPreviewPR()">
+            <button class="tog-btn" onclick="prDeltaCrayonBoxes(1)"  style="width:30px;height:30px;padding:0">+</button>
+          </div>
+        </div>
         <div class="field field-grow"><label>Box label</label>
           <input type="text" id="pr-crayon-label" value="5 Crayons"
             style="border:1.5px solid var(--border);border-radius:8px;padding:4px 8px;font-size:14px;font-family:var(--font);width:100%"
@@ -724,6 +734,13 @@ function prDeltaCols(d) {
   autoPreviewPR();
 }
 
+function prDeltaCrayonBoxes(d) {
+  pr_crayonBoxes = Math.max(1, Math.min(12, pr_crayonBoxes + d));
+  const el = document.getElementById('pr-crayon-boxes');
+  if (el) el.value = pr_crayonBoxes;
+  autoPreviewPR();
+}
+
 function prDeltaCrayon(d) {
   pr_crayonCount = Math.max(1, Math.min(10, pr_crayonCount + d));
   const el = document.getElementById('pr-crayon-count');
@@ -733,7 +750,7 @@ function prDeltaCrayon(d) {
 
 function prComputeAnswer() {
   if (pr_mode === 'count')  return pr_countA;
-  if (pr_mode === 'crayon') return pr_crayonCount;
+  if (pr_mode === 'crayon') return pr_crayonCount * pr_crayonBoxes;
   if (pr_mode === 'multiply') return pr_mrows * pr_mcols;
   if (pr_mode === 'addsub') {
     if (pr_op === 'add') return pr_countA + pr_countB;
@@ -785,6 +802,7 @@ function getPRConfig() {
     numB:         pr_numB,
     showEq:       pr_showEq,
     crayonCount:  pr_crayonCount,
+    crayonBoxes:  pr_crayonBoxes,
     crayonLabel:  pr_crayonLabel,
   };
 }
@@ -803,6 +821,7 @@ function restorePRConfig(cfg) {
   pr_cols         = cfg.cols         || 5;
   pr_mrows        = cfg.mrows        || 2;
   pr_crayonCount  = cfg.crayonCount  || 5;
+  pr_crayonBoxes  = cfg.crayonBoxes  || 1;
   pr_crayonLabel  = cfg.crayonLabel  !== undefined ? cfg.crayonLabel : '5 Crayons';
   pr_mcols        = cfg.mcols        || 5;
   pr_illusOutline = cfg.illusOutline !== false;
@@ -830,6 +849,7 @@ function restorePRConfig(cfg) {
   sc('pr-show-eq', pr_showEq);
   document.querySelectorAll('[data-prmode]').forEach(b => b.classList.toggle('active', b.dataset.prmode === pr_mode));
   const crEl = document.getElementById('pr-crayon-count'); if (crEl) crEl.value = pr_crayonCount;
+  const crBx = document.getElementById('pr-crayon-boxes'); if (crBx) crBx.value = pr_crayonBoxes;
   const crLb = document.getElementById('pr-crayon-label'); if (crLb) crLb.value = pr_crayonLabel;
   document.querySelectorAll('[data-prd]').forEach(b => b.classList.toggle('active', b.dataset.prd === pr_display));
   document.querySelectorAll('[data-pralign]').forEach(b => b.classList.toggle('active', b.dataset.pralign === pr_align));
@@ -845,7 +865,7 @@ function restorePRConfig(cfg) {
 
 function prResetState() {
   pr_mode = 'count'; pr_display = 'array'; pr_align = 'left';
-  pr_crayonCount = 5; pr_crayonLabel = '5 Crayons';
+  pr_crayonCount = 5; pr_crayonBoxes = 1; pr_crayonLabel = '5 Crayons';
   pr_countA = 7; pr_imageA = 'illus:space/crescent_moon_yellow';
   pr_countB = 3; pr_imageB = 'illus:space/crescent_moon_yellow';
   pr_op = 'add'; pr_subMode = 'crossed';
@@ -967,6 +987,7 @@ function pictorialSVG(cfg) {
     showEq  = false,
     showCount    = false,
     crayonCount  = 5,
+    crayonBoxes  = 1,
     crayonLabel  = '5 Crayons',
   } = cfg;
 
@@ -1269,14 +1290,19 @@ function pictorialSVG(cfg) {
     }
 
   } else if (mode === 'crayon') {
-    const boxSVG = buildCrayonBoxSVG(crayonCount, crayonLabel);
-    const VH = 1554.5;
-    const W  = CRAYON_BOX_X[Math.max(1,Math.min(10,crayonCount))-1] + 144.29 + 4.16;
+    const boxSVG  = buildCrayonBoxSVG(crayonCount, crayonLabel);
+    const VH      = 1554.5;
+    const W       = CRAYON_BOX_X[Math.max(1,Math.min(10,crayonCount))-1] + 144.29 + 4.16;
     const displayH = 200;
     const displayW = displayH * W / VH;
-    svgW = displayW + PAD * 2;
+    const boxes   = Math.max(1, crayonBoxes);
+    const boxGap  = 12;
+    svgW = PAD * 2 + boxes * displayW + (boxes - 1) * boxGap;
     svgH = displayH + PAD * 2;
-    parts.push(`<svg x="${PAD}" y="${PAD}" viewBox="0 0 ${W.toFixed(2)} ${VH}" width="${displayW.toFixed(1)}" height="${displayH}">${boxSVG}</svg>`);
+    for (let b = 0; b < boxes; b++) {
+      const bx = PAD + b * (displayW + boxGap);
+      parts.push(`<svg x="${bx.toFixed(1)}" y="${PAD}" viewBox="0 0 ${W.toFixed(2)} ${VH}" width="${displayW.toFixed(1)}" height="${displayH}">${boxSVG}</svg>`);
+    }
 
   } else if (mode === 'multiply') {
     const count = mrows * mcols;
