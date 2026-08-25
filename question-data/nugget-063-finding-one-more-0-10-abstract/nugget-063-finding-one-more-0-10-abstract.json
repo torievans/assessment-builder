@@ -23,7 +23,7 @@
     },
     {
       "id": 319045,
-      "text": "What is** one more** than 6?",
+      "text": "What is **one more** than 6?",
       "answer": "7",
       "type": "exact",
       "image": "",
@@ -36,7 +36,8 @@
         "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319046,
