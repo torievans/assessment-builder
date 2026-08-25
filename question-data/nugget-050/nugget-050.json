@@ -6,7 +6,7 @@
   "exampleOverride": {
     "cfg": {
       "sequence": "0,5,10,15,20,_,?",
-      "shape": "square",
+      "shape": "circle",
       "layout": "straight",
       "colourMode": "full"
     },
