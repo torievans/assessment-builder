@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 1,
-      "text": "How many **tens** are there in 34?",
+      "text": "**How many tens** are there in 34?",
       "answer": "3",
       "type": "exact",
       "image": "",
