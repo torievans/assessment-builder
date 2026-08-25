@@ -1,0 +1,97 @@
+{
+  "nuggetId": 51,
+  "status": "in-progress",
+  "nextQId": 319240,
+  "questions": [
+    {
+      "id": 319235,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "40",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "0,5,10,15,20,25,_,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319236,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "45",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "0,5,10,15,20,25,30,_,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319237,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "50",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "0,5,10,15,20,25,30,35,_,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319238,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "55",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "0,5,10,15,20,25,30,35,40,_,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319239,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "60",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "0,5,10,15,20,25,30,35,40,45,_,_,?",
+        "shape": "circle",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    }
+  ]
+}
