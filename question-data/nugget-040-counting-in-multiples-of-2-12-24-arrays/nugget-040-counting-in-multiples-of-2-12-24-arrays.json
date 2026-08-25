@@ -1,0 +1,31 @@
+{
+  "nuggetId": 40,
+  "status": "in-progress",
+  "nextQId": 319139,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "mode": "multiply",
+      "display": "array",
+      "align": "left",
+      "countA": 12,
+      "imageIdA": "illus:food/fruit/watermelon_green",
+      "countB": 3,
+      "imageIdB": "illus:space/crescent_moon_yellow",
+      "op": "add",
+      "subMode": "crossed",
+      "cols": 10,
+      "mrows": 2,
+      "mcols": 7,
+      "illusOutline": true,
+      "imgScale": 1,
+      "groupSize": 2,
+      "numA": false,
+      "numB": false,
+      "showEq": false
+    },
+    "visualType": "pr",
+    "answer": "14",
+    "text": "**Count in 2s** to find out how many watermelons there are."
+  }
+}
