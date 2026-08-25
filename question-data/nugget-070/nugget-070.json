@@ -41,7 +41,7 @@
     },
     {
       "id": 319081,
-      "text": "What is** one less** than 6?",
+      "text": "What is **one less** than 6?",
       "answer": "5",
       "type": "exact",
       "image": "",
