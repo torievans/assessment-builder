@@ -42,7 +42,7 @@
     {
       "id": 319030,
       "text": "Count the number of giraffes, then **add one more.**",
-      "answer": "6",
+      "answer": "5",
       "type": "exact",
       "image": "",
       "display": "",
@@ -59,13 +59,18 @@
         "op": "add",
         "subMode": "crossed",
         "cols": 10,
+        "groupSize": 1,
         "mrows": 2,
         "mcols": 5,
-        "illusOutline": true,
+        "illusOutline": "individual",
         "imgScale": 1,
         "numA": false,
         "numB": false,
-        "showEq": false
+        "showEq": false,
+        "crayonCount": 5,
+        "crayonBoxes": 1,
+        "crayonFontSize": 148,
+        "crayonLabel": "5 Crayons"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
