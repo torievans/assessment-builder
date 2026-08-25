@@ -25,11 +25,11 @@
       "showEq": false,
       "crayonCount": 10,
       "crayonBoxes": 7,
-      "crayonFontSize": 148,
-      "crayonLabel": "10 Crayons"
+      "crayonFontSize": 300,
+      "crayonLabel": "10"
     },
     "visualType": "pr",
     "answer": "70",
-    "text": "Count in 10s to find out how many balls there are."
+    "text": "**Count in 10s** to find out how many crayons there are altogether."
   }
 }
