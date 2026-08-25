@@ -116,7 +116,7 @@ let pr_subMode      = 'crossed';  // 'total' | 'separate' | 'crossed'
 let pr_cols         = 5;
 let pr_mrows        = 2;
 let pr_mcols        = 5;
-let pr_illusOutline = true;       // show circle outline under illustrations
+let pr_illusOutline = 'individual'; // outline mode: 'individual'|'group'|'row'|'column'|'none'
 let pr_imgScale    = 1.0;         // image scale multiplier (1.0 = default)
 let pr_numA        = false;       // show Group A as a numeral instead of images
 let pr_numB        = false;       // show Group B as a numeral instead of images
@@ -415,13 +415,16 @@ function prPanelHTML() {
           <button class="tog-btn"        data-banktab="counter" onclick="prBankSetTab(this)">😊 Friendly Counters</button>
           <button class="tog-btn"        data-banktab="emoji"   onclick="prBankSetTab(this)">🐯 Emojis</button>
         </div>
-        <!-- Circle outline toggle — shown inline next to tabs when illustrations are active -->
-        <div id="pr-illus-opts" style="display:none">
-          <label style="font-size:11px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;color:var(--muted)">
-            <input type="checkbox" id="pr-illus-outline" checked
-              onchange="pr_illusOutline=this.checked;autoPreviewPR()">
-            Circle outline
-          </label>
+        <!-- Outline mode — shown inline next to tabs when illustrations are active -->
+        <div id="pr-illus-opts" style="display:none;flex-direction:column;gap:4px">
+          <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)">Outline</span>
+          <div class="tog-row" style="gap:3px;flex-wrap:wrap">
+            <button class="tog-btn"        data-outline="none"       onclick="prSetOutline(this)" style="font-size:11px;padding:3px 7px">None</button>
+            <button class="tog-btn active" data-outline="individual" onclick="prSetOutline(this)" style="font-size:11px;padding:3px 7px">Each</button>
+            <button class="tog-btn"        data-outline="group"      onclick="prSetOutline(this)" style="font-size:11px;padding:3px 7px">Group</button>
+            <button class="tog-btn"        data-outline="row"        onclick="prSetOutline(this)" style="font-size:11px;padding:3px 7px">Row</button>
+            <button class="tog-btn"        data-outline="column"     onclick="prSetOutline(this)" style="font-size:11px;padding:3px 7px">Column</button>
+          </div>
         </div>
         <!-- Image scale slider — always visible -->
         <div style="display:flex;align-items:center;gap:6px;white-space:nowrap">
@@ -691,6 +694,13 @@ function prSetDisplay(btn) {
   autoPreviewPR();
 }
 
+function prSetOutline(btn) {
+  pr_illusOutline = btn.dataset.outline;
+  document.querySelectorAll('[data-outline]').forEach(b =>
+    b.classList.toggle('active', b.dataset.outline === pr_illusOutline));
+  autoPreviewPR();
+}
+
 function prSetAlign(btn) {
   pr_align = btn.dataset.pralign;
   document.querySelectorAll('[data-pralign]').forEach(b =>
@@ -867,7 +877,8 @@ function restorePRConfig(cfg) {
   pr_crayonFontSize = cfg.crayonFontSize || 148;
   pr_crayonLabel  = cfg.crayonLabel  !== undefined ? cfg.crayonLabel : '5 Crayons';
   pr_mcols        = cfg.mcols        || 5;
-  pr_illusOutline = cfg.illusOutline !== false;
+  const _oi = cfg.illusOutline;
+  pr_illusOutline = _oi === true ? 'individual' : _oi === false ? 'none' : (_oi || 'individual');
   pr_imgScale     = cfg.imgScale ?? 1.0;
   pr_numA         = !!cfg.numA;
   pr_numB         = !!cfg.numB;
@@ -891,6 +902,8 @@ function restorePRConfig(cfg) {
   sc('pr-num-b',   pr_numB);
   sc('pr-show-eq', pr_showEq);
   document.querySelectorAll('[data-prmode]').forEach(b => b.classList.toggle('active', b.dataset.prmode === pr_mode));
+  document.querySelectorAll('[data-outline]').forEach(b =>
+    b.classList.toggle('active', b.dataset.outline === pr_illusOutline));
   const gsEl = document.getElementById('pr-group-size'); if (gsEl) gsEl.value = pr_groupSize;
   const crEl = document.getElementById('pr-crayon-count'); if (crEl) crEl.value = pr_crayonCount;
   const crBx = document.getElementById('pr-crayon-boxes'); if (crBx) crBx.value = pr_crayonBoxes;
@@ -916,7 +929,7 @@ function prResetState() {
   pr_countB = 3; pr_imageB = 'illus:space/crescent_moon_yellow';
   pr_op = 'add'; pr_subMode = 'crossed';
   pr_cols = 5; pr_mrows = 2; pr_mcols = 5;
-  pr_illusOutline = true;
+  pr_illusOutline = 'individual';
   pr_numA = false; pr_numB = false; pr_showEq = false;
   pr_bankA = 'illus'; pr_bankB = 'illus'; pr_bankGroupSel = 'A';
   pr_counterA = {s:0, f:0, c:0}; pr_counterB = {s:1, f:2, c:3};
@@ -1027,7 +1040,7 @@ function pictorialSVG(cfg) {
     cols        = 5,
     groupSize   = 1,
     mrows       = 2,  mcols = 5,
-    illusOutline = true,
+    illusOutline = 'individual',
     imgScale = 1.0,
     numA    = false,
     numB    = false,
@@ -1085,7 +1098,7 @@ function pictorialSVG(cfg) {
       const url = `${ILLUS_BASE}/${img.id}.png`;
       const ar  = img.ar || 1;
       // Without the circle clip there's nothing to trim corners, so scale up a bit
-      const T    = illusOutline ? 0.88 : 1.1;
+      const T    = illusOutline === 'individual' ? 0.88 : 1.1;
       const ISCL = ar >= 1
         ? T / Math.sqrt(1 + 1 / (ar * ar))
         : T / Math.sqrt(ar * ar + 1);
@@ -1095,10 +1108,10 @@ function pictorialSVG(cfg) {
       const idy = img.dy || 0;
       const ix  = cx - (0.5 + idx) * iw;
       const iy  = cy - (0.5 + idy) * ih;
-      if (illusOutline) {
+      if (illusOutline === 'individual') {
         s += `<circle cx="${cx}" cy="${cy}" r="${IR}" fill="#fff" stroke="#D1D5DB" stroke-width="2"/>`;
         const id = uid();
-        defs.push(`<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${IR}"/></clipPath>`);
+        if (illusOutline === 'individual') defs.push(`<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${IR}"/></clipPath>`);
         s += `<image x="${ix}" y="${iy}" width="${iw}" height="${ih}" href="${url}" clip-path="url(#${id})" preserveAspectRatio="none"/>`;
       } else {
         s += `<image x="${ix}" y="${iy}" width="${iw}" height="${ih}" href="${url}" preserveAspectRatio="none"/>`;
@@ -1212,6 +1225,24 @@ function pictorialSVG(cfg) {
       return { w: maxX - ox, h: maxY - oy };
     } else {
       const {w, h} = arrayBox(count, cols);
+      const _OP = R * 0.3;
+      const _rx = (R * 0.45).toFixed(1);
+      const _st = `rx="${_rx}" fill="none" stroke="#D1D5DB" stroke-width="2.5"`;
+      if (illusOutline === 'row') {
+        const nr = Math.ceil(count / cols);
+        for (let r_ = 0; r_ < nr; r_++) {
+          const iir = Math.min(cols, count - r_ * cols);
+          parts.push(`<rect x="${(ox - _OP).toFixed(1)}" y="${(oy + r_ * S - _OP).toFixed(1)}" width="${(iir * S - GAP + 2 * _OP).toFixed(1)}" height="${(S - GAP + 2 * _OP).toFixed(1)}" ${_st}/>`);
+        }
+      } else if (illusOutline === 'column') {
+        const nc = Math.min(count, cols);
+        for (let c_ = 0; c_ < nc; c_++) {
+          const nic = Math.floor((count - c_ - 1) / cols) + 1;
+          parts.push(`<rect x="${(ox + c_ * S - _OP).toFixed(1)}" y="${(oy - _OP).toFixed(1)}" width="${(S - GAP + 2 * _OP).toFixed(1)}" height="${(nic * S - GAP + 2 * _OP).toFixed(1)}" ${_st}/>`);
+        }
+      } else if (illusOutline === 'group') {
+        parts.push(`<rect x="${(ox - _OP).toFixed(1)}" y="${(oy - _OP).toFixed(1)}" width="${(w + 2 * _OP).toFixed(1)}" height="${(h + 2 * _OP).toFixed(1)}" ${_st}/>`);
+      }
       arrayPts(count, cols, ox, oy, forceLeft).forEach(({x, y}, i) =>
         parts.push(renderItem(img, x, y, crossFrom !== undefined && i >= crossFrom, undefined, showCount ? i + 1 : undefined)));
       return { w, h };
@@ -1230,6 +1261,18 @@ function pictorialSVG(cfg) {
     const groupStep  = (groupCols + 1) * S - GAP;   // group width + S gap to next group
     const numGroups  = Math.ceil(total / groupSz);
     let totalW = 0;
+    const _gOP = R * 0.3;
+    const _gSt = `rx="${(R*0.45).toFixed(1)}" fill="none" stroke="#D1D5DB" stroke-width="2.5"`;
+    // Draw group outlines first (so items render on top)
+    if (illusOutline === 'group') {
+      for (let g = 0; g < numGroups; g++) {
+        const gx = ox + g * groupStep;
+        const inG = Math.min(groupSz, total - g * groupSz);
+        const gW = Math.min(inG, GROUP_COLS) * S - GAP;
+        const gH = Math.ceil(inG / GROUP_COLS) * S - GAP;
+        parts.push(`<rect x="${(gx - _gOP).toFixed(1)}" y="${(oy - _gOP).toFixed(1)}" width="${(gW + 2*_gOP).toFixed(1)}" height="${(gH + 2*_gOP).toFixed(1)}" ${_gSt}/>`);
+      }
+    }
     for (let g = 0; g < numGroups; g++) {
       const gx = ox + g * groupStep;
       const inThisGroup = Math.min(groupSz, total - g * groupSz);
