@@ -1,7 +1,7 @@
 {
   "nuggetId": 53,
-  "status": "in-progress",
-  "nextQId": 319288,
+  "status": "ready-for-qa",
+  "nextQId": 319298,
   "questions": [
     {
       "id": 319254,
@@ -211,6 +211,6 @@
     },
     "visualType": "pr",
     "answer": "30",
-    "text": "Count in 10s to find out how many balls there are."
+    "text": "**Count in 10s** to find out how many balls there are."
   }
 }
