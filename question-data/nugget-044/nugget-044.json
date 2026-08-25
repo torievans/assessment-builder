@@ -1,7 +1,7 @@
 {
   "nuggetId": 44,
   "status": "ready-for-qa",
-  "nextQId": 319225,
+  "nextQId": 319240,
   "questions": [
     {
       "id": 319201,
@@ -176,14 +176,18 @@
       "op": "add",
       "subMode": "crossed",
       "cols": 5,
+      "groupSize": 5,
       "mrows": 2,
       "mcols": 5,
-      "illusOutline": true,
+      "illusOutline": "group",
       "imgScale": 1,
-      "groupSize": 5,
       "numA": false,
       "numB": false,
-      "showEq": false
+      "showEq": false,
+      "crayonCount": 5,
+      "crayonBoxes": 1,
+      "crayonFontSize": 148,
+      "crayonLabel": "5 Crayons"
     },
     "visualType": "pr",
     "answer": "15",
