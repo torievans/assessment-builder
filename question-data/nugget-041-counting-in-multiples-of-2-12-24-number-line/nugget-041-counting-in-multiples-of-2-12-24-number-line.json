@@ -67,7 +67,10 @@
         "valuesGivenEvery": 2,
         "answer": "18",
         "lineStyle": "terminate",
-        "colour": "orange"
+        "colour": "orange",
+        "hideFrom": 6,
+        "hideTo": 24,
+        "answerCircle": "answer"
       },
       "updatedAt": "2026-08-25",
       "createdAt": "2026-08-25"
