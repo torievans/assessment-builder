@@ -11,10 +11,14 @@
       "image": "",
       "display": "",
       "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-25T15:11:15.000Z",
-      "createdAt": "2026-08-25T15:11:15.000Z"
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "20",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
     },
     {
       "id": 2,
@@ -24,10 +28,14 @@
       "image": "",
       "display": "",
       "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-25T15:11:15.000Z",
-      "createdAt": "2026-08-25T15:11:15.000Z"
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "50",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
     },
     {
       "id": 3,
@@ -37,10 +45,14 @@
       "image": "",
       "display": "",
       "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-25T15:11:15.000Z",
-      "createdAt": "2026-08-25T15:11:15.000Z"
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "80",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
     },
     {
       "id": 4,
@@ -50,10 +62,14 @@
       "image": "",
       "display": "",
       "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-25T15:11:15.000Z",
-      "createdAt": "2026-08-25T15:11:15.000Z"
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "30",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
     },
     {
       "id": 5,
@@ -63,20 +79,24 @@
       "image": "",
       "display": "",
       "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-25T15:11:15.000Z",
-      "createdAt": "2026-08-25T15:11:15.000Z"
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "60",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
     }
   ],
   "exampleOverride": {
     "cfg": {
-      "wbText": "40",
+      "wbText": "50",
       "wbBorder": "#319377",
       "wbSkin": "#ffa99c"
     },
     "visualType": "wb",
-    "answer": "4",
-    "text": "How many tens are the in 40?"
+    "answer": "5",
+    "text": "**How many tens** are there in 50?"
   }
 }
