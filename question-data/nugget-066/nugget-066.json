@@ -77,7 +77,7 @@
     },
     {
       "id": 319063,
-      "text": "What is one more than 91?",
+      "text": "What is **one more** than 91?",
       "answer": "92",
       "type": "exact",
       "image": "",
@@ -89,6 +89,7 @@
         "wbBorder": "#FECC6B",
         "wbSkin": "#b06530"
       },
+      "imagePath": "",
       "updatedAt": "2026-08-25",
       "createdAt": "2026-08-25"
     }
