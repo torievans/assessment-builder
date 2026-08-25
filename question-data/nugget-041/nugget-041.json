@@ -122,7 +122,8 @@
       "lineStyle": "terminate",
       "colour": "orange",
       "hideFrom": 6,
-      "hideTo": 24
+      "hideTo": 24,
+      "answerCircle": "answer"
     },
     "visualType": "nl",
     "answer": "14",
