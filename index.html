@@ -2817,7 +2817,7 @@ document.addEventListener('keydown',function(e){
   }
 });
 
-// Cmd+B / Ctrl+B → wrap selection with ** in any question-text input
+// Cmd+B / Ctrl+B → wrap/unwrap selection with ** in any question-text input
 const Q_TEXT_IDS=new Set(['nl-text','nt-text','pv-text','pr-text','nr-text','bm-text','text-q-text','custom-q-text']);
 document.addEventListener('keydown',e=>{
   if(e.key!=='b'||(!e.metaKey&&!e.ctrlKey))return;
@@ -2827,11 +2827,17 @@ document.addEventListener('keydown',e=>{
   e.preventDefault();
   const s=el.selectionStart,end=el.selectionEnd,v=el.value;
   if(s===end){
+    // No selection: insert **** and place cursor between them
     el.value=v.slice(0,s)+'****'+v.slice(s);
     el.selectionStart=el.selectionEnd=s+2;
+  }else if(s>=2&&end<=v.length-2&&v.slice(s-2,s)==='**'&&v.slice(end,end+2)==='**'){
+    // Already wrapped — toggle off
+    el.value=v.slice(0,s-2)+v.slice(s,end)+v.slice(end+2);
+    el.selectionStart=s-2;el.selectionEnd=end-2;
   }else{
+    // Wrap selection; cursor lands after closing **
     el.value=v.slice(0,s)+'**'+v.slice(s,end)+'**'+v.slice(end);
-    el.selectionStart=s;el.selectionEnd=end+4;
+    el.selectionStart=el.selectionEnd=end+4;
   }
 });
 </script>
