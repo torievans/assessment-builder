@@ -1,8 +1,139 @@
 {
   "nuggetId": 105,
   "status": "in-progress",
-  "nextQId": 319299,
-  "questions": [],
+  "nextQId": 319304,
+  "questions": [
+    {
+      "id": 1,
+      "text": "How many **tens** are there in 20?",
+      "answer": "2",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 20,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 2,
+      "text": "How many **tens** are there in 40?",
+      "answer": "4",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 40,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 3,
+      "text": "How many **tens** are there in 70?",
+      "answer": "7",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 70,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 4,
+      "text": "How many **tens** are there in 30?",
+      "answer": "3",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 30,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 5,
+      "text": "How many **tens** are there in 90?",
+      "answer": "9",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 90,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "n": 50,
