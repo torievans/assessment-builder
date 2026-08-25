@@ -150,7 +150,7 @@
     {
       "id": 319033,
       "text": "Count the number of flamingos, then **add one more.**",
-      "answer": "7",
+      "answer": "9",
       "type": "exact",
       "image": "",
       "display": "",
@@ -160,7 +160,7 @@
         "mode": "count",
         "display": "array",
         "align": "left",
-        "countA": 6,
+        "countA": 8,
         "imageIdA": "illus:animals/flamingo_pink",
         "countB": 3,
         "imageIdB": "illus:animals/flamingo_pink",
