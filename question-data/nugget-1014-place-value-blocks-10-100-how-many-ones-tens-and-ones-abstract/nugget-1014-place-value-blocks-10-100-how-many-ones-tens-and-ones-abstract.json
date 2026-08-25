@@ -1,7 +1,78 @@
 {
   "nuggetId": 1014,
-  "status": "not-started",
-  "nextQId": 319288,
-  "questions": [],
-  "exampleOverride": null
+  "status": "in-progress",
+  "nextQId": 6,
+  "questions": [
+    {
+      "id": 1,
+      "text": "**How many ones** are there in 36?",
+      "answer": "6",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "text",
+      "cfg": {},
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 2,
+      "text": "**How many ones** are there in 54?",
+      "answer": "4",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "text",
+      "cfg": {},
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 3,
+      "text": "**How many ones** are there in 82?",
+      "answer": "2",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "text",
+      "cfg": {},
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 4,
+      "text": "**How many ones** are there in 19?",
+      "answer": "9",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "text",
+      "cfg": {},
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 5,
+      "text": "**How many ones** are there in 73?",
+      "answer": "3",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "text",
+      "cfg": {},
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    }
+  ],
+  "exampleOverride": {
+    "visualType": "text",
+    "text": "**How many ones** are there in 42?",
+    "answer": "2",
+    "cfg": {}
+  }
 }
