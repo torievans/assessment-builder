@@ -1,0 +1,31 @@
+{
+  "nuggetId": 37,
+  "status": "in-progress",
+  "nextQId": 319136,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "mode": "multiply",
+      "display": "array",
+      "align": "left",
+      "countA": 6,
+      "imageIdA": "illus:space/planet_purple",
+      "countB": 3,
+      "imageIdB": "illus:space/crescent_moon_yellow",
+      "op": "add",
+      "subMode": "crossed",
+      "cols": 10,
+      "mrows": 2,
+      "mcols": 4,
+      "illusOutline": true,
+      "imgScale": 1,
+      "groupSize": 2,
+      "numA": false,
+      "numB": false,
+      "showEq": false
+    },
+    "visualType": "pr",
+    "answer": "8",
+    "text": "**Count in 2s** to find out how many planets there are."
+  }
+}
