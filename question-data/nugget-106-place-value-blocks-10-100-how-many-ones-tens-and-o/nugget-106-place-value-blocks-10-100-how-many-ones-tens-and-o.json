@@ -1,8 +1,139 @@
 {
   "nuggetId": 106,
   "status": "in-progress",
-  "nextQId": 319303,
-  "questions": [],
+  "nextQId": 6,
+  "questions": [
+    {
+      "id": 1,
+      "text": "**How many ones** are there in 34?",
+      "answer": "4",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 34,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 2,
+      "text": "**How many ones** are there in 51?",
+      "answer": "1",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 51,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 3,
+      "text": "**How many ones** are there in 27?",
+      "answer": "7",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 27,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 4,
+      "text": "**How many ones** are there in 68?",
+      "answer": "8",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 68,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 5,
+      "text": "**How many ones** are there in 43?",
+      "answer": "3",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 43,
+        "repType": "blocks",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "n": 42,
