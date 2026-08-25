@@ -6,7 +6,7 @@
     {
       "id": 319175,
       "text": "**Count in 2s** to find the number that should go in the circle.",
-      "answer": "12",
+      "answer": "14",
       "type": "exact",
       "image": "",
       "display": "",
@@ -17,9 +17,12 @@
         "end": 24,
         "partitions": 24,
         "valuesGivenEvery": 2,
-        "answer": "12",
+        "answer": "14",
         "lineStyle": "terminate",
-        "colour": "orange"
+        "colour": "orange",
+        "hideFrom": 6,
+        "hideTo": 24,
+        "answerCircle": "answer"
       },
       "updatedAt": "2026-08-25",
       "createdAt": "2026-08-25"
