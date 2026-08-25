@@ -41,7 +41,7 @@
     },
     {
       "id": 319061,
-      "text": "What is one more than 63?",
+      "text": "What is **one more** than 63?",
       "answer": "64",
       "type": "exact",
       "image": "",
@@ -53,6 +53,7 @@
         "wbBorder": "#7898F0",
         "wbSkin": "#6b3520"
       },
+      "imagePath": "",
       "updatedAt": "2026-08-25",
       "createdAt": "2026-08-25"
     },
