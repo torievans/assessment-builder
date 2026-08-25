@@ -41,7 +41,7 @@
     },
     {
       "id": 319270,
-      "text": "**Count in 10s** to find out how many balls there are.",
+      "text": "**Count in 10s** to find out how many tigers there are.",
       "answer": "80",
       "type": "exact",
       "image": "",
@@ -53,7 +53,7 @@
         "display": "array",
         "align": "left",
         "countA": 55,
-        "imageIdA": "illus:food/fruit/apple_green",
+        "imageIdA": "illus:animals/tiger_orange",
         "countB": 3,
         "imageIdB": "illus:space/crescent_moon_yellow",
         "op": "add",
