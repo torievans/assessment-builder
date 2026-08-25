@@ -6,7 +6,7 @@
     {
       "id": 319248,
       "text": "**Count in 10s** to find out how many crayons there are altogether.",
-      "answer": "10",
+      "answer": "20",
       "type": "exact",
       "image": "",
       "display": "",
@@ -32,7 +32,7 @@
         "numB": false,
         "showEq": false,
         "crayonCount": 10,
-        "crayonBoxes": 1,
+        "crayonBoxes": 2,
         "crayonFontSize": 148,
         "crayonLabel": "10 Crayons"
       },
