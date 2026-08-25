@@ -13,7 +13,7 @@
       "qaComment": "",
       "visualType": "nt",
       "cfg": {
-        "sequence": "2,4,6,8,10,_,_,?",
+        "sequence": "0,2,4,6,8,10,_,_,?",
         "shape": "square",
         "layout": "straight",
         "colourMode": "full"
