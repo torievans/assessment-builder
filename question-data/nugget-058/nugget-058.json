@@ -1,7 +1,18 @@
 {
   "nuggetId": 58,
-  "status": "not-started",
-  "nextQId": 319246,
+  "status": "in-progress",
+  "nextQId": 319247,
   "questions": [],
-  "customName": "Counting in Multiples of 10 0-100 (Number Track with 1 Blank)"
+  "customName": "Counting in Multiples of 10 0-100 (Number Track with 1 Blank)",
+  "exampleOverride": {
+    "cfg": {
+      "sequence": "0,10,20,30,_,?",
+      "shape": "cloud",
+      "layout": "straight",
+      "colourMode": "full"
+    },
+    "visualType": "nt",
+    "answer": "50",
+    "text": "**Count in 10s** to find the number that should go at the end?"
+  }
 }
