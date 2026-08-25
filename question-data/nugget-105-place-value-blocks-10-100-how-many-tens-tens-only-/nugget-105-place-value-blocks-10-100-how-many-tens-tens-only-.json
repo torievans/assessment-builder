@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 1,
-      "text": "How many **tens** are there in 20?",
+      "text": "**How many tens** are there in 20?",
       "answer": "2",
       "type": "exact",
       "image": "",
@@ -151,6 +151,6 @@
     },
     "visualType": "pv",
     "answer": "5",
-    "text": "How many **tens** are there is 50?"
+    "text": "**How many tens** are there is 50?"
   }
 }
