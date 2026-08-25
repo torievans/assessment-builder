@@ -45,9 +45,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .stat.af{background:rgba(255,255,255,.09)}
 .stat-n{font-size:17px;font-weight:700;line-height:1;margin-bottom:2px}
 .stat-l{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.35)}
-.s-ns .stat-n{color:#9CA3AF}
-.bold-live-preview{display:none;font-size:12px;color:rgba(255,255,255,.55);margin-top:4px;padding:4px 8px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid rgba(255,255,255,.12);line-height:1.4}
-.bold-live-preview strong{color:#fff;font-weight:600}.s-ip .stat-n{color:#F59E0B}.s-qa .stat-n{color:#60A5FA}.s-rd .stat-n{color:#34D399}.s-up .stat-n{color:#2DD4BF}
+.s-ip .stat-n{color:#F59E0B}.s-qa .stat-n{color:#60A5FA}.s-rd .stat-n{color:#34D399}.s-up .stat-n{color:#2DD4BF}
 .sb-srch{padding:8px;border-bottom:1px solid rgba(255,255,255,.04);flex-shrink:0}
 .sb-srch input{width:100%;padding:5px 10px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.07);border-radius:6px;color:rgba(255,255,255,.8);font-size:12.5px;font-family:var(--font)}
 .sb-srch input::placeholder{color:rgba(255,255,255,.22)}
@@ -235,8 +233,6 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 .tog-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
 .tog-btn:hover:not(.active){border-color:var(--blue);color:var(--blue)}
 .swatch-row{display:flex;gap:4px;flex-wrap:wrap;padding-top:2px}
-.wb-textarea{width:100%;background:#fff;border:1.5px solid #E5E7EB;border-radius:6px;padding:8px 10px;font-size:13px;font-family:var(--font);color:var(--text);resize:vertical;min-height:64px;line-height:1.5;box-sizing:border-box}
-.wb-textarea:focus{outline:none;border-color:#93C5FD}
 .swatch{width:19px;height:19px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform .1s,border-color .1s;flex-shrink:0;padding:0;outline:none}
 .swatch:hover{transform:scale(1.2)}.swatch.selected{border-color:#1A1A2E;transform:scale(1.12)}
 .sec-hr{border:none;border-top:1px solid var(--border);margin:12px 0}
@@ -251,7 +247,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 
 /* Preview box — below form controls, full width */
 .preview-box{background:#fff;border:1px solid var(--border);border-radius:6px;padding:16px 18px;margin-top:14px;margin-bottom:12px;min-height:90px;display:flex;align-items:center;justify-content:center}
-.preview-box svg{width:100%;height:auto;display:block}
+.preview-box svg{width:100%;height:auto;display:block;max-width:480px}
 .preview-empty{font-size:13px;color:var(--dim);text-align:center}
 .form-actions{display:flex;gap:8px;align-items:center;margin-top:4px}
 /* PR tool — image bank */
@@ -390,7 +386,6 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
 <div class="app">
   <aside class="sb">
     <div class="sb-stats">
-      <div class="stat s-ns" id="stat-ns" onclick="setFilter('not-started')"><div class="stat-n" id="sn-ns">0</div><div class="stat-l">Not Started</div></div>
       <div class="stat s-ip" id="stat-ip" onclick="setFilter('in-progress')"><div class="stat-n" id="sn-ip">0</div><div class="stat-l">In Progress</div></div>
       <div class="stat s-qa" id="stat-qa" onclick="setFilter('ready-for-qa')"><div class="stat-n" id="sn-qa">0</div><div class="stat-l">In QA</div></div>
       <div class="stat s-rd" id="stat-rd" onclick="setFilter('ready-for-qti')"><div class="stat-n" id="sn-rd">0</div><div class="stat-l">Ready</div></div>
@@ -472,12 +467,8 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
               <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('custom-q-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><input type="text" id="custom-q-text" placeholder="e.g. How many squares can you see?"></div>
               <div class="field field-sm"><label>Answer</label><input type="text" id="custom-answer" placeholder="e.g. 4"></div>
             </div>
-            <div style="margin:8px 0 4px">
-              <div class="fc-title" style="margin-bottom:6px">Mode</div>
-              <div class="tog-row"><button class="tog-btn active" id="custom-mode-upload" onclick="setCustomMode('upload')">Upload image</button><button class="tog-btn" id="custom-mode-wb" onclick="setCustomMode('whiteboard')">🖊 Whiteboard</button></div>
-            </div>
-            <div id="custom-upload-section">
-              <div class="fc-title" style="margin-top:10px">Image</div>
+            <div style="margin:12px 0 4px">
+              <div class="fc-title">Image</div>
               <div class="custom-img-drop" id="custom-drop-zone" onclick="document.getElementById('custom-file-input').click()" ondragover="customDragOver(event)" ondragleave="customDragLeave(event)" ondrop="customDrop(event)">
                 <div id="custom-drop-inner">
                   <div class="drop-icon">🖼</div>
@@ -485,15 +476,6 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
                 </div>
               </div>
               <input type="file" id="custom-file-input" accept="image/*" style="display:none" onchange="customFileSelected(this)">
-            </div>
-            <div id="custom-wb-section" style="display:none">
-              <div class="fc-title" style="margin-top:10px;margin-bottom:4px">Text</div>
-              <textarea class="wb-textarea" id="custom-wb-text" placeholder="Type text for the whiteboard…" oninput="customWBPreview()"></textarea>
-              <div class="fc-title" style="margin:10px 0 4px">Border colour</div>
-              <div class="swatch-row" id="custom-wb-border-swatches"></div>
-              <div class="fc-title" style="margin:10px 0 4px">Skin tone</div>
-              <div class="swatch-row" id="custom-wb-skin-swatches"></div>
-              <div id="custom-wb-preview" style="margin-top:10px;background:#fff;border:1px solid var(--border);border-radius:6px;padding:8px;line-height:0"></div>
             </div>
             <div class="form-actions" style="margin-top:14px">
               <button class="btn btn-blue" id="add-q-btn-custom" onclick="addToolQuestion('custom')">+ Add Question</button>
@@ -713,12 +695,12 @@ const LABEL_COLOR = NL_LABEL_COLOR;
 const NUGGETS=[
   {id:1,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Test Nugget',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
   {id:2,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Counting Forwards 1-10 What\'s Next? (Number Tracks)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
-  {id:3,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Counting Forwards 1-10 What\'s Missing? (Number Lines)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:3,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Counting Forwards 1-10 What\'s Next? (Number Lines)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
   {id:4,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Counting Forwards 1-10 What\'s Missing? (Number Tracks)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
   {id:5,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Counting Forwards 1-10 With 1 Blank (Number Tracks)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
   {id:6,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Counting Forwards 1-10 With 2 Blanks (Number Tracks)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
   {id:8,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Counting Forwards 1-20 What\'s Next? (Number Tracks)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
-  {id:9,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Counting Forwards 1-20 What\'s Missing? (Number Lines)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
+  {id:9,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Counting Forwards 1-20 What\'s Next? (Number Lines)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
   {id:10,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Counting Forwards 1-20 What\'s Missing? (Number Tracks)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
   {id:11,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Counting Forwards 1-20 With 1 Blank (Number Tracks)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
   {id:12,topic:'Number – Number & Place Value',subtopic:'counting forwards 1-20',name:'Counting Forwards 1-20 With 2 Blanks (Number Tracks)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
@@ -749,58 +731,58 @@ const NUGGETS=[
   {id:317,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'Counting Backwards Crossing Ten 20-100 What\'s Missing? (Number Tracks)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
   {id:318,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'Counting Backwards Crossing Ten 20-100 With 1 Blank (Number Tracks)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
   {id:319,topic:'Number – Number & Place Value',subtopic:'counting backwards 20-100',name:'Counting Backwards Crossing Ten 20-100 With 2 Blanks (Number Tracks)',obj:'count to and across 100, forwards and backwards, beginning with 0 or 1, or from any given number'},
-  {id:36,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 0-12 (Images)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:37,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 0-12 (Arrays)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:38,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 0-12 (Number Line)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:39,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 12-24 (Images)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:40,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 12-24 (Arrays)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:41,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 12-24 (Number Line)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:42,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 12-24 (Number Track with 1 Blank)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:43,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 12-24 (Number Track with 2 Blanks)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:44,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 0-30 (Images)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:45,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 0-30 (Arrays)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:46,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 0-30 (Number Line)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:47,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 30-60 (Images)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:48,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 30-60 (Arrays)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:49,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 30-60 (Number Line)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:50,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 30-60 (Number Track with 1 Blank)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:51,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 30-60 (Number Track with 2 Blanks)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:52,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 0-50 (Images)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:53,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 0-50 (Arrays)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:54,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 0-50 (Number Line)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:55,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 50-100 (Images)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:56,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 50-100 (Arrays)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:57,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 50-100 (Number Line)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:58,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 50-100 (Number Track with 1 Blank)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:59,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 50-100 (Number Track with 2 Blanks)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
-  {id:60,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More 0-10 (Images)',obj:'given a number, identify one more and one less'},
-  {id:61,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More 0-10 (Multilink Cubes)',obj:'given a number, identify one more and one less'},
-  {id:62,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More 0-20 (Number Line)',obj:'given a number, identify one more and one less'},
-  {id:63,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More 0-10 (Abstract)',obj:'given a number, identify one more and one less'},
-  {id:64,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More 0-20 (Abstract)',obj:'given a number, identify one more and one less'},
-  {id:65,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More 20-100 (Number Line)',obj:'given a number, identify one more and one less'},
-  {id:66,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More  20-100 (Abstract)',obj:'given a number, identify one more and one less'},
-  {id:67,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less  0-10 (Images)',obj:'given a number, identify one more and one less'},
-  {id:68,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less 0-10 (Multilink Cubes)',obj:'given a number, identify one more and one less'},
-  {id:69,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less 0-20 (Number Line)',obj:'given a number, identify one more and one less'},
-  {id:70,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less 0-10 (Abstract)',obj:'given a number, identify one more and one less'},
-  {id:71,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less 0-20 (Abstract)',obj:'given a number, identify one more and one less'},
-  {id:72,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less 20-100 (Number Line)',obj:'given a number, identify one more and one less'},
-  {id:73,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less  20-100 (Abstract)',obj:'given a number, identify one more and one less'},
-  {id:74,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Mixed Finding One More/Less 0-10 (Images)',obj:'given a number, identify one more and one less'},
-  {id:75,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Mixed Finding One More/Less 0-10 (Multilink Cubes)',obj:'given a number, identify one more and one less'},
-  {id:76,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Mixed Finding One More/Less 0-20 (Number Line)',obj:'given a number, identify one more and one less'},
-  {id:77,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Mixed Finding One More/Less 0-10 (Abstract)',obj:'given a number, identify one more and one less'},
-  {id:78,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Mixed Finding One More/Less 0-20 (Abstract)',obj:'given a number, identify one more and one less'},
-  {id:79,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Mixed Finding One More/Less 20-100 (Number Line)',obj:'given a number, identify one more and one less'},
-  {id:80,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Mixed Finding One More/Less 20-100 (Abstract)',obj:'given a number, identify one more and one less'},
+  {id:36,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 0-12 With Pictures',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:37,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2  0-12 With Arrays',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:38,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 0-12 on a Number Line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:39,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 12-24 With Pictures',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:40,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 12-24 With Arrays',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:41,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 12-24 on a Number Line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:42,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 on a Number Track (with 1 Blank)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:43,topic:'Number – Number & Place Value',subtopic:'count in multiples of 2',name:'Counting in Multiples of 2 on a Number Track (with 2 Blanks)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:44,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 0-12 With Pictures',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:45,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5  0-12 With Arrays',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:46,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 0-12 on a Number Line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:47,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 12-24 With Pictures',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:48,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 12-24 With Arrays',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:49,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 12-24 on a Number Line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:50,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 on a Number Track (with 1 Blank)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:51,topic:'Number – Number & Place Value',subtopic:'count in multiples of 5',name:'Counting in Multiples of 5 on a Number Track (with 2 Blanks)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:52,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 0-12 With Pictures',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:53,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10  0-12 With Arrays',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:54,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 0-12 on a Number Line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:55,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 12-24 With Pictures',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:56,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 12-24 With Arrays',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:57,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 12-24 on a Number Line',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:58,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 on a Number Track (with 1 Blank)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:59,topic:'Number – Number & Place Value',subtopic:'count in multiples of 10',name:'Counting in Multiples of 10 on a Number Track (with 2 Blanks)',obj:'count, read and write numbers to 100 in numerals; count in multiples of twos, fives and tens'},
+  {id:60,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More With Images 0-10',obj:'given a number, identify one more and one less'},
+  {id:61,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More With A Number Line 0-10',obj:'given a number, identify one more and one less'},
+  {id:62,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More With A Number Line 0-20',obj:'given a number, identify one more and one less'},
+  {id:63,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More Abstract 0-10',obj:'given a number, identify one more and one less'},
+  {id:64,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More Abstract 0-20',obj:'given a number, identify one more and one less'},
+  {id:65,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More With a Number Line 20-100',obj:'given a number, identify one more and one less'},
+  {id:66,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More Abstract 20-100',obj:'given a number, identify one more and one less'},
+  {id:67,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less With Images 0-10',obj:'given a number, identify one more and one less'},
+  {id:68,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less With A Number Line 0-10',obj:'given a number, identify one more and one less'},
+  {id:69,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less With A Number Line 0-20',obj:'given a number, identify one more and one less'},
+  {id:70,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less Abstract 0-10',obj:'given a number, identify one more and one less'},
+  {id:71,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less Abstract 0-20',obj:'given a number, identify one more and one less'},
+  {id:72,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less With a Number Line 20-100',obj:'given a number, identify one more and one less'},
+  {id:73,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One Less Abstract 20-100',obj:'given a number, identify one more and one less'},
+  {id:74,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Mixed Finding One More/Less With Images 0-10',obj:'given a number, identify one more and one less'},
+  {id:75,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More/Less (Mixed) With A Number Line 0-10',obj:'given a number, identify one more and one less'},
+  {id:76,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More/Less (Mixed) With A Number Line 0-20',obj:'given a number, identify one more and one less'},
+  {id:77,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More/Less (Mixed) Abstract 0-10',obj:'given a number, identify one more and one less'},
+  {id:78,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More/Less (Mixed) Abstract 0-20',obj:'given a number, identify one more and one less'},
+  {id:79,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More/Less (Mixed) With a Number Line 20-100',obj:'given a number, identify one more and one less'},
+  {id:80,topic:'Number – Number & Place Value',subtopic:'one more / less than',name:'Finding One More/Less (Mixed) Abstract 20-100',obj:'given a number, identify one more and one less'},
   {id:81,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'Counting Pictorial Representations 1-10 With Images (Clustered) [illustrations]',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:82,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'Counting Pictorial Representations 1-10 With Images (in Rows) [illustrations]',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:83,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'Counting Pictorial Representations 1-10 With Counters (Clustered) [friendly counters]',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:84,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'Counting Pictorial Representations 1-10 With Counters (in Rows) [friendly counters]',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:85,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'Counting Pictorial Representations 1-10 With Counters (in a 10 Frame) [friendly counters]',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:86,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'Counting Pictorial Representations 1-10 With Multilink Cubes',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
-  {id:87,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'Counting Pictorial Representations 1-10 With Number Shapes',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},  {id:89,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'Counting Pictorial Representations 1-10 With Place Value Blocks',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:87,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'Counting Pictorial Representations 1-10 With Numicon',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},  {id:89,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'Counting Pictorial Representations 1-10 With Place Value Blocks',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:90,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 1-10',name:'Counting Pictorial Representations 1-10 With Beads',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:91,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 11-20',name:'Counting Pictorial Representations 11-20 With Images (Clustered) [illustrations]',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:92,topic:'Number – Number & Place Value',subtopic:'counting pictorial representations 11-20',name:'Counting Pictorial Representations 11-20 With Images (in Rows) [illustrations]',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
@@ -814,8 +796,12 @@ const NUGGETS=[
   {id:102,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'Place Value Blocks 50-100 What Number Is Represented? (Tens Only)',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:103,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'Place Value Blocks 10-50 What Number Is Represented? (Tens And Ones)',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:104,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'Place Value Blocks 50-100 What Number Is Represented? (Tens And Ones)',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
-  {id:105,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'How Many Tens Are There In?',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
-  {id:106,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'How Many Ones Are There In?',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:105,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'Place Value Blocks 10-100 How Many Tens? (Tens Only With Images)',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:1011,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'Place Value Blocks 10-100 How Many Tens? (Tens Only Abstract)',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:1012,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'Place Value Blocks 10-100 How Many Tens? (Tens and Ones With Images)',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:1013,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'Place Value Blocks 10-100 How Many Tens? (Tens and Ones Abstract)',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:106,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'Place Value Blocks 10-100 How Many Ones? (Tens and Ones With Images)',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
+  {id:1014,topic:'Number – Number & Place Value',subtopic:'tens and ones',name:'Place Value Blocks 10-100 How Many Ones? (Tens and Ones Abstract)',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:107,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'Multi Choice Which Group Has More ...?',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:108,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'Multi Choice Which Group Has Fewer ...?',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
   {id:109,topic:'Number – Number & Place Value',subtopic:'equal to, more than, less than (fewer), most, least',name:'Multi Choice Mixed More/Fewer',obj:'identify and represent numbers using objects and pictorial representations including the Number Lines, and use the language of: equal to, more than, less than (fewer), most, least'},
@@ -1175,31 +1161,8 @@ async function loadStatusMap(){
     } else if(ns.status==='not-started'&&(!ns.questions||!ns.questions.length)){
       // Local state exists: only seed nuggets with no local data
       nuggetState[nid].status=status;changed=true;
-    } else if(status==='uploaded-to-cms'||ns.status==='uploaded-to-cms'){
-      // status.json is always authoritative for uploaded-to-cms (sets and clears it)
-      nuggetState[nid].status=status;changed=true;
     }
   });
-  // Clear uploaded-to-cms from any nugget not present in the status map
-  Object.keys(nuggetState).forEach(id=>{
-    const nid=parseInt(id);
-    const ns2=nuggetState[nid];
-    if(ns2&&ns2.status==='uploaded-to-cms'&&map[id]===undefined){
-      // Reset: has questions → in-progress, no questions → not-started
-      nuggetState[nid].status=(ns2.questions&&ns2.questions.length>0)?'in-progress':'not-started';changed=true;
-    }
-  });
-  // One-time versioned reset: clear any ready-for-qti that was set by bulk operations
-  const resetKey='statusReset_'+(map._reset||'v1');
-  if(map._reset&&!localStorage.getItem(resetKey)){
-    Object.keys(nuggetState).forEach(id=>{
-      const nid=parseInt(id);
-      if(nuggetState[nid]&&nuggetState[nid].status==='ready-for-qti'){
-        nuggetState[nid].status='not-started';changed=true;
-      }
-    });
-    localStorage.setItem(resetKey,'1');
-  }
   if(changed){save();renderSidebar();}
 }
 async function saveNuggetToFile(nid){
@@ -1447,10 +1410,10 @@ function renderSidebar(){
   updateStats();
 }
 function updateStats(){
-  const c={'not-started':0,'in-progress':0,'ready-for-qa':0,'ready-for-qti':0,'uploaded-to-cms':0};
-  const panelSet=new Set(panelIds);NUGGETS.forEach(n=>{if(!panelSet.has(n.id))return;const s=nuggetState[n.id]?.status;if(c[s]!==undefined)c[s]++;});
-  document.getElementById('sn-ns').textContent=c['not-started'];document.getElementById('sn-ip').textContent=c['in-progress'];document.getElementById('sn-qa').textContent=c['ready-for-qa'];document.getElementById('sn-rd').textContent=c['ready-for-qti'];document.getElementById('sn-up').textContent=c['uploaded-to-cms'];
-  ['not-started','in-progress','ready-for-qa','ready-for-qti','uploaded-to-cms'].forEach((s,i)=>{const ids=['ns','ip','qa','rd','up'];document.getElementById('stat-'+ids[i]).classList.toggle('af',filter===s);});
+  const c={'in-progress':0,'ready-for-qa':0,'ready-for-qti':0,'uploaded-to-cms':0};
+  NUGGETS.forEach(n=>{const s=nuggetState[n.id]?.status;if(c[s]!==undefined)c[s]++;});
+  document.getElementById('sn-ip').textContent=c['in-progress'];document.getElementById('sn-qa').textContent=c['ready-for-qa'];document.getElementById('sn-rd').textContent=c['ready-for-qti'];document.getElementById('sn-up').textContent=c['uploaded-to-cms'];
+  ['in-progress','ready-for-qa','ready-for-qti','uploaded-to-cms'].forEach((s,i)=>{const ids=['ip','qa','rd','up'];document.getElementById('stat-'+ids[i]).classList.toggle('af',filter===s);});
   document.getElementById('upload-ctr').innerHTML=`<strong>${c['uploaded-to-cms']}</strong> of ${NUGGETS.length} uploaded`;
 }
 
@@ -1486,22 +1449,11 @@ async function selectNugget(id){
     fr?.contentWindow?.postMessage({type:'selectNugget',nuggetId:Number(id)},'*');
   }
 }
-async function loadNuggetFromGitHub(nid){
-  // Fetch directly from GitHub Pages, bypassing any connected local folder.
-  const slug=nuggetSlug(nid);
-  const idSlug=`nugget-${String(nid).padStart(3,'0')}`;
-  const lSlug=legacySlug(nid);
-  const candidates=[slug,idSlug,...(lSlug?[lSlug]:[])].filter((s,i,a)=>a.indexOf(s)===i);
-  for(const s of candidates){
-    try{const r=await fetch(`question-data/${s}/${s}.json`,{cache:'no-store'});if(r.ok)return await r.json();}catch(e){}
-  }
-  return null;
-}
 async function refreshNugget(){
   if(!activeId)return;
   const btn=document.getElementById('nd-refresh-btn');
   if(btn){btn.style.opacity='0.4';btn.style.pointerEvents='none';}
-  const fileData=await loadNuggetFromGitHub(activeId);
+  const fileData=await loadNuggetFromFile(activeId);
   if(fileData){
     nuggetState[activeId]={status:fileData.status,questions:fileData.questions||[],customName:fileData.customName||undefined,exampleOverride:fileData.exampleOverride||null};
     if(fileData.nextQId)nextQId=Math.max(nextQId,fileData.nextQId);
@@ -1711,7 +1663,7 @@ function renderQABotModal(flagged,total){
       }).join('');
       html+=`<div data-qacard style="background:${bg};border:1px solid ${bd};border-radius:10px;padding:12px 14px;margin-bottom:10px;transition:background .3s,border-color .3s">
         <div style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Q${num}</div>
-        <div style="font-size:13.5px;color:#1A1A2E;margin-bottom:8px;line-height:1.4;font-weight:500">${renderBold(q.text)||'<em style="color:#9CA3AF">(empty)</em>'}</div>
+        <div style="font-size:13.5px;color:#1A1A2E;margin-bottom:8px;line-height:1.4;font-weight:500">${esc(q.text)||'<em style="color:#9CA3AF">(empty)</em>'}</div>
         ${rows}</div>`;
     });
   }
@@ -1726,7 +1678,6 @@ function renderQVisual(q){
   if(q.visualType==='nr'&&q.cfg&&q.cfg.n){try{return`<div class="q-svg-wrap">${nrRenderFromCfg(q.cfg)}</div>`;}catch(e){}}
   if(q.visualType==='pv'&&q.cfg&&q.cfg.n!=null){try{return`<div class="q-svg-wrap"><img src="${pvGetDataURL(q.cfg,4)}" style="max-width:100%;height:auto;display:block"></div>`;}catch(e){}}
   if(q.visualType==='pr'&&q.cfg&&q.cfg.mode){try{return`<div class="q-svg-wrap">${pictorialSVG(q.cfg)}</div>`;}catch(e){}}
-  if(q.visualType==='wb'&&q.cfg&&q.cfg.wbText!==undefined){try{return`<div class="q-svg-wrap">${whiteboardSVG(q.cfg.wbText,q.cfg.wbBorder||'#319377',q.cfg.wbSkin||'#ffa99c')}</div>`;}catch(e){}}
   if(q.visualType==='text')return'';
   const imgSrc=q.imagePath||q.image||'';
   if(imgSrc)return`<div class="q-img" style="padding:0 14px 8px;text-align:center"><img src="${esc(imgSrc)}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'q-img-ph\\'>🖼 ${esc(imgSrc.split('/').pop())}</div>'"></div>`;
@@ -1735,8 +1686,7 @@ function renderQVisual(q){
 function editExample(){
   if(!activeId)return;
   const ex=nuggetState[activeId]?.exampleOverride;if(!ex||!ex.cfg)return;
-  const rawType=ex.visualType;if(!rawType)return;
-  const type=rawType==='wb'?'custom':rawType;
+  const type=ex.visualType;if(!type)return;
   if(activeTool&&activeTool!==type)closeTool();
   if(activeTool!==type){
     activeTool=type;
@@ -1748,16 +1698,6 @@ function editExample(){
   else if(type==='nr'){document.getElementById('nr-text').value=ex.text||'';document.getElementById('nr-answer').value=ex.answer!=null?ex.answer:'';restoreNRConfig(ex.cfg||{});}
   else if(type==='pv'){document.getElementById('pv-text').value=ex.text||'';document.getElementById('pv-answer').value=ex.answer!=null?ex.answer:'';restorePVConfig(ex.cfg||{});}
   else if(type==='pr'){document.getElementById('pr-text').value=ex.text||'';document.getElementById('pr-answer').value=ex.answer!=null?ex.answer:'';restorePRConfig(ex.cfg||{});}
-  else if(type==='custom'&&rawType==='wb'){
-    document.getElementById('custom-q-text').value=ex.text||'';
-    document.getElementById('custom-answer').value=ex.answer!=null?ex.answer:'';
-    customWBBorderColour=(ex.cfg||{}).wbBorder||'#319377';
-    customWBSkinColour=(ex.cfg||{}).wbSkin||'#ffa99c';
-    const wbt=document.getElementById('custom-wb-text');
-    if(wbt)wbt.value=(ex.cfg||{}).wbText||'';
-    setCustomMode('whiteboard');
-    initCustomWBSwatches();
-  }
   editingExample=true;
   setEditMode(true,type);
   renderQuestions();
@@ -1778,7 +1718,7 @@ function renderExampleCard(nid){
   }
   const pseudoQ={visualType:vtype,cfg,imagePath:ex.imagePath||'',image:''};
   const explText=(ex.explanation||[]).join('\n');
-  return `<div class="q-card example-card${editingExample?' editing':''}" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div class="q-card-actions" style="margin-left:auto"><button class="example-view-btn" onclick="switchTab('slides')" title="Open slide reviewer">View slides ↗</button><button class="q-edit-btn" onclick="editExample()" title="Edit example">✏</button><button class="q-del-btn" onclick="clearExampleCard()" title="Clear example">✕</button></div></div>${renderQVisual(pseudoQ)}<div class="q-body"><div class="q-text">${renderBold(textVal)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(String(ansVal))}</div></div><div class="q-qa"><div class="q-qa-lbl">📝 Explanation (one per line)</div><textarea class="q-qa-ta" rows="2" placeholder="e.g. Count on to find out: 3, 4, 5…" onchange="saveExampleExplanation(this.value)">${esc(explText)}</textarea></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveExampleQA(this.value)">${esc(ex.qaComment||'')}</textarea></div></div>`;
+  return `<div class="q-card example-card${editingExample?' editing':''}" id="ex-card"><div class="q-head example-head"><div class="q-num">EXAMPLE</div><div class="q-card-actions" style="margin-left:auto"><button class="example-view-btn" onclick="switchTab('slides')" title="Open slide reviewer">View slides ↗</button><button class="q-edit-btn" onclick="editExample()" title="Edit example">✏</button><button class="q-del-btn" onclick="clearExampleCard()" title="Clear example">✕</button></div></div>${renderQVisual(pseudoQ)}<div class="q-body"><div class="q-text">${esc(textVal)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(String(ansVal))}</div></div><div class="q-qa"><div class="q-qa-lbl">📝 Explanation (one per line)</div><textarea class="q-qa-ta" rows="2" placeholder="e.g. Count on to find out: 3, 4, 5…" onchange="saveExampleExplanation(this.value)">${esc(explText)}</textarea></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveExampleQA(this.value)">${esc(ex.qaComment||'')}</textarea></div></div>`;
 }
 function clearExampleCard(){
   if(!activeId)return;
@@ -1801,7 +1741,7 @@ function saveExampleQA(val){
 function isExampleMode(){
   if(!activeId)return false;
   const ns=nuggetState[activeId];
-  return !ns?.exampleOverride?.cfg;
+  return !ns?.exampleOverride&&!(ns?.questions?.length);
 }
 // Update all tool Add-Question buttons and show/hide "Create more like this"
 function updateToolBtns(){
@@ -1824,7 +1764,7 @@ function renderQuestions(){
   const hdr=hasNT?`<div style="grid-column:1/-1;display:flex;justify-content:flex-end;margin-bottom:4px"><button class="wfbtn wfbtn-ghost" style="font-size:11px;padding:3px 10px" onclick="resequenceNTColours()" title="Assign a different starting colour to each number track question">🎨 Vary track colours</button></div>`:'';
   updateToolBtns();
   el.innerHTML=exHtml+hdr+qs.map((q,i)=>{
-    return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}" ondragover="dndOver(event,${q.id})" ondragleave="dndLeave(event)" ondrop="dndDrop(event,${q.id})"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions">${qHasImage(q)?'<button class="q-dl-btn" onclick="downloadQuestionImage('+q.id+')" title="Download image">⬇</button>':''}<button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button><div class="q-drag-handle" draggable="true" ondragstart="dndStart(event,${q.id})" ondragend="dndEnd(event)" title="Drag to reorder">⠿</div></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${renderBold(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
+    return `<div class="q-card${editingQId===q.id?' editing':''}" id="q-card-${q.id}" ondragover="dndOver(event,${q.id})" ondragleave="dndLeave(event)" ondrop="dndDrop(event,${q.id})"><div class="q-head"><div class="q-num">Q${i+1}</div><div class="q-type qt-exact">Exact answer</div><div class="q-card-actions">${qHasImage(q)?'<button class="q-dl-btn" onclick="downloadQuestionImage('+q.id+')" title="Download image">⬇</button>':''}<button class="q-edit-btn" onclick="editQuestion(${q.id})" title="Edit question">✏</button><button class="q-del-btn" onclick="deleteQuestion(${q.id})" title="Delete question">✕</button><div class="q-drag-handle" draggable="true" ondragstart="dndStart(event,${q.id})" ondragend="dndEnd(event)" title="Drag to reorder">⠿</div></div></div>${renderQVisual(q)}<div class="q-body"><div class="q-text">${esc(q.text)}</div><div class="q-ans-lbl">Answer</div><div class="q-ans-val">${esc(q.answer)}</div></div><div class="q-qa"><div class="q-qa-lbl">💬 QA Comment</div><textarea class="q-qa-ta" rows="2" placeholder="Add a comment…" onchange="saveQA(${q.id},this.value)">${esc(q.qaComment||'')}</textarea></div></div>`;
   }).join('');
 }
 function saveQA(qid,val){if(!activeId)return;const q=nuggetState[activeId].questions.find(q=>q.id===qid);if(q){q.qaComment=val;save();}}
@@ -1909,7 +1849,7 @@ function openTool(type){
   if(type==='nl'){document.getElementById('nl-text').value='';document.getElementById('nl-answer').value='';['f-start','f-end','f-step','f-vge','f-hide-from','f-hide-to'].forEach(id=>{const el=document.getElementById(id);if(el){if(id==='f-start')el.value='0';else if(id==='f-end')el.value='20';else if(id==='f-step')el.value='1';else el.value='';}});document.getElementById('nl-preview').innerHTML='<p class="preview-empty">Fill in settings above to preview.</p>';if(nlJumpOpen)nlToggleJump();if(nlJump2Open)nlToggleJump2();}
   else if(type==='bm'){document.getElementById('bm-text').value='';document.getElementById('bm-answer').value='';['bm-total','bm-seg1-val','bm-seg1-lbl','bm-seg1-brace','bm-seg2-val','bm-seg2-lbl','bm-seg2-brace'].forEach(id=>document.getElementById(id).value='');if(bmSeg3)bmToggleSeg3(false);document.getElementById('bm-preview').innerHTML='<p class="preview-empty">Fill in segment values above to preview.</p>';}
   else if(type==='text'){document.getElementById('text-q-text').value='';document.getElementById('text-answer').value='';}
-  else if(type==='custom'){document.getElementById('custom-q-text').value='';document.getElementById('custom-answer').value='';customResetImage();customWBMode='upload';customWBBorderColour='#319377';customWBSkinColour='#ffa99c';const wbt=document.getElementById('custom-wb-text');if(wbt)wbt.value='';setCustomMode('upload');initCustomWBSwatches();customWBPreview();}
+  else if(type==='custom'){document.getElementById('custom-q-text').value='';document.getElementById('custom-answer').value='';customResetImage();}
   else if(type==='nt'){document.getElementById('nt-text').value='';document.getElementById('nt-answer').value='';document.getElementById('nt-seq').value='1,2,3,?,5,6';ntShape='square';ntLayout='straight';ntColourMode='full';document.querySelectorAll('[data-ntshape]').forEach(b=>b.classList.toggle('active',b.dataset.ntshape==='square'));document.querySelectorAll('[data-ntlayout]').forEach(b=>b.classList.toggle('active',b.dataset.ntlayout==='straight'));document.querySelectorAll('[data-ntcolmode]').forEach(b=>b.classList.toggle('active',b.dataset.ntcolmode==='full'));autoPreviewNT();}
   else if(type==='nr'){document.getElementById('nr-text').value='';document.getElementById('nr-answer').value='';nrResetState();autoPreviewNR();}
   else if(type==='pv'){document.getElementById('pv-text').value='';document.getElementById('pv-answer').value='';pvResetState();}
@@ -1946,7 +1886,7 @@ function addToolQuestion(type){
       else if(type==='nr'){q.cfg=getNRConfig();}
       else if(type==='pv'){q.cfg=getPVConfig();}
       else if(type==='pr'){q.cfg=getPRConfig();}
-      else if(type==='custom'){if(customWBMode==='whiteboard'){q.visualType='wb';q.cfg={wbText:(document.getElementById('custom-wb-text')||{value:''}).value||'',wbBorder:customWBBorderColour,wbSkin:customWBSkinColour};q.imagePath='';q.image='';}else if(customImageDataURL){const fname=`q-${String(editingQId).padStart(4,'0')}.png`;const imagePath=`question-data/${nuggetSlug(activeId)}/${fname}`;saveImageToFile(activeId,fname,customImageDataURL);q.imagePath=imagePath;q.image='';}}
+      else if(type==='custom'&&customImageDataURL){const fname=`q-${String(editingQId).padStart(4,'0')}.png`;const imagePath=`question-data/${nuggetSlug(activeId)}/${fname}`;saveImageToFile(activeId,fname,customImageDataURL);q.imagePath=imagePath;q.image='';}
     }
     editingQId=null;setEditMode(false,type);save();renderQuestions();renderSidebar();renderWorkflow();closeTool();return;
   }
@@ -1954,17 +1894,12 @@ function addToolQuestion(type){
   if(editingExample){
     const ex=nuggetState[activeId].exampleOverride||{};
     let cfg={};
-    let exVisualType=type;
     if(type==='nl'){cfg=getNLConfig()||{};}
     else if(type==='nt'){cfg=getNTConfig()||{};}
     else if(type==='nr'){cfg=getNRConfig();}
     else if(type==='pv'){cfg=getPVConfig();}
     else if(type==='pr'){cfg=getPRConfig();}
-    else if(type==='custom'&&customWBMode==='whiteboard'){
-      exVisualType='wb';
-      cfg={wbText:(document.getElementById('custom-wb-text')||{value:''}).value||'',wbBorder:customWBBorderColour,wbSkin:customWBSkinColour};
-    }
-    nuggetState[activeId].exampleOverride={cfg,visualType:exVisualType,answer,...(text&&{text}),...(ex.imagePath&&{imagePath:ex.imagePath}),...(ex.explanation&&{explanation:ex.explanation})};
+    nuggetState[activeId].exampleOverride={cfg,visualType:type,answer,...(text&&{text}),...(ex.imagePath&&{imagePath:ex.imagePath}),...(ex.explanation&&{explanation:ex.explanation})};
     editingExample=false;
     setEditMode(false,type);
     save();saveNuggetToFile(activeId);renderQuestions();renderSidebar();renderWorkflow();closeTool();
@@ -1980,20 +1915,13 @@ function addToolQuestion(type){
   else if(type==='pv'){q.cfg=getPVConfig();}
   else if(type==='pr'){q.cfg=getPRConfig();}
   else if(type==='custom'){
-    if(customWBMode==='whiteboard'){
-      const wbText=(document.getElementById('custom-wb-text')||{value:''}).value||'';
-      if(!wbText.trim()){alert('Please type some whiteboard text.');nextQId--;return;}
-      q.visualType='wb';
-      q.cfg={wbText,wbBorder:customWBBorderColour,wbSkin:customWBSkinColour};
-    } else {
-      if(!customImageDataURL&&!customImagePath){alert('Please add an image for this question.');nextQId--;return;}
-      q.visualType='custom';
-      if(customImageDataURL){
-        const fname=`q-${String(id).padStart(4,'0')}.png`;
-        const imagePath=`question-data/${nuggetSlug(activeId)}/${fname}`;
-        saveImageToFile(activeId,fname,customImageDataURL);
-        q.imagePath=imagePath;q.image='';
-      }
+    if(!customImageDataURL&&!customImagePath){alert('Please add an image for this question.');nextQId--;return;}
+    q.visualType='custom';
+    if(customImageDataURL){
+      const fname=`q-${String(id).padStart(4,'0')}.png`;
+      const imagePath=`question-data/${nuggetSlug(activeId)}/${fname}`;
+      saveImageToFile(activeId,fname,customImageDataURL);
+      q.imagePath=imagePath;q.image='';
     }
   }
   // First question on a blank nugget becomes the example
@@ -2070,7 +1998,6 @@ function renderExportView(){
 function updateExCount(){const total=document.querySelectorAll('.ex-cb').length,sel=document.querySelectorAll('.ex-cb:checked').length;const el=document.getElementById('ex-count');if(el)el.textContent=sel+' of '+total+' selected';}
 function selectAllEx(v){document.querySelectorAll('.ex-cb').forEach(c=>c.checked=v);updateExCount();}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function renderBold(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\*\*([^*\n]+)\*\*/g,'<strong>$1</strong>');}
 function qtiXML(q,imgFile,nuggetTitle,qNum){
   const rid=`RESPONSE-${10000+q.id}`;
   const title=`${nuggetTitle} - Q${String(qNum).padStart(2,'0')}`;
@@ -2336,80 +2263,6 @@ async function batchExport(){
 
 /* ── Custom image panel ── */
 let customImageDataURL=null,customImagePath=null;
-// ── Whiteboard globals ────────────────────────────────────────────────────────
-let customWBMode='upload';
-let customWBBorderColour='#319377';
-let customWBSkinColour='#ffa99c';
-
-function wrapText(text,charsPerLine){
-  const words=text.split(' ');const lines=[];let cur='';
-  words.forEach(w=>{
-    if(!w)return;
-    if(!cur){cur=w;}
-    else if((cur+' '+w).length<=charsPerLine){cur+=' '+w;}
-    else{lines.push(cur);cur=w;}
-  });
-  if(cur)lines.push(cur);
-  return lines.length?lines:[''];
-}
-function whiteboardSVG(text,bc,sc){
-  const FONT="proxima-soft,'Proxima Soft',system-ui,sans-serif";
-  const VW=1260,VH=1030,BX=11,BY=11,BW=1057,BH=714,BR=76;
-  const TCX=BX+BW/2,TW=762,TH=BH-120,TY=BY+(BH-TH)/2;
-  let fs=380,lines=[];
-  while(fs>=22){
-    const cpl=Math.floor(TW/(fs*0.54));
-    lines=wrapText(text||' ',cpl);
-    const longest=Math.max(...lines.map(l=>l.length));
-    if(longest*fs*0.54<=TW&&lines.length*fs*1.3<=TH)break;
-    fs-=4;
-  }
-  const lh=fs*1.3,blockCY=TY+TH/2,firstCY=blockCY-((lines.length-1)*lh)/2;
-  let textSVG='';
-  if(text.trim()){
-    lines.forEach((line,i)=>{
-      const y=(firstCY+i*lh).toFixed(1);
-      const e=line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-      textSVG+=`<text x="${TCX.toFixed(0)}" y="${y}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-size="${fs}" font-weight="700" fill="#1A1A2E">${e}</text>`;
-    });
-  }
-  const behindBoard=`<path fill="${sc}" d="M1126.75,793.93s13.07,47.67,33.83,95.33c20.76,47.67,61.51,136.6,61.51,136.6h-199.89s-25.37-151.98-29.98-173.5c-4.61-21.53,134.54-58.43,134.54-58.43Z"/><path fill="#6d8ff7" d="M1000.48,973.51c.14,1.66.32,3.32.51,5.03,2.4,22.28,6.23,47.33,6.23,47.33h234.84s-23.66-43.04-44.65-78.14c-1.15-1.89-2.31-3.78-3.41-5.63-12.73-21.03-23.89-38.01-27.31-38.89-9.18-2.4-64.3-7.93-112.97,6.69-48.67,14.62-51.53,24.72-54.2,36.26-.92,4.01-.28,14.9.97,27.35Z"/><path fill="#23191b" d="M1000.48,973.51c.14,1.66.32,3.32.51,5.03,24.22-16.65,54.48-26.57,81.83-32.61,37.96-8.4,77.59-8.44,114.58,1.8-1.15-1.89-2.31-3.78-3.41-5.63-37.87-9.59-78.14-8.81-116.66.32-25.88,6.14-53.79,15.78-76.85,31.09Z"/><path fill="${sc}" d="M1127.61,796.98s-.68-76.09,0-113.76c.72-40.12,1.85-80.67-16.55-117.44-8.39-16.75-17.56-33.49-30.33-47.38-4.44-4.83-26.86-26.83-34.33-26.62-12.79.36-33.44,56.12-58.05,90.72-24.6,34.6-60.74,116.09-60.74,116.09,0,0-6.92,62.99,6.92,98.38,13.84,35.39,55.95,44.59,60.55,70.51,4.6,25.92,21.72,47.91,21.72,47.91l99.95-56.89,10.86-61.53Z"/><path fill="#23191b" d="M1032.27,683.04c13.02,17.61,31.83,28.62,50.55,39.25,2.58,1.46.36,5.51-2.23,4.04-19.48-11.05-38.72-22.56-52.25-40.86-1.77-2.39,2.17-4.8,3.93-2.42Z"/><path fill="#23191b" d="M976.96,739.15c-.04-2.95,4.55-3.43,4.59-.46.31,22.52,8.87,42.98,24.95,58.8,2.1,2.07-.8,5.65-2.92,3.57-16.91-16.62-26.29-38.17-26.62-61.91Z"/><path fill="#23191b" d="M1041.55,588.14c14.76,11.79,22.28,36.02,27.91,53.42.92,2.83-3.54,4.04-4.45,1.23-5.3-16.39-12.75-40.22-26.72-51.38-2.32-1.85.96-5.1,3.26-3.26Z"/>`;
-  const inFront=`<path fill="${sc}" d="M935.53,581.74c-1.2,35.15,20.25,78.56,32.06,96.87,11.86,18.31,9.23,50.93,17.85,81.79,8.58,30.86,41.61,57.43,54.52,58.12,12.92.74,57.43-77.5,49.17-131.33,0,0-53.46-27.63-69.98-50.97-11.21-15.82-20.39-40.87-28.65-59.92-1.89-4.43-3.74-8.53-5.58-12.09-1.89-3.78-3.78-7.01-5.63-9.46-1.2-1.61-2.68-3.04-4.34-4.15-2.17-1.66-4.71-2.81-7.43-3.46-4.98-1.34-10.56-.92-15.64,1.61-1.61.78-3.23,1.8-4.71,3.09-.37.32-.74.65-1.06.97-1.43,1.34-2.72,2.86-3.87,4.66-3.83,5.63-6.37,13.56-6.73,24.26Z"/><path fill="#23191b" d="M942.59,558.7c2.54,17.71,8.99,36.63,28.78,31.97,16.88-3.97,12.04-24.45,3.92-38.84-2.17-1.66-4.71-2.81-7.43-3.46,3.41,4.38,5.63,9.41,7.47,14.95,3.14,9.69,5.31,26.2-12.36,22.42-11.72-2.49-15.18-18.04-16.51-31.69-1.43,1.34-2.72,2.86-3.87,4.66Z"/>`;
-  return `<svg viewBox="0 0 ${VW} ${VH}" xmlns="http://www.w3.org/2000/svg">${behindBoard}<rect x="${BX}" y="${BY}" width="${BW}" height="${BH}" rx="${BR}" fill="#fcfcfc" stroke="${bc}" stroke-width="21"/>${textSVG}${inFront}</svg>`;
-}
-function setCustomMode(mode){
-  customWBMode=mode;
-  const ups=document.getElementById('custom-upload-section');
-  const wbs=document.getElementById('custom-wb-section');
-  const btnU=document.getElementById('custom-mode-upload');
-  const btnW=document.getElementById('custom-mode-wb');
-  if(ups)ups.style.display=mode==='upload'?'':'none';
-  if(wbs)wbs.style.display=mode==='whiteboard'?'':'none';
-  if(btnU)btnU.classList.toggle('active',mode==='upload');
-  if(btnW)btnW.classList.toggle('active',mode==='whiteboard');
-  if(mode==='whiteboard')customWBPreview();
-}
-function customWBPreview(){
-  const text=(document.getElementById('custom-wb-text')||{value:''}).value||'';
-  const el=document.getElementById('custom-wb-preview');
-  if(el)el.innerHTML=whiteboardSVG(text,customWBBorderColour,customWBSkinColour);
-}
-function initCustomWBSwatches(){
-  const BORDER_PALETTE=[['grey','#AAAAAA'],['red','#D46B55'],['orange','#F5995B'],['yellow','#FECC6B'],['green','#319377'],['blue','#7898F0'],['purple','#847AC9'],['pink','#FC7E91']];
-  const SKIN_TONES=[['light','#ffa99c'],['light tan','#d4895a'],['medium brown','#b06530'],['deep brown','#6b3520']];
-  function buildRow(id,palette,getCur,onChange){
-    const row=document.getElementById(id);if(!row)return;row.innerHTML='';
-    palette.forEach(([name,hex])=>{
-      const b=document.createElement('button');
-      b.className='swatch'+(hex===getCur()?' selected':'');
-      b.style.background=hex;b.title=name;
-      b.onclick=()=>{row.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));b.classList.add('selected');onChange(hex);customWBPreview();};
-      row.appendChild(b);
-    });
-  }
-  buildRow('custom-wb-border-swatches',BORDER_PALETTE,()=>customWBBorderColour,v=>{customWBBorderColour=v;});
-  buildRow('custom-wb-skin-swatches',SKIN_TONES,()=>customWBSkinColour,v=>{customWBSkinColour=v;});
-}
 function customResetImage(){
   customImageDataURL=null;customImagePath=null;
   document.getElementById('custom-drop-inner').innerHTML='<div class="drop-icon">🖼</div><p>Click to choose or drag an image here</p>';
@@ -2434,7 +2287,7 @@ function customDrop(e){e.preventDefault();document.getElementById('custom-drop-z
 function editQuestion(qid){
   if(!activeId)return;
   const q=nuggetState[activeId].questions.find(q=>q.id===qid);if(!q)return;
-  const type=q.visualType==='text'?'text':(q.visualType==='wb'?'custom':q.visualType); // nl | bm | text | custom | nt | wb→custom
+  const type=q.visualType==='text'?'text':q.visualType; // nl | bm | text | custom | nt
   // Open the correct tool panel without resetting fields
   if(activeTool&&activeTool!==type)closeTool();
   if(activeTool!==type){
@@ -2473,21 +2326,11 @@ function editQuestion(qid){
   } else if(type==='custom'){
     document.getElementById('custom-q-text').value=q.text;
     document.getElementById('custom-answer').value=q.answer||'';
-    if(q.visualType==='wb'){
-      customWBBorderColour=(q.cfg||{}).wbBorder||'#319377';
-      customWBSkinColour=(q.cfg||{}).wbSkin||'#ffa99c';
-      const wbt=document.getElementById('custom-wb-text');
-      if(wbt)wbt.value=(q.cfg||{}).wbText||'';
-      setCustomMode('whiteboard');
-      initCustomWBSwatches();
-    } else {
-      customResetImage();
-      setCustomMode('upload');
-      initCustomWBSwatches();
-      if(q.imagePath){
-        const inner=document.getElementById('custom-drop-inner');
-        inner.innerHTML=`<div class="drop-icon">🖼</div><p style="font-size:12px;color:var(--muted)">Existing image kept — drop a new one to replace</p>`;
-      }
+    customResetImage();
+    // Show a placeholder so the user knows an image already exists
+    if(q.imagePath){
+      const inner=document.getElementById('custom-drop-inner');
+      inner.innerHTML=`<div class="drop-icon">🖼</div><p style="font-size:12px;color:var(--muted)">Existing image kept — drop a new one to replace</p>`;
     }
   }
   editingQId=qid;
@@ -2776,42 +2619,6 @@ document.querySelector('#tool-panel-pv .form-card').innerHTML = pvPanelHTML();
 document.querySelector('#tool-panel-pr .form-card').innerHTML = prPanelHTML();
 initState();loadStorage();loadPanel();renderSidebar();initNLPanel();initBMPanel();initNRPanel();initPRPanel();updateFolderStatus();loadStatusMap().then(()=>saveStatusMap());loadPanelMap().then(()=>{if(_panelHadLocalState)savePanelMap();});
 document.getElementById('qabot-modal-body').addEventListener('click',e=>{const b=e.target.closest('[data-accept]');if(b)qaAcceptIssue(b.getAttribute('data-accept'));});
-
-// Live bold preview under question text inputs
-document.addEventListener('input',function(e){
-  const el=e.target;
-  if(!el||el.tagName!=='INPUT'||!el.id||!/-text$/.test(el.id))return;
-  const val=el.value||'';
-  const hasBold=/\*\*[^*\n]+\*\*/.test(val);
-  let preview=el.parentElement&&el.parentElement.querySelector('.bold-live-preview');
-  if(hasBold){
-    if(!preview){preview=document.createElement('div');preview.className='bold-live-preview';el.parentElement.appendChild(preview);}
-    preview.innerHTML=renderBold(val);
-    preview.style.display='block';
-  } else if(preview){
-    preview.style.display='none';
-  }
-});
-
-// Ctrl+B / Cmd+B bold shortcut for question text inputs
-document.addEventListener('keydown',function(e){
-  if((e.ctrlKey||e.metaKey)&&e.key==='b'){
-    const el=document.activeElement;
-    if(el&&(el.tagName==='INPUT'||el.tagName==='TEXTAREA')&&!el.readOnly&&!el.disabled){
-      e.preventDefault();
-      const s=el.selectionStart,end=el.selectionEnd,v=el.value,sel=v.slice(s,end);
-      if(sel.length){
-        el.value=v.slice(0,s)+'**'+sel+'**'+v.slice(end);
-        el.selectionStart=el.selectionEnd=end+4;
-      } else {
-        el.value=v.slice(0,s)+'****'+v.slice(end);
-        el.selectionStart=el.selectionEnd=s+2;
-      }
-      el.dispatchEvent(new Event('input',{bubbles:true}));
-      el.dispatchEvent(new Event('change',{bubbles:true}));
-    }
-  }
-});
 </script>
 </body>
 </html>
