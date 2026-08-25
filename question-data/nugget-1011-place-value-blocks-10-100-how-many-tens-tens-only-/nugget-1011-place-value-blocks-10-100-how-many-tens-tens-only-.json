@@ -75,20 +75,21 @@
     },
     {
       "id": 5,
-      "text": "How many **tens** are there in 60?",
-      "answer": "6",
+      "text": "How many **tens** are there in 90?",
+      "answer": "9",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "60",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbText": "90",
+        "wbBorder": "#847AC9",
+        "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-25T15:15:24.000Z",
-      "createdAt": "2026-08-25T15:15:24.000Z"
+      "createdAt": "2026-08-25T15:15:24.000Z",
+      "imagePath": ""
     }
   ],
   "exampleOverride": {
