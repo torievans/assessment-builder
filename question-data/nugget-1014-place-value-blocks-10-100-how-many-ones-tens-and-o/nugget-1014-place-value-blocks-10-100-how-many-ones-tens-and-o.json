@@ -1,0 +1,16 @@
+{
+  "nuggetId": 1014,
+  "status": "in-progress",
+  "nextQId": 319304,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "26",
+      "wbBorder": "#847AC9",
+      "wbSkin": "#b06530"
+    },
+    "visualType": "wb",
+    "answer": "6",
+    "text": "**How many ones** are there in 26?"
+  }
+}
