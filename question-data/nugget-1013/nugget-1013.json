@@ -2,15 +2,102 @@
   "nuggetId": 1013,
   "status": "in-progress",
   "nextQId": 319304,
-  "questions": [],
+  "questions": [
+    {
+      "id": 1,
+      "text": "How many **tens** are there in 34?",
+      "answer": "3",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "34",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
+    },
+    {
+      "id": 2,
+      "text": "How many **tens** are there in 57?",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "57",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
+    },
+    {
+      "id": 3,
+      "text": "How many **tens** are there in 72?",
+      "answer": "7",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "72",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
+    },
+    {
+      "id": 4,
+      "text": "How many **tens** are there in 16?",
+      "answer": "1",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "16",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z"
+    },
+    {
+      "id": 5,
+      "text": "How many **tens** are there in 93?",
+      "answer": "9",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "93",
+        "wbBorder": "#7898F0",
+        "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z",
+      "imagePath": ""
+    }
+  ],
   "exampleOverride": {
+    "visualType": "wb",
+    "text": "How many **tens** are there in 34?",
+    "answer": "3",
     "cfg": {
-      "wbText": "59",
+      "wbText": "34",
       "wbBorder": "#319377",
       "wbSkin": "#ffa99c"
-    },
-    "visualType": "wb",
-    "answer": "5",
-    "text": "**How many tens** are the in 59?"
+    }
   }
 }
