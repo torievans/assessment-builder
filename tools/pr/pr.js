@@ -1047,9 +1047,11 @@ function pictorialSVG(cfg) {
       const gx = ox + g * groupStep;
       const inThisGroup = Math.min(groupSz, total - g * groupSz);
       for (let k = 0; k < inThisGroup; k++) {
-        const col = k % GROUP_COLS;
-        const row = Math.floor(k / GROUP_COLS);
-        parts.push(renderItem(img, gx + col * S + R, oy + row * S + R));
+        const row    = Math.floor(k / GROUP_COLS);
+        const col    = k % GROUP_COLS;
+        const inRow  = Math.min(GROUP_COLS, inThisGroup - row * GROUP_COLS);
+        const rowOff = (groupCols - inRow) * S / 2;   // centre partial rows under full row
+        parts.push(renderItem(img, gx + rowOff + col * S + R, oy + row * S + R));
       }
       totalW = gx - ox + Math.min(inThisGroup, GROUP_COLS) * S - GAP;
     }
