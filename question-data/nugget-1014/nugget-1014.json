@@ -1,16 +1,102 @@
 {
   "nuggetId": 1014,
-  "status": "in-progress",
+  "status": "ready-for-qa",
   "nextQId": 319304,
-  "questions": [],
-  "exampleOverride": {
-    "cfg": {
-      "wbText": "26",
-      "wbBorder": "#847AC9",
-      "wbSkin": "#b06530"
+  "questions": [
+    {
+      "id": 1,
+      "text": "**How many ones** are there in 36?",
+      "answer": "6",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "36",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:22:54.000Z",
+      "createdAt": "2026-08-25T15:22:54.000Z"
     },
+    {
+      "id": 2,
+      "text": "**How many ones** are there in 54?",
+      "answer": "4",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "54",
+        "wbBorder": "#7898F0",
+        "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-08-25T15:22:54.000Z",
+      "createdAt": "2026-08-25T15:22:54.000Z"
+    },
+    {
+      "id": 3,
+      "text": "**How many ones** are there in 82?",
+      "answer": "2",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "82",
+        "wbBorder": "#D46B55",
+        "wbSkin": "#b06530"
+      },
+      "updatedAt": "2026-08-25T15:22:54.000Z",
+      "createdAt": "2026-08-25T15:22:54.000Z"
+    },
+    {
+      "id": 4,
+      "text": "**How many ones** are there in 19?",
+      "answer": "9",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "19",
+        "wbBorder": "#F5995B",
+        "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-08-25T15:22:54.000Z",
+      "createdAt": "2026-08-25T15:22:54.000Z"
+    },
+    {
+      "id": 5,
+      "text": "**How many ones** are there in 73?",
+      "answer": "3",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "73",
+        "wbBorder": "#847AC9",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-25T15:22:54.000Z",
+      "createdAt": "2026-08-25T15:22:54.000Z"
+    }
+  ],
+  "exampleOverride": {
     "visualType": "wb",
-    "answer": "6",
-    "text": "**How many ones** are there in 26?"
+    "text": "**How many ones** are there in 42?",
+    "answer": "2",
+    "cfg": {
+      "wbText": "42",
+      "wbBorder": "#319377",
+      "wbSkin": "#ffa99c"
+    }
   }
 }
