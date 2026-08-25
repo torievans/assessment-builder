@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 319084,
-      "text": "What is one less than 17?",
+      "text": "What is **one less** than 17?",
       "answer": "16",
       "type": "exact",
       "image": "",
