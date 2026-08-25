@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 319079,
-      "text": "What is** one less** than 3?",
+      "text": "What is **one less** than 3?",
       "answer": "2",
       "type": "exact",
       "image": "",
@@ -18,7 +18,8 @@
         "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319080,
