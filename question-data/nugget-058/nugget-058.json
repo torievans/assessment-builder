@@ -1,11 +1,11 @@
 {
   "nuggetId": 58,
   "status": "ready-for-qa",
-  "nextQId": 319293,
+  "nextQId": 319298,
   "questions": [
     {
       "id": 319288,
-      "text": "**Count in 10s** to find the number that should go at the end?",
+      "text": "**Count in 10s** to find the number that should go at the end.",
       "answer": "40",
       "type": "exact",
       "image": "",
@@ -23,7 +23,7 @@
     },
     {
       "id": 319289,
-      "text": "**Count in 10s** to find the number that should go at the end?",
+      "text": "**Count in 10s** to find the number that should go at the end.",
       "answer": "50",
       "type": "exact",
       "image": "",
@@ -41,7 +41,7 @@
     },
     {
       "id": 319290,
-      "text": "**Count in 10s** to find the number that should go at the end?",
+      "text": "**Count in 10s** to find the number that should go at the end.",
       "answer": "60",
       "type": "exact",
       "image": "",
@@ -59,7 +59,7 @@
     },
     {
       "id": 319291,
-      "text": "**Count in 10s** to find the number that should go at the end?",
+      "text": "**Count in 10s** to find the number that should go at the end.",
       "answer": "70",
       "type": "exact",
       "image": "",
@@ -77,7 +77,7 @@
     },
     {
       "id": 319292,
-      "text": "**Count in 10s** to find the number that should go at the end?",
+      "text": "**Count in 10s** to find the number that should go at the end.",
       "answer": "80",
       "type": "exact",
       "image": "",
