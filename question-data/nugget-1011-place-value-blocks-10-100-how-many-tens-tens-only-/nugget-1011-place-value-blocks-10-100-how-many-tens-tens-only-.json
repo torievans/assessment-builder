@@ -1,11 +1,11 @@
 {
   "nuggetId": 1011,
-  "status": "ready-for-qa",
-  "nextQId": 319304,
+  "status": "in-progress",
+  "nextQId": 6,
   "questions": [
     {
       "id": 1,
-      "text": "**How many tens** are there in 20?",
+      "text": "How many **tens** are there in 20?",
       "answer": "2",
       "type": "exact",
       "image": "",
@@ -14,16 +14,32 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "20",
-        "wbBorder": "#FC7E91",
+        "wbBorder": "#319377",
         "wbSkin": "#ffa99c"
       },
-      "updatedAt": "2026-08-25T15:15:24.000Z",
-      "createdAt": "2026-08-25T15:15:24.000Z",
-      "imagePath": ""
+      "updatedAt": "2026-08-25T15:22:34.000Z",
+      "createdAt": "2026-08-25T15:22:34.000Z"
+    },
+    {
+      "id": 2,
+      "text": "How many **tens** are there in 50?",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "50",
+        "wbBorder": "#7898F0",
+        "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-08-25T15:22:34.000Z",
+      "createdAt": "2026-08-25T15:22:34.000Z"
     },
     {
       "id": 3,
-      "text": "**How many tens** are there in 80?",
+      "text": "How many **tens** are there in 80?",
       "answer": "8",
       "type": "exact",
       "image": "",
@@ -32,34 +48,15 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "80",
-        "wbBorder": "#F5995B",
-        "wbSkin": "#6b3520"
+        "wbBorder": "#D46B55",
+        "wbSkin": "#b06530"
       },
-      "updatedAt": "2026-08-25T15:15:24.000Z",
-      "createdAt": "2026-08-25T15:15:24.000Z",
-      "imagePath": ""
-    },
-    {
-      "id": 2,
-      "text": "**How many tens** are there in 60?",
-      "answer": "6",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "60",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
-      },
-      "updatedAt": "2026-08-25T15:15:24.000Z",
-      "createdAt": "2026-08-25T15:15:24.000Z",
-      "imagePath": ""
+      "updatedAt": "2026-08-25T15:22:34.000Z",
+      "createdAt": "2026-08-25T15:22:34.000Z"
     },
     {
       "id": 4,
-      "text": "**How many tens** are there in 30?",
+      "text": "How many **tens** are there in 30?",
       "answer": "3",
       "type": "exact",
       "image": "",
@@ -69,39 +66,37 @@
       "cfg": {
         "wbText": "30",
         "wbBorder": "#F5995B",
-        "wbSkin": "#b06530"
+        "wbSkin": "#6b3520"
       },
-      "updatedAt": "2026-08-25T15:15:24.000Z",
-      "createdAt": "2026-08-25T15:15:24.000Z",
-      "imagePath": ""
+      "updatedAt": "2026-08-25T15:22:34.000Z",
+      "createdAt": "2026-08-25T15:22:34.000Z"
     },
     {
       "id": 5,
-      "text": "**How many tens** are there in 90?",
-      "answer": "9",
+      "text": "How many **tens** are there in 60?",
+      "answer": "6",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "90",
+        "wbText": "60",
         "wbBorder": "#847AC9",
-        "wbSkin": "#b06530"
+        "wbSkin": "#ffa99c"
       },
-      "updatedAt": "2026-08-25T15:15:24.000Z",
-      "createdAt": "2026-08-25T15:15:24.000Z",
-      "imagePath": ""
+      "updatedAt": "2026-08-25T15:22:34.000Z",
+      "createdAt": "2026-08-25T15:22:34.000Z"
     }
   ],
   "exampleOverride": {
+    "visualType": "wb",
+    "text": "How many **tens** are there in 50?",
+    "answer": "5",
     "cfg": {
       "wbText": "50",
       "wbBorder": "#319377",
       "wbSkin": "#ffa99c"
-    },
-    "visualType": "wb",
-    "answer": "5",
-    "text": "**How many tens** are there in 50?"
+    }
   }
 }
