@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 319254,
-      "text": "**Count in 10s** to find out how many balls there are.",
+      "text": "**Count in 10s** to find out how many palm trees there are.",
       "answer": "20",
       "type": "exact",
       "image": "",
@@ -17,7 +17,7 @@
         "display": "array",
         "align": "left",
         "countA": 55,
-        "imageIdA": "illus:sports/ball_basketball_orange",
+        "imageIdA": "illus:plants/palm_tree_green",
         "countB": 3,
         "imageIdB": "illus:space/crescent_moon_yellow",
         "op": "add",
