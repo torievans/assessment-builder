@@ -68,6 +68,8 @@
         "answer": "55",
         "lineStyle": "terminate",
         "colour": "orange",
+        "hideFrom": 15,
+        "hideTo": 60,
         "answerCircle": "answer"
       },
       "updatedAt": "2026-08-25",
