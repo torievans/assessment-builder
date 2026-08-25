@@ -2827,9 +2827,14 @@ document.addEventListener('keydown',e=>{
   e.preventDefault();
   const s=el.selectionStart,end=el.selectionEnd,v=el.value;
   if(s===end){
-    // No selection: insert **** and place cursor between them
-    el.value=v.slice(0,s)+'****'+v.slice(s);
-    el.selectionStart=el.selectionEnd=s+2;
+    if(v.slice(s,s+2)==='**'){
+      // Cursor is right before closing ** — jump past it
+      el.selectionStart=el.selectionEnd=s+2;
+    }else{
+      // No selection: insert **** and place cursor between them
+      el.value=v.slice(0,s)+'****'+v.slice(s);
+      el.selectionStart=el.selectionEnd=s+2;
+    }
   }else if(s>=2&&end<=v.length-2&&v.slice(s-2,s)==='**'&&v.slice(end,end+2)==='**'){
     // Already wrapped — toggle off
     el.value=v.slice(0,s-2)+v.slice(s,end)+v.slice(end+2);
