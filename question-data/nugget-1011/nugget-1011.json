@@ -1,0 +1,16 @@
+{
+  "nuggetId": 1011,
+  "status": "in-progress",
+  "nextQId": 319300,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "40",
+      "wbBorder": "#319377",
+      "wbSkin": "#ffa99c"
+    },
+    "visualType": "wb",
+    "answer": "4",
+    "text": "How many tens are the in 40?"
+  }
+}
