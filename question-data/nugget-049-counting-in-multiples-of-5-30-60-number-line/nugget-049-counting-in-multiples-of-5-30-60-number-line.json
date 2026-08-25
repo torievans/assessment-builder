@@ -123,10 +123,12 @@
       "answer": "40",
       "lineStyle": "terminate",
       "colour": "orange",
+      "hideFrom": 15,
+      "hideTo": 60,
       "answerCircle": "answer"
     },
     "visualType": "nl",
     "answer": "40",
-    "text": "**Count in 5s** to find the missing number."
+    "text": "**Count in 5s** to find the number that should go in the circle."
   }
 }
