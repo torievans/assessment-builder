@@ -57,7 +57,7 @@
     },
     {
       "id": 3,
-      "text": "How many **tens** are there in 70?",
+      "text": "**How many tens** are there in 70?",
       "answer": "7",
       "type": "exact",
       "image": "",
