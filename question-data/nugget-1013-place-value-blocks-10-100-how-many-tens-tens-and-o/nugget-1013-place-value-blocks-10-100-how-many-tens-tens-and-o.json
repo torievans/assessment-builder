@@ -59,7 +59,7 @@
     },
     {
       "id": 4,
-      "text": "How many **tens** are there in 16?",
+      "text": "**How many tens** are there in 16?",
       "answer": "1",
       "type": "exact",
       "image": "",
