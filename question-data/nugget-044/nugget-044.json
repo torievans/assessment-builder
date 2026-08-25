@@ -6,7 +6,7 @@
     {
       "id": 319200,
       "text": "**Count in 5s** to find out how many rhinos there are.",
-      "answer": "5",
+      "answer": "15",
       "type": "exact",
       "image": "",
       "display": "",
@@ -16,7 +16,7 @@
         "mode": "count",
         "display": "array",
         "align": "left",
-        "countA": 5,
+        "countA": 15,
         "imageIdA": "illus:animals/rhinoceros_grey",
         "countB": 3,
         "imageIdB": "illus:space/crescent_moon_yellow",
