@@ -1,7 +1,7 @@
 {
   "nuggetId": 45,
-  "status": "in-progress",
-  "nextQId": 319210,
+  "status": "ready-for-qa",
+  "nextQId": 319225,
   "questions": [
     {
       "id": 319205,
@@ -163,5 +163,30 @@
       "updatedAt": "2026-08-25",
       "createdAt": "2026-08-25"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "mode": "multiply",
+      "display": "array",
+      "align": "left",
+      "countA": 15,
+      "imageIdA": "illus:food/fruit/tomato_red",
+      "countB": 3,
+      "imageIdB": "illus:space/crescent_moon_yellow",
+      "op": "add",
+      "subMode": "crossed",
+      "cols": 5,
+      "mrows": 3,
+      "mcols": 5,
+      "illusOutline": true,
+      "imgScale": 1,
+      "groupSize": 5,
+      "numA": false,
+      "numB": false,
+      "showEq": false
+    },
+    "visualType": "pr",
+    "answer": "15",
+    "text": "Count in 5s to find out how many tomatoes there are."
+  }
 }
