@@ -77,7 +77,7 @@
     },
     {
       "id": 319088,
-      "text": "What is one less than 20?",
+      "text": "What is **one less** than 20?",
       "answer": "19",
       "type": "exact",
       "image": "",
@@ -90,7 +90,8 @@
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     }
   ],
   "exampleOverride": {
