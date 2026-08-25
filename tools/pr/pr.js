@@ -985,7 +985,7 @@ function buildCrayonBoxSVG(n, label, fontSize) {
   parts.push(`<ellipse fill="#fff2d4" cx="${(W/2).toFixed(2)}" cy="1029.46" rx="${(556.95*W/ORIG_W).toFixed(2)}" ry="233"/>`);
   if (label) {
     const esc = label.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    parts.push(`<text fill="#333" text-anchor="middle" font-family="'Proxima Soft',sans-serif" font-size="${fontSize || 148}" font-weight="800" x="${(W/2).toFixed(2)}" y="1068.708">${esc}</text>`);
+    parts.push(`<text fill="#333" text-anchor="middle" dominant-baseline="central" font-family="'Proxima Soft',sans-serif" font-size="${fontSize || 148}" font-weight="800" x="${(W/2).toFixed(2)}" y="1029.46">${esc}</text>`);
   }
   return parts.join('');
 }
