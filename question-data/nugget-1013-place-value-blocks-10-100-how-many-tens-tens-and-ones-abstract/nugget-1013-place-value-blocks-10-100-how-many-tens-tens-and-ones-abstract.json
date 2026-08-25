@@ -1,7 +1,78 @@
 {
   "nuggetId": 1013,
-  "status": "not-started",
-  "nextQId": 319288,
-  "questions": [],
-  "exampleOverride": null
+  "status": "in-progress",
+  "nextQId": 6,
+  "questions": [
+    {
+      "id": 1,
+      "text": "How many **tens** are there in 34?",
+      "answer": "3",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "text",
+      "cfg": {},
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 2,
+      "text": "How many **tens** are there in 57?",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "text",
+      "cfg": {},
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 3,
+      "text": "How many **tens** are there in 72?",
+      "answer": "7",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "text",
+      "cfg": {},
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 4,
+      "text": "How many **tens** are there in 16?",
+      "answer": "1",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "text",
+      "cfg": {},
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    },
+    {
+      "id": 5,
+      "text": "How many **tens** are there in 93?",
+      "answer": "9",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "text",
+      "cfg": {},
+      "updatedAt": "2026-08-25T15:00:51.000Z",
+      "createdAt": "2026-08-25T15:00:51.000Z"
+    }
+  ],
+  "exampleOverride": {
+    "visualType": "text",
+    "text": "How many **tens** are there in 34?",
+    "answer": "3",
+    "cfg": {}
+  }
 }
