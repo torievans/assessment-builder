@@ -22,24 +22,6 @@
       "createdAt": "2026-08-25"
     },
     {
-      "id": 319294,
-      "text": "**Count in 10s** to find the number that should go at the end?",
-      "answer": "100",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nt",
-      "cfg": {
-        "sequence": "0,10,20,30,40,50,60,70,_,_,?",
-        "shape": "balloon",
-        "layout": "straight",
-        "colourMode": "full"
-      },
-      "updatedAt": "2026-08-25",
-      "createdAt": "2026-08-25"
-    },
-    {
       "id": 319295,
       "text": "**Count in 10s** to find the number that should go at the end?",
       "answer": "70",
@@ -68,6 +50,24 @@
       "visualType": "nt",
       "cfg": {
         "sequence": "0,10,20,30,40,50,_,_,?",
+        "shape": "balloon",
+        "layout": "straight",
+        "colourMode": "full"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319294,
+      "text": "**Count in 10s** to find the number that should go at the end?",
+      "answer": "100",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nt",
+      "cfg": {
+        "sequence": "0,10,20,30,40,50,60,70,_,_,?",
         "shape": "balloon",
         "layout": "straight",
         "colourMode": "full"
