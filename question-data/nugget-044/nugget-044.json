@@ -1,0 +1,31 @@
+{
+  "nuggetId": 44,
+  "status": "in-progress",
+  "nextQId": 319191,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "mode": "count",
+      "display": "array",
+      "align": "left",
+      "countA": 15,
+      "imageIdA": "illus:sports/ball_basketball_orange",
+      "countB": 3,
+      "imageIdB": "illus:space/crescent_moon_yellow",
+      "op": "add",
+      "subMode": "crossed",
+      "cols": 5,
+      "mrows": 2,
+      "mcols": 5,
+      "illusOutline": true,
+      "imgScale": 1,
+      "groupSize": 5,
+      "numA": false,
+      "numB": false,
+      "showEq": false
+    },
+    "visualType": "pr",
+    "answer": "15",
+    "text": "Count in 5s to find out how many balls there are."
+  }
+}
