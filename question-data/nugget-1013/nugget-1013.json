@@ -41,7 +41,7 @@
     },
     {
       "id": 3,
-      "text": "How many **tens** are there in 72?",
+      "text": "**How many tens** are there in 72?",
       "answer": "7",
       "type": "exact",
       "image": "",
