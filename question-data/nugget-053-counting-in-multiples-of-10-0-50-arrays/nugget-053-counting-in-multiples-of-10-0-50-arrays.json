@@ -113,7 +113,7 @@
     },
     {
       "id": 319255,
-      "text": "**Count in 10s** to find out how many balls there are.",
+      "text": "**Count in 10s** to find out how many ice creams there are.",
       "answer": "30",
       "type": "exact",
       "image": "",
@@ -125,7 +125,7 @@
         "display": "array",
         "align": "left",
         "countA": 55,
-        "imageIdA": "illus:sports/ball_basketball_orange",
+        "imageIdA": "illus:food/sweets/soft_serve_cone_orange",
         "countB": 3,
         "imageIdB": "illus:space/crescent_moon_yellow",
         "op": "add",
