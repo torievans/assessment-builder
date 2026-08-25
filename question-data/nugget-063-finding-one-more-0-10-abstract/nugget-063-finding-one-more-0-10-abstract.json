@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 319044,
-      "text": "What is** one more** than 2?",
+      "text": "What is **one more** than 2?",
       "answer": "3",
       "type": "exact",
       "image": "",
@@ -18,7 +18,8 @@
         "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319045,
