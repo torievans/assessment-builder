@@ -1,0 +1,18 @@
+{
+  "nuggetId": 59,
+  "status": "in-progress",
+  "nextQId": 319248,
+  "questions": [],
+  "customName": "Counting in Multiples of 10 (Number Track with 2 Blanks)",
+  "exampleOverride": {
+    "cfg": {
+      "sequence": "0,10,20,30,_,_,?",
+      "shape": "balloon",
+      "layout": "straight",
+      "colourMode": "full"
+    },
+    "visualType": "nt",
+    "answer": "60",
+    "text": "**Count in 10s** to find the number that should go at the end?"
+  }
+}
