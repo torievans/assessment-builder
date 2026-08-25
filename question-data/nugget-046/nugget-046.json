@@ -1,7 +1,7 @@
 {
   "nuggetId": 46,
   "status": "in-progress",
-  "nextQId": 319215,
+  "nextQId": 319225,
   "questions": [
     {
       "id": 319210,
@@ -113,5 +113,20 @@
       "updatedAt": "2026-08-25",
       "createdAt": "2026-08-25"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 30,
+      "partitions": 30,
+      "valuesGivenEvery": 5,
+      "answer": "20",
+      "lineStyle": "terminate",
+      "colour": "red",
+      "answerCircle": "answer"
+    },
+    "visualType": "nl",
+    "answer": "20",
+    "text": "**Count in 5s** to find the missing number."
+  }
 }
