@@ -77,7 +77,7 @@
     },
     {
       "id": 5,
-      "text": "How many **tens** are there in 90?",
+      "text": "**How many tens** are there in 90?",
       "answer": "9",
       "type": "exact",
       "image": "",
