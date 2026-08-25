@@ -1,7 +1,7 @@
 {
   "nuggetId": 57,
-  "status": "in-progress",
-  "nextQId": 319288,
+  "status": "ready-for-qa",
+  "nextQId": 319298,
   "questions": [
     {
       "id": 319273,
@@ -123,6 +123,8 @@
       "answer": "80",
       "lineStyle": "terminate",
       "colour": "green",
+      "hideFrom": 30,
+      "hideTo": 100,
       "answerCircle": "answer"
     },
     "visualType": "nl",
