@@ -113,5 +113,20 @@
       "updatedAt": "2026-08-25",
       "createdAt": "2026-08-25"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 60,
+      "partitions": 60,
+      "valuesGivenEvery": 5,
+      "answer": "40",
+      "lineStyle": "terminate",
+      "colour": "orange",
+      "answerCircle": "answer"
+    },
+    "visualType": "nl",
+    "answer": "40",
+    "text": "**Count in 5s** to find the missing number."
+  }
 }
