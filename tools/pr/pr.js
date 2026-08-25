@@ -875,8 +875,9 @@ function pictorialSVG(cfg) {
 
   const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const defs = [];
+  const _pfx = Math.random().toString(36).slice(2,8);
   let _uid = 0;
-  const uid = () => `u${_uid++}`;
+  const uid = () => `${_pfx}u${_uid++}`;
 
   // ── Single item renderer ──────────────────────────────────────────────────
   // r: optional radius override (used by renderFrames for larger frame cells)
