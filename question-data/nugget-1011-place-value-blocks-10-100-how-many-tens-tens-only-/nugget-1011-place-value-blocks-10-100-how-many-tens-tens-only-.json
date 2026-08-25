@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 1,
-      "text": "How many **tens** are there in 20?",
+      "text": "**How many tens** are there in 20?",
       "answer": "2",
       "type": "exact",
       "image": "",
@@ -18,7 +18,8 @@
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-25T15:15:24.000Z",
-      "createdAt": "2026-08-25T15:15:24.000Z"
+      "createdAt": "2026-08-25T15:15:24.000Z",
+      "imagePath": ""
     },
     {
       "id": 2,
