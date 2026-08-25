@@ -22,24 +22,6 @@
       "imagePath": ""
     },
     {
-      "id": 2,
-      "text": "**How many tens** are there in 60?",
-      "answer": "6",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "60",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
-      },
-      "updatedAt": "2026-08-25T15:15:24.000Z",
-      "createdAt": "2026-08-25T15:15:24.000Z",
-      "imagePath": ""
-    },
-    {
       "id": 3,
       "text": "How many **tens** are there in 80?",
       "answer": "8",
@@ -52,6 +34,24 @@
         "wbText": "80",
         "wbBorder": "#F5995B",
         "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-08-25T15:15:24.000Z",
+      "createdAt": "2026-08-25T15:15:24.000Z",
+      "imagePath": ""
+    },
+    {
+      "id": 2,
+      "text": "**How many tens** are there in 60?",
+      "answer": "6",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "60",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-25T15:15:24.000Z",
       "createdAt": "2026-08-25T15:15:24.000Z",
