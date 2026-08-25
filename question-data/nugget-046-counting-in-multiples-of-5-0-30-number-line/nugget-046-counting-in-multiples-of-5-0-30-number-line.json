@@ -1,7 +1,7 @@
 {
   "nuggetId": 46,
   "status": "in-progress",
-  "nextQId": 319195,
+  "nextQId": 319197,
   "questions": [],
   "exampleOverride": {
     "cfg": {
@@ -16,6 +16,6 @@
     },
     "visualType": "nl",
     "answer": "20",
-    "text": "**Count in 5s** to find the missing number>"
+    "text": "**Count in 5s** to find the missing number."
   }
 }
