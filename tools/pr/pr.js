@@ -1296,7 +1296,7 @@ function pictorialSVG(cfg) {
     const displayH = 200;
     const displayW = displayH * W / VH;
     const boxes   = Math.max(1, crayonBoxes);
-    const boxGap  = 12;
+    const boxGap  = 24;
     svgW = PAD * 2 + boxes * displayW + (boxes - 1) * boxGap;
     svgH = displayH + PAD * 2;
     for (let b = 0; b < boxes; b++) {
