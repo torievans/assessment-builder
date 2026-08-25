@@ -67,27 +67,6 @@
       "createdAt": "2026-08-25"
     },
     {
-      "id": 319178,
-      "text": "**Count in 2s** to find the missing number.",
-      "answer": "20",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nl",
-      "cfg": {
-        "start": 0,
-        "end": 24,
-        "partitions": 24,
-        "valuesGivenEvery": 2,
-        "answer": "20",
-        "lineStyle": "terminate",
-        "colour": "orange"
-      },
-      "updatedAt": "2026-08-25",
-      "createdAt": "2026-08-25"
-    },
-    {
       "id": 319179,
       "text": "**Count in 2s** to find the missing number.",
       "answer": "22",
@@ -102,6 +81,27 @@
         "partitions": 24,
         "valuesGivenEvery": 2,
         "answer": "22",
+        "lineStyle": "terminate",
+        "colour": "orange"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319178,
+      "text": "**Count in 2s** to find the missing number.",
+      "answer": "20",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 24,
+        "partitions": 24,
+        "valuesGivenEvery": 2,
+        "answer": "20",
         "lineStyle": "terminate",
         "colour": "orange"
       },
