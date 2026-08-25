@@ -94,13 +94,13 @@
     }
   ],
   "exampleOverride": {
-    "visualType": "wb",
-    "text": "How many **tens** are there in 34?",
-    "answer": "3",
     "cfg": {
       "wbText": "34",
       "wbBorder": "#319377",
       "wbSkin": "#ffa99c"
-    }
+    },
+    "visualType": "wb",
+    "answer": "3",
+    "text": "**How many tens** are there in 34?"
   }
 }
