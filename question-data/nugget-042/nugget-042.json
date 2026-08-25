@@ -1,0 +1,17 @@
+{
+  "nuggetId": 42,
+  "status": "in-progress",
+  "nextQId": 319141,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "sequence": "0,2,4,6,8,10,_,?",
+      "shape": "square",
+      "layout": "straight",
+      "colourMode": "full"
+    },
+    "visualType": "nt",
+    "answer": "14",
+    "text": "**Count in 2s** to find the number that should go at the end?"
+  }
+}
