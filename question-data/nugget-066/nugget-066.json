@@ -23,7 +23,7 @@
     },
     {
       "id": 319060,
-      "text": "What is one more than 49?",
+      "text": "What is **one more** than 49?",
       "answer": "50",
       "type": "exact",
       "image": "",
@@ -35,6 +35,7 @@
         "wbBorder": "#D46B55",
         "wbSkin": "#d4895a"
       },
+      "imagePath": "",
       "updatedAt": "2026-08-25",
       "createdAt": "2026-08-25"
     },
