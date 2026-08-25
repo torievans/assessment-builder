@@ -1,7 +1,7 @@
 {
   "nuggetId": 71,
   "status": "ready-for-qa",
-  "nextQId": 319099,
+  "nextQId": 319298,
   "questions": [
     {
       "id": 319084,
@@ -99,6 +99,6 @@
     },
     "visualType": "wb",
     "answer": "11",
-    "text": "What is one less than 12?"
+    "text": "What is **one less** than 12?"
   }
 }
