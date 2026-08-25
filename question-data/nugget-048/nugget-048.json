@@ -134,7 +134,7 @@
     {
       "id": 319224,
       "text": "**Count in 5s** to find out how many toucans there are.",
-      "answer": "50",
+      "answer": "30",
       "type": "exact",
       "image": "",
       "display": "",
@@ -152,7 +152,7 @@
         "subMode": "crossed",
         "cols": 5,
         "mrows": 5,
-        "mcols": 10,
+        "mcols": 6,
         "illusOutline": true,
         "imgScale": 1,
         "groupSize": 5,
