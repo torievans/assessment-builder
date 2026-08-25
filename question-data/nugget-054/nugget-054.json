@@ -48,28 +48,6 @@
       "createdAt": "2026-08-25"
     },
     {
-      "id": 319260,
-      "text": "**Count in 10s** to find the missing number.",
-      "answer": "30",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nl",
-      "cfg": {
-        "start": 0,
-        "end": 60,
-        "partitions": 60,
-        "valuesGivenEvery": 10,
-        "answer": "30",
-        "lineStyle": "terminate",
-        "colour": "green",
-        "answerCircle": "answer"
-      },
-      "updatedAt": "2026-08-25",
-      "createdAt": "2026-08-25"
-    },
-    {
       "id": 319261,
       "text": "**Count in 10s** to find the missing number.",
       "answer": "40",
@@ -84,6 +62,28 @@
         "partitions": 60,
         "valuesGivenEvery": 10,
         "answer": "40",
+        "lineStyle": "terminate",
+        "colour": "green",
+        "answerCircle": "answer"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319260,
+      "text": "**Count in 10s** to find the missing number.",
+      "answer": "30",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 60,
+        "partitions": 60,
+        "valuesGivenEvery": 10,
+        "answer": "30",
         "lineStyle": "terminate",
         "colour": "green",
         "answerCircle": "answer"
