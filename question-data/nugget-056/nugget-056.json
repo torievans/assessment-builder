@@ -113,7 +113,7 @@
     },
     {
       "id": 319269,
-      "text": "**Count in 10s** to find out how many balls there are.",
+      "text": "**Count in 10s** to find out how many lemons there are.",
       "answer": "60",
       "type": "exact",
       "image": "",
@@ -125,7 +125,7 @@
         "display": "array",
         "align": "left",
         "countA": 55,
-        "imageIdA": "illus:food/fruit/apple_green",
+        "imageIdA": "illus:food/fruit/lemon_yellow",
         "countB": 3,
         "imageIdB": "illus:space/crescent_moon_yellow",
         "op": "add",
