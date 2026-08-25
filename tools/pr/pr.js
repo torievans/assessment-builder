@@ -100,7 +100,8 @@ const PR_IMAGE_BANK = [
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let pr_mode         = 'count';
-let pr_groupSize    = 1;
+let pr_crayonCount  = 5;
+let pr_crayonLabel  = '5 Crayons';
 let pr_display      = 'array';    // 'array' | 'frame' | 'clustered'
 let pr_align        = 'left';     // 'left' | 'centre'  (array only)
 let pr_countA       = 7;
@@ -377,6 +378,7 @@ function prPanelHTML() {
           <button class="tog-btn active" data-prmode="count"    onclick="prSetMode(this)">Count</button>
           <button class="tog-btn"        data-prmode="addsub"   onclick="prSetMode(this)">Add / Sub</button>
           <button class="tog-btn"        data-prmode="multiply" onclick="prSetMode(this)">Multiply</button>
+          <button class="tog-btn"        data-prmode="crayon"   onclick="prSetMode(this)">Container</button>
         </div>
       </div>
     </div>
@@ -439,20 +441,10 @@ function prPanelHTML() {
         <div class="field"><label>Count</label>
           <div style="display:flex;align-items:center;gap:4px">
             <button class="tog-btn" onclick="prDelta('A',-1)" style="width:30px;height:30px;padding:0">−</button>
-            <input type="number" id="pr-ca" min="1" max="60" value="7"
+            <input type="number" id="pr-ca" min="1" max="20" value="7"
               style="width:52px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:4px;font-size:14px;font-family:var(--font)"
-              oninput="pr_countA=prClamp(+this.value,1,60);autoPreviewPR()">
+              oninput="pr_countA=prClamp(+this.value,1,20);autoPreviewPR()">
             <button class="tog-btn" onclick="prDelta('A',1)"  style="width:30px;height:30px;padding:0">+</button>
-          </div>
-        </div>
-        <div class="field" id="pr-group-size-field" style="display:none">
-          <label>Group size</label>
-          <div style="display:flex;align-items:center;gap:4px">
-            <button class="tog-btn" onclick="prDeltaGroup(-1)" style="width:30px;height:30px;padding:0">−</button>
-            <input type="number" id="pr-group-size" min="1" max="10" value="1"
-              style="width:52px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:4px;font-size:14px;font-family:var(--font)"
-              oninput="pr_groupSize=prClamp(+this.value,1,10);prUpdateMode();autoPreviewPR()">
-            <button class="tog-btn" onclick="prDeltaGroup(1)"  style="width:30px;height:30px;padding:0">+</button>
           </div>
         </div>
       </div>
@@ -545,6 +537,25 @@ function prPanelHTML() {
       </div>
     </div>
 
+    <!-- CRAYON BOX ─────────────────────────────────────────────────────────── -->
+    <div id="pr-crayon-wrap" style="display:none">
+      <div class="form-row" style="margin-top:0">
+        <div class="field"><label>Items in box</label>
+          <div style="display:flex;align-items:center;gap:4px">
+            <button class="tog-btn" onclick="prDeltaCrayon(-1)" style="width:30px;height:30px;padding:0">−</button>
+            <input type="number" id="pr-crayon-count" min="1" max="10" value="5"
+              style="width:52px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:4px;font-size:14px;font-family:var(--font)"
+              oninput="pr_crayonCount=Math.max(1,Math.min(10,+this.value||1));autoPreviewPR()">
+            <button class="tog-btn" onclick="prDeltaCrayon(1)"  style="width:30px;height:30px;padding:0">+</button>
+          </div>
+        </div>
+        <div class="field field-grow"><label>Box label</label>
+          <input type="text" id="pr-crayon-label" value="5 Crayons"
+            style="border:1.5px solid var(--border);border-radius:8px;padding:4px 8px;font-size:14px;font-family:var(--font);width:100%"
+            oninput="pr_crayonLabel=this.value;autoPreviewPR()">
+        </div>
+      </div>
+    </div>
     <div class="sec-hr"></div>
 
     <!-- LAYOUT ─────────────────────────────────────────────────────────────── -->
@@ -620,12 +631,12 @@ function prUpdateMode() {
   show('pr-count-wrap',     pr_mode === 'count');
   show('pr-addsub-wrap',    isAddSub);
   show('pr-multiply-wrap',  isMultiply);
-  show('pr-layout-row',     !isMultiply);
+  show('pr-crayon-wrap',    pr_mode === 'crayon');
+  show('pr-layout-row',     !isMultiply && pr_mode !== 'crayon');
+  show('pr-bank-panel',     pr_mode !== 'crayon');
   show('pr-bank-group-sel', isAddSub);
   const isArray = pr_display === 'array' && !isMultiply;
-  // Show cols (per-row) only when not grouped; show group-size only in count+array mode
-  show('pr-cols-field',       isArray && !(pr_mode === 'count' && pr_groupSize > 1));
-  show('pr-group-size-field', isArray && pr_mode === 'count');
+  show('pr-cols-field',  isArray);
   show('pr-align-field', !isMultiply);
   // Show outline toggle whenever any illustration is in use or selected in bank
   const hasIllus = pr_imageA.startsWith('illus:') || pr_imageB.startsWith('illus:')
@@ -640,8 +651,7 @@ function prSetDisplay(btn) {
     b.classList.toggle('active', b.dataset.prd === pr_display));
   const isArray = pr_display === 'array' && pr_mode !== 'multiply';
   const showEl = (id, v) => { const e = document.getElementById(id); if (e) e.style.display = v ? '' : 'none'; };
-  showEl('pr-cols-field',       isArray && !(pr_mode === 'count' && pr_groupSize > 1));
-  showEl('pr-group-size-field', isArray && pr_mode === 'count');
+  showEl('pr-cols-field',  isArray);
   showEl('pr-align-field', pr_mode !== 'multiply');
   autoPreviewPR();
 }
@@ -693,7 +703,7 @@ function prUpdateSubUI() {
 
 function prDelta(grp, d) {
   if (grp === 'A') {
-    pr_countA = prClamp(pr_countA + d, 1, 60);
+    pr_countA = prClamp(pr_countA + d, 1, 20);
     ['pr-ca', 'pr-addsub-ca'].forEach(id => { const e = document.getElementById(id); if (e) e.value = pr_countA; });
   } else {
     pr_countB = prClamp(pr_countB + d, 1, 20);
@@ -714,15 +724,16 @@ function prDeltaCols(d) {
   autoPreviewPR();
 }
 
-function prDeltaGroup(d) {
-  pr_groupSize = prClamp(pr_groupSize + d, 1, 10);
-  const e = document.getElementById('pr-group-size'); if (e) e.value = pr_groupSize;
-  prUpdateMode();
+function prDeltaCrayon(d) {
+  pr_crayonCount = Math.max(1, Math.min(10, pr_crayonCount + d));
+  const el = document.getElementById('pr-crayon-count');
+  if (el) el.value = pr_crayonCount;
   autoPreviewPR();
 }
 
 function prComputeAnswer() {
-  if (pr_mode === 'count') return pr_countA;
+  if (pr_mode === 'count')  return pr_countA;
+  if (pr_mode === 'crayon') return pr_crayonCount;
   if (pr_mode === 'multiply') return pr_mrows * pr_mcols;
   if (pr_mode === 'addsub') {
     if (pr_op === 'add') return pr_countA + pr_countB;
@@ -770,10 +781,11 @@ function getPRConfig() {
     mcols:        pr_mcols,
     illusOutline: pr_illusOutline,
     imgScale:     pr_imgScale,
-    groupSize:    pr_groupSize,
     numA:         pr_numA,
     numB:         pr_numB,
     showEq:       pr_showEq,
+    crayonCount:  pr_crayonCount,
+    crayonLabel:  pr_crayonLabel,
   };
 }
 
@@ -790,10 +802,11 @@ function restorePRConfig(cfg) {
   pr_subMode      = cfg.subMode      || 'crossed';
   pr_cols         = cfg.cols         || 5;
   pr_mrows        = cfg.mrows        || 2;
+  pr_crayonCount  = cfg.crayonCount  || 5;
+  pr_crayonLabel  = cfg.crayonLabel  !== undefined ? cfg.crayonLabel : '5 Crayons';
   pr_mcols        = cfg.mcols        || 5;
   pr_illusOutline = cfg.illusOutline !== false;
   pr_imgScale     = cfg.imgScale ?? 1.0;
-  pr_groupSize    = cfg.groupSize    || 1;
   pr_numA         = !!cfg.numA;
   pr_numB         = !!cfg.numB;
   pr_showEq       = !!cfg.showEq;
@@ -807,7 +820,6 @@ function restorePRConfig(cfg) {
   sv('pr-addsub-cb', pr_countB);
   sv('pr-mrows', pr_mrows);     sv('pr-mcols', pr_mcols);
   sv('pr-cols-in', pr_cols);
-  sv('pr-group-size', pr_groupSize);
   sv('pr-img-scale', pr_imgScale);
   const scaleVal = document.getElementById('pr-img-scale-val');
   if (scaleVal) scaleVal.textContent = Math.round(pr_imgScale * 100) + '%';
@@ -817,6 +829,8 @@ function restorePRConfig(cfg) {
   sc('pr-num-b',   pr_numB);
   sc('pr-show-eq', pr_showEq);
   document.querySelectorAll('[data-prmode]').forEach(b => b.classList.toggle('active', b.dataset.prmode === pr_mode));
+  const crEl = document.getElementById('pr-crayon-count'); if (crEl) crEl.value = pr_crayonCount;
+  const crLb = document.getElementById('pr-crayon-label'); if (crLb) crLb.value = pr_crayonLabel;
   document.querySelectorAll('[data-prd]').forEach(b => b.classList.toggle('active', b.dataset.prd === pr_display));
   document.querySelectorAll('[data-pralign]').forEach(b => b.classList.toggle('active', b.dataset.pralign === pr_align));
   document.querySelectorAll('[data-prop]').forEach(b => b.classList.toggle('active', b.dataset.prop === pr_op));
@@ -831,15 +845,107 @@ function restorePRConfig(cfg) {
 
 function prResetState() {
   pr_mode = 'count'; pr_display = 'array'; pr_align = 'left';
+  pr_crayonCount = 5; pr_crayonLabel = '5 Crayons';
   pr_countA = 7; pr_imageA = 'illus:space/crescent_moon_yellow';
   pr_countB = 3; pr_imageB = 'illus:space/crescent_moon_yellow';
   pr_op = 'add'; pr_subMode = 'crossed';
   pr_cols = 5; pr_mrows = 2; pr_mcols = 5;
   pr_illusOutline = true;
-  pr_groupSize = 1;
   pr_numA = false; pr_numB = false; pr_showEq = false;
   pr_bankA = 'illus'; pr_bankB = 'illus'; pr_bankGroupSel = 'A';
   pr_counterA = {s:0, f:0, c:0}; pr_counterB = {s:1, f:2, c:3};
+}
+
+
+// ── Crayon Box SVG Builder ────────────────────────────────────────────────────
+const CRAYON_BOX_X = [3.24, 161.24, 322.02, 477.86, 634.52, 796.13, 954.44, 1111.93, 1267.91, 1425.40];
+
+function buildCrayonBoxSVG(n, label) {
+  const COLORS = ['#7898f0','#319377','#847ac9','#f5995b','#fc7e91','#d46b55','#fecc6b','#efe5c5','#a8a6a5','#3f3f3f'];
+  const DARK = '#1f1f1f';
+  const CRAYON_W = 144.29, RIGHT_PAD = 4.16, VH = 1554.5, ORIG_W = 1573.85;
+  const count = Math.max(1, Math.min(10, n));
+  const W = CRAYON_BOX_X[count - 1] + CRAYON_W + RIGHT_PAD;
+
+  // Per-crayon data: [bodyY, capPath, tipPath, band1Points, band2Points]
+  // bodyY lowered 10px from original to remove sub-pixel seam with shoulder cap
+  const CD = [
+    { bodyY:244.74,
+      cap:'M13.32,199h124.97c5.33,0,9.66,4.33,9.66,9.66v46.34H3.66v-46.34c0-5.33,4.33-9.66,9.66-9.66Z',
+      tip:'M80.14,0h-10.89c-7.54,0-14.12,6.22-15.95,15.09L15.2,199h118.73L96.73,15.77c-1.88-9.26-8.73-15.77-16.59-15.77Z',
+      b1:'12.73 366 3.66 362 3.66 329 13.55 333 52.3 317 104.25 332 133.11 319 147.95 324 147.95 353 133.93 348 105.08 364 53.13 346 12.73 366',
+      b2:'12.73 421.52 3.66 417.52 3.66 384.52 13.55 388.52 52.3 372.52 104.25 387.52 133.11 374.52 147.95 379.52 147.95 408.52 133.93 403.52 105.08 419.52 53.13 401.52 12.73 421.52'},
+    { bodyY:247.54,
+      cap:'M171.31,201.8h124.97c5.33,0,9.66,4.33,9.66,9.66v46.34h-144.29v-46.34c0-5.33,4.33-9.66,9.66-9.66Z',
+      tip:'M238.13,2.8h-10.89c-7.54,0-14.12,6.22-15.95,15.09l-38.1,183.91h118.73L254.73,18.57c-1.88-9.26-8.73-15.77-16.59-15.77Z',
+      b1:'170.72 368.8 161.65 364.8 161.65 331.8 171.54 335.8 210.3 319.8 262.24 334.8 291.1 321.8 305.94 326.8 305.94 355.8 291.93 350.8 263.07 366.8 211.12 348.8 170.72 368.8',
+      b2:'170.72 424.32 161.65 420.32 161.65 387.32 171.54 391.32 210.3 375.32 262.24 390.32 291.1 377.32 305.94 382.32 305.94 411.32 291.93 406.32 263.07 422.32 211.12 404.32 170.72 424.32'},
+    { bodyY:247.54,
+      cap:'M332.09,201.8h124.97c5.33,0,9.66,4.33,9.66,9.66v46.34h-144.29v-46.34c0-5.33,4.33-9.66,9.66-9.66Z',
+      tip:'M398.92,2.8h-10.89c-7.54,0-14.12,6.22-15.95,15.09l-38.1,183.91h118.73l-37.2-183.23c-1.88-9.26-8.73-15.77-16.59-15.77Z',
+      b1:'331.5 368.8 322.43 364.8 322.43 331.8 332.33 335.8 371.08 319.8 423.03 334.8 451.89 321.8 466.73 326.8 466.73 355.8 452.71 350.8 423.85 366.8 371.91 348.8 331.5 368.8',
+      b2:'331.5 424.32 322.43 420.32 322.43 387.32 332.33 391.32 371.08 375.32 423.03 390.32 451.89 377.32 466.73 382.32 466.73 411.32 452.71 406.32 423.85 422.32 371.91 404.32 331.5 424.32'},
+    { bodyY:247.54,
+      cap:'M487.93,201.8h124.97c5.33,0,9.66,4.33,9.66,9.66v46.34h-144.29v-46.34c0-5.33,4.33-9.66,9.66-9.66Z',
+      tip:'M554.76,2.8h-10.89c-7.54,0-14.12,6.22-15.95,15.09l-38.1,183.91h118.73l-37.2-183.23c-1.88-9.26-8.73-15.77-16.59-15.77Z',
+      b1:'487.34 368.8 478.27 364.8 478.27 331.8 488.17 335.8 526.92 319.8 578.87 334.8 607.73 321.8 622.57 326.8 622.57 355.8 608.55 350.8 579.69 366.8 527.74 348.8 487.34 368.8',
+      b2:'487.34 424.32 478.27 420.32 478.27 387.32 488.17 391.32 526.92 375.32 578.87 390.32 607.73 377.32 622.57 382.32 622.57 411.32 608.55 406.32 579.69 422.32 527.74 404.32 487.34 424.32'},
+    { bodyY:247.54,
+      cap:'M644.6,201.8h124.97c5.33,0,9.66,4.33,9.66,9.66v46.34h-144.29v-46.34c0-5.33,4.33-9.66,9.66-9.66Z',
+      tip:'M711.42,2.8h-10.89c-7.54,0-14.12,6.22-15.95,15.09l-38.1,183.91h118.73l-37.2-183.23c-1.88-9.26-8.73-15.77-16.59-15.77Z',
+      b1:'644.01 368.8 634.94 364.8 634.94 331.8 644.83 335.8 683.58 319.8 735.53 334.8 764.39 321.8 779.23 326.8 779.23 355.8 765.21 350.8 736.35 366.8 684.41 348.8 644.01 368.8',
+      b2:'644.01 424.32 634.94 420.32 634.94 387.32 644.83 391.32 683.58 375.32 735.53 390.32 764.39 377.32 779.23 382.32 779.23 411.32 765.21 406.32 736.35 422.32 684.41 404.32 644.01 424.32'},
+    { bodyY:249.54, brownBar:true,
+      cap:'M806.21,203.8h124.97c5.33,0,9.66,4.33,9.66,9.66v46.34h-144.29v-46.34c0-5.33,4.33-9.66,9.66-9.66Z',
+      tip:'M873.03,4.8h-10.89c-7.54,0-14.12,6.22-15.95,15.09l-38.1,183.91h118.73l-37.2-183.23c-1.88-9.26-8.73-15.77-16.59-15.77Z',
+      b1:'805.61 370.8 796.54 366.8 796.54 333.8 806.44 337.8 845.19 321.8 897.14 336.8 926 323.8 940.84 328.8 940.84 357.8 926.82 352.8 897.96 368.8 846.02 350.8 805.61 370.8',
+      b2:'805.61 426.32 796.54 422.32 796.54 389.32 806.44 393.32 845.19 377.32 897.14 392.32 926 379.32 940.84 384.32 940.84 413.32 926.82 408.32 897.96 424.32 846.02 406.32 805.61 426.32'},
+    { bodyY:249.54,
+      cap:'M964.52,203.8h124.97c5.33,0,9.66,4.33,9.66,9.66v46.34h-144.29v-46.34c0-5.33,4.33-9.66,9.66-9.66Z',
+      tip:'M1031.34,4.8h-10.89c-7.54,0-14.12,6.22-15.95,15.09l-38.1,183.91h118.73l-37.2-183.23c-1.88-9.26-8.73-15.77-16.59-15.77Z',
+      b1:'963.93 370.8 954.86 366.8 954.86 333.8 964.75 337.8 1003.5 321.8 1055.45 336.8 1084.31 323.8 1099.15 328.8 1099.15 357.8 1085.13 352.8 1056.27 368.8 1004.33 350.8 963.93 370.8',
+      b2:'963.93 426.32 954.86 422.32 954.86 389.32 964.75 393.32 1003.5 377.32 1055.45 392.32 1084.31 379.32 1099.15 384.32 1099.15 413.32 1085.13 408.32 1056.27 424.32 1004.33 406.32 963.93 426.32'},
+    { bodyY:252.54,
+      cap:'M1122,206.8h124.97c5.33,0,9.66,4.33,9.66,9.66v46.34h-144.29v-46.34c0-5.33,4.33-9.66,9.66-9.66Z',
+      tip:'M1188.83,7.8h-10.89c-7.54,0-14.12,6.22-15.95,15.09l-38.1,183.91h118.73l-37.2-183.23c-1.88-9.26-8.73-15.77-16.59-15.77Z',
+      b1:'1121.41 373.8 1112.34 369.8 1112.34 336.8 1122.24 340.8 1160.99 324.8 1212.94 339.8 1241.8 326.8 1256.64 331.8 1256.64 360.8 1242.62 355.8 1213.76 371.8 1161.82 353.8 1121.41 373.8',
+      b2:'1121.41 429.32 1112.34 425.32 1112.34 392.32 1122.24 396.32 1160.99 380.32 1212.94 395.32 1241.8 382.32 1256.64 387.32 1256.64 416.32 1242.62 411.32 1213.76 427.32 1161.82 409.32 1121.41 429.32'},
+    { bodyY:252.46,
+      cap:'M1277.98,206.72h124.97c5.33,0,9.66,4.33,9.66,9.66v46.34h-144.29v-46.34c0-5.33,4.33-9.66,9.66-9.66Z',
+      tip:'M1344.81,7.72h-10.89c-7.54,0-14.12,6.22-15.95,15.09l-38.1,183.91h118.73l-37.2-183.23c-1.88-9.26-8.73-15.77-16.59-15.77Z',
+      b1:'1277.39 373.72 1268.32 369.72 1268.32 336.72 1278.22 340.72 1316.97 324.72 1368.92 339.72 1397.78 326.72 1412.62 331.72 1412.62 360.72 1398.6 355.72 1369.74 371.72 1317.8 353.72 1277.39 373.72',
+      b2:'1277.39 429.24 1268.32 425.24 1268.32 392.24 1278.22 396.24 1316.97 380.24 1368.92 395.24 1397.78 382.24 1412.62 387.24 1412.62 416.24 1398.6 411.24 1369.74 427.24 1317.8 409.24 1277.39 429.24'},
+    { bodyY:255.46,
+      cap:'M1435.47,209.72h124.97c5.33,0,9.66,4.33,9.66,9.66v46.34h-144.29v-46.34c0-5.33,4.33-9.66,9.66-9.66Z',
+      tip:'M1502.3,10.72h-10.89c-7.54,0-14.12,6.22-15.95,15.09l-38.1,183.91h118.73l-37.2-183.23c-1.88-9.26-8.73-15.77-16.59-15.77Z',
+      b1:'1434.88 376.72 1425.81 372.72 1425.81 339.72 1435.71 343.72 1474.46 327.72 1526.41 342.72 1555.26 329.72 1570.11 334.72 1570.11 363.72 1556.09 358.72 1527.23 374.72 1475.28 356.72 1434.88 376.72',
+      b2:'1434.88 432.24 1425.81 428.24 1425.81 395.24 1435.71 399.24 1474.46 383.24 1526.41 398.24 1555.26 385.24 1570.11 390.24 1570.11 419.24 1556.09 414.24 1527.23 430.24 1475.28 412.24 1434.88 432.24'},
+  ];
+
+  const parts = [];
+  // Box body (back)
+  parts.push(`<rect fill="#cec7b7" y="286.5" width="${W.toFixed(2)}" height="710" rx="42.71" ry="42.71"/>`);
+  // Crayons
+  for (let i = 0; i < count; i++) {
+    const c = CD[i], col = COLORS[i];
+    if (c.brownBar) parts.push(`<rect fill="#623c21" x="903.21" y="330.29" width="17.53" height="609"/>`);
+    parts.push(`<rect fill="${col}" x="${CRAYON_BOX_X[i]}" y="${c.bodyY}" width="144.29" height="619"/>`);
+    parts.push(`<path fill="${col}" d="${c.cap}"/>`);
+    parts.push(`<path fill="${col}" d="${c.tip}"/>`);
+    parts.push(`<polygon fill="${DARK}" points="${c.b1}"/>`);
+    parts.push(`<polygon fill="${DARK}" points="${c.b2}"/>`);
+  }
+  // Front face (covers bottom of crayons)
+  const span = W - 78.36, origSpan = 1495.27;
+  const cx1 = (300.41  * span / origSpan).toFixed(2);
+  const cx2 = (1330.45 * span / origSpan).toFixed(2);
+  parts.push(`<path fill="#ddbf72" d="M${W.toFixed(2)},1554.5H1.73V370.5h40.73c${cx1},532,${cx2},399,${span.toFixed(2)},0h35.9v1184Z"/>`);
+  parts.push(`<ellipse fill="#fff2d4" cx="${(W/2).toFixed(2)}" cy="1029.46" rx="${(556.95*W/ORIG_W).toFixed(2)}" ry="233"/>`);
+  if (label) {
+    const esc = label.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    parts.push(`<text fill="#333" text-anchor="middle" font-family="'Proxima Soft',sans-serif" font-size="147.94" font-weight="800" x="${(W/2).toFixed(2)}" y="1068.708">${esc}</text>`);
+  }
+  return parts.join('');
 }
 
 // ── SVG Renderer ──────────────────────────────────────────────────────────────
@@ -856,10 +962,12 @@ function pictorialSVG(cfg) {
     mrows       = 2,  mcols = 5,
     illusOutline = true,
     imgScale = 1.0,
-    groupSize = 1,
     numA    = false,
     numB    = false,
     showEq  = false,
+    showCount    = false,
+    crayonCount  = 5,
+    crayonLabel  = '5 Crayons',
   } = cfg;
 
   const R    = 22 * imgScale;
@@ -875,13 +983,13 @@ function pictorialSVG(cfg) {
 
   const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const defs = [];
-  const _pfx = Math.random().toString(36).slice(2,8);
   let _uid = 0;
-  const uid = () => `${_pfx}u${_uid++}`;
+  const uid = () => `u${_uid++}`;
 
   // ── Single item renderer ──────────────────────────────────────────────────
   // r: optional radius override (used by renderFrames for larger frame cells)
-  function renderItem(img, cx, cy, crossed, r) {
+  // countNum: if defined, draws a numbered badge (used for answer images)
+  function renderItem(img, cx, cy, crossed, r, countNum) {
     const IR = (r !== undefined) ? r : R;
     let s = '';
 
@@ -937,6 +1045,14 @@ function pictorialSVG(cfg) {
       const d = IR * 0.60, sw = Math.max(2.5, IR * 0.12);
       s += `<line x1="${cx - d}" y1="${cy - d}" x2="${cx + d}" y2="${cy + d}" stroke="#DC2626" stroke-width="${sw}" stroke-linecap="round"/>`;
       s += `<line x1="${cx + d}" y1="${cy - d}" x2="${cx - d}" y2="${cy + d}" stroke="#DC2626" stroke-width="${sw}" stroke-linecap="round"/>`;
+    }
+    if (countNum != null) {
+      const br  = Math.max(9, IR * 0.40);
+      const bx  = cx + IR * 0.62;
+      const by  = cy + IR * 0.62;
+      const bfs = Math.max(10, Math.round(br * 1.25));
+      s += `<circle cx="${bx}" cy="${by}" r="${br}" fill="#2E7D5E" stroke="#fff" stroke-width="2"/>`;
+      s += `<text x="${bx}" y="${by}" dominant-baseline="central" text-anchor="middle" font-family="${FONT}" font-weight="700" font-size="${bfs}" fill="#fff">${countNum}</text>`;
     }
     return s;
   }
@@ -996,7 +1112,7 @@ function pictorialSVG(cfg) {
         const gi = fStart + i, col = i % F_COLS, row = Math.floor(i / F_COLS);
         const cx = fx + col * FS + FS / 2;
         const cy = oy + row * FS + FS / 2;
-        parts.push(renderItem(img, cx, cy, crossFrom !== undefined && gi >= crossFrom, RF));
+        parts.push(renderItem(img, cx, cy, crossFrom !== undefined && gi >= crossFrom, RF, showCount ? gi + 1 : undefined));
       }
 
       // Grid lines on top of items (border + internal dividers)
@@ -1022,40 +1138,14 @@ function pictorialSVG(cfg) {
       const pts = clusterPts(count, ox, oy);
       const maxX = pts.length ? Math.max(...pts.map(p => p.x + R)) : ox;
       const maxY = pts.length ? Math.max(...pts.map(p => p.y + R)) : oy;
-      pts.forEach(({x, y}, i) => parts.push(renderItem(img, x, y, crossFrom !== undefined && i >= crossFrom)));
+      pts.forEach(({x, y}, i) => parts.push(renderItem(img, x, y, crossFrom !== undefined && i >= crossFrom, undefined, showCount ? i + 1 : undefined)));
       return { w: maxX - ox, h: maxY - oy };
     } else {
       const {w, h} = arrayBox(count, cols);
       arrayPts(count, cols, ox, oy, forceLeft).forEach(({x, y}, i) =>
-        parts.push(renderItem(img, x, y, crossFrom !== undefined && i >= crossFrom)));
+        parts.push(renderItem(img, x, y, crossFrom !== undefined && i >= crossFrom, undefined, showCount ? i + 1 : undefined)));
       return { w, h };
     }
-  }
-
-  // ── Render items in groups with visual gap between each group ────────────
-  // Items within each group wrap at 3 columns so groups stay compact when
-  // groupSz > 3 (e.g. groupSz=5 → 3 on row 0, 2 on row 1).
-  // Groups are placed side by side with a one-item-slot gap between them.
-  function renderGroupedCount(total, groupSz, img, ox, oy, parts) {
-    const GROUP_COLS = 3;
-    const groupCols  = Math.min(groupSz, GROUP_COLS);
-    const groupRows  = Math.ceil(groupSz / GROUP_COLS);
-    const groupStep  = (groupCols + 1) * S - GAP;   // group width + S gap to next group
-    const numGroups  = Math.ceil(total / groupSz);
-    let totalW = 0;
-    for (let g = 0; g < numGroups; g++) {
-      const gx = ox + g * groupStep;
-      const inThisGroup = Math.min(groupSz, total - g * groupSz);
-      for (let k = 0; k < inThisGroup; k++) {
-        const row    = Math.floor(k / GROUP_COLS);
-        const col    = k % GROUP_COLS;
-        const inRow  = Math.min(GROUP_COLS, inThisGroup - row * GROUP_COLS);
-        const rowOff = (groupCols - inRow) * S / 2;   // centre partial rows under full row
-        parts.push(renderItem(img, gx + rowOff + col * S + R, oy + row * S + R));
-      }
-      totalW = gx - ox + Math.min(inThisGroup, GROUP_COLS) * S - GAP;
-    }
-    return { w: totalW, h: groupRows * S - GAP };
   }
 
   // ── Render two groups side by side ────────────────────────────────────────
@@ -1133,9 +1223,7 @@ function pictorialSVG(cfg) {
   let svgW, svgH;
 
   if (mode === 'count') {
-    const {w, h} = groupSize > 1
-      ? renderGroupedCount(countA, groupSize, imgA, PAD, PAD, parts)
-      : renderGroup(countA, imgA, PAD, PAD, parts);
+    const {w, h} = renderGroup(countA, imgA, PAD, PAD, parts);
     svgW = w + PAD * 2; svgH = h + PAD * 2;
 
   } else if (mode === 'addsub') {
@@ -1179,6 +1267,16 @@ function pictorialSVG(cfg) {
       const {svgW: w2, svgH: h2} = renderTwoGroups(parts, false);
       svgW = w2; svgH = h2;
     }
+
+  } else if (mode === 'crayon') {
+    const boxSVG = buildCrayonBoxSVG(crayonCount, crayonLabel);
+    const VH = 1554.5;
+    const W  = CRAYON_BOX_X[Math.max(1,Math.min(10,crayonCount))-1] + 144.29 + 4.16;
+    const displayH = 200;
+    const displayW = displayH * W / VH;
+    svgW = displayW + PAD * 2;
+    svgH = displayH + PAD * 2;
+    parts.push(`<svg x="${PAD}" y="${PAD}" viewBox="0 0 ${W.toFixed(2)} ${VH}" width="${displayW.toFixed(1)}" height="${displayH}">${boxSVG}</svg>`);
 
   } else if (mode === 'multiply') {
     const count = mrows * mcols;
