@@ -1,0 +1,17 @@
+{
+  "nuggetId": 50,
+  "status": "in-progress",
+  "nextQId": 319197,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "sequence": "0,5,10,15,20,_,?",
+      "shape": "square",
+      "layout": "straight",
+      "colourMode": "full"
+    },
+    "visualType": "nt",
+    "answer": "30",
+    "text": "h"
+  }
+}
