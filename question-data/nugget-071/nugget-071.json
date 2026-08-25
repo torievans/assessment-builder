@@ -23,7 +23,7 @@
     },
     {
       "id": 319085,
-      "text": "What is one less than 11?",
+      "text": "What is **one less** than 11?",
       "answer": "10",
       "type": "exact",
       "image": "",
@@ -36,7 +36,8 @@
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     },
     {
       "id": 319086,
