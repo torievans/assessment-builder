@@ -77,7 +77,7 @@
     },
     {
       "id": 319048,
-      "text": "What is** one more** than 9?",
+      "text": "What is **one more** than 9?",
       "answer": "10",
       "type": "exact",
       "image": "",
@@ -90,7 +90,8 @@
         "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "createdAt": "2026-08-24",
+      "imagePath": ""
     }
   ],
   "exampleOverride": {
