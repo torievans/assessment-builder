@@ -59,7 +59,7 @@
     },
     {
       "id": 319087,
-      "text": "What is one less than 14?",
+      "text": "What is **one less** than 14?",
       "answer": "13",
       "type": "exact",
       "image": "",
