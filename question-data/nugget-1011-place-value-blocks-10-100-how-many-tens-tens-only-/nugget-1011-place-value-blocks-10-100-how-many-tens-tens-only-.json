@@ -1,7 +1,7 @@
 {
   "nuggetId": 1011,
   "status": "in-progress",
-  "nextQId": 6,
+  "nextQId": 319304,
   "questions": [
     {
       "id": 1,
@@ -90,13 +90,13 @@
     }
   ],
   "exampleOverride": {
-    "visualType": "wb",
-    "text": "How many **tens** are there in 50?",
-    "answer": "5",
     "cfg": {
       "wbText": "50",
       "wbBorder": "#319377",
       "wbSkin": "#ffa99c"
-    }
+    },
+    "visualType": "wb",
+    "answer": "5",
+    "text": "**How many tens** are there in 50?"
   }
 }
