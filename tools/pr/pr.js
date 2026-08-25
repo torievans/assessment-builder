@@ -439,9 +439,9 @@ function prPanelHTML() {
         <div class="field"><label>Count</label>
           <div style="display:flex;align-items:center;gap:4px">
             <button class="tog-btn" onclick="prDelta('A',-1)" style="width:30px;height:30px;padding:0">−</button>
-            <input type="number" id="pr-ca" min="1" max="20" value="7"
+            <input type="number" id="pr-ca" min="1" max="60" value="7"
               style="width:52px;text-align:center;border:1.5px solid var(--border);border-radius:8px;padding:4px;font-size:14px;font-family:var(--font)"
-              oninput="pr_countA=prClamp(+this.value,1,20);autoPreviewPR()">
+              oninput="pr_countA=prClamp(+this.value,1,60);autoPreviewPR()">
             <button class="tog-btn" onclick="prDelta('A',1)"  style="width:30px;height:30px;padding:0">+</button>
           </div>
         </div>
@@ -693,7 +693,7 @@ function prUpdateSubUI() {
 
 function prDelta(grp, d) {
   if (grp === 'A') {
-    pr_countA = prClamp(pr_countA + d, 1, 20);
+    pr_countA = prClamp(pr_countA + d, 1, 60);
     ['pr-ca', 'pr-addsub-ca'].forEach(id => { const e = document.getElementById(id); if (e) e.value = pr_countA; });
   } else {
     pr_countB = prClamp(pr_countB + d, 1, 20);
