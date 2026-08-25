@@ -23,7 +23,7 @@
     },
     {
       "id": 2,
-      "text": "How many **tens** are there in 57?",
+      "text": "**How many tens** are there in 57?",
       "answer": "5",
       "type": "exact",
       "image": "",
@@ -36,7 +36,8 @@
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-25T15:15:24.000Z",
-      "createdAt": "2026-08-25T15:15:24.000Z"
+      "createdAt": "2026-08-25T15:15:24.000Z",
+      "imagePath": ""
     },
     {
       "id": 3,
