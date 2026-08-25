@@ -37,7 +37,7 @@
     },
     {
       "id": 319216,
-      "text": "**Count in 5s** to find out how many giraffes there are.",
+      "text": "**Count in 5s** to find out how many lemons there are.",
       "answer": "40",
       "type": "exact",
       "image": "",
@@ -49,7 +49,7 @@
         "display": "array",
         "align": "left",
         "countA": 40,
-        "imageIdA": "illus:animals/giraffe_orange",
+        "imageIdA": "illus:food/fruit/lemon_yellow",
         "countB": 3,
         "imageIdB": "illus:space/crescent_moon_yellow",
         "op": "add",
