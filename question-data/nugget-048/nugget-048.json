@@ -133,7 +133,7 @@
     },
     {
       "id": 319224,
-      "text": "**Count in 5s** to find out how many toucans there are.",
+      "text": "**Count in 5s** to find out how many peaches there are.",
       "answer": "30",
       "type": "exact",
       "image": "",
@@ -145,7 +145,7 @@
         "display": "array",
         "align": "left",
         "countA": 55,
-        "imageIdA": "illus:animals/toucan_black",
+        "imageIdA": "illus:food/fruit/peach_orange",
         "countB": 3,
         "imageIdB": "illus:space/crescent_moon_yellow",
         "op": "add",
