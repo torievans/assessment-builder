@@ -1,12 +1,12 @@
 {
   "nuggetId": 60,
   "status": "ready-for-qa",
-  "nextQId": 319099,
+  "nextQId": 319298,
   "questions": [
     {
       "id": 319029,
       "text": "Count the number of apples, then **add one more.**",
-      "answer": "4",
+      "answer": "5",
       "type": "exact",
       "image": "",
       "display": "",
@@ -23,13 +23,18 @@
         "op": "add",
         "subMode": "crossed",
         "cols": 10,
+        "groupSize": 1,
         "mrows": 2,
         "mcols": 5,
-        "illusOutline": true,
+        "illusOutline": "individual",
         "imgScale": 1,
         "numA": false,
         "numB": false,
-        "showEq": false
+        "showEq": false,
+        "crayonCount": 5,
+        "crayonBoxes": 1,
+        "crayonFontSize": 148,
+        "crayonLabel": "5 Crayons"
       },
       "updatedAt": "2026-08-24",
       "createdAt": "2026-08-24"
