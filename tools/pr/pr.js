@@ -1032,20 +1032,27 @@ function pictorialSVG(cfg) {
   }
 
   // ── Render items in groups with visual gap between each group ────────────
-  // Group gap = one item-slot (S), so groupStep = (groupSize+1)*S - GAP
+  // Items within each group wrap at 3 columns so groups stay compact when
+  // groupSz > 3 (e.g. groupSz=5 → 3 on row 0, 2 on row 1).
+  // Groups are placed side by side with a one-item-slot gap between them.
   function renderGroupedCount(total, groupSz, img, ox, oy, parts) {
-    const numGroups = Math.ceil(total / groupSz);
-    const groupStep = (groupSz + 1) * S - GAP;
+    const GROUP_COLS = 3;
+    const groupCols  = Math.min(groupSz, GROUP_COLS);
+    const groupRows  = Math.ceil(groupSz / GROUP_COLS);
+    const groupStep  = (groupCols + 1) * S - GAP;   // group width + S gap to next group
+    const numGroups  = Math.ceil(total / groupSz);
     let totalW = 0;
     for (let g = 0; g < numGroups; g++) {
       const gx = ox + g * groupStep;
       const inThisGroup = Math.min(groupSz, total - g * groupSz);
       for (let k = 0; k < inThisGroup; k++) {
-        parts.push(renderItem(img, gx + k * S + R, oy + R));
+        const col = k % GROUP_COLS;
+        const row = Math.floor(k / GROUP_COLS);
+        parts.push(renderItem(img, gx + col * S + R, oy + row * S + R));
       }
-      totalW = gx - ox + inThisGroup * S - GAP;
+      totalW = gx - ox + Math.min(inThisGroup, GROUP_COLS) * S - GAP;
     }
-    return { w: totalW, h: S - GAP };
+    return { w: totalW, h: groupRows * S - GAP };
   }
 
   // ── Render two groups side by side ────────────────────────────────────────
