@@ -1,7 +1,7 @@
 {
   "nuggetId": 62,
   "status": "ready-for-qa",
-  "nextQId": 319099,
+  "nextQId": 319298,
   "questions": [
     {
       "id": 319039,
@@ -23,8 +23,8 @@
         "answerCircle": 4,
         "revealAnswer": true
       },
-      "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
     },
     {
       "id": 319040,
@@ -46,8 +46,8 @@
         "answerCircle": 8,
         "revealAnswer": true
       },
-      "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
     },
     {
       "id": 319041,
@@ -69,8 +69,8 @@
         "answerCircle": 15,
         "revealAnswer": true
       },
-      "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
     },
     {
       "id": 319042,
@@ -92,12 +92,12 @@
         "answerCircle": 17,
         "revealAnswer": true
       },
-      "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
     },
     {
       "id": 319043,
-      "text": "What is one more than 2?",
+      "text": "What is one more than 14?",
       "answer": "15",
       "type": "exact",
       "image": "",
@@ -115,8 +115,8 @@
         "answerCircle": 14,
         "revealAnswer": true
       },
-      "updatedAt": "2026-08-24",
-      "createdAt": "2026-08-24"
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
     }
   ],
   "exampleOverride": {
