@@ -6,7 +6,7 @@
     {
       "id": 319210,
       "text": "**Count in 5s** to find the missing number.",
-      "answer": "5",
+      "answer": "20",
       "type": "exact",
       "image": "",
       "display": "",
@@ -17,7 +17,7 @@
         "end": 30,
         "partitions": 30,
         "valuesGivenEvery": 5,
-        "answer": "5",
+        "answer": "20",
         "lineStyle": "terminate",
         "colour": "red",
         "answerCircle": "answer"
