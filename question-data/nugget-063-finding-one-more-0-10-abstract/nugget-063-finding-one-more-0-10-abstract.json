@@ -41,7 +41,7 @@
     },
     {
       "id": 319046,
-      "text": "What is** one more** than 3?",
+      "text": "What is **one more** than 3?",
       "answer": "4",
       "type": "exact",
       "image": "",
