@@ -59,7 +59,7 @@
     },
     {
       "id": 319062,
-      "text": "What is one more than 75?",
+      "text": "What is **one more** than 75?",
       "answer": "76",
       "type": "exact",
       "image": "",
@@ -71,6 +71,7 @@
         "wbBorder": "#F5995B",
         "wbSkin": "#ffa99c"
       },
+      "imagePath": "",
       "updatedAt": "2026-08-25",
       "createdAt": "2026-08-25"
     },
