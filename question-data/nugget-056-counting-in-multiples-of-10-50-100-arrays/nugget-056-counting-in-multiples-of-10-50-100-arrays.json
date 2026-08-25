@@ -77,7 +77,7 @@
     },
     {
       "id": 319271,
-      "text": "**Count in 10s** to find out how many balls there are.",
+      "text": "**Count in 10s** to find out how many lollies there are.",
       "answer": "90",
       "type": "exact",
       "image": "",
@@ -89,7 +89,7 @@
         "display": "array",
         "align": "left",
         "countA": 55,
-        "imageIdA": "illus:food/fruit/apple_green",
+        "imageIdA": "illus:food/sweets/popsicle_pink",
         "countB": 3,
         "imageIdB": "illus:space/crescent_moon_yellow",
         "op": "add",
