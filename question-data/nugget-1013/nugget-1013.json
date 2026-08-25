@@ -1,0 +1,16 @@
+{
+  "nuggetId": 1013,
+  "status": "in-progress",
+  "nextQId": 319302,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "59",
+      "wbBorder": "#319377",
+      "wbSkin": "#ffa99c"
+    },
+    "visualType": "wb",
+    "answer": "5",
+    "text": "**How many tens** are the in 59?"
+  }
+}
