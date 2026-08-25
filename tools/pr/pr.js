@@ -1429,6 +1429,21 @@ function pictorialSVG(cfg) {
     const count = mrows * mcols;
     const {w, h} = arrayBox(count, mcols);
     svgW = w + PAD * 2; svgH = h + PAD * 2;
+    const _mOP = R * 0.3;
+    const _mSt = `rx="${(R*0.45).toFixed(1)}" fill="none" stroke="#D1D5DB" stroke-width="2.5"`;
+    if (illusOutline === 'row') {
+      for (let r_ = 0; r_ < mrows; r_++) {
+        const rw = mcols * S - GAP;
+        parts.push(`<rect x="${(PAD - _mOP).toFixed(1)}" y="${(PAD + r_ * S - _mOP).toFixed(1)}" width="${(rw + 2*_mOP).toFixed(1)}" height="${(S - GAP + 2*_mOP).toFixed(1)}" ${_mSt}/>`);
+      }
+    } else if (illusOutline === 'column') {
+      for (let c_ = 0; c_ < mcols; c_++) {
+        const ch = mrows * S - GAP;
+        parts.push(`<rect x="${(PAD + c_ * S - _mOP).toFixed(1)}" y="${(PAD - _mOP).toFixed(1)}" width="${(S - GAP + 2*_mOP).toFixed(1)}" height="${(ch + 2*_mOP).toFixed(1)}" ${_mSt}/>`);
+      }
+    } else if (illusOutline === 'group') {
+      parts.push(`<rect x="${(PAD - _mOP).toFixed(1)}" y="${(PAD - _mOP).toFixed(1)}" width="${(w + 2*_mOP).toFixed(1)}" height="${(h + 2*_mOP).toFixed(1)}" ${_mSt}/>`);
+    }
     arrayPts(count, mcols, PAD, PAD).forEach(({x, y}) => parts.push(renderItem(imgA, x, y)));
   }
 
