@@ -4,28 +4,6 @@
   "nextQId": 319225,
   "questions": [
     {
-      "id": 319210,
-      "text": "**Count in 5s** to find the missing number.",
-      "answer": "20",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nl",
-      "cfg": {
-        "start": 0,
-        "end": 30,
-        "partitions": 30,
-        "valuesGivenEvery": 5,
-        "answer": "20",
-        "lineStyle": "terminate",
-        "colour": "red",
-        "answerCircle": "answer"
-      },
-      "updatedAt": "2026-08-25",
-      "createdAt": "2026-08-25"
-    },
-    {
       "id": 319211,
       "text": "**Count in 5s** to find the missing number.",
       "answer": "10",
@@ -40,6 +18,28 @@
         "partitions": 30,
         "valuesGivenEvery": 5,
         "answer": "10",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": "answer"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319210,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "20",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 30,
+        "partitions": 30,
+        "valuesGivenEvery": 5,
+        "answer": "20",
         "lineStyle": "terminate",
         "colour": "red",
         "answerCircle": "answer"
