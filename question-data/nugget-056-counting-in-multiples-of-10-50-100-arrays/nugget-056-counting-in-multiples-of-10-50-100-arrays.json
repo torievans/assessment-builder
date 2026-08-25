@@ -1,7 +1,7 @@
 {
   "nuggetId": 56,
   "status": "ready-for-qa",
-  "nextQId": 319288,
+  "nextQId": 319298,
   "questions": [
     {
       "id": 319268,
@@ -211,6 +211,6 @@
     },
     "visualType": "pr",
     "answer": "70",
-    "text": "**Count in 10s** to find out how many balls there are."
+    "text": "**Count in 10s** to find out how many apples there are."
   }
 }
