@@ -1,8 +1,119 @@
 {
   "nuggetId": 46,
   "status": "in-progress",
-  "nextQId": 319197,
-  "questions": [],
+  "nextQId": 319215,
+  "questions": [
+    {
+      "id": 319210,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 30,
+        "partitions": 30,
+        "valuesGivenEvery": 5,
+        "answer": "5",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": "answer"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319211,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "10",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 30,
+        "partitions": 30,
+        "valuesGivenEvery": 5,
+        "answer": "10",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": "answer"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319212,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "15",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 30,
+        "partitions": 30,
+        "valuesGivenEvery": 5,
+        "answer": "15",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": "answer"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319213,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "25",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 30,
+        "partitions": 30,
+        "valuesGivenEvery": 5,
+        "answer": "25",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": "answer"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    },
+    {
+      "id": 319214,
+      "text": "**Count in 5s** to find the missing number.",
+      "answer": "30",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nl",
+      "cfg": {
+        "start": 0,
+        "end": 30,
+        "partitions": 30,
+        "valuesGivenEvery": 5,
+        "answer": "30",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "answerCircle": "answer"
+      },
+      "updatedAt": "2026-08-25",
+      "createdAt": "2026-08-25"
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "start": 0,
