@@ -1,0 +1,21 @@
+{
+  "nuggetId": 54,
+  "status": "in-progress",
+  "nextQId": 319243,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 60,
+      "partitions": 60,
+      "valuesGivenEvery": 10,
+      "answer": "30",
+      "lineStyle": "terminate",
+      "colour": "green",
+      "answerCircle": "answer"
+    },
+    "visualType": "nl",
+    "answer": "30",
+    "text": "Count in 10s to find the missing number."
+  }
+}
