@@ -67,7 +67,7 @@
       "qaComment": "",
       "visualType": "nt",
       "cfg": {
-        "sequence": "20,30,40,50,_,_,?",
+        "sequence": "0,10,20,30,40,50,_,_,?",
         "shape": "balloon",
         "layout": "straight",
         "colourMode": "full"
