@@ -1,7 +1,7 @@
 {
   "nuggetId": 63,
-  "status": "in-progress",
-  "nextQId": 319099,
+  "status": "ready-for-qa",
+  "nextQId": 319298,
   "questions": [
     {
       "id": 319044,
@@ -98,6 +98,6 @@
     },
     "visualType": "wb",
     "answer": "5",
-    "text": "What is** one more** than 4?"
+    "text": "What is **one more** than 4?"
   }
 }
