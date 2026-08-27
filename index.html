@@ -1750,6 +1750,7 @@ function editExample(){
   else if(type==='nr'){document.getElementById('nr-text').value=ex.text||'';document.getElementById('nr-answer').value=ex.answer!=null?ex.answer:'';restoreNRConfig(ex.cfg||{});}
   else if(type==='pv'){document.getElementById('pv-text').value=ex.text||'';document.getElementById('pv-answer').value=ex.answer!=null?ex.answer:'';restorePVConfig(ex.cfg||{});}
   else if(type==='pr'){document.getElementById('pr-text').value=ex.text||'';document.getElementById('pr-answer').value=ex.answer!=null?ex.answer:'';restorePRConfig(ex.cfg||{});}
+  else if(type==='bm'){document.getElementById('bm-text').value=ex.text||'';document.getElementById('bm-answer').value=ex.answer!=null?ex.answer:'';restoreBMConfig(ex.cfg||{});}
   else if(type==='custom'&&rawType==='wb'){
     document.getElementById('custom-q-text').value=ex.text||'';
     document.getElementById('custom-answer').value=ex.answer!=null?ex.answer:'';
