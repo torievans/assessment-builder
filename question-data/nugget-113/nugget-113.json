@@ -49,10 +49,11 @@
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c",
-        "wbText": "five"
+        "wbText": "five",
+        "wbBorder": "#FC7E91",
+        "wbSkin": "#b06530"
       },
+      "imagePath": "",
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
     },
