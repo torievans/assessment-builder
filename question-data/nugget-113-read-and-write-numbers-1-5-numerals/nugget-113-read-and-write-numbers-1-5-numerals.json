@@ -1,7 +1,7 @@
 {
   "nuggetId": 113,
   "status": "in-progress",
-  "nextQId": 319306,
+  "nextQId": 319311,
   "questions": [
     {
       "id": 319305,
@@ -16,6 +16,91 @@
         "wbText": "three",
         "wbBorder": "#319377",
         "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319306,
+      "text": "Write the number in numerals.",
+      "answer": "3",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c",
+        "wbText": "three"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319307,
+      "text": "Write the number in numerals.",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c",
+        "wbText": "five"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319308,
+      "text": "Write the number in numerals.",
+      "answer": "4",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c",
+        "wbText": "four"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319309,
+      "text": "Write the number in numerals.",
+      "answer": "1",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c",
+        "wbText": "one"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319310,
+      "text": "Write the number in numerals.",
+      "answer": "2",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c",
+        "wbText": "two"
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
