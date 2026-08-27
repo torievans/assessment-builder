@@ -6,19 +6,20 @@
     {
       "id": 319355,
       "text": "Write the number in numerals.",
-      "answer": "14",
+      "answer": "15",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "fourteen",
+        "wbText": "fifteen",
         "wbBorder": "#FC7E91",
         "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
+      "createdAt": "2026-08-27",
+      "imagePath": ""
     },
     {
       "id": 319356,
