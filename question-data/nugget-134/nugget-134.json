@@ -1,11 +1,11 @@
 {
   "nuggetId": 134,
   "status": "in-progress",
-  "nextQId": 319401,
+  "nextQId": 319410,
   "questions": [
     {
       "id": 319396,
-      "text": "# 3 + _ = 10",
+      "text": "What number is missing from this calculation?",
       "answer": "7",
       "type": "exact",
       "image": "",
@@ -18,7 +18,7 @@
     },
     {
       "id": 319397,
-      "text": "# 7 + _ = 10",
+      "text": "What number is missing from this calculation?",
       "answer": "3",
       "type": "exact",
       "image": "",
@@ -31,7 +31,7 @@
     },
     {
       "id": 319398,
-      "text": "# 1 + _ = 10",
+      "text": "What number is missing from this calculation?",
       "answer": "9",
       "type": "exact",
       "image": "",
@@ -44,7 +44,7 @@
     },
     {
       "id": 319399,
-      "text": "# 6 + _ = 10",
+      "text": "What number is missing from this calculation?",
       "answer": "4",
       "type": "exact",
       "image": "",
@@ -57,7 +57,7 @@
     },
     {
       "id": 319400,
-      "text": "# 4 + _ = 10",
+      "text": "What number is missing from this calculation?",
       "answer": "6",
       "type": "exact",
       "image": "",
