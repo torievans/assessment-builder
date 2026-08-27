@@ -96,15 +96,17 @@
       "cfg": {
         "segments": [
           {
-            "value": "?"
+            "value": "?",
+            "segLabel": "?"
           },
           {
-            "value": 7
+            "value": 7,
+            "segLabel": "7"
           }
         ],
         "total": 10,
         "colorIdx": 3,
-        "topBar": true
+        "multi": true
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
