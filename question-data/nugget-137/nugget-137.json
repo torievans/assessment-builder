@@ -1,0 +1,30 @@
+{
+  "nuggetId": 137,
+  "status": "in-progress",
+  "nextQId": 319430,
+  "questions": [
+    {
+      "id": 137001,
+      "text": "How many cubes are missing to make 20?",
+      "answer": "7",
+      "type": "exact",
+      "visualType": "nr",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 20,
+        "rep": "multilink",
+        "mlSplitOn": true,
+        "mlSplit": 13,
+        "mc": 4,
+        "mc2": 0,
+        "mlRows": "10",
+        "mlFill": "row",
+        "mlGap": false
+      },
+      "qaComment": "",
+      "createdAt": "2026-08-27",
+      "updatedAt": "2026-08-27"
+    }
+  ]
+}
