@@ -38,23 +38,6 @@
       "createdAt": "2026-08-27"
     },
     {
-      "id": 319340,
-      "text": "Write the number in words.",
-      "answer": "eleven",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "11",
-        "wbBorder": "#FC7E91",
-        "wbSkin": "#b06530"
-      },
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
-    },
-    {
       "id": 319343,
       "text": "Write the number in words.",
       "answer": "fourteen",
@@ -67,6 +50,23 @@
         "wbText": "14",
         "wbBorder": "#F5995B",
         "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319340,
+      "text": "Write the number in words.",
+      "answer": "eleven",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "11",
+        "wbBorder": "#FC7E91",
+        "wbSkin": "#b06530"
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
