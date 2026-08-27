@@ -155,21 +155,7 @@
     }
   ],
   "exampleOverride": {
-    "cfg": {
-      "segments": [
-        {
-          "value": 4,
-          "divisions": 4
-        },
-        {
-          "value": "?",
-          "divisions": 7
-        }
-      ],
-      "total": 10,
-      "colorIdx": 0,
-      "multi": true
-    },
+    "cfg": {},
     "visualType": "bm",
     "answer": "6",
     "text": "# 4 + _ = 10"
