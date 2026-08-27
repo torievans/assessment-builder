@@ -2072,7 +2072,7 @@ function renderExportView(){
 function updateExCount(){const total=document.querySelectorAll('.ex-cb').length,sel=document.querySelectorAll('.ex-cb:checked').length;const el=document.getElementById('ex-count');if(el)el.textContent=sel+' of '+total+' selected';}
 function selectAllEx(v){document.querySelectorAll('.ex-cb').forEach(c=>c.checked=v);updateExCount();}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function md(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\*\*([^*\n]+)\*\*/g,'<strong>$1</strong>');}
+function md(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\*\*([^*\n]+)\*\*/g,'<strong>$1</strong>').replace(/(?:^|\n)# ([^\n]+)/g,(_,t)=>`<span style="display:block;text-align:center;font-size:1.55em;font-weight:700;line-height:1.25;padding:2px 0">${t.trim()}</span>`);}
 function qtiXML(q,imgFile,nuggetTitle,qNum){
   const rid=`RESPONSE-${10000+q.id}`;
   const title=`${nuggetTitle} - Q${String(qNum).padStart(2,'0')}`;
