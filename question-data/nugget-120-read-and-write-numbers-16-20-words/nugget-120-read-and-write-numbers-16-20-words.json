@@ -21,23 +21,6 @@
       "createdAt": "2026-08-27"
     },
     {
-      "id": 319345,
-      "text": "Write the number in words.",
-      "answer": "sixteen",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "16",
-        "wbBorder": "#319377",
-        "wbSkin": "#6b3520"
-      },
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
-    },
-    {
       "id": 319347,
       "text": "Write the number in words.",
       "answer": "eighteen",
@@ -50,6 +33,23 @@
         "wbText": "18",
         "wbBorder": "#847AC9",
         "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319345,
+      "text": "Write the number in words.",
+      "answer": "sixteen",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "16",
+        "wbBorder": "#319377",
+        "wbSkin": "#6b3520"
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
