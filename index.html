@@ -2360,14 +2360,28 @@ function whiteboardSVG(text,bc,sc){
   const FONT="proxima-soft,'Proxima Soft',system-ui,sans-serif";
   const VW=1260,VH=1030,BX=11,BY=11,BW=1057,BH=714,BR=76;
   const TCX=BX+BW/2,TW=762,TH=BH-120,TY=BY+(BH-TH)/2;
-  let fs=380,lines=[];
-  while(fs>=22){
-    const cpl=Math.floor(TW/(fs*0.54));
-    lines=wrapText(text||' ',cpl);
-    const longest=Math.max(...lines.map(l=>l.length));
-    if(longest*fs*0.54<=TW&&lines.length*fs*1.3<=TH)break;
-    fs-=4;
+  // Weighted width: spaces are ~0.27x font size, other chars ~0.58x
+  const lineW=(line,fs)=>[...line].reduce((w,c)=>w+(c===' '?fs*0.27:fs*0.58),0);
+  // Find best layout for a given max number of lines
+  function tryLayout(maxLines){
+    let fs=380;
+    while(fs>=22){
+      const cpl=Math.floor(TW/(fs*0.58));
+      const ls=maxLines===1?[text.trim()||' ']:wrapText(text||' ',cpl);
+      if(ls.length<=maxLines){
+        const maxW=Math.max(...ls.map(l=>lineW(l,fs)));
+        if(maxW<=TW&&ls.length*fs*1.3<=TH)return{fs,lines:ls};
+      }
+      fs-=4;
+    }
+    return null;
   }
+  const l1=tryLayout(1),lN=tryLayout(20);
+  // Prefer single-line unless multi-line gives >40% bigger font
+  let fs,lines;
+  if(!l1){({fs,lines}=lN);}
+  else if(!lN||l1.fs*1.4>=lN.fs){({fs,lines}=l1);}
+  else{({fs,lines}=lN);}
   const lh=fs*1.3,blockCY=TY+TH/2,firstCY=blockCY-((lines.length-1)*lh)/2;
   let textSVG='';
   if(text.trim()){
