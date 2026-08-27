@@ -122,14 +122,17 @@
       "cfg": {
         "segments": [
           {
-            "value": 1
+            "value": 1,
+            "segLabel": "1"
           },
           {
-            "value": "?"
+            "value": "?",
+            "segLabel": "?"
           }
         ],
         "total": 10,
-        "colorIdx": 4
+        "colorIdx": 4,
+        "multi": true
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
