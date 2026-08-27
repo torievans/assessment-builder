@@ -1,0 +1,24 @@
+{
+  "nuggetId": 139,
+  "status": "in-progress",
+  "nextQId": 139002,
+  "questions": [
+    {
+      "id": 139001,
+      "text": "There are 7 cubes. How many more are needed to make 20?",
+      "answer": "13",
+      "type": "exact",
+      "visualType": "wb",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "wbText": "7 + ? = 20",
+        "borderColour": "#4A90D9",
+        "skinColour": "#FFFFFF"
+      },
+      "qaComment": "",
+      "createdAt": "2026-08-27",
+      "updatedAt": "2026-08-27"
+    }
+  ]
+}
