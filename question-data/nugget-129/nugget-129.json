@@ -1,7 +1,7 @@
 {
   "nuggetId": 129,
   "status": "in-progress",
-  "nextQId": 319376,
+  "nextQId": 319406,
   "questions": [
     {
       "id": 319371,
@@ -39,7 +39,7 @@
     },
     {
       "id": 319372,
-      "text": "# _ + 4 = 10",
+      "text": "# _ + 5 = 10",
       "answer": "6",
       "type": "exact",
       "image": "",
@@ -53,7 +53,7 @@
         "fc1": 0,
         "fc2": 4,
         "fSplitOn": true,
-        "fSplit": 6,
+        "fSplit": 5,
         "bg": 5,
         "ba": 6,
         "bb": 0,
