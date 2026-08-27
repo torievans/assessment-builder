@@ -128,18 +128,7 @@
     }
   ],
   "exampleOverride": {
-    "cfg": {
-      "segments": [
-        {
-          "value": 8
-        },
-        {
-          "value": "?"
-        }
-      ],
-      "total": 10,
-      "colorIdx": 0
-    },
+    "cfg": {},
     "visualType": "bm",
     "answer": "2",
     "text": "# 8 + _ = 10"
