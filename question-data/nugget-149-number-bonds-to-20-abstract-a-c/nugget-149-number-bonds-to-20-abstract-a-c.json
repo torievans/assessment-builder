@@ -1,0 +1,20 @@
+{
+  "nuggetId": 149,
+  "status": "in-progress",
+  "nextQId": 149002,
+  "questions": [
+    {
+      "id": 149001,
+      "text": "7 + ? = 20",
+      "answer": "13",
+      "type": "exact",
+      "visualType": "text",
+      "image": "",
+      "imagePath": "",
+      "cfg": {},
+      "qaComment": "",
+      "createdAt": "2026-08-27",
+      "updatedAt": "2026-08-27"
+    }
+  ]
+}
