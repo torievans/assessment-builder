@@ -104,7 +104,8 @@
           }
         ],
         "total": 10,
-        "colorIdx": 3
+        "colorIdx": 3,
+        "multi": true
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
