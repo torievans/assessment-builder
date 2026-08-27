@@ -149,7 +149,7 @@
     },
     {
       "id": 319429,
-      "text": "17 + _ = 20",
+      "text": "16 + _ = 20",
       "answer": "3",
       "type": "exact",
       "image": "",
@@ -176,7 +176,7 @@
         "mlFill": "row",
         "mlGap": false,
         "mlSplitOn": true,
-        "mlSplit": 17,
+        "mlSplit": 16,
         "niSplitOn": false,
         "niSplit": 10
       },
