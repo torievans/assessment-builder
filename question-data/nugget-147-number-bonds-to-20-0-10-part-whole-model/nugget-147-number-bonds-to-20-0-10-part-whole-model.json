@@ -1,0 +1,24 @@
+{
+  "nuggetId": 147,
+  "status": "in-progress",
+  "nextQId": 147002,
+  "questions": [
+    {
+      "id": 147001,
+      "text": "The whole is 20 and one part is 7. What is the other part?",
+      "answer": "13",
+      "type": "exact",
+      "visualType": "wb",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "wbText": "Whole: 20  |  Part: 7  |  Part: ?",
+        "borderColour": "#4A90D9",
+        "skinColour": "#FFFFFF"
+      },
+      "qaComment": "",
+      "createdAt": "2026-08-27",
+      "updatedAt": "2026-08-27"
+    }
+  ]
+}
