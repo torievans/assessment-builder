@@ -1,8 +1,94 @@
 {
   "nuggetId": 117,
   "status": "in-progress",
-  "nextQId": 319319,
-  "questions": [],
+  "nextQId": 319324,
+  "questions": [
+    {
+      "id": 319319,
+      "text": "Write the number in words.",
+      "answer": "two",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "2",
+        "wbBorder": "#AAAAAA",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319320,
+      "text": "Write the number in words.",
+      "answer": "three",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "3",
+        "wbBorder": "#D46B55",
+        "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319321,
+      "text": "Write the number in words.",
+      "answer": "four",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "4",
+        "wbBorder": "#F5995B",
+        "wbSkin": "#b06530"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319322,
+      "text": "Write the number in words.",
+      "answer": "five",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "5",
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319323,
+      "text": "Write the number in words.",
+      "answer": "one",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "1",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "wbText": "1",
