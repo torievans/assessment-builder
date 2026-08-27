@@ -4,23 +4,6 @@
   "nextQId": 319340,
   "questions": [
     {
-      "id": 319335,
-      "text": "Write the number in words.",
-      "answer": "six",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "6",
-        "wbBorder": "#F5995B",
-        "wbSkin": "#d4895a"
-      },
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
-    },
-    {
       "id": 319336,
       "text": "Write the number in words.",
       "answer": "seven",
@@ -33,6 +16,23 @@
         "wbText": "7",
         "wbBorder": "#FECC6B",
         "wbSkin": "#b06530"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319335,
+      "text": "Write the number in words.",
+      "answer": "six",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "6",
+        "wbBorder": "#F5995B",
+        "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
