@@ -2638,6 +2638,7 @@ function dndEnd(e){
 /* ── Shared batch panel ── */
 let sharedBatchTool=null, sharedBatchStructure={}, sharedBatchRowIdx=0, sharedBatchRowColors={};
 let sharedBatchNTNextOffset=0; // auto-incremented colourOffset for NT batch rows
+let sharedBatchNRNextOffset=0; // auto-incremented colour index for NR batch rows
 let sharedBatchWBNextOffset=0; // auto-incremented index for WB border/skin cycling
 const WB_BORDER_PALETTE=[['grey','#AAAAAA'],['red','#D46B55'],['orange','#F5995B'],['yellow','#FECC6B'],['green','#319377'],['blue','#7898F0'],['purple','#847AC9'],['pink','#FC7E91']];
 const WB_SKIN_TONES=[['light','#ffa99c'],['light tan','#d4895a'],['medium brown','#b06530'],['deep brown','#6b3520']];
@@ -2652,7 +2653,7 @@ function openSharedBatch(tool){
     // continue the palette rather than all starting from colour 0
     sharedBatchNTNextOffset=(nuggetState[activeId]?.questions?.length||0)%7;}
   else if(tool==='pv'){const cfg=getPVConfig();if(!cfg){alert('Please enter a number.');return;}sharedBatchStructure=cfg;}
-  else if(tool==='nr'){const cfg=getNRConfig();if(!cfg){alert('Please set a number.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='nr'){const cfg=getNRConfig();if(!cfg){alert('Please set a number.');return;}sharedBatchStructure=cfg;sharedBatchNRNextOffset=(nuggetState[activeId]?.questions?.length||0)%7;}
   else if(tool==='text'){sharedBatchStructure={};}
   else if(tool==='pr'){const cfg=getPRConfig();if(!cfg){alert('Please configure the pictorial representation first.');return;}sharedBatchStructure=cfg;}
   else if(tool==='wb'){sharedBatchStructure={};sharedBatchWBNextOffset=(nuggetState[activeId]?.questions?.length||0);}
@@ -2677,7 +2678,7 @@ function openSharedBatch(tool){
   const seed={};
   if(tool==='bm'){(sharedBatchStructure.segments||[]).forEach((s,i)=>{seed[`seg${i}`]=s.value;});seed.answer=document.getElementById('bm-answer').value.trim();seed.text=document.getElementById('bm-text').value.trim();}
   else if(tool==='nt'){seed.seq=document.getElementById('nt-seq').value.trim();seed.answer=document.getElementById('nt-answer').value.trim();seed.text=document.getElementById('nt-text').value.trim();}
-  else if(tool==='nr'){seed.n=sharedBatchStructure.n;if(nrHasSplit(sharedBatchStructure))seed.split=nrGetSplit(sharedBatchStructure);seed.answer=document.getElementById('nr-answer').value.trim();seed.text=document.getElementById('nr-text').value.trim();}
+  else if(tool==='nr'){seed.n=sharedBatchStructure.n;if(nrHasSplit(sharedBatchStructure))seed.split=nrGetSplit(sharedBatchStructure);seed.colorIdx=sharedBatchNRNextOffset%7;seed.answer=document.getElementById('nr-answer').value.trim();seed.text=document.getElementById('nr-text').value.trim();}
   else if(tool==='pv'){seed.n=sharedBatchStructure.n;seed.answer=document.getElementById('pv-answer').value.trim();seed.text=document.getElementById('pv-text').value.trim();}
   else if(tool==='text'){seed.answer=document.getElementById('text-answer').value.trim();seed.text=document.getElementById('text-q-text').value.trim();}
   else if(tool==='pr'){const mode=sharedBatchStructure.mode;if(mode==='count')seed.countA=sharedBatchStructure.countA;else if(mode==='addsub'){seed.countA=sharedBatchStructure.countA;seed.countB=sharedBatchStructure.countB;}else if(mode==='multiply'){seed.mrows=sharedBatchStructure.mrows;seed.mcols=sharedBatchStructure.mcols;}seed.answer=document.getElementById('pr-answer')?.value.trim()??'';seed.text=document.getElementById('pr-text')?.value.trim()??'';}
@@ -2752,6 +2753,8 @@ function addSharedBatchRow(defaults={}){
     // Inherit n and split from the previous row when not explicitly provided
     if(defaults.n===undefined){const lastRow=tbody.querySelector('tr:last-child');defaults.n=parseFloat(lastRow?.querySelector('[data-field="n"]')?.value)??sharedBatchStructure.n??0;}
     if(nrHasSplit(sharedBatchStructure)&&defaults.split===undefined){const lastRow=tbody.querySelector('tr:last-child');defaults.split=parseFloat(lastRow?.querySelector('[data-field="split"]')?.value)??nrGetSplit(sharedBatchStructure);}
+    const nrColIdx=defaults.colorIdx??sharedBatchNRNextOffset%7;
+    sharedBatchRowColors[idx]={colorIdx:nrColIdx};sharedBatchNRNextOffset++;
     cells+=`<td>${n('n',defaults.n??sharedBatchStructure.n??0,72)}</td>`;
     if(nrHasSplit(sharedBatchStructure))cells+=`<td>${n('split',defaults.split??nrGetSplit(sharedBatchStructure),60)}</td>`;
   } else if(tool==='pv'){
@@ -2847,6 +2850,9 @@ function getSharedBatchRowCfg(tr){
     const num=parseFloat(g('n'));if(isNaN(num))return null;
     const cfg={...sharedBatchStructure,n:num};
     if(nrHasSplit(sharedBatchStructure)){const sv=parseFloat(g('split'));if(!isNaN(sv)){if(cfg.rep==='multilink')cfg.mlSplit=sv;else if(cfg.rep==='frames')cfg.fSplit=sv;else if(cfg.rep==='beads')cfg.beadSplit=sv;else if(cfg.rep==='numicon')cfg.niSplit=sv;}}
+    const rowIdx=parseInt(tr.dataset.rowIdx);
+    const ci=sharedBatchRowColors[rowIdx]?.colorIdx??cfg.mc??0;
+    if(cfg.rep==='multilink')cfg.mc=ci;else if(cfg.rep==='frames')cfg.fc1=ci;else if(cfg.rep==='beads')cfg.ba=ci;else if(cfg.rep==='numicon')cfg.niSplitOn&&(cfg.mc=ci);
     return cfg;
   } else if(tool==='pv'){
     const num=parseFloat(g('n'));if(isNaN(num))return null;
