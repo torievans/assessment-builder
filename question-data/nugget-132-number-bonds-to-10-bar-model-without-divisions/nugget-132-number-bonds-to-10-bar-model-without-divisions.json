@@ -126,11 +126,5 @@
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
     }
-  ],
-  "exampleOverride": {
-    "cfg": {},
-    "visualType": "bm",
-    "answer": "2",
-    "text": "# 8 + _ = 10"
-  }
+  ]
 }
