@@ -105,10 +105,7 @@ function numberLineSVG(config) {
   const circleLblLen = circleVal !== null ? String(Math.round(circleVal)).length : 1;
   const crMin = circleLblLen <= 1 ? 9 : 11;
   const cr = hasCircle ? Math.min(Math.max(crMin, Math.floor(pxPerUnit * 0.32)), 18) : 0;
-  const circleTarget = (answerCircle === true || answerCircle === 'answer')
-    ? answerNum
-    : (typeof answerCircle === 'number' && !isNaN(answerCircle) ? answerCircle : null);
-  const hasAnswerCircle = circleTarget !== null;
+  const hasAnswerCircle = answerCircle && answerNum !== null;
   const acr = hasAnswerCircle ? Math.min(Math.max(9, Math.floor(pxPerUnit * 0.32)), 18) : 0;
 
   const EXTEND    = terminate ? 0 : 20;
@@ -176,7 +173,7 @@ function numberLineSVG(config) {
         const circleCy = (parseFloat(ly) + 4).toFixed(1);
         s += `<circle cx="${x.toFixed(1)}" cy="${circleCy}" r="${cr}" fill="none" stroke="${JC1}" stroke-width="2"/>`;
       }
-      if (hasAnswerCircle && circleTarget !== null && Math.abs(value - circleTarget) < 0.001) {
+      if (isAnswer && hasAnswerCircle) {
         const circleCy = (parseFloat(ly) + 4).toFixed(1);
         s += `<circle cx="${x.toFixed(1)}" cy="${circleCy}" r="${acr}" fill="none" stroke="${LABEL_COLOR}" stroke-width="2"/>`;
       }
@@ -461,7 +458,7 @@ function barModelSVG(config) {
 
 // ─── Number Track ─────────────────────────────────────────────────────────────
 function numberTrackSVG(cfg) {
-  const { sequence, shape = 'square', layout = 'straight', colourMode = 'full', colourOffset = 0 } = cfg;
+  const { sequence, shape = 'square', layout = 'straight', colourMode = 'full', colourOffset = 0, revealIdx } = cfg;
   if (!sequence) return '';
   const tokens = sequence.split(',').map(s => s.trim()).filter(s => s !== '');
   if (!tokens.length) return '';
@@ -537,6 +534,7 @@ function numberTrackSVG(cfg) {
     const isEmpty  = token === '_' || isAnswer;
 
     if (isEmpty) {
+      if (isAnswer) palIdx++;  // consume palette slot so subsequent items keep position-based colours
       const fill = '#F4F5F7', stroke = isAnswer ? '#BBBFD0' : '#D1D5DB';
       parts.push(drawShape(shape, cx, cy, CELL, fill, stroke, 2, isAnswer ? '7,5' : null));
       if (isAnswer) {
@@ -549,7 +547,8 @@ function numberTrackSVG(cfg) {
       }
     } else {
       const c = cellFill(palIdx++);
-      parts.push(drawShape(shape, cx, cy, CELL, c.fill, c.stroke, c.strokeW, null));
+      const isRevealed = revealIdx !== undefined && i === revealIdx;
+      parts.push(drawShape(shape, cx, cy, CELL, c.fill, isRevealed ? 'white' : c.stroke, isRevealed ? 4 : c.strokeW, null));
       const fs = CELL * 0.36;
       const ty = shape === 'balloon' ? cy - CELL*0.0556 + fs*0.35
                : shape === 'cloud'   ? cy + CELL*(7/195) + fs*0.35
@@ -610,8 +609,12 @@ function nrRenderFrames(cfg) {
 
 function nrRenderBeads(cfg) {
   const N=cfg.n, bg=cfg.bg||5, ba=cfg.ba??4, bb=cfg.bb??0, beadPreset=cfg.beadPreset||'colour', showCount=cfg.showCount||false;
+  const beadSplitOn=cfg.beadSplitOn||false, beadSplit=cfg.beadSplit??5;
   const RW_RED={fill:'#CC2200',stroke:nrDarkenHex('#CC2200')}, RW_WHITE={fill:'#FFFFFF',stroke:nrDarkenHex('#FFFFFF')};
-  function beadCol(i) { const even=Math.floor(i/bg)%2===0; if(beadPreset==='rw') return even?RW_RED:RW_WHITE; const fill=even?NR_STROKES[ba]:NR_STROKES[bb]; return{fill,stroke:nrDarkenHex(fill)}; }
+  function beadCol(i) {
+    if(beadSplitOn){const inA=i<beadSplit;if(beadPreset==='rw')return inA?RW_RED:RW_WHITE;const fill=inA?NR_STROKES[ba]:NR_STROKES[bb];return{fill,stroke:nrDarkenHex(fill)};}
+    const even=Math.floor(i/bg)%2===0; if(beadPreset==='rw') return even?RW_RED:RW_WHITE; const fill=even?NR_STROKES[ba]:NR_STROKES[bb]; return{fill,stroke:nrDarkenHex(fill)};
+  }
   const r=Math.min(18,Math.max(11,Math.floor(180/N))), LTAIL=18, RTAIL=110, A=4, WL=140;
   const SVG_W=LTAIL+N*2*r+RTAIL, baseCY=r+A+6, SVG_H=baseCY*2;
   const beads=[]; for(let i=0;i<N;i++){const x=LTAIL+r+i*2*r; beads.push({x,y:baseCY+A*Math.sin(2*Math.PI*x/WL)});}
