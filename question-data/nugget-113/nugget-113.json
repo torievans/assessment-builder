@@ -6,8 +6,8 @@
   "exampleOverride": {
     "cfg": {
       "wbText": "two",
-      "wbBorder": "#319377",
-      "wbSkin": "#ffa99c"
+      "wbBorder": "#FECC6B",
+      "wbSkin": "#d4895a"
     },
     "visualType": "wb",
     "answer": "2",
