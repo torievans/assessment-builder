@@ -1,0 +1,33 @@
+{
+  "nuggetId": 127,
+  "status": "in-progress",
+  "nextQId": 319361,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "n": 10,
+      "rep": "numicon",
+      "fType": "5",
+      "fc1": 0,
+      "fc2": 4,
+      "fSplitOn": false,
+      "fSplit": 5,
+      "bg": 5,
+      "ba": 4,
+      "bb": 0,
+      "beadPreset": "colour",
+      "mc": 4,
+      "mc2": 0,
+      "mlRows": "10",
+      "mlFill": "row",
+      "mlGap": false,
+      "mlSplitOn": false,
+      "mlSplit": 5,
+      "niSplitOn": true,
+      "niSplit": 5
+    },
+    "visualType": "nr",
+    "answer": "5",
+    "text": "5 + _ = 10"
+  }
+}
