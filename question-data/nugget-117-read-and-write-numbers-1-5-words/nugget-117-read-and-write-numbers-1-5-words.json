@@ -1,0 +1,16 @@
+{
+  "nuggetId": 117,
+  "status": "in-progress",
+  "nextQId": 319319,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "1",
+      "wbBorder": "#847AC9",
+      "wbSkin": "#b06530"
+    },
+    "visualType": "wb",
+    "answer": "one",
+    "text": "Write the number in words."
+  }
+}
