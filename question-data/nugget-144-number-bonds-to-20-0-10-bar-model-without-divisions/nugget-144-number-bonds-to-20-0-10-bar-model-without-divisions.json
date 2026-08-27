@@ -1,0 +1,33 @@
+{
+  "nuggetId": 144,
+  "status": "in-progress",
+  "nextQId": 144002,
+  "questions": [
+    {
+      "id": 144001,
+      "text": "What is the missing number?",
+      "answer": "13",
+      "type": "exact",
+      "visualType": "bm",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "segments": [
+          {
+            "value": 7,
+            "segLabel": "7"
+          },
+          {
+            "value": "?",
+            "segLabel": "?"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 0
+      },
+      "qaComment": "",
+      "createdAt": "2026-08-27",
+      "updatedAt": "2026-08-27"
+    }
+  ]
+}
