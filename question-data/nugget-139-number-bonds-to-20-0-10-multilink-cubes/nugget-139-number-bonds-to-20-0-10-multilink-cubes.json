@@ -5,16 +5,22 @@
   "questions": [
     {
       "id": 139001,
-      "text": "There are 7 cubes. How many more are needed to make 20?",
+      "text": "How many cubes are missing to make 20?",
       "answer": "13",
       "type": "exact",
-      "visualType": "wb",
+      "visualType": "nr",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "wbText": "7 + ? = 20",
-        "borderColour": "#4A90D9",
-        "skinColour": "#FFFFFF"
+        "n": 20,
+        "rep": "multilink",
+        "mlSplitOn": true,
+        "mlSplit": 7,
+        "mc": 4,
+        "mc2": 0,
+        "mlRows": "10",
+        "mlFill": "row",
+        "mlGap": false
       },
       "qaComment": "",
       "createdAt": "2026-08-27",
