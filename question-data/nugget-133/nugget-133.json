@@ -1,7 +1,7 @@
 {
   "nuggetId": 133,
   "status": "in-progress",
-  "nextQId": 319396,
+  "nextQId": 319410,
   "questions": [
     {
       "id": 319391,
@@ -130,19 +130,7 @@
     }
   ],
   "exampleOverride": {
-    "cfg": {
-      "segments": [
-        {
-          "value": 6
-        },
-        {
-          "value": "?"
-        }
-      ],
-      "total": 10,
-      "colorIdx": 0,
-      "topBar": true
-    },
+    "cfg": {},
     "visualType": "bm",
     "answer": "4",
     "text": "# 6 + _ = 10"
