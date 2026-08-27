@@ -4,32 +4,6 @@
   "nextQId": 319411,
   "questions": [
     {
-      "id": 319398,
-      "text": "What number is missing from this calculation?",
-      "answer": "9",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
-    },
-    {
-      "id": 319399,
-      "text": "What number is missing from this calculation?",
-      "answer": "4",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
-    },
-    {
       "id": 319400,
       "text": "What number is missing from this calculation?",
       "answer": "6",
