@@ -1,12 +1,12 @@
 {
   "nuggetId": 128,
   "status": "in-progress",
-  "nextQId": 319371,
+  "nextQId": 319406,
   "questions": [
     {
       "id": 319366,
-      "text": "# 4 + _ = 10",
-      "answer": "6",
+      "text": "# 6 + _ = 10",
+      "answer": "4",
       "type": "exact",
       "image": "",
       "display": "",
@@ -24,13 +24,13 @@
         "ba": 4,
         "bb": 0,
         "beadPreset": "colour",
-        "mc": 4,
-        "mc2": 0,
+        "mc": 6,
+        "mc2": 5,
         "mlRows": "10",
         "mlFill": "row",
         "mlGap": false,
         "mlSplitOn": true,
-        "mlSplit": 4,
+        "mlSplit": 6,
         "niSplitOn": false,
         "niSplit": 4
       },
