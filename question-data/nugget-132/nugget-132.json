@@ -1,7 +1,7 @@
 {
   "nuggetId": 132,
   "status": "in-progress",
-  "nextQId": 319409,
+  "nextQId": 319410,
   "questions": [
     {
       "id": 319386,
@@ -126,5 +126,25 @@
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 8,
+          "segLabel": "8"
+        },
+        {
+          "value": 2,
+          "segLabel": "?"
+        }
+      ],
+      "total": 10,
+      "colorIdx": 0,
+      "multi": true
+    },
+    "visualType": "bm",
+    "answer": "2",
+    "text": "# 8 + _ = 10"
+  }
 }
