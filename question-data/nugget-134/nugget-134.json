@@ -1,7 +1,7 @@
 {
   "nuggetId": 134,
   "status": "in-progress",
-  "nextQId": 319410,
+  "nextQId": 319411,
   "questions": [
     {
       "id": 319396,
@@ -65,6 +65,23 @@
       "qaComment": "",
       "visualType": "text",
       "cfg": {},
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319410,
+      "text": "What number is missing from this calculation?",
+      "answer": "7",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "3 + _ = 10",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
     }
