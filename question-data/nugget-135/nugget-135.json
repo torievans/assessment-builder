@@ -1,7 +1,7 @@
 {
   "nuggetId": 135,
   "status": "in-progress",
-  "nextQId": 319413,
+  "nextQId": 319418,
   "questions": [
     {
       "id": 319411,
@@ -16,6 +16,91 @@
         "wbText": "_ + 5 = 10",
         "wbBorder": "#319377",
         "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319413,
+      "text": "What number is missing from this calculation?",
+      "answer": "4",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "_ + 5 = 10",
+        "wbBorder": "#D46B55",
+        "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319414,
+      "text": "What number is missing from this calculation?",
+      "answer": "7",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "_ + 3 = 10",
+        "wbBorder": "#F5995B",
+        "wbSkin": "#b06530"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319415,
+      "text": "What number is missing from this calculation?",
+      "answer": "1",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "_ + 9 = 10",
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319416,
+      "text": "What number is missing from this calculation?",
+      "answer": "2",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "_ + 8 = 10",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319417,
+      "text": "What number is missing from this calculation?",
+      "answer": "6",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "_ + 4 = 10",
+        "wbBorder": "#7898F0",
+        "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
