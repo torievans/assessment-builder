@@ -1,11 +1,11 @@
 {
   "nuggetId": 130,
   "status": "in-progress",
-  "nextQId": 319381,
+  "nextQId": 319406,
   "questions": [
     {
       "id": 319376,
-      "text": "# 5 + _ = 10",
+      "text": "# _ + 5 = 10",
       "answer": "5",
       "type": "exact",
       "image": "",
