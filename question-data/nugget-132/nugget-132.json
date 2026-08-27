@@ -1,0 +1,144 @@
+{
+  "nuggetId": 132,
+  "status": "in-progress",
+  "nextQId": 319391,
+  "questions": [
+    {
+      "id": 319386,
+      "text": "# 8 + _ = 10",
+      "answer": "2",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 8
+          },
+          {
+            "value": "?"
+          }
+        ],
+        "total": 10,
+        "colorIdx": 0
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319387,
+      "text": "# _ + 9 = 10",
+      "answer": "1",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": "?"
+          },
+          {
+            "value": 9
+          }
+        ],
+        "total": 10,
+        "colorIdx": 1
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319388,
+      "text": "# 5 + _ = 10",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 5
+          },
+          {
+            "value": "?"
+          }
+        ],
+        "total": 10,
+        "colorIdx": 2
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319389,
+      "text": "# _ + 4 = 10",
+      "answer": "6",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": "?"
+          },
+          {
+            "value": 4
+          }
+        ],
+        "total": 10,
+        "colorIdx": 3
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319390,
+      "text": "# 1 + _ = 10",
+      "answer": "9",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 1
+          },
+          {
+            "value": "?"
+          }
+        ],
+        "total": 10,
+        "colorIdx": 4
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    }
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 8
+        },
+        {
+          "value": "?"
+        }
+      ],
+      "total": 10,
+      "colorIdx": 0
+    },
+    "visualType": "bm",
+    "answer": "2",
+    "text": "# 8 + _ = 10"
+  }
+}
