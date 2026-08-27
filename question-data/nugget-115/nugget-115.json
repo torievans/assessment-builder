@@ -21,23 +21,6 @@
       "createdAt": "2026-08-27"
     },
     {
-      "id": 319325,
-      "text": "Write the number in numerals.",
-      "answer": "11",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "eleven",
-        "wbBorder": "#AAAAAA",
-        "wbSkin": "#ffa99c"
-      },
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
-    },
-    {
       "id": 319327,
       "text": "Write the number in numerals.",
       "answer": "13",
@@ -67,6 +50,23 @@
         "wbText": "fourteen",
         "wbBorder": "#FECC6B",
         "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319325,
+      "text": "Write the number in numerals.",
+      "answer": "11",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "eleven",
+        "wbBorder": "#AAAAAA",
+        "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
