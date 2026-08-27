@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 319371,
-      "text": "# 6 + _ = 10",
+      "text": "# _ + 4 = 10",
       "answer": "4",
       "type": "exact",
       "image": "",
