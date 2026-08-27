@@ -1,0 +1,150 @@
+{
+  "nuggetId": 133,
+  "status": "in-progress",
+  "nextQId": 319396,
+  "questions": [
+    {
+      "id": 319391,
+      "text": "# 6 + _ = 10",
+      "answer": "4",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 6
+          },
+          {
+            "value": "?"
+          }
+        ],
+        "total": 10,
+        "colorIdx": 0,
+        "topBar": true
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319392,
+      "text": "# _ + 2 = 10",
+      "answer": "8",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": "?"
+          },
+          {
+            "value": 2
+          }
+        ],
+        "total": 10,
+        "colorIdx": 1,
+        "topBar": true
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319393,
+      "text": "# 3 + _ = 10",
+      "answer": "7",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3
+          },
+          {
+            "value": "?"
+          }
+        ],
+        "total": 10,
+        "colorIdx": 2,
+        "topBar": true
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319394,
+      "text": "# _ + 7 = 10",
+      "answer": "3",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": "?"
+          },
+          {
+            "value": 7
+          }
+        ],
+        "total": 10,
+        "colorIdx": 3,
+        "topBar": true
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319395,
+      "text": "# 9 + _ = 10",
+      "answer": "1",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 9
+          },
+          {
+            "value": "?"
+          }
+        ],
+        "total": 10,
+        "colorIdx": 4,
+        "topBar": true
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    }
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 6
+        },
+        {
+          "value": "?"
+        }
+      ],
+      "total": 10,
+      "colorIdx": 0,
+      "topBar": true
+    },
+    "visualType": "bm",
+    "answer": "4",
+    "text": "# 6 + _ = 10"
+  }
+}
