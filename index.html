@@ -2564,6 +2564,9 @@ function dndEnd(e){
 /* ── Shared batch panel ── */
 let sharedBatchTool=null, sharedBatchStructure={}, sharedBatchRowIdx=0, sharedBatchRowColors={};
 let sharedBatchNTNextOffset=0; // auto-incremented colourOffset for NT batch rows
+let sharedBatchWBNextOffset=0; // auto-incremented index for WB border/skin cycling
+const WB_BORDER_PALETTE=[['grey','#AAAAAA'],['red','#D46B55'],['orange','#F5995B'],['yellow','#FECC6B'],['green','#319377'],['blue','#7898F0'],['purple','#847AC9'],['pink','#FC7E91']];
+const WB_SKIN_TONES=[['light','#ffa99c'],['light tan','#d4895a'],['medium brown','#b06530'],['deep brown','#6b3520']];
 
 function openSharedBatch(tool){
   // Validate current tool config first
@@ -2576,7 +2579,7 @@ function openSharedBatch(tool){
   else if(tool==='nr'){const cfg=getNRConfig();if(!cfg){alert('Please set a number.');return;}sharedBatchStructure=cfg;}
   else if(tool==='text'){sharedBatchStructure={};}
   else if(tool==='pr'){const cfg=getPRConfig();if(!cfg){alert('Please configure the pictorial representation first.');return;}sharedBatchStructure=cfg;}
-  else if(tool==='wb'){sharedBatchStructure={wbBorder:customWBBorderColour||'#319377',wbSkin:customWBSkinColour||'#ffa99c'};}
+  else if(tool==='wb'){sharedBatchStructure={};sharedBatchWBNextOffset=(nuggetState[activeId]?.questions?.length||0);}
   sharedBatchTool=tool;sharedBatchRowColors={};
   // Build locked-setting tags
   const tagsEl=document.getElementById('shared-batch-tags');tagsEl.innerHTML='';
@@ -2586,7 +2589,7 @@ function openSharedBatch(tool){
   else if(tool==='nr'){tags.push(`Rep: ${sharedBatchStructure.rep}`,`N: ${sharedBatchStructure.n}`);}
   else if(tool==='pv'){tags.push(`Rep: ${sharedBatchStructure.repType}`,`Display: ${sharedBatchStructure.dispMode}`);}
   else if(tool==='pr'){tags.push(`Mode: ${sharedBatchStructure.mode}`,`Image: ${sharedBatchStructure.imageIdA||''}`);}
-  else if(tool==='wb'){tags.push(`Border: ${sharedBatchStructure.wbBorder}`,`Skin: ${sharedBatchStructure.wbSkin}`);}
+  else if(tool==='wb'){tags.push('Colours cycle per row');}
   tags.forEach(t=>{const s=document.createElement('span');s.className='locked-tag';s.textContent=t;tagsEl.appendChild(s);});
   // Subtitle
   const subtitles={nr:'Representation is locked. Change the number and answer per row.',bm:'Segment structure is locked. Change segment values and answers per row.',nt:'Shape and layout are locked. Change the sequence and answer per row.',text:'No locked settings — enter question and answer for each row.',pv:'Representation and display mode are locked. Change the number per row.',pr:'Image and mode are locked. Change the count and answer per row.',wb:'Border and skin colour are locked. Change the whiteboard text and answer per row.'};
@@ -2677,6 +2680,10 @@ function addSharedBatchRow(defaults={}){
     else if(mode==='addsub'){cells+=`<td>${n('countA',defaults.countA??1,60)}</td><td>${n('countB',defaults.countB??1,60)}</td>`;}
     else if(mode==='multiply'){cells+=`<td>${n('mrows',defaults.mrows??2,60)}</td><td>${n('mcols',defaults.mcols??3,60)}</td>`;}
   } else if(tool==='wb'){
+    const borderIdx=sharedBatchWBNextOffset%WB_BORDER_PALETTE.length;
+    const skinIdx=sharedBatchWBNextOffset%WB_SKIN_TONES.length;
+    sharedBatchRowColors[idx]={borderIdx,skinIdx};
+    sharedBatchWBNextOffset++;
     cells+=`<td><textarea data-field="wbText" class="batch-input batch-input-text" style="width:180px;height:52px;resize:vertical" oninput="updateSharedPreview(${idx})">${esc(String(defaults.wbText??''))}</textarea></td>`;
   }
   cells+=`<td>${t('answer',defaults.answer??'','batch-input-num')}</td>`;
@@ -2705,6 +2712,34 @@ function addSharedBatchRow(defaults={}){
         swatchRow.appendChild(btn);
       });
       wrap.appendChild(swatchRow);cell.appendChild(wrap);
+    }
+  }
+  // WB: per-row border and skin swatches
+  if(sharedBatchTool==='wb'){
+    const cell=tr.querySelector('.batch-preview-cell');
+    if(cell){
+      const wrap=document.createElement('div');wrap.className='batch-swatch-wrap';
+      function makeWBSwatchRow(label,palette,colorKey){
+        const row=document.createElement('div');row.className='batch-mini-swatch-row';
+        const lbl=document.createElement('span');lbl.className='batch-swatch-label';lbl.textContent=label;
+        row.appendChild(lbl);
+        palette.forEach(([name,hex],i)=>{
+          const btn=document.createElement('button');
+          btn.className='mini-swatch'+(i===sharedBatchRowColors[idx][colorKey]?' selected':'');
+          btn.style.background=hex;btn.title=name;
+          btn.addEventListener('click',()=>{
+            row.querySelectorAll('.mini-swatch').forEach(s=>s.classList.remove('selected'));
+            btn.classList.add('selected');
+            sharedBatchRowColors[idx][colorKey]=i;
+            updateSharedPreview(idx);
+          });
+          row.appendChild(btn);
+        });
+        return row;
+      }
+      wrap.appendChild(makeWBSwatchRow('Border',WB_BORDER_PALETTE,'borderIdx'));
+      wrap.appendChild(makeWBSwatchRow('Skin',WB_SKIN_TONES,'skinIdx'));
+      cell.appendChild(wrap);
     }
   }
   setTimeout(()=>updateSharedPreview(idx),0);
@@ -2739,7 +2774,11 @@ function getSharedBatchRowCfg(tr){
     else if(mode==='multiply'){const r=parseInt(g('mrows')),c=parseInt(g('mcols'));if(isNaN(r)||isNaN(c))return null;cfg.mrows=r;cfg.mcols=c;}
     return cfg;
   } else if(tool==='wb'){
-    return {...sharedBatchStructure, wbText:g('wbText')};
+    const rowIdx=parseInt(tr.dataset.rowIdx);
+    const rowColors=sharedBatchRowColors[rowIdx]||{};
+    const wbBorder=WB_BORDER_PALETTE[rowColors.borderIdx??0][1];
+    const wbSkin=WB_SKIN_TONES[rowColors.skinIdx??0][1];
+    return {wbText:g('wbText'), wbBorder, wbSkin};
   }
   return {};
 }
