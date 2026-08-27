@@ -2641,6 +2641,8 @@ let sharedBatchNTNextOffset=0; // auto-incremented colourOffset for NT batch row
 let sharedBatchWBNextOffset=0; // auto-incremented index for WB border/skin cycling
 const WB_BORDER_PALETTE=[['grey','#AAAAAA'],['red','#D46B55'],['orange','#F5995B'],['yellow','#FECC6B'],['green','#319377'],['blue','#7898F0'],['purple','#847AC9'],['pink','#FC7E91']];
 const WB_SKIN_TONES=[['light','#ffa99c'],['light tan','#d4895a'],['medium brown','#b06530'],['deep brown','#6b3520']];
+function nrHasSplit(cfg){if(!cfg)return false;if(cfg.rep==='multilink')return!!cfg.mlSplitOn;if(cfg.rep==='frames')return!!cfg.fSplitOn;if(cfg.rep==='beads')return!!cfg.beadSplitOn;if(cfg.rep==='numicon')return!!cfg.niSplitOn;return false;}
+function nrGetSplit(cfg){if(!cfg)return 0;if(cfg.rep==='multilink')return cfg.mlSplit??5;if(cfg.rep==='frames')return cfg.fSplit??5;if(cfg.rep==='beads')return cfg.beadSplit??5;if(cfg.rep==='numicon')return cfg.niSplit??5;return 0;}
 
 function openSharedBatch(tool){
   // Validate current tool config first
@@ -2660,13 +2662,13 @@ function openSharedBatch(tool){
   const tags=[];
   if(tool==='bm'){tags.push(`${sharedBatchStructure.segments?.length} segments`,`Colour: swatch ${sharedBatchStructure.colorIdx??0}`);}
   else if(tool==='nt'){tags.push(`Shape: ${ntShape}`,`Layout: ${ntLayout}`,`Colour: ${ntColourMode}`);}
-  else if(tool==='nr'){tags.push(`Rep: ${sharedBatchStructure.rep}`,`N: ${sharedBatchStructure.n}`);}
+  else if(tool==='nr'){tags.push(`Rep: ${sharedBatchStructure.rep}`,`N: ${sharedBatchStructure.n}`);if(nrHasSplit(sharedBatchStructure))tags.push('Split: per row');}
   else if(tool==='pv'){tags.push(`Rep: ${sharedBatchStructure.repType}`,`Display: ${sharedBatchStructure.dispMode}`);}
   else if(tool==='pr'){tags.push(`Mode: ${sharedBatchStructure.mode}`,`Image: ${sharedBatchStructure.imageIdA||''}`);}
   else if(tool==='wb'){tags.push('Colours cycle per row');}
   tags.forEach(t=>{const s=document.createElement('span');s.className='locked-tag';s.textContent=t;tagsEl.appendChild(s);});
   // Subtitle
-  const subtitles={nr:'Representation is locked. Change the number and answer per row.',bm:'Segment structure is locked. Change segment values and answers per row.',nt:'Shape and layout are locked. Change the sequence and answer per row.',text:'No locked settings — enter question and answer for each row.',pv:'Representation and display mode are locked. Change the number per row.',pr:'Image and mode are locked. Change the count and answer per row.',wb:'Border and skin colour are locked. Change the whiteboard text and answer per row.'};
+  const subtitles={nr:nrHasSplit(sharedBatchStructure)?'Representation is locked. Change the number, split and answer per row.':'Representation is locked. Change the number and answer per row.',bm:'Segment structure is locked. Change segment values and answers per row.',nt:'Shape and layout are locked. Change the sequence and answer per row.',text:'No locked settings — enter question and answer for each row.',pv:'Representation and display mode are locked. Change the number per row.',pr:'Image and mode are locked. Change the count and answer per row.',wb:'Border and skin colour are locked. Change the whiteboard text and answer per row.'};
   document.getElementById('shared-batch-subtitle').textContent=subtitles[tool]||'';
   // Build table headers
   buildSharedBatchHeaders();
@@ -2675,7 +2677,7 @@ function openSharedBatch(tool){
   const seed={};
   if(tool==='bm'){(sharedBatchStructure.segments||[]).forEach((s,i)=>{seed[`seg${i}`]=s.value;});seed.answer=document.getElementById('bm-answer').value.trim();seed.text=document.getElementById('bm-text').value.trim();}
   else if(tool==='nt'){seed.seq=document.getElementById('nt-seq').value.trim();seed.answer=document.getElementById('nt-answer').value.trim();seed.text=document.getElementById('nt-text').value.trim();}
-  else if(tool==='nr'){seed.n=sharedBatchStructure.n;seed.answer=document.getElementById('nr-answer').value.trim();seed.text=document.getElementById('nr-text').value.trim();}
+  else if(tool==='nr'){seed.n=sharedBatchStructure.n;if(nrHasSplit(sharedBatchStructure))seed.split=nrGetSplit(sharedBatchStructure);seed.answer=document.getElementById('nr-answer').value.trim();seed.text=document.getElementById('nr-text').value.trim();}
   else if(tool==='pv'){seed.n=sharedBatchStructure.n;seed.answer=document.getElementById('pv-answer').value.trim();seed.text=document.getElementById('pv-text').value.trim();}
   else if(tool==='text'){seed.answer=document.getElementById('text-answer').value.trim();seed.text=document.getElementById('text-q-text').value.trim();}
   else if(tool==='pr'){const mode=sharedBatchStructure.mode;if(mode==='count')seed.countA=sharedBatchStructure.countA;else if(mode==='addsub'){seed.countA=sharedBatchStructure.countA;seed.countB=sharedBatchStructure.countB;}else if(mode==='multiply'){seed.mrows=sharedBatchStructure.mrows;seed.mcols=sharedBatchStructure.mcols;}seed.answer=document.getElementById('pr-answer')?.value.trim()??'';seed.text=document.getElementById('pr-text')?.value.trim()??'';}
@@ -2707,6 +2709,8 @@ function buildSharedBatchHeaders(){
     cols=['Preview','Question','Sequence','Answer',''];
   } else if(sharedBatchTool==='text'){
     cols=['Question','Answer',''];
+  } else if(sharedBatchTool==='nr'){
+    cols=nrHasSplit(sharedBatchStructure)?['Preview','Question','Number','Split','Answer','']:['Preview','Question','Number','Answer',''];
   } else if(sharedBatchTool==='pv'){
     cols=['Preview','Question','Number','Answer',''];
   } else if(sharedBatchTool==='pr'){
@@ -2746,6 +2750,7 @@ function addSharedBatchRow(defaults={}){
     cells+=`<td>${t('seq',defaults.seq??'1,2,3,?,5','batch-input-text')}</td>`;
   } else if(tool==='nr'){
     cells+=`<td>${n('n',defaults.n??0,72)}</td>`;
+    if(nrHasSplit(sharedBatchStructure))cells+=`<td>${n('split',defaults.split??nrGetSplit(sharedBatchStructure),60)}</td>`;
   } else if(tool==='pv'){
     cells+=`<td>${n('n',defaults.n??0,72)}</td>`;
   } else if(tool==='pr'){
@@ -2837,7 +2842,9 @@ function getSharedBatchRowCfg(tr){
     return {...sharedBatchStructure, sequence:seq, colourOffset};
   } else if(tool==='nr'){
     const num=parseFloat(g('n'));if(isNaN(num))return null;
-    return {...sharedBatchStructure, n:num};
+    const cfg={...sharedBatchStructure,n:num};
+    if(nrHasSplit(sharedBatchStructure)){const sv=parseFloat(g('split'));if(!isNaN(sv)){if(cfg.rep==='multilink')cfg.mlSplit=sv;else if(cfg.rep==='frames')cfg.fSplit=sv;else if(cfg.rep==='beads')cfg.beadSplit=sv;else if(cfg.rep==='numicon')cfg.niSplit=sv;}}
+    return cfg;
   } else if(tool==='pv'){
     const num=parseFloat(g('n'));if(isNaN(num))return null;
     return {...sharedBatchStructure, n:num, missingVals:sharedBatchStructure.missingVals||[]};
