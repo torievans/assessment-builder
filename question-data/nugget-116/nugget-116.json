@@ -4,23 +4,6 @@
   "nextQId": 319335,
   "questions": [
     {
-      "id": 319330,
-      "text": "Write the number in numerals.",
-      "answer": "16",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "sixteen",
-        "wbBorder": "#7898F0",
-        "wbSkin": "#d4895a"
-      },
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
-    },
-    {
       "id": 319331,
       "text": "Write the number in numerals.",
       "answer": "17",
@@ -33,6 +16,23 @@
         "wbText": "seventeen",
         "wbBorder": "#847AC9",
         "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319330,
+      "text": "Write the number in numerals.",
+      "answer": "16",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "sixteen",
+        "wbBorder": "#7898F0",
+        "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
