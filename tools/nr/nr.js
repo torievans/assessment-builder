@@ -12,7 +12,7 @@
 
 // NR state
 let nr_N=5,nr_rep='frames',nr_fType='5',nr_fc1=0,nr_fc2=4,nr_fSplitOn=false,nr_fSplit=5;
-let nr_bg=5,nr_ba=4,nr_bb=0,nr_beadPreset='colour';
+let nr_bg=5,nr_ba=4,nr_bb=0,nr_beadPreset='colour',nr_beadSplitOn=false,nr_beadSplit=5;
 let nr_mc=4,nr_mc2=0,nr_mlRows='10',nr_mlFill='row',nr_mlGap=false,nr_mlSplitOn=false,nr_mlSplit=5;
 let nr_niSplitOn=false,nr_niSplit=5;
 
@@ -32,7 +32,7 @@ function initNRPanel(){
 
 function nrResetState(){
   nr_N=5;nr_rep='frames';nr_fType='5';nr_fc1=0;nr_fc2=4;nr_fSplitOn=false;nr_fSplit=5;
-  nr_bg=5;nr_ba=4;nr_bb=0;nr_beadPreset='colour';
+  nr_bg=5;nr_ba=4;nr_bb=0;nr_beadPreset='colour';nr_beadSplitOn=false;nr_beadSplit=5;
   nr_mc=4;nr_mc2=0;nr_mlRows='10';nr_mlFill='row';nr_mlGap=false;nr_mlSplitOn=false;nr_mlSplit=5;
   nr_niSplitOn=false;nr_niSplit=5;
   document.getElementById('nr-num-in').value=5;
@@ -82,6 +82,7 @@ function nrChangeFSplit(d){nrSetFSplitAt(nr_fSplit+d);}
 function nrSetFSplitAt(v){nr_fSplit=Math.max(1,Math.min(nr_N-1,isNaN(v)?nr_fSplit:v));document.getElementById('nr-fsplit-in').value=nr_fSplit;autoPreviewNR();}
 function nrSetBeadPreset(btn){nr_beadPreset=btn.dataset.nrbp;document.querySelectorAll('[data-nrbp]').forEach(b=>b.classList.toggle('active',b.dataset.nrbp===nr_beadPreset));const row=document.getElementById('nr-bead-col-row');if(row){row.style.opacity=nr_beadPreset==='rw'?'0.35':'';row.style.pointerEvents=nr_beadPreset==='rw'?'none':'';}autoPreviewNR();}
 function nrSetBG(btn){nr_bg=+btn.dataset.nrbg;document.querySelectorAll('[data-nrbg]').forEach(b=>b.classList.toggle('active',b.dataset.nrbg==String(nr_bg)));autoPreviewNR();}
+function nrSetBeadSplit(btn){nr_beadSplitOn=btn.dataset.nrbsp==='on';document.querySelectorAll('[data-nrbsp]').forEach(b=>b.classList.toggle('active',b.dataset.nrbsp===btn.dataset.nrbsp));const row=document.getElementById('nr-bsplit-row');if(row)row.style.display=nr_beadSplitOn?'':'none';autoPreviewNR();}
 function nrSetMLGap(btn,on){nr_mlGap=on;document.querySelectorAll('[data-nrmsg]').forEach(b=>b.classList.toggle('active',b.dataset.nrmsg===(on?'on':'off')));autoPreviewNR();}
 function nrUpdateSep10(){const show=nr_mlRows==='5'&&nr_N>10;const el=document.getElementById('nr-ml-sep10-row');if(el)el.style.display=show?'':'none';}
 function nrSetML(btn){nr_mlRows=btn.dataset.nrml;document.querySelectorAll('[data-nrml]').forEach(b=>b.classList.toggle('active',b.dataset.nrml===nr_mlRows));const fr=document.getElementById('nr-ml-fill-row');if(fr)fr.style.display=nr_mlRows==='5'?'':'none';nrUpdateSep10();autoPreviewNR();}
@@ -101,14 +102,14 @@ function autoPreviewNR(){
 }
 
 function getNRConfig(){
-  return{n:nr_N,rep:nr_rep,fType:nr_fType,fc1:nr_fc1,fc2:nr_fc2,fSplitOn:nr_fSplitOn,fSplit:nr_fSplit,bg:nr_bg,ba:nr_ba,bb:nr_bb,beadPreset:nr_beadPreset,mc:nr_mc,mc2:nr_mc2,mlRows:nr_mlRows,mlFill:nr_mlFill,mlGap:nr_mlGap,mlSplitOn:nr_mlSplitOn,mlSplit:nr_mlSplit,niSplitOn:nr_niSplitOn,niSplit:nr_niSplit};
+  return{n:nr_N,rep:nr_rep,fType:nr_fType,fc1:nr_fc1,fc2:nr_fc2,fSplitOn:nr_fSplitOn,fSplit:nr_fSplit,bg:nr_bg,ba:nr_ba,bb:nr_bb,beadPreset:nr_beadPreset,beadSplitOn:nr_beadSplitOn,beadSplit:nr_beadSplit,mc:nr_mc,mc2:nr_mc2,mlRows:nr_mlRows,mlFill:nr_mlFill,mlGap:nr_mlGap,mlSplitOn:nr_mlSplitOn,mlSplit:nr_mlSplit,niSplitOn:nr_niSplitOn,niSplit:nr_niSplit};
 }
 
 function restoreNRConfig(cfg){
   if(!cfg||!cfg.n)return;
   nr_N=cfg.n||5;nr_rep=cfg.rep||'frames';nr_fType=cfg.fType||'5';nr_fc1=cfg.fc1??0;nr_fc2=cfg.fc2??4;
   nr_fSplitOn=cfg.fSplitOn||false;nr_fSplit=cfg.fSplit||5;
-  nr_bg=cfg.bg||5;nr_ba=cfg.ba??4;nr_bb=cfg.bb??0;nr_beadPreset=cfg.beadPreset||'colour';
+  nr_bg=cfg.bg||5;nr_ba=cfg.ba??4;nr_bb=cfg.bb??0;nr_beadPreset=cfg.beadPreset||'colour';nr_beadSplitOn=cfg.beadSplitOn||false;nr_beadSplit=cfg.beadSplit??5;
   nr_mc=cfg.mc??4;nr_mc2=cfg.mc2??0;nr_mlRows=cfg.mlRows||'10';nr_mlFill=cfg.mlFill||'row';
   nr_mlGap=cfg.mlGap||false;nr_mlSplitOn=cfg.mlSplitOn||false;nr_mlSplit=cfg.mlSplit||5;
   nr_niSplitOn=cfg.niSplitOn||false;nr_niSplit=cfg.niSplit||5;
@@ -121,6 +122,9 @@ function restoreNRConfig(cfg){
   document.getElementById('nr-fsplit-in').value=nr_fSplit;
   document.querySelectorAll('[data-nrbp]').forEach(b=>b.classList.toggle('active',b.dataset.nrbp===nr_beadPreset));
   document.querySelectorAll('[data-nrbg]').forEach(b=>b.classList.toggle('active',b.dataset.nrbg==String(nr_bg)));
+  document.querySelectorAll('[data-nrbsp]').forEach(b=>b.classList.toggle('active',b.dataset.nrbsp===(nr_beadSplitOn?'on':'off')));
+  const bsr=document.getElementById('nr-bsplit-row');if(bsr)bsr.style.display=nr_beadSplitOn?'':'none';
+  const bsi=document.getElementById('nr-bsplit-in');if(bsi)bsi.value=nr_beadSplit;
   document.querySelectorAll('[data-nrml]').forEach(b=>b.classList.toggle('active',b.dataset.nrml===nr_mlRows));
   const fr=document.getElementById('nr-ml-fill-row');if(fr)fr.style.display=nr_mlRows==='5'?'':'none';
   document.querySelectorAll('[data-nrmf]').forEach(b=>b.classList.toggle('active',b.dataset.nrmf===nr_mlFill));
@@ -205,6 +209,17 @@ function nrPanelHTML(){
                     <button class="tog-btn" data-nrbg="10" onclick="nrSetBG(this)">10</button>
                   </div>
                 </div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label>Split</label>
+                  <div class="tog-row">
+                    <button class="tog-btn active" data-nrbsp="off" onclick="nrSetBeadSplit(this)">Off</button>
+                    <button class="tog-btn" data-nrbsp="on" onclick="nrSetBeadSplit(this)">On</button>
+                  </div>
+                </div>
+              </div>
+              <div id="nr-bsplit-row" class="form-row" style="display:none">
+                <div class="field field-sm"><label>Split at</label><input type="number" id="nr-bsplit-in" min="0" max="20" value="5" style="width:60px" oninput="nr_beadSplit=Math.max(0,Math.min(20,+this.value||0));autoPreviewNR()"></div>
               </div>
               <div id="nr-bead-col-row" class="form-row">
                 <div class="field"><label>Colour A</label><div class="swatch-row" id="nr-sw-ba"></div></div>
