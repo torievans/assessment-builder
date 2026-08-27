@@ -140,7 +140,21 @@
     }
   ],
   "exampleOverride": {
-    "cfg": {},
+    "cfg": {
+      "segments": [
+        {
+          "value": 6,
+          "segLabel": "6"
+        },
+        {
+          "value": 4,
+          "segLabel": "?"
+        }
+      ],
+      "total": "?",
+      "colorIdx": 5,
+      "multi": true
+    },
     "visualType": "bm",
     "answer": "4",
     "text": "# 6 + _ = 10"
