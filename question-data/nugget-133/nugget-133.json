@@ -1,7 +1,7 @@
 {
   "nuggetId": 133,
   "status": "in-progress",
-  "nextQId": 319410,
+  "nextQId": 319411,
   "questions": [
     {
       "id": 319391,
@@ -151,7 +151,7 @@
           "segLabel": "?"
         }
       ],
-      "total": "?",
+      "total": 10,
       "colorIdx": 5,
       "multi": true
     },
