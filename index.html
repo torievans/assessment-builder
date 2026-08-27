@@ -380,6 +380,17 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
   <span class="upload-ctr" id="upload-ctr"><strong>0</strong> of 59 uploaded</span>
 </header>
 <div id="save-toast"></div>
+<div class="modal-overlay hidden" id="confirm-modal">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-body" style="padding:28px 28px 20px">
+      <p id="confirm-msg" style="font-size:15px;line-height:1.5;margin-bottom:22px;color:var(--text)"></p>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button class="btn btn-ghost" id="confirm-cancel-btn">Cancel</button>
+        <button class="btn" id="confirm-ok-btn" style="background:#EF4444;color:#fff">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="tabs">
   <button class="tab active" id="tab-builder" onclick="switchTab('builder')">📓 Builder</button>
@@ -1273,6 +1284,17 @@ function showToast(msg,isError=false){
   t.textContent=msg;t.style.background=isError?'#EF4444':'#10B981';t.style.display='block';
   clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',3500);
 }
+function showConfirm(msg,okLabel,onOk){
+  const modal=document.getElementById('confirm-modal');
+  document.getElementById('confirm-msg').textContent=msg;
+  const okBtn=document.getElementById('confirm-ok-btn');
+  okBtn.textContent=okLabel||'Delete';
+  okBtn.style.background=okLabel==='Clear'?'#6B7280':'#EF4444';
+  const close=()=>modal.classList.add('hidden');
+  okBtn.onclick=()=>{close();onOk();};
+  document.getElementById('confirm-cancel-btn').onclick=close;
+  modal.classList.remove('hidden');
+}
 function openSettings(){
   document.getElementById('gh-owner-input').value=ghOwner;
   document.getElementById('gh-repo-input').value=ghRepo;
@@ -1785,10 +1807,12 @@ function renderExampleCard(nid){
 }
 function clearExampleCard(){
   if(!activeId)return;
-  if(!confirm('Clear example override for this nugget?'))return;
-  nuggetState[activeId].exampleOverride=null;
-  editingExample=false;
-  save();saveNuggetToFile(activeId);renderQuestions();showToast('Example cleared');
+  showConfirm('Clear example override for this nugget?','Clear',()=>{
+    nuggetState[activeId].exampleOverride=null;
+    editingExample=false;
+    save();saveNuggetToFile(activeId);renderQuestions();showToast('Example cleared');
+  });
+  return;
 }
 function saveExampleExplanation(val){
   if(!activeId)return;const ex=nuggetState[activeId].exampleOverride;if(!ex)return;
@@ -1866,11 +1890,12 @@ function deleteQuestion(qid){
   const qs=nuggetState[activeId].questions;
   const q=qs.find(q=>q.id===qid);if(!q)return;
   const label=q.text?`"${q.text.slice(0,50)}"`:`Q${qs.indexOf(q)+1}`;
-  if(!confirm(`Delete question ${label}?\n\nThis cannot be undone.`))return;
-  const imagePath=q.imagePath||null;
-  nuggetState[activeId].questions=qs.filter(q=>q.id!==qid);
-  save();renderQuestions();renderSidebar();renderWorkflow();
-  if(imagePath)deleteImageFile(imagePath);
+  showConfirm(`Delete question ${label}? This cannot be undone.`,'Delete',()=>{
+    const imagePath=q.imagePath||null;
+    nuggetState[activeId].questions=qs.filter(q=>q.id!==qid);
+    save();renderQuestions();renderSidebar();renderWorkflow();
+    if(imagePath)deleteImageFile(imagePath);
+  });
 }
 async function deleteImageFile(imagePath){
   // imagePath = "question-data/nugget-001-slug/q-1001.png"
