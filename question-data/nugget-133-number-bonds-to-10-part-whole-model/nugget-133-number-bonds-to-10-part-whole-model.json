@@ -123,15 +123,17 @@
       "cfg": {
         "segments": [
           {
-            "value": 9
+            "value": 9,
+            "segLabel": "9"
           },
           {
-            "value": "?"
+            "value": "?",
+            "segLabel": "?"
           }
         ],
         "total": 10,
         "colorIdx": 4,
-        "topBar": true
+        "multi": true
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
