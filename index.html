@@ -2749,7 +2749,10 @@ function addSharedBatchRow(defaults={}){
     sharedBatchRowColors[idx]={colourOffset:sharedBatchNTNextOffset%7};sharedBatchNTNextOffset++;
     cells+=`<td>${t('seq',defaults.seq??'1,2,3,?,5','batch-input-text')}</td>`;
   } else if(tool==='nr'){
-    cells+=`<td>${n('n',defaults.n??0,72)}</td>`;
+    // Inherit n and split from the previous row when not explicitly provided
+    if(defaults.n===undefined){const lastRow=tbody.querySelector('tr:last-child');defaults.n=parseFloat(lastRow?.querySelector('[data-field="n"]')?.value)??sharedBatchStructure.n??0;}
+    if(nrHasSplit(sharedBatchStructure)&&defaults.split===undefined){const lastRow=tbody.querySelector('tr:last-child');defaults.split=parseFloat(lastRow?.querySelector('[data-field="split"]')?.value)??nrGetSplit(sharedBatchStructure);}
+    cells+=`<td>${n('n',defaults.n??sharedBatchStructure.n??0,72)}</td>`;
     if(nrHasSplit(sharedBatchStructure))cells+=`<td>${n('split',defaults.split??nrGetSplit(sharedBatchStructure),60)}</td>`;
   } else if(tool==='pv'){
     cells+=`<td>${n('n',defaults.n??0,72)}</td>`;
