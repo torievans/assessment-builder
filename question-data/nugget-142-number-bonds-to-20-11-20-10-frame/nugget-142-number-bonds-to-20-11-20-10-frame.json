@@ -1,0 +1,24 @@
+{
+  "nuggetId": 142,
+  "status": "in-progress",
+  "nextQId": 142002,
+  "questions": [
+    {
+      "id": 142001,
+      "text": "The 10 frames show 13. How many more to make 20?",
+      "answer": "7",
+      "type": "exact",
+      "visualType": "wb",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "wbText": "13 + ? = 20",
+        "borderColour": "#4A90D9",
+        "skinColour": "#FFFFFF"
+      },
+      "qaComment": "",
+      "createdAt": "2026-08-27",
+      "updatedAt": "2026-08-27"
+    }
+  ]
+}
