@@ -5,16 +5,20 @@
   "questions": [
     {
       "id": 148001,
-      "text": "The whole is 20 and one part is 13. What is the other part?",
+      "text": "What is the missing part?",
       "answer": "7",
       "type": "exact",
-      "visualType": "wb",
+      "visualType": "pv",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "wbText": "Whole: 20  |  Part: 13  |  Part: ?",
-        "borderColour": "#4A90D9",
-        "skinColour": "#FFFFFF"
+        "n": 20,
+        "repType": "numbers",
+        "dispMode": "partwhole",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {},
+        "pvColors": {}
       },
       "qaComment": "",
       "createdAt": "2026-08-27",
