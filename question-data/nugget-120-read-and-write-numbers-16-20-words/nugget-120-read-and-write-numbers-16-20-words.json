@@ -1,0 +1,102 @@
+{
+  "nuggetId": 120,
+  "status": "in-progress",
+  "nextQId": 319350,
+  "questions": [
+    {
+      "id": 319345,
+      "text": "Write the number in words.",
+      "answer": "sixteen",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "16",
+        "wbBorder": "#319377",
+        "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319346,
+      "text": "Write the number in words.",
+      "answer": "seventeen",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "17",
+        "wbBorder": "#7898F0",
+        "wbSkin": "#ffa99c"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319347,
+      "text": "Write the number in words.",
+      "answer": "eighteen",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "18",
+        "wbBorder": "#847AC9",
+        "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319348,
+      "text": "Write the number in words.",
+      "answer": "nineteen",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "19",
+        "wbBorder": "#FC7E91",
+        "wbSkin": "#b06530"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    },
+    {
+      "id": 319349,
+      "text": "Write the number in words.",
+      "answer": "twenty",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "20",
+        "wbBorder": "#AAAAAA",
+        "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-08-27",
+      "createdAt": "2026-08-27"
+    }
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "16",
+      "wbBorder": "#D46B55",
+      "wbSkin": "#ffa99c"
+    },
+    "visualType": "wb",
+    "answer": "sixteen",
+    "text": "Write the number in words."
+  }
+}
