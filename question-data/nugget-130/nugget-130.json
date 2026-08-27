@@ -60,6 +60,8 @@
         "ba": 3,
         "bb": 0,
         "beadPreset": "colour",
+        "beadSplitOn": true,
+        "beadSplit": 3,
         "mc": 3,
         "mc2": 0,
         "mlRows": "10",
