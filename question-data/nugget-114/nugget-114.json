@@ -4,23 +4,6 @@
   "nextQId": 319318,
   "questions": [
     {
-      "id": 319312,
-      "text": "Write the number in numerals.",
-      "answer": "6",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "six",
-        "wbBorder": "#AAAAAA",
-        "wbSkin": "#ffa99c"
-      },
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
-    },
-    {
       "id": 319313,
       "text": "Write the number in numerals.",
       "answer": "7",
