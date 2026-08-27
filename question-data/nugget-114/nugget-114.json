@@ -1,0 +1,16 @@
+{
+  "nuggetId": 114,
+  "status": "in-progress",
+  "nextQId": 319312,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "six",
+      "wbBorder": "#319377",
+      "wbSkin": "#6b3520"
+    },
+    "visualType": "wb",
+    "answer": "6",
+    "text": "Write the number in numerals."
+  }
+}
