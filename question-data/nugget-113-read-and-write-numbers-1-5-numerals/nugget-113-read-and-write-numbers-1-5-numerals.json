@@ -31,10 +31,11 @@
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c",
-        "wbText": "three"
+        "wbText": "three",
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#ffa99c"
       },
+      "imagePath": "",
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
     },
