@@ -20,11 +20,5 @@
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
     }
-  ],
-  "exampleOverride": {
-    "cfg": {},
-    "visualType": "text",
-    "answer": "5",
-    "text": "# _ + 5 = 10"
-  }
+  ]
 }
