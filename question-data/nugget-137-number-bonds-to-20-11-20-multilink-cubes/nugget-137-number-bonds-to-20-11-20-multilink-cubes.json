@@ -1,7 +1,7 @@
 {
   "nuggetId": 137,
   "status": "in-progress",
-  "nextQId": 319430,
+  "nextQId": 319431,
   "questions": [
     {
       "id": 137001,
@@ -39,5 +39,34 @@
       "createdAt": "2026-08-27",
       "updatedAt": "2026-08-27"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "n": 20,
+      "rep": "multilink",
+      "fType": "5",
+      "fc1": 0,
+      "fc2": 4,
+      "fSplitOn": false,
+      "fSplit": 1,
+      "bg": 5,
+      "ba": 4,
+      "bb": 0,
+      "beadPreset": "colour",
+      "beadSplitOn": false,
+      "beadSplit": 5,
+      "mc": 6,
+      "mc2": 5,
+      "mlRows": "10",
+      "mlFill": "row",
+      "mlGap": false,
+      "mlSplitOn": true,
+      "mlSplit": 9,
+      "niSplitOn": false,
+      "niSplit": 10
+    },
+    "visualType": "nr",
+    "answer": "11",
+    "text": "9 + _ = 20"
+  }
 }
