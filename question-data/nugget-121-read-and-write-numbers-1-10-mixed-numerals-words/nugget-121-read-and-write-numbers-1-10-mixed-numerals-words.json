@@ -13,12 +13,13 @@
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "seven",
+        "wbText": "four",
         "wbBorder": "#D46B55",
         "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
+      "createdAt": "2026-08-27",
+      "imagePath": ""
     },
     {
       "id": 319351,
