@@ -82,12 +82,13 @@
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "two",
+        "wbText": "eight",
         "wbBorder": "#7898F0",
         "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
+      "createdAt": "2026-08-27",
+      "imagePath": ""
     }
   ],
   "exampleOverride": {
