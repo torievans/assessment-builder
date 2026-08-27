@@ -1,0 +1,28 @@
+{
+  "nuggetId": 144,
+  "status": "in-progress",
+  "nextQId": 144002,
+  "questions": [
+    {
+      "id": 144001,
+      "text": "What is the missing part?",
+      "answer": "13",
+      "type": "exact",
+      "visualType": "pv",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 20,
+        "repType": "numbers",
+        "dispMode": "partwhole",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {},
+        "pvColors": {}
+      },
+      "qaComment": "",
+      "createdAt": "2026-08-27",
+      "updatedAt": "2026-08-27"
+    }
+  ]
+}
