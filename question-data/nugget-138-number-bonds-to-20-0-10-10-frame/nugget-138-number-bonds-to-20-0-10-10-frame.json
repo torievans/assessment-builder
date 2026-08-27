@@ -1,0 +1,28 @@
+{
+  "nuggetId": 138,
+  "status": "in-progress",
+  "nextQId": 138002,
+  "questions": [
+    {
+      "id": 138001,
+      "text": "How many counters are missing to make 20?",
+      "answer": "13",
+      "type": "exact",
+      "visualType": "nr",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "n": 20,
+        "rep": "frames",
+        "fType": "10",
+        "fSplitOn": true,
+        "fSplit": 7,
+        "fc1": 0,
+        "fc2": 4
+      },
+      "qaComment": "",
+      "createdAt": "2026-08-27",
+      "updatedAt": "2026-08-27"
+    }
+  ]
+}
