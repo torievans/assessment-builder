@@ -42,14 +42,17 @@
       "cfg": {
         "segments": [
           {
-            "value": "?"
+            "value": "?",
+            "segLabel": "?"
           },
           {
-            "value": 9
+            "value": 9,
+            "segLabel": "9"
           }
         ],
         "total": 10,
-        "colorIdx": 1
+        "colorIdx": 1,
+        "multi": true
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
