@@ -329,8 +329,28 @@ function barModelSVG(config) {
   // Top bar — comparison bar model
   if (config.topBar) {
     const tbY = 14;
-    s += `<rect x="${bx}" y="${tbY}" width="${BAR_W}" height="${TOP_BAR_H}" fill="${FILL}" stroke="${STROKE}" stroke-width="2" rx="3"/>`;
-    s += `<text x="${(bx + BAR_W / 2).toFixed(1)}" y="${tbY + TOP_BAR_H / 2}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-weight="900" font-size="22" fill="${TEXT_COLOR}">${totalLbl}</text>`;
+    const tbDivs = (config.topBarDivisions ?? 1);
+    const tbDivLabel = config.topBarDivLabel;
+    if (tbDivs > 1) {
+      const tbDivW = BAR_W / tbDivs;
+      const tbClipId = `bm-tb-clip-${Math.random().toString(36).slice(2,8)}`;
+      s += `<defs><clipPath id="${tbClipId}"><rect x="${bx}" y="${tbY}" width="${BAR_W}" height="${TOP_BAR_H}" rx="3"/></clipPath></defs>`;
+      s += `<g clip-path="url(#${tbClipId})">`;
+      for (let d = 0; d < tbDivs; d++) {
+        s += `<rect x="${(bx + d * tbDivW).toFixed(1)}" y="${tbY}" width="${tbDivW.toFixed(1)}" height="${TOP_BAR_H}" fill="${FILL}" stroke="${STROKE}" stroke-width="1"/>`;
+      }
+      s += `</g>`;
+      s += `<rect x="${bx}" y="${tbY}" width="${BAR_W}" height="${TOP_BAR_H}" fill="none" stroke="${STROKE}" stroke-width="2" rx="3"/>`;
+      if (tbDivLabel) {
+        const fs = Math.min(22, Math.max(10, Math.round(tbDivW * 0.55)));
+        for (let d = 0; d < tbDivs; d++) {
+          s += `<text x="${(bx + (d + 0.5) * tbDivW).toFixed(1)}" y="${tbY + TOP_BAR_H / 2}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-weight="900" font-size="${fs}" fill="${TEXT_COLOR}">${tbDivLabel}</text>`;
+        }
+      }
+    } else {
+      s += `<rect x="${bx}" y="${tbY}" width="${BAR_W}" height="${TOP_BAR_H}" fill="${FILL}" stroke="${STROKE}" stroke-width="2" rx="3"/>`;
+      s += `<text x="${(bx + BAR_W / 2).toFixed(1)}" y="${tbY + TOP_BAR_H / 2}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-weight="900" font-size="22" fill="${TEXT_COLOR}">${totalLbl}</text>`;
+    }
   }
 
   // Pass 1: fills + borders
