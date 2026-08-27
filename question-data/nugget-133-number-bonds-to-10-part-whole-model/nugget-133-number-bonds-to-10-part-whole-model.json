@@ -6,7 +6,7 @@
     {
       "id": 319391,
       "text": "# 6 + _ = 10",
-      "answer": "4",
+      "answer": "6",
       "type": "exact",
       "image": "",
       "display": "",
@@ -15,8 +15,8 @@
       "cfg": {
         "segments": [
           {
-            "value": 6,
-            "segLabel": "6"
+            "value": 4,
+            "segLabel": "4"
           },
           {
             "value": "?",
