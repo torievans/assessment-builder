@@ -17,19 +17,6 @@
       "createdAt": "2026-08-27"
     },
     {
-      "id": 319402,
-      "text": "# _ + 8 = 10",
-      "answer": "2",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "text",
-      "cfg": {},
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
-    },
-    {
       "id": 319403,
       "text": "# _ + 3 = 10",
       "answer": "7",
