@@ -131,33 +131,6 @@
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
-    },
-    {
-      "id": 319407,
-      "text": "# 4 + _ = 10",
-      "answer": "6",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "bm",
-      "cfg": {
-        "segments": [
-          {
-            "value": 4,
-            "divisions": 4
-          },
-          {
-            "value": "?",
-            "divisions": 7
-          }
-        ],
-        "total": 10,
-        "colorIdx": 5,
-        "multi": true
-      },
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
     }
   ],
   "exampleOverride": {
