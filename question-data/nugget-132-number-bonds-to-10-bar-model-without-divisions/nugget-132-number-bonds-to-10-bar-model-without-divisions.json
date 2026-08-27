@@ -1,12 +1,12 @@
 {
   "nuggetId": 132,
   "status": "in-progress",
-  "nextQId": 319391,
+  "nextQId": 319409,
   "questions": [
     {
       "id": 319386,
       "text": "# 8 + _ = 10",
-      "answer": "2",
+      "answer": "3",
       "type": "exact",
       "image": "",
       "display": "",
@@ -15,14 +15,17 @@
       "cfg": {
         "segments": [
           {
-            "value": 8
+            "value": 7,
+            "segLabel": "7"
           },
           {
-            "value": "?"
+            "value": "?",
+            "segLabel": "?"
           }
         ],
         "total": 10,
-        "colorIdx": 0
+        "colorIdx": 0,
+        "multi": true
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
