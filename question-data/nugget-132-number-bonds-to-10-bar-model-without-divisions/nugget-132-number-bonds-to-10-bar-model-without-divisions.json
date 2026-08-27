@@ -69,10 +69,12 @@
       "cfg": {
         "segments": [
           {
-            "value": 5
+            "value": 5,
+            "segLabel": "5"
           },
           {
-            "value": "?"
+            "value": "?",
+            "segLabel": "?"
           }
         ],
         "total": 10,
