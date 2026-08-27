@@ -1772,7 +1772,7 @@ function renderExampleCard(nid){
   const q0=ns.questions[0];
   const ex=ns.exampleOverride||{};
   const hasOverride=!!(ns.exampleOverride&&ns.exampleOverride.cfg);
-  const vtype=q0?.visualType||ex.visualType;
+  const vtype=ex.visualType||q0?.visualType;
   const cfg=ex.cfg||{};
   const ansVal=ex.answer!=null?ex.answer:'';
   const textVal=ex.text||'';
@@ -1961,6 +1961,7 @@ function addToolQuestion(type){
     if(type==='nl'){cfg=getNLConfig()||{};}
     else if(type==='nt'){cfg=getNTConfig()||{};}
     else if(type==='nr'){cfg=getNRConfig();}
+    else if(type==='bm'){cfg=getBMConfig()||{};}
     else if(type==='pv'){cfg=getPVConfig();}
     else if(type==='pr'){cfg=getPRConfig();}
     else if(type==='custom'&&customWBMode==='whiteboard'){
