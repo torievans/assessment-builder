@@ -494,6 +494,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
               <div class="fc-title" style="margin:10px 0 4px">Skin tone</div>
               <div class="swatch-row" id="custom-wb-skin-swatches"></div>
               <div id="custom-wb-preview" style="margin-top:10px;background:#fff;border:1px solid var(--border);border-radius:6px;padding:8px;line-height:0"></div>
+              <button class="btn-create-more" style="margin-top:10px" onclick="openSharedBatch('wb')">⊞ Create more like this</button>
             </div>
             <div class="form-actions" style="margin-top:14px">
               <button class="btn btn-blue" id="add-q-btn-custom" onclick="addToolQuestion('custom')">+ Add Question</button>
@@ -2575,6 +2576,7 @@ function openSharedBatch(tool){
   else if(tool==='nr'){const cfg=getNRConfig();if(!cfg){alert('Please set a number.');return;}sharedBatchStructure=cfg;}
   else if(tool==='text'){sharedBatchStructure={};}
   else if(tool==='pr'){const cfg=getPRConfig();if(!cfg){alert('Please configure the pictorial representation first.');return;}sharedBatchStructure=cfg;}
+  else if(tool==='wb'){sharedBatchStructure={wbBorder:customWBBorderColour||'#319377',wbSkin:customWBSkinColour||'#ffa99c'};}
   sharedBatchTool=tool;sharedBatchRowColors={};
   // Build locked-setting tags
   const tagsEl=document.getElementById('shared-batch-tags');tagsEl.innerHTML='';
@@ -2584,9 +2586,10 @@ function openSharedBatch(tool){
   else if(tool==='nr'){tags.push(`Rep: ${sharedBatchStructure.rep}`,`N: ${sharedBatchStructure.n}`);}
   else if(tool==='pv'){tags.push(`Rep: ${sharedBatchStructure.repType}`,`Display: ${sharedBatchStructure.dispMode}`);}
   else if(tool==='pr'){tags.push(`Mode: ${sharedBatchStructure.mode}`,`Image: ${sharedBatchStructure.imageIdA||''}`);}
+  else if(tool==='wb'){tags.push(`Border: ${sharedBatchStructure.wbBorder}`,`Skin: ${sharedBatchStructure.wbSkin}`);}
   tags.forEach(t=>{const s=document.createElement('span');s.className='locked-tag';s.textContent=t;tagsEl.appendChild(s);});
   // Subtitle
-  const subtitles={nr:'Representation is locked. Change the number and answer per row.',bm:'Segment structure is locked. Change segment values and answers per row.',nt:'Shape and layout are locked. Change the sequence and answer per row.',text:'No locked settings — enter question and answer for each row.',pv:'Representation and display mode are locked. Change the number per row.',pr:'Image and mode are locked. Change the count and answer per row.'};
+  const subtitles={nr:'Representation is locked. Change the number and answer per row.',bm:'Segment structure is locked. Change segment values and answers per row.',nt:'Shape and layout are locked. Change the sequence and answer per row.',text:'No locked settings — enter question and answer for each row.',pv:'Representation and display mode are locked. Change the number per row.',pr:'Image and mode are locked. Change the count and answer per row.',wb:'Border and skin colour are locked. Change the whiteboard text and answer per row.'};
   document.getElementById('shared-batch-subtitle').textContent=subtitles[tool]||'';
   // Build table headers
   buildSharedBatchHeaders();
@@ -2599,6 +2602,7 @@ function openSharedBatch(tool){
   else if(tool==='pv'){seed.n=sharedBatchStructure.n;seed.answer=document.getElementById('pv-answer').value.trim();seed.text=document.getElementById('pv-text').value.trim();}
   else if(tool==='text'){seed.answer=document.getElementById('text-answer').value.trim();seed.text=document.getElementById('text-q-text').value.trim();}
   else if(tool==='pr'){const mode=sharedBatchStructure.mode;if(mode==='count')seed.countA=sharedBatchStructure.countA;else if(mode==='addsub'){seed.countA=sharedBatchStructure.countA;seed.countB=sharedBatchStructure.countB;}else if(mode==='multiply'){seed.mrows=sharedBatchStructure.mrows;seed.mcols=sharedBatchStructure.mcols;}seed.answer=document.getElementById('pr-answer')?.value.trim()??'';seed.text=document.getElementById('pr-text')?.value.trim()??'';}
+  else if(tool==='wb'){seed.wbText=(document.getElementById('custom-wb-text')||{value:''}).value||'';seed.answer=document.getElementById('custom-answer')?.value.trim()??'';seed.text=document.getElementById('custom-q-text')?.value.trim()??'';}
   // Override seed with example values when example exists
   const _exOv=nuggetState[activeId]?.exampleOverride;
   if(_exOv?.cfg){
@@ -2634,6 +2638,8 @@ function buildSharedBatchHeaders(){
     else if(mode==='addsub') cols=['Preview','Question','Group A','Group B','Answer',''];
     else if(mode==='multiply') cols=['Preview','Question','Rows','Cols','Answer',''];
     else cols=['Preview','Question','Answer',''];
+  } else if(sharedBatchTool==='wb'){
+    cols=['Preview','Question','Whiteboard Text','Answer',''];
   }
   tr.innerHTML=cols.map(c=>`<th>${c}</th>`).join('');
 }
@@ -2670,6 +2676,8 @@ function addSharedBatchRow(defaults={}){
     if(mode==='count') cells+=`<td>${n('countA',defaults.countA??1,60)}</td>`;
     else if(mode==='addsub'){cells+=`<td>${n('countA',defaults.countA??1,60)}</td><td>${n('countB',defaults.countB??1,60)}</td>`;}
     else if(mode==='multiply'){cells+=`<td>${n('mrows',defaults.mrows??2,60)}</td><td>${n('mcols',defaults.mcols??3,60)}</td>`;}
+  } else if(tool==='wb'){
+    cells+=`<td><textarea data-field="wbText" class="batch-input batch-input-text" style="width:180px;height:52px;resize:vertical" oninput="updateSharedPreview(${idx})">${esc(String(defaults.wbText??''))}</textarea></td>`;
   }
   cells+=`<td>${t('answer',defaults.answer??'','batch-input-num')}</td>`;
   cells+=`<td><button class="batch-del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
@@ -2730,6 +2738,8 @@ function getSharedBatchRowCfg(tr){
     else if(mode==='addsub'){const a=parseInt(g('countA')),b=parseInt(g('countB'));if(isNaN(a)||isNaN(b))return null;cfg.countA=a;cfg.countB=b;}
     else if(mode==='multiply'){const r=parseInt(g('mrows')),c=parseInt(g('mcols'));if(isNaN(r)||isNaN(c))return null;cfg.mrows=r;cfg.mcols=c;}
     return cfg;
+  } else if(tool==='wb'){
+    return {...sharedBatchStructure, wbText:g('wbText')};
   }
   return {};
 }
@@ -2750,6 +2760,7 @@ function updateSharedPreview(idx){
       box.innerHTML='';box.appendChild(img);
     }
     else if(tool==='pr'){const cfg=getSharedBatchRowCfg(tr);if(cfg)box.innerHTML=pictorialSVG(cfg);else box.innerHTML='<div class="batch-no-preview">Invalid</div>';}
+    else if(tool==='wb'){const cfg=getSharedBatchRowCfg(tr);if(cfg)box.innerHTML=whiteboardSVG(cfg.wbText||'',cfg.wbBorder||'#319377',cfg.wbSkin||'#ffa99c');else box.innerHTML='<div class="batch-no-preview">Invalid</div>';}
   } catch(e){box.innerHTML='<div class="batch-no-preview">Error</div>';}
 }
 
