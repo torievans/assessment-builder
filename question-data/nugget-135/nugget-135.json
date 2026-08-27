@@ -21,23 +21,6 @@
       "createdAt": "2026-08-27"
     },
     {
-      "id": 319413,
-      "text": "What number is missing from this calculation?",
-      "answer": "4",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "_ + 5 = 10",
-        "wbBorder": "#D46B55",
-        "wbSkin": "#d4895a"
-      },
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
-    },
-    {
       "id": 319414,
       "text": "What number is missing from this calculation?",
       "answer": "7",
