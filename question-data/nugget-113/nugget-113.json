@@ -1,7 +1,7 @@
 {
   "nuggetId": 113,
   "status": "in-progress",
-  "nextQId": 319311,
+  "nextQId": 319324,
   "questions": [
     {
       "id": 319305,
@@ -14,9 +14,10 @@
       "visualType": "wb",
       "cfg": {
         "wbText": "three",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#847AC9",
+        "wbSkin": "#b06530"
       },
+      "imagePath": "",
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
     },
