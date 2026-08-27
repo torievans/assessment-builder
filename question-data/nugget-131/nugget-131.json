@@ -69,14 +69,17 @@
       "cfg": {
         "segments": [
           {
-            "value": 7
+            "value": 7,
+            "divisions": 7
           },
           {
-            "value": "?"
+            "value": "?",
+            "divisions": 3
           }
         ],
         "total": 10,
-        "colorIdx": 2
+        "colorIdx": 4,
+        "multi": true
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
