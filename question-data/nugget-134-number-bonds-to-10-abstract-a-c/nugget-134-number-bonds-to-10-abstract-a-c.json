@@ -85,11 +85,5 @@
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
     }
-  ],
-  "exampleOverride": {
-    "cfg": {},
-    "visualType": "text",
-    "answer": "7",
-    "text": "# 3 + _ = 10"
-  }
+  ]
 }
