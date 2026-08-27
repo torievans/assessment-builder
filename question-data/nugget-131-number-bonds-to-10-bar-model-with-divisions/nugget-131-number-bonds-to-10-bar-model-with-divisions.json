@@ -1,7 +1,7 @@
 {
   "nuggetId": 131,
   "status": "in-progress",
-  "nextQId": 319401,
+  "nextQId": 319406,
   "questions": [
     {
       "id": 319381,
@@ -15,14 +15,17 @@
       "cfg": {
         "segments": [
           {
-            "value": 4
+            "value": 4,
+            "divisions": 4
           },
           {
-            "value": "?"
+            "value": "?",
+            "divisions": 7
           }
         ],
         "total": 10,
-        "colorIdx": 0
+        "colorIdx": 0,
+        "multi": true
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
