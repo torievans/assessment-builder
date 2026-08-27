@@ -15,15 +15,17 @@
       "cfg": {
         "segments": [
           {
-            "value": 6
+            "value": 6,
+            "segLabel": "6"
           },
           {
-            "value": "?"
+            "value": "?",
+            "segLabel": "?"
           }
         ],
         "total": 10,
         "colorIdx": 0,
-        "topBar": true
+        "multi": true
       },
       "updatedAt": "2026-08-27",
       "createdAt": "2026-08-27"
