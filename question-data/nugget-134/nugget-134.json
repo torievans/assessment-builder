@@ -1,6 +1,16 @@
 {
   "nuggetId": 134,
-  "status": "not-started",
-  "nextQId": 319418,
-  "questions": []
+  "status": "in-progress",
+  "nextQId": 319419,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "1 + _ = 10",
+      "wbBorder": "#847AC9",
+      "wbSkin": "#ffa99c"
+    },
+    "visualType": "wb",
+    "answer": "9",
+    "text": "What number is missing from this calculation?"
+  }
 }
