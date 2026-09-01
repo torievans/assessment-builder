@@ -137,7 +137,7 @@
       "answer": "10",
       "cfg": {
         "mode": "addsub",
-        "display": "array",
+        "display": "clustered",
         "align": "centre",
         "countA": 9,
         "imageIdA": "illus:sports/ball_basketball_orange",
@@ -145,7 +145,7 @@
         "imageIdB": "illus:sports/ball_basketball_orange",
         "op": "add",
         "subMode": "crossed",
-        "cols": 10,
+        "cols": 5,
         "groupSize": 1,
         "mrows": 2,
         "mcols": 10,
