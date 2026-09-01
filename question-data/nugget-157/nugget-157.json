@@ -110,8 +110,8 @@
       "answer": "8",
       "cfg": {
         "start": 0,
-        "end": 12,
-        "partitions": 12,
+        "end": 10,
+        "partitions": 10,
         "valuesGivenEvery": null,
         "answer": "8",
         "lineStyle": "terminate",
