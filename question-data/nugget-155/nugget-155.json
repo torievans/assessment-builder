@@ -130,13 +130,10 @@
     }
   ],
   "exampleOverride": {
-    "visualType": "nl",
-    "text": "# 4 + 2 =",
-    "answer": "6",
     "cfg": {
       "start": 0,
-      "end": 10,
-      "partitions": 10,
+      "end": 12,
+      "partitions": 12,
       "valuesGivenEvery": null,
       "answer": "6",
       "lineStyle": "terminate",
@@ -149,6 +146,9 @@
       "jumpArrow": true,
       "jumpCircle": "none",
       "jumpColour": "purple"
-    }
+    },
+    "visualType": "nl",
+    "answer": "6",
+    "text": "# 4 + 2 ="
   }
 }
