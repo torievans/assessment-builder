@@ -8,10 +8,12 @@
       "segments": [
         {
           "value": 3,
-          "divisions": 3
+          "divisions": 3,
+          "braceLabel": "3"
         },
         {
-          "value": 1
+          "value": 1,
+          "braceLabel": "1"
         }
       ],
       "total": "?",
