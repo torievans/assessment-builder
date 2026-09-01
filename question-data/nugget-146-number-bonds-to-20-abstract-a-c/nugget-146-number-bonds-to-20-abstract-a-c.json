@@ -1,7 +1,7 @@
 {
   "nuggetId": 146,
   "status": "in-progress",
-  "nextQId": 319471,
+  "nextQId": 319472,
   "questions": [
     {
       "id": 146001,
@@ -67,6 +67,23 @@
         "wbText": "11 + _ = 20",
         "wbBorder": "#FECC6B",
         "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319471,
+      "text": "What number is missing?",
+      "answer": "17",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "3 + _ = 20",
+        "wbBorder": "#FC7E91",
+        "wbSkin": "#b06530"
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
