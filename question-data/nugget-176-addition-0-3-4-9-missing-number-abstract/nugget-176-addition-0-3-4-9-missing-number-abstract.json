@@ -2,56 +2,56 @@
   "name": "Addition 0-3 + 4-9 Missing Number (Abstract)",
   "questions": [
     {
-      "id": 1788267779336,
+      "id": 1788268370664,
       "visualType": "wb",
       "text": "What number is missing?",
-      "answer": "9",
+      "answer": "7",
       "cfg": {
-        "wbText": "0 + _ = 9",
+        "wbText": "0 + _ = 7",
         "wbBorder": "#D46B55",
         "wbSkin": "#d4895a"
       }
     },
     {
-      "id": 1788267779337,
+      "id": 1788268370665,
       "visualType": "wb",
       "text": "What number is missing?",
       "answer": "1",
       "cfg": {
-        "wbText": "_ + 6 = 7",
+        "wbText": "_ + 5 = 6",
         "wbBorder": "#FECC6B",
         "wbSkin": "#ffa99c"
       }
     },
     {
-      "id": 1788267779338,
+      "id": 1788268370666,
       "visualType": "wb",
       "text": "What number is missing?",
-      "answer": "4",
+      "answer": "8",
       "cfg": {
-        "wbText": "2 + _ = 6",
+        "wbText": "2 + _ = 10",
         "wbBorder": "#FC7E91",
         "wbSkin": "#b06530"
       }
     },
     {
-      "id": 1788267779339,
+      "id": 1788268370667,
       "visualType": "wb",
       "text": "What number is missing?",
       "answer": "3",
       "cfg": {
-        "wbText": "_ + 7 = 10",
+        "wbText": "_ + 4 = 7",
         "wbBorder": "#319377",
         "wbSkin": "#ffa99c"
       }
     },
     {
-      "id": 1788267779340,
+      "id": 1788268370668,
       "visualType": "wb",
       "text": "What number is missing?",
-      "answer": "7",
+      "answer": "9",
       "cfg": {
-        "wbText": "1 + _ = 8",
+        "wbText": "1 + _ = 10",
         "wbBorder": "#847AC9",
         "wbSkin": "#6b3520"
       }
