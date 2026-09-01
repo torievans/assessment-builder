@@ -31,7 +31,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788269610236,
@@ -43,9 +45,9 @@
         "display": "array",
         "align": "centre",
         "countA": 2,
-        "imageIdA": "illus:food/fruit/strawberry_red",
+        "imageIdA": "illus:animals/toucan_black",
         "countB": 3,
-        "imageIdB": "illus:food/fruit/strawberry_red",
+        "imageIdB": "illus:animals/toucan_black",
         "op": "add",
         "subMode": "crossed",
         "cols": 5,
@@ -61,7 +63,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788269610237,
@@ -91,7 +95,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788269610238,
@@ -121,7 +127,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788269610239,
@@ -151,7 +159,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
