@@ -86,8 +86,8 @@
     },
     {
       "id": 319481,
-      "text": "# 13 + _ = 20",
-      "answer": "7",
+      "text": "# 16 + _ = 20",
+      "answer": "4",
       "type": "exact",
       "image": "",
       "display": "",
@@ -96,11 +96,11 @@
       "cfg": {
         "segments": [
           {
-            "value": 13,
+            "value": 16,
             "segLabel": "16"
           },
           {
-            "value": 7,
+            "value": 4,
             "segLabel": "?"
           }
         ],
