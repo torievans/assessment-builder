@@ -25,7 +25,7 @@ function nrMkSwatches(id,activeIdx,cb){
 function nrMkPWSwatches(id,activeIdx,cb){
   const el=document.getElementById(id);if(!el)return;el.innerHTML='';
   const wb=document.createElement('button');wb.className='swatch'+(activeIdx===-1?' selected':'');wb.style.background='#fff';wb.style.outline='2px dashed #ccc';wb.style.outlineOffset='-2px';wb.title='None';wb.onclick=()=>{el.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));wb.classList.add('selected');cb(-1);autoPreviewNR();};el.appendChild(wb);
-  BM_BOX_COLORS.forEach((col,i)=>{const b=document.createElement('button');b.className='swatch'+(i===activeIdx?' selected':'');b.style.background=BM_BAR_LIGHT_FILLS[i];b.style.outline='2px solid '+col;b.style.outlineOffset='-2px';b.title=['Red','Orange','Yellow','Green','Blue','Purple','Pink'][i];b.onclick=()=>{el.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));b.classList.add('selected');cb(i);autoPreviewNR();};el.appendChild(b);});
+  BM_BOX_COLORS.forEach((col,i)=>{const b=document.createElement('button');b.className='swatch'+(i===activeIdx?' selected':'');b.style.background='#fff';b.style.outline='3px solid '+col;b.style.outlineOffset='-3px';b.title=['Red','Orange','Yellow','Green','Blue','Purple','Pink'][i];b.onclick=()=>{el.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));b.classList.add('selected');cb(i);autoPreviewNR();};el.appendChild(b);});
 }
 
 function initNRPanel(){
