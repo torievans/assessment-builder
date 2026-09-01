@@ -1,6 +1,6 @@
 {
   "nuggetId": 159,
-  "status": "not-started",
+  "status": "ready-for-qa",
   "nextQId": 319496,
   "questions": [
     {
@@ -131,19 +131,19 @@
   ],
   "exampleOverride": {
     "visualType": "bm",
-    "text": "# 6 + 2 =",
-    "answer": "8",
+    "text": "# 7 + 3 =",
+    "answer": "10",
     "cfg": {
       "segments": [
         {
-          "value": 6,
-          "divisions": 6,
-          "braceLabel": "6"
+          "value": 7,
+          "divisions": 7,
+          "braceLabel": "7"
         },
         {
-          "value": 2,
-          "braceLabel": "2",
-          "divisions": 2
+          "value": 3,
+          "divisions": 3,
+          "braceLabel": "3"
         }
       ],
       "total": "?",
