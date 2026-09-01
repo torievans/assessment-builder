@@ -1,7 +1,7 @@
 {
   "nuggetId": 141,
   "status": "ready-for-qa",
-  "nextQId": 319492,
+  "nextQId": 319493,
   "questions": [
     {
       "id": 319478,
@@ -106,6 +106,33 @@
         ],
         "total": 20,
         "colorIdx": 6,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319492,
+      "text": "# 15 + _ = 20",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 15,
+            "segLabel": "13"
+          },
+          {
+            "value": 5,
+            "segLabel": "?"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 4,
         "multi": true
       },
       "updatedAt": "2026-09-01",
