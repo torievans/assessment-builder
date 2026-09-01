@@ -70,14 +70,7 @@
         "answer": "7",
         "lineStyle": "terminate",
         "colour": "grey",
-        "revealAnswer": true,
-        "jumpFrom": 4,
-        "jumpTo": 7,
-        "jumpType": "unit",
-        "jumpLabel": "",
-        "jumpArrow": true,
-        "jumpCircle": "none",
-        "jumpColour": "blue"
+        "revealAnswer": true
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
