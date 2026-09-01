@@ -1,11 +1,11 @@
 {
   "nuggetId": 142,
   "status": "in-progress",
-  "nextQId": 142002,
+  "nextQId": 319445,
   "questions": [
     {
       "id": 142001,
-      "text": "What is the missing number?",
+      "text": "# _ + 7 = 20",
       "answer": "7",
       "type": "exact",
       "visualType": "bm",
@@ -15,15 +15,18 @@
         "segments": [
           {
             "value": 13,
-            "divisions": 13
+            "divisions": 13,
+            "braceLabel": "?"
           },
           {
             "value": "?",
-            "segLabel": "?"
+            "divisions": 7,
+            "braceLabel": "7"
           }
         ],
         "total": 20,
-        "colorIdx": 0
+        "colorIdx": 0,
+        "multi": true
       },
       "qaComment": "",
       "createdAt": "2026-08-27",
