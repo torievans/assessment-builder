@@ -165,9 +165,6 @@
     }
   ],
   "exampleOverride": {
-    "visualType": "pr",
-    "text": "2 + 1 =",
-    "answer": "3",
     "cfg": {
       "mode": "addsub",
       "display": "array",
@@ -191,6 +188,9 @@
       "crayonBoxes": 1,
       "crayonFontSize": 148,
       "crayonLabel": "5 Crayons"
-    }
+    },
+    "visualType": "pr",
+    "answer": "3",
+    "text": "# 2 + 1 ="
   }
 }
