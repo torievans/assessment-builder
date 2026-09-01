@@ -8,7 +8,7 @@
       "cfg": {
         "wbText": "2 + 19 = ",
         "wbBorder": "#D46B55",
-        "wbSkin": "#d4895a"
+        "wbSkin": "#ffa99c"
       }
     },
     {
@@ -19,7 +19,7 @@
       "cfg": {
         "wbText": "1 + 16 = ",
         "wbBorder": "#7898F0",
-        "wbSkin": "#9b7550"
+        "wbSkin": "#d4895a"
       }
     },
     {
@@ -30,7 +30,7 @@
       "cfg": {
         "wbText": "4 + 15 = ",
         "wbBorder": "#5BAD5B",
-        "wbSkin": "#6b9040"
+        "wbSkin": "#b06530"
       }
     },
     {
@@ -41,7 +41,7 @@
       "cfg": {
         "wbText": "3 + 12 = ",
         "wbBorder": "#B06BB3",
-        "wbSkin": "#c4855a"
+        "wbSkin": "#6b3520"
       }
     },
     {
@@ -52,7 +52,7 @@
       "cfg": {
         "wbText": "5 + 10 = ",
         "wbBorder": "#F0A030",
-        "wbSkin": "#c87830"
+        "wbSkin": "#ffa99c"
       }
     }
   ],
@@ -63,7 +63,7 @@
     "cfg": {
       "wbText": "3 + 11 = ",
       "wbBorder": "#5BAD5B",
-      "wbSkin": "#6b9040"
+      "wbSkin": "#ffa99c"
     }
   },
   "nextQId": 1790100000071
