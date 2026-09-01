@@ -1,0 +1,130 @@
+{
+  "name": "Addition 4-9 + 0-3 (Bar Model Without Divisions)",
+  "questions": [
+    {
+      "id": 1788267216607,
+      "visualType": "bm",
+      "text": "# 4 + 1 =",
+      "answer": "5",
+      "cfg": {
+        "segments": [
+          {
+            "value": 4,
+            "segLabel": "4"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 0,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788267216608,
+      "visualType": "bm",
+      "text": "# 5 + 2 =",
+      "answer": "7",
+      "cfg": {
+        "segments": [
+          {
+            "value": 5,
+            "segLabel": "5"
+          },
+          {
+            "value": 2,
+            "segLabel": "2"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 1,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788267216609,
+      "visualType": "bm",
+      "text": "# 7 + 1 =",
+      "answer": "8",
+      "cfg": {
+        "segments": [
+          {
+            "value": 7,
+            "segLabel": "7"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 2,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788267216610,
+      "visualType": "bm",
+      "text": "# 6 + 3 =",
+      "answer": "9",
+      "cfg": {
+        "segments": [
+          {
+            "value": 6,
+            "segLabel": "6"
+          },
+          {
+            "value": 3,
+            "segLabel": "3"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 4,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788267216611,
+      "visualType": "bm",
+      "text": "# 9 + 1 =",
+      "answer": "10",
+      "cfg": {
+        "segments": [
+          {
+            "value": 9,
+            "segLabel": "9"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 5,
+        "multi": true
+      }
+    }
+  ],
+  "exampleOverride": {
+    "visualType": "bm",
+    "text": "# 5 + 3 =",
+    "answer": "8",
+    "cfg": {
+      "segments": [
+        {
+          "value": 5,
+          "segLabel": "5"
+        },
+        {
+          "value": 3,
+          "segLabel": "3"
+        }
+      ],
+      "total": "?",
+      "colorIdx": 3,
+      "multi": true
+    }
+  }
+}
