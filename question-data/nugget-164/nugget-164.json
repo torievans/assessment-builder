@@ -1,0 +1,141 @@
+{
+  "nuggetId": 164,
+  "nextQId": 319496,
+  "questions": [
+    {
+      "id": 1788268356821,
+      "visualType": "bm",
+      "text": "# 0 + 5 =",
+      "answer": "5",
+      "cfg": {
+        "segments": [
+          {
+            "value": 0,
+            "segLabel": "0"
+          },
+          {
+            "value": 5,
+            "segLabel": "5"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 0,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1788268356822,
+      "visualType": "bm",
+      "text": "# 1 + 4 =",
+      "answer": "5",
+      "cfg": {
+        "segments": [
+          {
+            "value": 1,
+            "segLabel": "1"
+          },
+          {
+            "value": 4,
+            "segLabel": "4"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 1,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1788268356823,
+      "visualType": "bm",
+      "text": "# 2 + 4 =",
+      "answer": "6",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "segLabel": "2"
+          },
+          {
+            "value": 4,
+            "segLabel": "4"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 2,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1788268356824,
+      "visualType": "bm",
+      "text": "# 3 + 7 =",
+      "answer": "10",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "segLabel": "3"
+          },
+          {
+            "value": 7,
+            "segLabel": "7"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 4,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1788268356825,
+      "visualType": "bm",
+      "text": "# 2 + 6 =",
+      "answer": "8",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "segLabel": "2"
+          },
+          {
+            "value": 6,
+            "segLabel": "6"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 5,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    }
+  ],
+  "exampleOverride": {
+    "visualType": "bm",
+    "text": "# 1 + 7 =",
+    "answer": "8",
+    "cfg": {
+      "segments": [
+        {
+          "value": 1,
+          "segLabel": "1"
+        },
+        {
+          "value": 7,
+          "segLabel": "7"
+        }
+      ],
+      "total": "?",
+      "colorIdx": 3,
+      "multi": true
+    }
+  }
+}
