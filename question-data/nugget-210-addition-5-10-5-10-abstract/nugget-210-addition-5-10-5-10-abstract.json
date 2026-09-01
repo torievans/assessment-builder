@@ -47,14 +47,16 @@
       "id": 1790100000074,
       "visualType": "wb",
       "text": "",
-      "answer": "15",
+      "answer": "13",
       "cfg": {
-        "wbText": "10 + 5 = ",
+        "wbText": "8 + 5 = ",
         "wbBorder": "#B06BB3",
         "wbSkin": "#6b3520"
       },
       "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
+      "createdAt": "2026-09-01",
+      "imagePath": "",
+      "image": ""
     },
     {
       "id": 1790100000075,
