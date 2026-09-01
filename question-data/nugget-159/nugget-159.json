@@ -1,0 +1,147 @@
+{
+  "nuggetId": 159,
+  "nextQId": 319496,
+  "questions": [
+    {
+      "id": 1788268217676,
+      "visualType": "bm",
+      "text": "# 4 + 3 =",
+      "answer": "7",
+      "cfg": {
+        "segments": [
+          {
+            "value": 4,
+            "divisions": 4,
+            "braceLabel": "4"
+          },
+          {
+            "value": 3,
+            "braceLabel": "3"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 0,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1788268217677,
+      "visualType": "bm",
+      "text": "# 5 + 1 =",
+      "answer": "6",
+      "cfg": {
+        "segments": [
+          {
+            "value": 5,
+            "divisions": 5,
+            "braceLabel": "5"
+          },
+          {
+            "value": 1,
+            "braceLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 1,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1788268217678,
+      "visualType": "bm",
+      "text": "# 6 + 2 =",
+      "answer": "8",
+      "cfg": {
+        "segments": [
+          {
+            "value": 6,
+            "divisions": 6,
+            "braceLabel": "6"
+          },
+          {
+            "value": 2,
+            "braceLabel": "2"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 2,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1788268217679,
+      "visualType": "bm",
+      "text": "# 7 + 2 =",
+      "answer": "9",
+      "cfg": {
+        "segments": [
+          {
+            "value": 7,
+            "divisions": 7,
+            "braceLabel": "7"
+          },
+          {
+            "value": 2,
+            "braceLabel": "2"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 4,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1788268217680,
+      "visualType": "bm",
+      "text": "# 9 + 3 =",
+      "answer": "12",
+      "cfg": {
+        "segments": [
+          {
+            "value": 9,
+            "divisions": 9,
+            "braceLabel": "9"
+          },
+          {
+            "value": 3,
+            "braceLabel": "3"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 5,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    }
+  ],
+  "exampleOverride": {
+    "visualType": "bm",
+    "text": "# 6 + 2 =",
+    "answer": "8",
+    "cfg": {
+      "segments": [
+        {
+          "value": 6,
+          "divisions": 6,
+          "braceLabel": "6"
+        },
+        {
+          "value": 2,
+          "braceLabel": "2"
+        }
+      ],
+      "total": "?",
+      "colorIdx": 3,
+      "multi": true
+    }
+  }
+}
