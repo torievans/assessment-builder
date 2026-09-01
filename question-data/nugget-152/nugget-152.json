@@ -5,7 +5,7 @@
     {
       "id": 1788268350266,
       "visualType": "pr",
-      "text": "1 + 4 =",
+      "text": "# 1 + 4 =",
       "answer": "5",
       "cfg": {
         "mode": "addsub",
