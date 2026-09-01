@@ -5,8 +5,8 @@
   "questions": [
     {
       "id": 139001,
-      "text": "9 + _ = 20",
-      "answer": "11",
+      "text": "8 + _ = 20",
+      "answer": "12",
       "type": "exact",
       "visualType": "nr",
       "image": "",
@@ -18,7 +18,7 @@
         "fc1": 0,
         "fc2": 4,
         "fSplitOn": true,
-        "fSplit": 9,
+        "fSplit": 8,
         "bg": 5,
         "ba": 4,
         "bb": 0,
