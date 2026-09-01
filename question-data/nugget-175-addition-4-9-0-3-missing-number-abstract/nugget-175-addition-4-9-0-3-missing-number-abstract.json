@@ -1,5 +1,6 @@
 {
   "nuggetId": 175,
+  "status": "ready-for-qa",
   "nextQId": 319496,
   "questions": [
     {
@@ -71,9 +72,9 @@
   "exampleOverride": {
     "visualType": "wb",
     "text": "What number is missing?",
-    "answer": "4",
+    "answer": "2",
     "cfg": {
-      "wbText": "_ + 3 = 7",
+      "wbText": "6 + _ = 8",
       "wbBorder": "#319377",
       "wbSkin": "#ffa99c"
     }
