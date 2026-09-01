@@ -110,6 +110,25 @@
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
+    },
+    {
+      "visualType": "bm",
+      "text": "# 13 + _ = 20",
+      "answer": 7,
+      "cfg": {
+        "segments": [
+          {
+            "value": 13,
+            "segLabel": "13"
+          },
+          {
+            "value": "?",
+            "segLabel": "?"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 4
+      }
     }
   ],
   "exampleOverride": {
