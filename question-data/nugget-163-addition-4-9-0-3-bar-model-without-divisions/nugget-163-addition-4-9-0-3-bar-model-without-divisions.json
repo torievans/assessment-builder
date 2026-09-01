@@ -2,7 +2,7 @@
   "name": "Addition 4-9 + 0-3 (Bar Model Without Divisions)",
   "questions": [
     {
-      "id": 1788267216607,
+      "id": 1788267766577,
       "visualType": "bm",
       "text": "# 4 + 1 =",
       "answer": "5",
@@ -23,10 +23,10 @@
       }
     },
     {
-      "id": 1788267216608,
+      "id": 1788267766578,
       "visualType": "bm",
-      "text": "# 5 + 2 =",
-      "answer": "7",
+      "text": "# 5 + 3 =",
+      "answer": "8",
       "cfg": {
         "segments": [
           {
@@ -34,8 +34,8 @@
             "segLabel": "5"
           },
           {
-            "value": 2,
-            "segLabel": "2"
+            "value": 3,
+            "segLabel": "3"
           }
         ],
         "total": "?",
@@ -44,19 +44,19 @@
       }
     },
     {
-      "id": 1788267216609,
+      "id": 1788267766579,
       "visualType": "bm",
-      "text": "# 7 + 1 =",
-      "answer": "8",
+      "text": "# 6 + 0 =",
+      "answer": "6",
       "cfg": {
         "segments": [
           {
-            "value": 7,
-            "segLabel": "7"
+            "value": 6,
+            "segLabel": "6"
           },
           {
-            "value": 1,
-            "segLabel": "1"
+            "value": 0,
+            "segLabel": "0"
           }
         ],
         "total": "?",
@@ -65,19 +65,19 @@
       }
     },
     {
-      "id": 1788267216610,
+      "id": 1788267766580,
       "visualType": "bm",
-      "text": "# 6 + 3 =",
-      "answer": "9",
+      "text": "# 8 + 2 =",
+      "answer": "10",
       "cfg": {
         "segments": [
           {
-            "value": 6,
-            "segLabel": "6"
+            "value": 8,
+            "segLabel": "8"
           },
           {
-            "value": 3,
-            "segLabel": "3"
+            "value": 2,
+            "segLabel": "2"
           }
         ],
         "total": "?",
@@ -86,10 +86,10 @@
       }
     },
     {
-      "id": 1788267216611,
+      "id": 1788267766581,
       "visualType": "bm",
-      "text": "# 9 + 1 =",
-      "answer": "10",
+      "text": "# 9 + 3 =",
+      "answer": "12",
       "cfg": {
         "segments": [
           {
@@ -97,8 +97,8 @@
             "segLabel": "9"
           },
           {
-            "value": 1,
-            "segLabel": "1"
+            "value": 3,
+            "segLabel": "3"
           }
         ],
         "total": "?",
@@ -109,17 +109,17 @@
   ],
   "exampleOverride": {
     "visualType": "bm",
-    "text": "# 5 + 3 =",
+    "text": "# 6 + 2 =",
     "answer": "8",
     "cfg": {
       "segments": [
         {
-          "value": 5,
-          "segLabel": "5"
+          "value": 6,
+          "segLabel": "6"
         },
         {
-          "value": 3,
-          "segLabel": "3"
+          "value": 2,
+          "segLabel": "2"
         }
       ],
       "total": "?",
