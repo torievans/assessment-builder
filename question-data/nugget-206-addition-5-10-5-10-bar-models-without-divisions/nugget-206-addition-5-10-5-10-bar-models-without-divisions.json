@@ -1,4 +1,6 @@
 {
+  "nuggetId": 206,
+  "nextQId": 1790100000056,
   "questions": [
     {
       "id": 1790100000051,
@@ -19,7 +21,9 @@
         "total": "?",
         "colorIdx": 6,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000052,
@@ -40,7 +44,9 @@
         "total": "?",
         "colorIdx": 1,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000053,
@@ -61,7 +67,9 @@
         "total": "?",
         "colorIdx": 3,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000054,
@@ -82,7 +90,9 @@
         "total": "?",
         "colorIdx": 0,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000055,
@@ -103,7 +113,9 @@
         "total": "?",
         "colorIdx": 5,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
@@ -125,6 +137,5 @@
       "colorIdx": 2,
       "multi": true
     }
-  },
-  "nextQId": 1790100000056
+  }
 }
