@@ -1,4 +1,6 @@
 {
+  "nuggetId": 198,
+  "nextQId": 1790100000056,
   "questions": [
     {
       "id": 1790100000011,
@@ -28,7 +30,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000012,
@@ -58,7 +62,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000013,
@@ -88,7 +94,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000014,
@@ -118,7 +126,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000015,
@@ -148,7 +158,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
@@ -179,6 +191,5 @@
       "crayonFontSize": 148,
       "crayonLabel": "5 Crayons"
     }
-  },
-  "nextQId": 1790100000016
+  }
 }
