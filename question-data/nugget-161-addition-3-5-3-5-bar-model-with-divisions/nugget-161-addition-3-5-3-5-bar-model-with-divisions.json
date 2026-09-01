@@ -2,10 +2,10 @@
   "name": "Addition 3-5 + 3-5 (Bar Model With Divisions)",
   "questions": [
     {
-      "id": 1788267214558,
+      "id": 1788267764864,
       "visualType": "bm",
-      "text": "# 3 + 3 =",
-      "answer": "6",
+      "text": "# 3 + 4 =",
+      "answer": "7",
       "cfg": {
         "segments": [
           {
@@ -14,8 +14,8 @@
             "braceLabel": "3"
           },
           {
-            "value": 3,
-            "braceLabel": "3"
+            "value": 4,
+            "braceLabel": "4"
           }
         ],
         "total": "?",
@@ -24,16 +24,16 @@
       }
     },
     {
-      "id": 1788267214559,
+      "id": 1788267764865,
       "visualType": "bm",
-      "text": "# 4 + 3 =",
-      "answer": "7",
+      "text": "# 5 + 3 =",
+      "answer": "8",
       "cfg": {
         "segments": [
           {
-            "value": 4,
-            "divisions": 4,
-            "braceLabel": "4"
+            "value": 5,
+            "divisions": 5,
+            "braceLabel": "5"
           },
           {
             "value": 3,
@@ -46,29 +46,7 @@
       }
     },
     {
-      "id": 1788267214560,
-      "visualType": "bm",
-      "text": "# 3 + 5 =",
-      "answer": "8",
-      "cfg": {
-        "segments": [
-          {
-            "value": 3,
-            "divisions": 3,
-            "braceLabel": "3"
-          },
-          {
-            "value": 5,
-            "braceLabel": "5"
-          }
-        ],
-        "total": "?",
-        "colorIdx": 2,
-        "multi": true
-      }
-    },
-    {
-      "id": 1788267214561,
+      "id": 1788267764866,
       "visualType": "bm",
       "text": "# 4 + 5 =",
       "answer": "9",
@@ -85,15 +63,37 @@
           }
         ],
         "total": "?",
+        "colorIdx": 2,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788267764867,
+      "visualType": "bm",
+      "text": "# 3 + 3 =",
+      "answer": "6",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "divisions": 3,
+            "braceLabel": "3"
+          },
+          {
+            "value": 3,
+            "braceLabel": "3"
+          }
+        ],
+        "total": "?",
         "colorIdx": 4,
         "multi": true
       }
     },
     {
-      "id": 1788267214562,
+      "id": 1788267764868,
       "visualType": "bm",
-      "text": "# 5 + 5 =",
-      "answer": "10",
+      "text": "# 5 + 4 =",
+      "answer": "9",
       "cfg": {
         "segments": [
           {
@@ -102,8 +102,8 @@
             "braceLabel": "5"
           },
           {
-            "value": 5,
-            "braceLabel": "5"
+            "value": 4,
+            "braceLabel": "4"
           }
         ],
         "total": "?",
