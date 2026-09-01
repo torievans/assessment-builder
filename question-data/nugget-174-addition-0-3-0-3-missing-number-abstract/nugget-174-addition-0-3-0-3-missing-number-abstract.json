@@ -12,7 +12,9 @@
         "wbText": "_ + 1 = 2",
         "wbBorder": "#D46B55",
         "wbSkin": "#d4895a"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788266735045,
@@ -23,7 +25,9 @@
         "wbText": "1 + _ = 3",
         "wbBorder": "#FECC6B",
         "wbSkin": "#ffa99c"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788266735046,
@@ -34,7 +38,9 @@
         "wbText": "_ + 2 = 4",
         "wbBorder": "#FC7E91",
         "wbSkin": "#b06530"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788266735047,
@@ -45,7 +51,9 @@
         "wbText": "3 + _ = 5",
         "wbBorder": "#319377",
         "wbSkin": "#ffa99c"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788266735048,
@@ -56,7 +64,9 @@
         "wbText": "_ + 3 = 6",
         "wbBorder": "#847AC9",
         "wbSkin": "#6b3520"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
