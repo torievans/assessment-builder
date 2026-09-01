@@ -110,11 +110,11 @@
         "segments": [
           {
             "value": 1,
-            "divisions": 1,
             "braceLabel": "1"
           },
           {
             "value": 3,
+            "divisions": 3,
             "braceLabel": "3"
           }
         ],
