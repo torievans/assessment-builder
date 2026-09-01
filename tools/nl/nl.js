@@ -68,7 +68,7 @@ function getNLConfig(){
   const start=parseFloat(document.getElementById('f-start').value),end=parseFloat(document.getElementById('f-end').value),step=parseFloat(document.getElementById('f-step').value),vge=parseFloat(document.getElementById('f-vge').value),hF=parseFloat(document.getElementById('f-hide-from').value),hT=parseFloat(document.getElementById('f-hide-to').value);
   if(isNaN(start)||isNaN(end)||isNaN(step)||step<=0)return null;const p=Math.round((end-start)/step);if(p<=0)return null;
   const ans=document.getElementById('nl-answer').value.trim()||undefined;
-  const cfg={start,end,partitions:p,valuesGivenEvery:vge,answer:ans,lineStyle:nlStyle,colour:nlColour,hideFrom:isNaN(hF)?undefined:hF,hideTo:isNaN(hT)?undefined:hT,answerCircle:nlAnswerCircle||undefined,revealAnswer:nlAnswerCircle?nlRevealAnswer:undefined};
+  const cfg={start,end,partitions:p,valuesGivenEvery:vge,answer:ans,lineStyle:nlStyle,colour:nlColour,hideFrom:isNaN(hF)?undefined:hF,hideTo:isNaN(hT)?undefined:hT,answerCircle:nlAnswerCircle||undefined,revealAnswer:nlRevealAnswer||undefined};
   if(nlJumpOpen){const from=parseFloat(document.getElementById('f-from').value),to=parseFloat(document.getElementById('f-to').value),lbl=document.getElementById('f-jump-label').value.trim();if(!isNaN(from)&&!isNaN(to)&&from!==to){cfg.jumpFrom=from;cfg.jumpTo=to;cfg.jumpType=nlArcType;cfg.jumpLabel=lbl;cfg.jumpArrow=nlArrow;cfg.jumpCircle=nlCircle;cfg.jumpColour=nlJumpCol;}if(nlJump2Open){const from2=parseFloat(document.getElementById('f-from2').value),to2=parseFloat(document.getElementById('f-to2').value),lbl2=document.getElementById('f-jump-label2').value.trim();if(!isNaN(from2)&&!isNaN(to2)&&from2!==to2){cfg.jump2From=from2;cfg.jump2To=to2;cfg.jump2Type=nlArcType2;cfg.jump2Label=lbl2;cfg.jump2Arrow=nlArrow2;cfg.jump2Circle=nlCircle2;cfg.jump2Colour=nlJump2Col;}}}
   return cfg;
 }
@@ -244,7 +244,7 @@ function nlPanelHTML(){
             <div class="form-row">
               <div class="field"><label>Style</label><div class="tog-row"><button class="tog-btn active" data-style="through">Through</button><button class="tog-btn" data-style="terminate">Terminate</button></div></div>
               <div class="field"><label>Circle ?</label><div class="tog-row"><button class="tog-btn active" data-anscircle="no">No</button><button class="tog-btn" data-anscircle="yes">Yes</button></div></div>
-              <div class="field"><label>Circle label</label><div class="tog-row"><button class="tog-btn active" data-reveal="yes">Keep value</button><button class="tog-btn" data-reveal="no">Show ?</button></div></div>
+              <div class="field"><label>Answer label</label><div class="tog-row"><button class="tog-btn active" data-reveal="yes">Keep value</button><button class="tog-btn" data-reveal="no">Show ?</button></div></div>
               <div class="field"><label>Colour</label><div class="swatch-row" id="nl-swatch-row"></div></div>
             </div>
             <button class="jump-toggle" id="jump-toggle-btn" onclick="nlToggleJump()">＋ Add jumps</button>
