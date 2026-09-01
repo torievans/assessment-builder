@@ -1,7 +1,7 @@
 {
   "nuggetId": 146,
   "status": "in-progress",
-  "nextQId": 319467,
+  "nextQId": 319468,
   "questions": [
     {
       "id": 146001,
@@ -20,5 +20,15 @@
       "createdAt": "2026-08-27",
       "updatedAt": "2026-08-27"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "5 + _ = 20",
+      "wbBorder": "#FC7E91",
+      "wbSkin": "#6b3520"
+    },
+    "visualType": "wb",
+    "answer": "15",
+    "text": "What number is missing?"
+  }
 }
