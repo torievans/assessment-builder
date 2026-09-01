@@ -30,7 +30,7 @@
     {
       "id": 1790100000017,
       "visualType": "nl",
-      "text": "# 12 + 2 =",
+      "text": "# 12 + 4 =",
       "answer": "14",
       "cfg": {
         "start": 0,
@@ -42,7 +42,7 @@
         "colour": "grey",
         "revealAnswer": true,
         "jumpFrom": 12,
-        "jumpTo": 14,
+        "jumpTo": 16,
         "jumpType": "unit",
         "jumpLabel": "",
         "jumpArrow": true,
