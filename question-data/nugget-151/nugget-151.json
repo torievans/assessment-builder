@@ -73,7 +73,7 @@
       "answer": "9",
       "cfg": {
         "mode": "addsub",
-        "display": "array",
+        "display": "clustered",
         "align": "centre",
         "countA": 6,
         "imageIdA": "illus:animals/rhinoceros_grey",
