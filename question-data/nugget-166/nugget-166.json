@@ -3,14 +3,11 @@
   "nextQId": 1790100000076,
   "questions": [],
   "exampleOverride": {
-    "visualType": "bm",
-    "text": "# _ + 3 =",
-    "answer": "4",
     "cfg": {
       "segments": [
         {
           "value": "?",
-          "divisions": 1,
+          "divisions": 4,
           "braceLabel": "?"
         },
         {
@@ -22,6 +19,9 @@
       "total": 7,
       "colorIdx": 3,
       "multi": true
-    }
+    },
+    "visualType": "bm",
+    "answer": "4",
+    "text": "# _ + 3 ="
   }
 }
