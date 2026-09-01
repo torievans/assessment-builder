@@ -101,9 +101,9 @@
         "pwWhole": "20",
         "pwPart1": "18",
         "pwPart2": "?",
-        "pwColWhole": 1,
-        "pwColPart1": 0,
-        "pwColPart2": 0
+        "pwColWhole": 3,
+        "pwColPart1": 1,
+        "pwColPart2": 1
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
