@@ -88,7 +88,7 @@
         "n": 20,
         "rep": "frames",
         "fType": "10",
-        "fc1": 2,
+        "fc1": 6,
         "fc2": 4,
         "fSplitOn": true,
         "fSplit": 5,
