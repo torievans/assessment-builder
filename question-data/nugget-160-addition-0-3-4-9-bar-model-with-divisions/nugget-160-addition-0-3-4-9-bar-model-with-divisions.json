@@ -15,7 +15,8 @@
           },
           {
             "value": 7,
-            "braceLabel": "7"
+            "braceLabel": "7",
+            "divisions": 7
           }
         ],
         "total": "?",
@@ -37,7 +38,8 @@
           },
           {
             "value": 8,
-            "braceLabel": "8"
+            "braceLabel": "8",
+            "divisions": 8
           }
         ],
         "total": "?",
@@ -59,7 +61,8 @@
           },
           {
             "value": 5,
-            "braceLabel": "5"
+            "braceLabel": "5",
+            "divisions": 5
           }
         ],
         "total": "?",
@@ -81,7 +84,8 @@
           },
           {
             "value": 6,
-            "braceLabel": "6"
+            "braceLabel": "6",
+            "divisions": 6
           }
         ],
         "total": "?",
@@ -103,7 +107,8 @@
           },
           {
             "value": 9,
-            "braceLabel": "9"
+            "braceLabel": "9",
+            "divisions": 9
           }
         ],
         "total": "?",
@@ -125,7 +130,8 @@
         },
         {
           "value": 7,
-          "braceLabel": "7"
+          "braceLabel": "7",
+          "divisions": 7
         }
       ],
       "total": "?",
