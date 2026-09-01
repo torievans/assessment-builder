@@ -2,7 +2,113 @@
   "nuggetId": 162,
   "status": "in-progress",
   "nextQId": 319495,
-  "questions": [],
+  "questions": [
+    {
+      "id": 1788266735024,
+      "visualType": "bm",
+      "text": "# 1 + 1 =",
+      "answer": "2",
+      "cfg": {
+        "segments": [
+          {
+            "value": 1,
+            "segLabel": "1"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 0,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788266735025,
+      "visualType": "bm",
+      "text": "# 2 + 1 =",
+      "answer": "3",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "segLabel": "2"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 1,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788266735026,
+      "visualType": "bm",
+      "text": "# 3 + 1 =",
+      "answer": "4",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "segLabel": "3"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 2,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788266735027,
+      "visualType": "bm",
+      "text": "# 2 + 3 =",
+      "answer": "5",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "segLabel": "2"
+          },
+          {
+            "value": 3,
+            "segLabel": "3"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 4,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788266735028,
+      "visualType": "bm",
+      "text": "# 3 + 3 =",
+      "answer": "6",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "segLabel": "3"
+          },
+          {
+            "value": 3,
+            "segLabel": "3"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 5,
+        "multi": true
+      }
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "segments": [
