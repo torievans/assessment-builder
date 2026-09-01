@@ -105,7 +105,7 @@
       "answer": "8",
       "cfg": {
         "mode": "addsub",
-        "display": "array",
+        "display": "clustered",
         "align": "centre",
         "countA": 7,
         "imageIdA": "illus:food/veg/pumpkin_orange",
@@ -113,7 +113,7 @@
         "imageIdB": "illus:food/veg/pumpkin_orange",
         "op": "add",
         "subMode": "crossed",
-        "cols": 10,
+        "cols": 4,
         "groupSize": 1,
         "mrows": 2,
         "mcols": 10,
