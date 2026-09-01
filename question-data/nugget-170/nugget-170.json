@@ -6,11 +6,10 @@
   "exampleOverride": {
     "cfg": {
       "wbText": "3 + 2 = ",
-      "wbBorder": "#319377",
-      "wbSkin": "#ffa99c"
+      "wbBorder": "#7898F0",
+      "wbSkin": "#b06530"
     },
     "visualType": "wb",
-    "answer": "5",
-    "text": ""
+    "answer": "5"
   }
 }
