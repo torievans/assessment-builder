@@ -12,11 +12,10 @@
       "answer": "4",
       "lineStyle": "terminate",
       "colour": "grey",
-      "revealAnswer": true,
       "jumpFrom": 2,
       "jumpTo": 4,
       "jumpType": "unit",
-      "jumpLabel": "+2",
+      "jumpLabel": "",
       "jumpArrow": true,
       "jumpCircle": "none",
       "jumpColour": "yellow"
