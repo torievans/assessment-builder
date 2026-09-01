@@ -33,14 +33,7 @@
         "answer": "16",
         "lineStyle": "terminate",
         "colour": "grey",
-        "revealAnswer": true,
-        "jumpFrom": 6,
-        "jumpTo": 16,
-        "jumpType": "unit",
-        "jumpLabel": "",
-        "jumpArrow": true,
-        "jumpCircle": "none",
-        "jumpColour": "blue"
+        "revealAnswer": true
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
