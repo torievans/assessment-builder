@@ -58,17 +58,18 @@
     {
       "id": 319475,
       "text": "What number is missing?",
-      "answer": "5",
+      "answer": "15",
       "type": "exact",
       "image": "",
       "display": "",
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "_ + 15 = 20",
+        "wbText": "_ + 5 = 20",
         "wbBorder": "#FECC6B",
         "wbSkin": "#6b3520"
       },
+      "imagePath": "",
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
     },
