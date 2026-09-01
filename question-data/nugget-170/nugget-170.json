@@ -2,25 +2,7 @@
   "nuggetId": 170,
   "status": "in-progress",
   "nextQId": 319495,
-  "questions": [
-    {
-      "id": 319494,
-      "text": "",
-      "answer": "5",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "3 + 2 = ",
-        "wbBorder": "#7898F0",
-        "wbSkin": "#b06530"
-      },
-      "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
-    }
-  ],
+  "questions": [],
   "exampleOverride": {
     "cfg": {
       "wbText": "3 + 2 = ",
