@@ -2,10 +2,10 @@
   "name": "Addition 3-5 + 3-5 (Bar Model Without Divisions)",
   "questions": [
     {
-      "id": 1788267220803,
+      "id": 1788267769920,
       "visualType": "bm",
-      "text": "# 3 + 3 =",
-      "answer": "6",
+      "text": "# 3 + 4 =",
+      "answer": "7",
       "cfg": {
         "segments": [
           {
@@ -13,8 +13,8 @@
             "segLabel": "3"
           },
           {
-            "value": 3,
-            "segLabel": "3"
+            "value": 4,
+            "segLabel": "4"
           }
         ],
         "total": "?",
@@ -23,15 +23,15 @@
       }
     },
     {
-      "id": 1788267220804,
+      "id": 1788267769921,
       "visualType": "bm",
-      "text": "# 4 + 3 =",
-      "answer": "7",
+      "text": "# 5 + 3 =",
+      "answer": "8",
       "cfg": {
         "segments": [
           {
-            "value": 4,
-            "segLabel": "4"
+            "value": 5,
+            "segLabel": "5"
           },
           {
             "value": 3,
@@ -44,28 +44,7 @@
       }
     },
     {
-      "id": 1788267220805,
-      "visualType": "bm",
-      "text": "# 3 + 5 =",
-      "answer": "8",
-      "cfg": {
-        "segments": [
-          {
-            "value": 3,
-            "segLabel": "3"
-          },
-          {
-            "value": 5,
-            "segLabel": "5"
-          }
-        ],
-        "total": "?",
-        "colorIdx": 2,
-        "multi": true
-      }
-    },
-    {
-      "id": 1788267220806,
+      "id": 1788267769922,
       "visualType": "bm",
       "text": "# 4 + 5 =",
       "answer": "9",
@@ -81,15 +60,36 @@
           }
         ],
         "total": "?",
+        "colorIdx": 2,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788267769923,
+      "visualType": "bm",
+      "text": "# 3 + 3 =",
+      "answer": "6",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "segLabel": "3"
+          },
+          {
+            "value": 3,
+            "segLabel": "3"
+          }
+        ],
+        "total": "?",
         "colorIdx": 4,
         "multi": true
       }
     },
     {
-      "id": 1788267220807,
+      "id": 1788267769924,
       "visualType": "bm",
-      "text": "# 5 + 5 =",
-      "answer": "10",
+      "text": "# 5 + 4 =",
+      "answer": "9",
       "cfg": {
         "segments": [
           {
@@ -97,8 +97,8 @@
             "segLabel": "5"
           },
           {
-            "value": 5,
-            "segLabel": "5"
+            "value": 4,
+            "segLabel": "4"
           }
         ],
         "total": "?",
