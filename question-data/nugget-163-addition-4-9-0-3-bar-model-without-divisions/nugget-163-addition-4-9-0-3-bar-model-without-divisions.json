@@ -120,8 +120,8 @@
   ],
   "exampleOverride": {
     "visualType": "bm",
-    "text": "# 6 + 2 =",
-    "answer": "8",
+    "text": "# 6 + 1 =",
+    "answer": "7",
     "cfg": {
       "segments": [
         {
@@ -129,8 +129,8 @@
           "segLabel": "6"
         },
         {
-          "value": 2,
-          "segLabel": "2"
+          "value": 1,
+          "segLabel": "1"
         }
       ],
       "total": "?",
