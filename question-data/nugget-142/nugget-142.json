@@ -122,7 +122,7 @@
     {
       "id": 319449,
       "text": "# _ + 9 = 20",
-      "answer": "9",
+      "answer": "11",
       "type": "exact",
       "image": "",
       "display": "",
@@ -138,7 +138,7 @@
           {
             "value": 9,
             "divisions": 9,
-            "braceLabel": "7"
+            "braceLabel": "9"
           }
         ],
         "total": 20,
