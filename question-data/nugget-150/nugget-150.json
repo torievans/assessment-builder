@@ -134,7 +134,7 @@
     {
       "id": 1788266734998,
       "visualType": "pr",
-      "text": "3 + 3 =",
+      "text": "# 3 + 3 =",
       "answer": "6",
       "cfg": {
         "mode": "addsub",
