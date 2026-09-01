@@ -1,5 +1,6 @@
 {
-  "name": "Addition 0-3 + 4-9 Missing Number (Abstract)",
+  "nuggetId": 176,
+  "nextQId": 319496,
   "questions": [
     {
       "id": 1788268370664,
@@ -10,7 +11,9 @@
         "wbText": "0 + _ = 7",
         "wbBorder": "#D46B55",
         "wbSkin": "#d4895a"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268370665,
@@ -21,7 +24,9 @@
         "wbText": "_ + 5 = 6",
         "wbBorder": "#FECC6B",
         "wbSkin": "#ffa99c"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268370666,
@@ -32,7 +37,9 @@
         "wbText": "2 + _ = 10",
         "wbBorder": "#FC7E91",
         "wbSkin": "#b06530"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268370667,
@@ -43,7 +50,9 @@
         "wbText": "_ + 4 = 7",
         "wbBorder": "#319377",
         "wbSkin": "#ffa99c"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268370668,
@@ -54,7 +63,9 @@
         "wbText": "1 + _ = 10",
         "wbBorder": "#847AC9",
         "wbSkin": "#6b3520"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
