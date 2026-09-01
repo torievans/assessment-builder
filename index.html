@@ -2437,11 +2437,10 @@ function whiteboardSVG(text,bc,sc){
     return null;
   }
   const l1=tryLayout(1),lN=tryLayout(20);
-  // Prefer single-line unless multi-line gives >40% bigger font
+  // Always prefer single-line; only wrap if it genuinely doesn't fit
   let fs,lines;
   if(!l1){({fs,lines}=lN);}
-  else if(!lN||l1.fs*1.4>=lN.fs){({fs,lines}=l1);}
-  else{({fs,lines}=lN);}
+  else{({fs,lines}=l1);}
   const lh=fs*1.3,blockCY=TY+TH/2,firstCY=blockCY-((lines.length-1)*lh)/2;
   let textSVG='';
   if(text.trim()){
