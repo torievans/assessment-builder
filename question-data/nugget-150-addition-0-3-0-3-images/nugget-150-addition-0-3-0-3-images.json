@@ -1,0 +1,35 @@
+{
+  "nuggetId": 150,
+  "status": "in-progress",
+  "nextQId": 319489,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "mode": "addsub",
+      "display": "array",
+      "align": "centre",
+      "countA": 3,
+      "imageIdA": "illus:food/fruit/apple_green",
+      "countB": 2,
+      "imageIdB": "illus:food/fruit/apple_green",
+      "op": "add",
+      "subMode": "crossed",
+      "cols": 3,
+      "groupSize": 1,
+      "mrows": 2,
+      "mcols": 5,
+      "illusOutline": "individual",
+      "imgScale": 1,
+      "numA": false,
+      "numB": false,
+      "showEq": true,
+      "crayonCount": 5,
+      "crayonBoxes": 1,
+      "crayonFontSize": 148,
+      "crayonLabel": "5 Crayons"
+    },
+    "visualType": "pr",
+    "answer": "5",
+    "text": "3 + 1 ="
+  }
+}
