@@ -1,0 +1,130 @@
+{
+  "questions": [
+    {
+      "id": 1790100000046,
+      "visualType": "bm",
+      "text": "# 15 + 2 =",
+      "answer": "17",
+      "cfg": {
+        "segments": [
+          {
+            "value": 15,
+            "segLabel": "15"
+          },
+          {
+            "value": 2,
+            "segLabel": "2"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 4,
+        "multi": true
+      }
+    },
+    {
+      "id": 1790100000047,
+      "visualType": "bm",
+      "text": "# 18 + 1 =",
+      "answer": "19",
+      "cfg": {
+        "segments": [
+          {
+            "value": 18,
+            "segLabel": "18"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 1,
+        "multi": true
+      }
+    },
+    {
+      "id": 1790100000048,
+      "visualType": "bm",
+      "text": "# 12 + 3 =",
+      "answer": "15",
+      "cfg": {
+        "segments": [
+          {
+            "value": 12,
+            "segLabel": "12"
+          },
+          {
+            "value": 3,
+            "segLabel": "3"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 6,
+        "multi": true
+      }
+    },
+    {
+      "id": 1790100000049,
+      "visualType": "bm",
+      "text": "# 17 + 4 =",
+      "answer": "21",
+      "cfg": {
+        "segments": [
+          {
+            "value": 17,
+            "segLabel": "17"
+          },
+          {
+            "value": 4,
+            "segLabel": "4"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 0,
+        "multi": true
+      }
+    },
+    {
+      "id": 1790100000050,
+      "visualType": "bm",
+      "text": "# 16 + 5 =",
+      "answer": "21",
+      "cfg": {
+        "segments": [
+          {
+            "value": 16,
+            "segLabel": "16"
+          },
+          {
+            "value": 5,
+            "segLabel": "5"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 3,
+        "multi": true
+      }
+    }
+  ],
+  "exampleOverride": {
+    "visualType": "bm",
+    "text": "# 13 + 2 =",
+    "answer": "15",
+    "cfg": {
+      "segments": [
+        {
+          "value": 13,
+          "segLabel": "13"
+        },
+        {
+          "value": 2,
+          "segLabel": "2"
+        }
+      ],
+      "total": "?",
+      "colorIdx": 2,
+      "multi": true
+    }
+  },
+  "nextQId": 1790100000051
+}
