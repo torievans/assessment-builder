@@ -102,7 +102,7 @@
     {
       "id": 1788269610238,
       "visualType": "pr",
-      "text": "2 + 2 =",
+      "text": "# 2 + 2 =",
       "answer": "4",
       "cfg": {
         "mode": "addsub",
