@@ -164,12 +164,9 @@
     }
   ],
   "exampleOverride": {
-    "visualType": "pr",
-    "text": "# 5 + 3 =",
-    "answer": "8",
     "cfg": {
       "mode": "addsub",
-      "display": "array",
+      "display": "clustered",
       "align": "centre",
       "countA": 5,
       "imageIdA": "illus:animals/tiger_orange",
@@ -177,7 +174,7 @@
       "imageIdB": "illus:animals/tiger_orange",
       "op": "add",
       "subMode": "crossed",
-      "cols": 10,
+      "cols": 3,
       "groupSize": 1,
       "mrows": 2,
       "mcols": 10,
@@ -190,6 +187,9 @@
       "crayonBoxes": 1,
       "crayonFontSize": 148,
       "crayonLabel": "5 Crayons"
-    }
+    },
+    "visualType": "pr",
+    "answer": "8",
+    "text": "# 5 + 3 ="
   }
 }
