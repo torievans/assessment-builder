@@ -1,7 +1,7 @@
 {
   "nuggetId": 156,
-  "status": "in-progress",
-  "nextQId": 319496,
+  "status": "ready-for-qa",
+  "nextQId": 1790100000076,
   "questions": [
     {
       "id": 1788268352290,
@@ -130,9 +130,6 @@
     }
   ],
   "exampleOverride": {
-    "visualType": "nl",
-    "text": "# 1 + 7 =",
-    "answer": "8",
     "cfg": {
       "start": 0,
       "end": 12,
@@ -141,14 +138,10 @@
       "answer": "8",
       "lineStyle": "terminate",
       "colour": "grey",
-      "revealAnswer": true,
-      "jumpFrom": 1,
-      "jumpTo": 8,
-      "jumpType": "unit",
-      "jumpLabel": "",
-      "jumpArrow": true,
-      "jumpCircle": "none",
-      "jumpColour": "purple"
-    }
+      "revealAnswer": true
+    },
+    "visualType": "nl",
+    "answer": "8",
+    "text": "# 1 + 7 ="
   }
 }
