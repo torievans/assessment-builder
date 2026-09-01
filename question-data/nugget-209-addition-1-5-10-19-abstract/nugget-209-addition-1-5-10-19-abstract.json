@@ -1,4 +1,6 @@
 {
+  "nuggetId": 209,
+  "nextQId": 1790100000076,
   "questions": [
     {
       "id": 1790100000066,
@@ -9,7 +11,9 @@
         "wbText": "2 + 19 = ",
         "wbBorder": "#D46B55",
         "wbSkin": "#ffa99c"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000067,
@@ -20,7 +24,9 @@
         "wbText": "1 + 16 = ",
         "wbBorder": "#7898F0",
         "wbSkin": "#d4895a"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000068,
@@ -31,7 +37,9 @@
         "wbText": "4 + 15 = ",
         "wbBorder": "#5BAD5B",
         "wbSkin": "#b06530"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000069,
@@ -42,7 +50,9 @@
         "wbText": "3 + 12 = ",
         "wbBorder": "#B06BB3",
         "wbSkin": "#6b3520"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000070,
@@ -53,18 +63,18 @@
         "wbText": "5 + 10 = ",
         "wbBorder": "#F0A030",
         "wbSkin": "#ffa99c"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
-    "visualType": "wb",
-    "text": "",
-    "answer": "14",
     "cfg": {
       "wbText": "3 + 11 = ",
-      "wbBorder": "#5BAD5B",
-      "wbSkin": "#ffa99c"
-    }
-  },
-  "nextQId": 1790100000071
+      "wbBorder": "#FECC6B",
+      "wbSkin": "#6b3520"
+    },
+    "visualType": "wb",
+    "answer": "14"
+  }
 }
