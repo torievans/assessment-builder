@@ -2,7 +2,7 @@
   "name": "Addition 4-9 + 0-3 (Abstract)",
   "questions": [
     {
-      "id": 1788267223397,
+      "id": 1788267772050,
       "visualType": "wb",
       "text": "",
       "answer": "5",
@@ -13,45 +13,45 @@
       }
     },
     {
-      "id": 1788267223398,
+      "id": 1788267772051,
       "visualType": "wb",
       "text": "",
-      "answer": "7",
+      "answer": "8",
       "cfg": {
-        "wbText": "5 + 2 = ",
+        "wbText": "5 + 3 = ",
         "wbBorder": "#FECC6B",
         "wbSkin": "#ffa99c"
       }
     },
     {
-      "id": 1788267223399,
+      "id": 1788267772052,
       "visualType": "wb",
       "text": "",
-      "answer": "8",
+      "answer": "6",
       "cfg": {
-        "wbText": "7 + 1 = ",
+        "wbText": "6 + 0 = ",
         "wbBorder": "#FC7E91",
         "wbSkin": "#b06530"
       }
     },
     {
-      "id": 1788267223400,
+      "id": 1788267772053,
       "visualType": "wb",
       "text": "",
-      "answer": "9",
+      "answer": "10",
       "cfg": {
-        "wbText": "6 + 3 = ",
+        "wbText": "8 + 2 = ",
         "wbBorder": "#319377",
         "wbSkin": "#ffa99c"
       }
     },
     {
-      "id": 1788267223401,
+      "id": 1788267772054,
       "visualType": "wb",
       "text": "",
-      "answer": "10",
+      "answer": "12",
       "cfg": {
-        "wbText": "9 + 1 = ",
+        "wbText": "9 + 3 = ",
         "wbBorder": "#847AC9",
         "wbSkin": "#6b3520"
       }
@@ -62,7 +62,7 @@
     "text": "",
     "answer": "8",
     "cfg": {
-      "wbText": "5 + 3 = ",
+      "wbText": "6 + 2 = ",
       "wbBorder": "#7898F0",
       "wbSkin": "#b06530"
     }
