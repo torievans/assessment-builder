@@ -19,12 +19,14 @@
       "id": 1788268372612,
       "visualType": "wb",
       "text": "What number is missing?",
-      "answer": "3",
+      "answer": "4",
       "cfg": {
-        "wbText": "4 + _ = 7",
+        "wbText": "4 + _ = 8",
         "wbBorder": "#FECC6B",
         "wbSkin": "#ffa99c"
       },
+      "imagePath": "",
+      "image": "",
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
     },
