@@ -166,7 +166,7 @@
   "exampleOverride": {
     "cfg": {
       "mode": "addsub",
-      "display": "array",
+      "display": "clustered",
       "align": "centre",
       "countA": 1,
       "imageIdA": "illus:animals/tiger_orange",
