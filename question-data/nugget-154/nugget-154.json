@@ -4,7 +4,32 @@
   "nextQId": 319496,
   "questions": [
     {
-      "id": 1788266735004,
+      "id": 1788269612485,
+      "visualType": "nl",
+      "text": "# 1 + 3 =",
+      "answer": "4",
+      "cfg": {
+        "start": 0,
+        "end": 10,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "4",
+        "lineStyle": "terminate",
+        "colour": "grey",
+        "revealAnswer": true,
+        "jumpFrom": 1,
+        "jumpTo": 4,
+        "jumpType": "unit",
+        "jumpLabel": "",
+        "jumpArrow": true,
+        "jumpCircle": "none",
+        "jumpColour": "red"
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1788269612486,
       "visualType": "nl",
       "text": "# 1 + 1 =",
       "answer": "2",
@@ -23,13 +48,38 @@
         "jumpLabel": "",
         "jumpArrow": true,
         "jumpCircle": "none",
-        "jumpColour": "red"
+        "jumpColour": "orange"
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
     },
     {
-      "id": 1788266735005,
+      "id": 1788269612487,
+      "visualType": "nl",
+      "text": "# 3 + 2 =",
+      "answer": "5",
+      "cfg": {
+        "start": 0,
+        "end": 10,
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "5",
+        "lineStyle": "terminate",
+        "colour": "grey",
+        "revealAnswer": true,
+        "jumpFrom": 3,
+        "jumpTo": 5,
+        "jumpType": "unit",
+        "jumpLabel": "",
+        "jumpArrow": true,
+        "jumpCircle": "none",
+        "jumpColour": "green"
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1788269612488,
       "visualType": "nl",
       "text": "# 2 + 1 =",
       "answer": "3",
@@ -48,63 +98,13 @@
         "jumpLabel": "",
         "jumpArrow": true,
         "jumpCircle": "none",
-        "jumpColour": "orange"
-      },
-      "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
-    },
-    {
-      "id": 1788266735006,
-      "visualType": "nl",
-      "text": "# 3 + 1 =",
-      "answer": "4",
-      "cfg": {
-        "start": 0,
-        "end": 10,
-        "partitions": 10,
-        "valuesGivenEvery": null,
-        "answer": "4",
-        "lineStyle": "terminate",
-        "colour": "grey",
-        "revealAnswer": true,
-        "jumpFrom": 3,
-        "jumpTo": 4,
-        "jumpType": "unit",
-        "jumpLabel": "",
-        "jumpArrow": true,
-        "jumpCircle": "none",
-        "jumpColour": "green"
-      },
-      "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
-    },
-    {
-      "id": 1788266735007,
-      "visualType": "nl",
-      "text": "# 2 + 3 =",
-      "answer": "5",
-      "cfg": {
-        "start": 0,
-        "end": 10,
-        "partitions": 10,
-        "valuesGivenEvery": null,
-        "answer": "5",
-        "lineStyle": "terminate",
-        "colour": "grey",
-        "revealAnswer": true,
-        "jumpFrom": 2,
-        "jumpTo": 5,
-        "jumpType": "unit",
-        "jumpLabel": "",
-        "jumpArrow": true,
-        "jumpCircle": "none",
         "jumpColour": "blue"
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
     },
     {
-      "id": 1788266735008,
+      "id": 1788269612489,
       "visualType": "nl",
       "text": "# 3 + 3 =",
       "answer": "6",
@@ -130,25 +130,25 @@
     }
   ],
   "exampleOverride": {
+    "visualType": "nl",
+    "text": "# 2 + 1 =",
+    "answer": "3",
     "cfg": {
       "start": 0,
       "end": 10,
       "partitions": 10,
       "valuesGivenEvery": null,
-      "answer": "4",
+      "answer": "3",
       "lineStyle": "terminate",
       "colour": "grey",
       "revealAnswer": true,
       "jumpFrom": 2,
-      "jumpTo": 4,
+      "jumpTo": 3,
       "jumpType": "unit",
       "jumpLabel": "",
       "jumpArrow": true,
       "jumpCircle": "none",
       "jumpColour": "purple"
-    },
-    "visualType": "nl",
-    "answer": "4",
-    "text": "# 2 + 2 ="
+    }
   }
 }
