@@ -50,7 +50,7 @@
         "imageIdB": "illus:animals/elephant_grey",
         "op": "add",
         "subMode": "crossed",
-        "cols": 10,
+        "cols": 3,
         "groupSize": 1,
         "mrows": 2,
         "mcols": 10,
