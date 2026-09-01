@@ -81,10 +81,11 @@
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "_ + 7 =",
+        "wbText": "_ + 7 = 20",
         "wbBorder": "#319377",
         "wbSkin": "#ffa99c"
       },
+      "imagePath": "",
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
     }
