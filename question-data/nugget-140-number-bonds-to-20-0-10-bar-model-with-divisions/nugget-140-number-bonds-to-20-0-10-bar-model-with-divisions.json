@@ -1,7 +1,7 @@
 {
   "nuggetId": 140,
   "status": "in-progress",
-  "nextQId": 319451,
+  "nextQId": 319455,
   "questions": [
     {
       "id": 140001,
@@ -31,6 +31,122 @@
       "qaComment": "",
       "createdAt": "2026-08-27",
       "updatedAt": "2026-08-27"
+    },
+    {
+      "id": 319451,
+      "text": "# _ + 11 = 20",
+      "answer": "9",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 9,
+            "divisions": 9,
+            "braceLabel": "?"
+          },
+          {
+            "value": 11,
+            "divisions": 11,
+            "braceLabel": "11"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 1,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319452,
+      "text": "# _ + 10 = 20",
+      "answer": "7",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 7,
+            "divisions": 7,
+            "braceLabel": "?"
+          },
+          {
+            "value": 13,
+            "divisions": 13,
+            "braceLabel": "13"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 4,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319453,
+      "text": "# _ + 10 = 20",
+      "answer": "6",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 6,
+            "divisions": 6,
+            "braceLabel": "?"
+          },
+          {
+            "value": 14,
+            "divisions": 14,
+            "braceLabel": "14"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 3,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319454,
+      "text": "# _ + 10 = 20",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 5,
+            "divisions": 5,
+            "braceLabel": "?"
+          },
+          {
+            "value": 15,
+            "divisions": 15,
+            "braceLabel": "15"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 6,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
