@@ -2,10 +2,10 @@
   "name": "Addition 0-3 + 4-9 (Bar Model Without Divisions)",
   "questions": [
     {
-      "id": 1788267768099,
+      "id": 1788268356821,
       "visualType": "bm",
-      "text": "# 0 + 9 =",
-      "answer": "9",
+      "text": "# 0 + 5 =",
+      "answer": "5",
       "cfg": {
         "segments": [
           {
@@ -13,8 +13,8 @@
             "segLabel": "0"
           },
           {
-            "value": 9,
-            "segLabel": "9"
+            "value": 5,
+            "segLabel": "5"
           }
         ],
         "total": "?",
@@ -23,10 +23,10 @@
       }
     },
     {
-      "id": 1788267768100,
+      "id": 1788268356822,
       "visualType": "bm",
-      "text": "# 1 + 6 =",
-      "answer": "7",
+      "text": "# 1 + 4 =",
+      "answer": "5",
       "cfg": {
         "segments": [
           {
@@ -34,8 +34,8 @@
             "segLabel": "1"
           },
           {
-            "value": 6,
-            "segLabel": "6"
+            "value": 4,
+            "segLabel": "4"
           }
         ],
         "total": "?",
@@ -44,7 +44,7 @@
       }
     },
     {
-      "id": 1788267768101,
+      "id": 1788268356823,
       "visualType": "bm",
       "text": "# 2 + 4 =",
       "answer": "6",
@@ -65,7 +65,7 @@
       }
     },
     {
-      "id": 1788267768102,
+      "id": 1788268356824,
       "visualType": "bm",
       "text": "# 3 + 7 =",
       "answer": "10",
@@ -86,10 +86,10 @@
       }
     },
     {
-      "id": 1788267768103,
+      "id": 1788268356825,
       "visualType": "bm",
-      "text": "# 2 + 5 =",
-      "answer": "7",
+      "text": "# 2 + 6 =",
+      "answer": "8",
       "cfg": {
         "segments": [
           {
@@ -97,8 +97,8 @@
             "segLabel": "2"
           },
           {
-            "value": 5,
-            "segLabel": "5"
+            "value": 6,
+            "segLabel": "6"
           }
         ],
         "total": "?",
