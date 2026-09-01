@@ -5,13 +5,13 @@
     {
       "id": 1788268350266,
       "visualType": "pr",
-      "text": "0 + 4 =",
-      "answer": "4",
+      "text": "1 + 4 =",
+      "answer": "5",
       "cfg": {
         "mode": "addsub",
         "display": "array",
         "align": "centre",
-        "countA": 0,
+        "countA": 1,
         "imageIdA": "illus:animals/elephant_grey",
         "countB": 4,
         "imageIdB": "illus:animals/elephant_grey",
