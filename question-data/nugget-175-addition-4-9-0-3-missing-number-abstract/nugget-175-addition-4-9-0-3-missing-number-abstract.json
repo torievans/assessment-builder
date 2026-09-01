@@ -71,9 +71,9 @@
   "exampleOverride": {
     "visualType": "wb",
     "text": "What number is missing?",
-    "answer": "2",
+    "answer": "4",
     "cfg": {
-      "wbText": "6 + _ = 8",
+      "wbText": "_ + 3 = 7",
       "wbBorder": "#319377",
       "wbSkin": "#ffa99c"
     }
