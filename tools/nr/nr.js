@@ -15,11 +15,17 @@ let nr_N=5,nr_rep='frames',nr_fType='5',nr_fc1=0,nr_fc2=4,nr_fSplitOn=false,nr_f
 let nr_bg=5,nr_ba=4,nr_bb=0,nr_beadPreset='colour',nr_beadSplitOn=false,nr_beadSplit=5;
 let nr_mc=4,nr_mc2=0,nr_mlRows='10',nr_mlFill='row',nr_mlGap=false,nr_mlSplitOn=false,nr_mlSplit=5;
 let nr_niSplitOn=false,nr_niSplit=5;
-let nr_pwWhole=10,nr_pwPart1=6,nr_pwPart2=4;
+let nr_pwWhole='10',nr_pwPart1='6',nr_pwPart2='4';
+let nr_pwColWhole=-1,nr_pwColPart1=-1,nr_pwColPart2=-1;
 
 function nrMkSwatches(id,activeIdx,cb){
   const el=document.getElementById(id);if(!el)return;el.innerHTML='';
   NR_STROKES.forEach((col,i)=>{const b=document.createElement('button');b.className='swatch'+(i===activeIdx?' selected':'');b.style.background=col;b.title=['Red','Orange','Yellow','Green','Blue','Purple','Pink'][i];b.onclick=()=>{el.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));b.classList.add('selected');cb(i);autoPreviewNR();};el.appendChild(b);});
+}
+function nrMkPWSwatches(id,activeIdx,cb){
+  const el=document.getElementById(id);if(!el)return;el.innerHTML='';
+  const wb=document.createElement('button');wb.className='swatch'+(activeIdx===-1?' selected':'');wb.style.background='#fff';wb.style.outline='2px dashed #ccc';wb.style.outlineOffset='-2px';wb.title='None';wb.onclick=()=>{el.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));wb.classList.add('selected');cb(-1);autoPreviewNR();};el.appendChild(wb);
+  BM_BOX_COLORS.forEach((col,i)=>{const b=document.createElement('button');b.className='swatch'+(i===activeIdx?' selected':'');b.style.background=BM_BAR_LIGHT_FILLS[i];b.style.outline='2px solid '+col;b.style.outlineOffset='-2px';b.title=['Red','Orange','Yellow','Green','Blue','Purple','Pink'][i];b.onclick=()=>{el.querySelectorAll('.swatch').forEach(s=>s.classList.remove('selected'));b.classList.add('selected');cb(i);autoPreviewNR();};el.appendChild(b);});
 }
 
 function initNRPanel(){
@@ -29,6 +35,9 @@ function initNRPanel(){
   nrMkSwatches('nr-sw-bb', nr_bb, i=>{nr_bb=i;});
   nrMkSwatches('nr-sw-mc', nr_mc, i=>{nr_mc=i;});
   nrMkSwatches('nr-sw-mc2',nr_mc2,i=>{nr_mc2=i;});
+  nrMkPWSwatches('nr-pw-sw-whole', nr_pwColWhole, i=>{nr_pwColWhole=i;});
+  nrMkPWSwatches('nr-pw-sw-part1', nr_pwColPart1, i=>{nr_pwColPart1=i;});
+  nrMkPWSwatches('nr-pw-sw-part2', nr_pwColPart2, i=>{nr_pwColPart2=i;});
 }
 
 function nrResetState(){
@@ -36,7 +45,7 @@ function nrResetState(){
   nr_bg=5;nr_ba=4;nr_bb=0;nr_beadPreset='colour';nr_beadSplitOn=false;nr_beadSplit=5;
   nr_mc=4;nr_mc2=0;nr_mlRows='10';nr_mlFill='row';nr_mlGap=false;nr_mlSplitOn=false;nr_mlSplit=5;
   nr_niSplitOn=false;nr_niSplit=5;
-  nr_pwWhole=10;nr_pwPart1=6;nr_pwPart2=4;
+  nr_pwWhole='10';nr_pwPart1='6';nr_pwPart2='4';nr_pwColWhole=-1;nr_pwColPart1=-1;nr_pwColPart2=-1;
   document.getElementById('nr-num-in').value=5;
   document.querySelectorAll('[data-nrrep]').forEach(b=>b.classList.toggle('active',b.dataset.nrrep==='frames'));
   ['frames','beads','multilink','numicon','partwhole'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x==='frames'?'':'none';});
@@ -78,7 +87,8 @@ function nrSetNum(v){
 }
 function nrChangeNum(d){nrSetNum(nr_N+d);}
 function nrSetRep(btn){nr_rep=btn.dataset.nrrep;document.querySelectorAll('[data-nrrep]').forEach(b=>b.classList.toggle('active',b.dataset.nrrep===nr_rep));['frames','beads','multilink','numicon','partwhole'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x===nr_rep?'':'none';});const numRow=document.getElementById('nr-num-row');if(numRow)numRow.style.display=nr_rep==='partwhole'?'none':'';autoPreviewNR();}
-function nrSetPW(field,v){const n=parseInt(v);if(isNaN(n))return;if(field==='whole'){nr_pwWhole=n;}else if(field==='part1'){nr_pwPart1=n;}else if(field==='part2'){nr_pwPart2=n;}autoPreviewNR();}
+function nrSetPW(field,v){const s=v.trim();if(field==='whole'){nr_pwWhole=s;}else if(field==='part1'){nr_pwPart1=s;}else if(field==='part2'){nr_pwPart2=s;}autoPreviewNR();}
+function nrSetPWColor(circle,idx){if(circle==='whole'){nr_pwColWhole=idx;}else if(circle==='part1'){nr_pwColPart1=idx;}else if(circle==='part2'){nr_pwColPart2=idx;}autoPreviewNR();}
 function nrSetFT(btn){nr_fType=btn.dataset.nrft;document.querySelectorAll('[data-nrft]').forEach(b=>b.classList.toggle('active',b.dataset.nrft===nr_fType));autoPreviewNR();}
 function nrSetFSplit(btn,on){nr_fSplitOn=on;document.querySelectorAll('[data-nrfsp]').forEach(b=>b.classList.toggle('active',b.dataset.nrfsp===(on?'on':'off')));document.getElementById('nr-fsplit-row').style.display=on?'':'none';autoPreviewNR();}
 function nrChangeFSplit(d){nrSetFSplitAt(nr_fSplit+d);}
@@ -105,7 +115,7 @@ function autoPreviewNR(){
 }
 
 function getNRConfig(){
-  if(nr_rep==='partwhole')return{rep:'partwhole',pwWhole:nr_pwWhole,pwPart1:nr_pwPart1,pwPart2:nr_pwPart2};
+  if(nr_rep==='partwhole')return{rep:'partwhole',pwWhole:nr_pwWhole,pwPart1:nr_pwPart1,pwPart2:nr_pwPart2,pwColWhole:nr_pwColWhole,pwColPart1:nr_pwColPart1,pwColPart2:nr_pwColPart2};
   return{n:nr_N,rep:nr_rep,fType:nr_fType,fc1:nr_fc1,fc2:nr_fc2,fSplitOn:nr_fSplitOn,fSplit:nr_fSplit,bg:nr_bg,ba:nr_ba,bb:nr_bb,beadPreset:nr_beadPreset,beadSplitOn:nr_beadSplitOn,beadSplit:nr_beadSplit,mc:nr_mc,mc2:nr_mc2,mlRows:nr_mlRows,mlFill:nr_mlFill,mlGap:nr_mlGap,mlSplitOn:nr_mlSplitOn,mlSplit:nr_mlSplit,niSplitOn:nr_niSplitOn,niSplit:nr_niSplit};
 }
 
@@ -113,13 +123,17 @@ function restoreNRConfig(cfg){
   if(!cfg)return;
   nr_rep=cfg.rep||'frames';
   if(nr_rep==='partwhole'){
-    nr_pwWhole=cfg.pwWhole??10;nr_pwPart1=cfg.pwPart1??6;nr_pwPart2=cfg.pwPart2??4;
+    nr_pwWhole=String(cfg.pwWhole??'10');nr_pwPart1=String(cfg.pwPart1??'6');nr_pwPart2=String(cfg.pwPart2??'4');
+    nr_pwColWhole=cfg.pwColWhole??-1;nr_pwColPart1=cfg.pwColPart1??-1;nr_pwColPart2=cfg.pwColPart2??-1;
     document.querySelectorAll('[data-nrrep]').forEach(b=>b.classList.toggle('active',b.dataset.nrrep==='partwhole'));
     ['frames','beads','multilink','numicon','partwhole'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x==='partwhole'?'':'none';});
     const numRow=document.getElementById('nr-num-row');if(numRow)numRow.style.display='none';
     const pww=document.getElementById('nr-pw-whole');if(pww)pww.value=nr_pwWhole;
     const pwp1=document.getElementById('nr-pw-part1');if(pwp1)pwp1.value=nr_pwPart1;
     const pwp2=document.getElementById('nr-pw-part2');if(pwp2)pwp2.value=nr_pwPart2;
+    nrMkPWSwatches('nr-pw-sw-whole',nr_pwColWhole,i=>{nr_pwColWhole=i;});
+    nrMkPWSwatches('nr-pw-sw-part1',nr_pwColPart1,i=>{nr_pwColPart1=i;});
+    nrMkPWSwatches('nr-pw-sw-part2',nr_pwColPart2,i=>{nr_pwColPart2=i;});
     autoPreviewNR();return;
   }
   if(!cfg.n)return;
@@ -308,14 +322,19 @@ function nrPanelHTML(){
             <div id="nr-opts-partwhole" style="display:none">
               <div class="form-row">
                 <div class="field field-sm"><label>Whole</label>
-                  <input type="number" id="nr-pw-whole" min="0" max="100" value="10" style="width:60px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetPW('whole',this.value)">
+                  <input type="text" id="nr-pw-whole" value="10" style="width:60px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetPW('whole',this.value)">
                 </div>
                 <div class="field field-sm"><label>Part 1</label>
-                  <input type="number" id="nr-pw-part1" min="0" max="100" value="6" style="width:60px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetPW('part1',this.value)">
+                  <input type="text" id="nr-pw-part1" value="6" style="width:60px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetPW('part1',this.value)">
                 </div>
                 <div class="field field-sm"><label>Part 2</label>
-                  <input type="number" id="nr-pw-part2" min="0" max="100" value="4" style="width:60px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetPW('part2',this.value)">
+                  <input type="text" id="nr-pw-part2" value="4" style="width:60px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetPW('part2',this.value)">
                 </div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label>Whole colour</label><div class="swatch-row" id="nr-pw-sw-whole"></div></div>
+                <div class="field"><label>Part 1 colour</label><div class="swatch-row" id="nr-pw-sw-part1"></div></div>
+                <div class="field"><label>Part 2 colour</label><div class="swatch-row" id="nr-pw-sw-part2"></div></div>
               </div>
             </div>
             <div class="preview-box" id="nr-preview"><p class="preview-empty">Select a number above to preview.</p></div>
