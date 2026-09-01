@@ -69,13 +69,13 @@
     }
   ],
   "exampleOverride": {
-    "visualType": "wb",
-    "text": "What number is missing?",
-    "answer": "4",
     "cfg": {
-      "wbText": "4 + _ = 8",
+      "wbText": "4 + _ = 7",
       "wbBorder": "#319377",
       "wbSkin": "#ffa99c"
-    }
+    },
+    "visualType": "wb",
+    "answer": "3",
+    "text": "What number is missing?"
   }
 }
