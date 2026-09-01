@@ -1,5 +1,6 @@
 {
-  "name": "Addition 0-3 + 4-9 (Images)",
+  "nuggetId": 152,
+  "nextQId": 319496,
   "questions": [
     {
       "id": 1788268350266,
@@ -29,7 +30,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268350267,
@@ -59,7 +62,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268350268,
@@ -89,7 +94,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268350269,
@@ -119,7 +126,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268350270,
@@ -149,7 +158,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
