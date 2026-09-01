@@ -1,0 +1,16 @@
+{
+  "nuggetId": 174,
+  "status": "in-progress",
+  "nextQId": 319496,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "1 + _ = 3",
+      "wbBorder": "#319377",
+      "wbSkin": "#ffa99c"
+    },
+    "visualType": "wb",
+    "answer": "2",
+    "text": "What number is missing?"
+  }
+}
