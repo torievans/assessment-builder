@@ -1,7 +1,7 @@
 {
   "nuggetId": 144,
   "status": "ready-for-qa",
-  "nextQId": 319461,
+  "nextQId": 319477,
   "questions": [
     {
       "id": 319456,
@@ -46,27 +46,6 @@
       "createdAt": "2026-09-01"
     },
     {
-      "id": 319458,
-      "text": "# 13 + _ = 20",
-      "answer": "7",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "nr",
-      "cfg": {
-        "rep": "partwhole",
-        "pwWhole": "20",
-        "pwPart1": "13",
-        "pwPart2": "?",
-        "pwColWhole": 1,
-        "pwColPart1": 0,
-        "pwColPart2": 0
-      },
-      "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
-    },
-    {
       "id": 319459,
       "text": "# 12 + _ = 20",
       "answer": "8",
@@ -81,6 +60,27 @@
         "pwPart1": "12",
         "pwPart2": "?",
         "pwColWhole": 5,
+        "pwColPart1": 0,
+        "pwColPart2": 0
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319458,
+      "text": "# 13 + _ = 20",
+      "answer": "7",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nr",
+      "cfg": {
+        "rep": "partwhole",
+        "pwWhole": "20",
+        "pwPart1": "13",
+        "pwPart2": "?",
+        "pwColWhole": 1,
         "pwColPart1": 0,
         "pwColPart2": 0
       },
