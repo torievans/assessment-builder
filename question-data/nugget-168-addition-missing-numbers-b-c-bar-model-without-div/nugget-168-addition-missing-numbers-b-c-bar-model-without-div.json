@@ -3,9 +3,6 @@
   "nextQId": 1790100000076,
   "questions": [],
   "exampleOverride": {
-    "visualType": "bm",
-    "text": "# _ + 3 =",
-    "answer": "4",
     "cfg": {
       "segments": [
         {
@@ -17,9 +14,12 @@
           "segLabel": "3"
         }
       ],
-      "total": 7,
-      "colorIdx": 3,
+      "total": 9,
+      "colorIdx": 5,
       "multi": true
-    }
+    },
+    "visualType": "bm",
+    "answer": "6",
+    "text": "# _ + 3 = 9"
   }
 }
