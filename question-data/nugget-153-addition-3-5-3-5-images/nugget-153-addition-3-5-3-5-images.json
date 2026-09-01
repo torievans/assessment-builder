@@ -5,7 +5,7 @@
     {
       "id": 1788268359053,
       "visualType": "pr",
-      "text": "3 + 3 =",
+      "text": "# 3 + 3 =",
       "answer": "6",
       "cfg": {
         "mode": "addsub",
@@ -37,7 +37,7 @@
     {
       "id": 1788268359054,
       "visualType": "pr",
-      "text": "4 + 5 =",
+      "text": "# 4 + 5 =",
       "answer": "9",
       "cfg": {
         "mode": "addsub",
@@ -69,7 +69,7 @@
     {
       "id": 1788268359055,
       "visualType": "pr",
-      "text": "5 + 4 =",
+      "text": "# 5 + 4 =",
       "answer": "9",
       "cfg": {
         "mode": "addsub",
@@ -101,7 +101,7 @@
     {
       "id": 1788268359056,
       "visualType": "pr",
-      "text": "3 + 5 =",
+      "text": "# 3 + 5 =",
       "answer": "8",
       "cfg": {
         "mode": "addsub",
@@ -133,7 +133,7 @@
     {
       "id": 1788268359057,
       "visualType": "pr",
-      "text": "5 + 3 =",
+      "text": "# 5 + 3 =",
       "answer": "8",
       "cfg": {
         "mode": "addsub",
@@ -165,7 +165,7 @@
   ],
   "exampleOverride": {
     "visualType": "pr",
-    "text": "4 + 4 =",
+    "text": "# 4 + 4 =",
     "answer": "8",
     "cfg": {
       "mode": "addsub",
