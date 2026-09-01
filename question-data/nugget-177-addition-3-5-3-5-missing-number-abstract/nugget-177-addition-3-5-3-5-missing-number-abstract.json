@@ -2,29 +2,29 @@
   "name": "Addition 3-5 + 3-5 Missing Number (Abstract)",
   "questions": [
     {
-      "id": 1788267233760,
+      "id": 1788267780998,
       "visualType": "wb",
       "text": "What number is missing?",
-      "answer": "3",
+      "answer": "4",
       "cfg": {
-        "wbText": "_ + 3 = 6",
+        "wbText": "_ + 3 = 7",
         "wbBorder": "#D46B55",
         "wbSkin": "#d4895a"
       }
     },
     {
-      "id": 1788267233761,
+      "id": 1788267780999,
       "visualType": "wb",
       "text": "What number is missing?",
-      "answer": "3",
+      "answer": "5",
       "cfg": {
-        "wbText": "4 + _ = 7",
+        "wbText": "4 + _ = 9",
         "wbBorder": "#FECC6B",
         "wbSkin": "#ffa99c"
       }
     },
     {
-      "id": 1788267233762,
+      "id": 1788267781000,
       "visualType": "wb",
       "text": "What number is missing?",
       "answer": "3",
@@ -35,23 +35,23 @@
       }
     },
     {
-      "id": 1788267233763,
+      "id": 1788267781001,
       "visualType": "wb",
       "text": "What number is missing?",
-      "answer": "5",
+      "answer": "4",
       "cfg": {
-        "wbText": "4 + _ = 9",
+        "wbText": "5 + _ = 9",
         "wbBorder": "#319377",
         "wbSkin": "#ffa99c"
       }
     },
     {
-      "id": 1788267233764,
+      "id": 1788267781002,
       "visualType": "wb",
       "text": "What number is missing?",
-      "answer": "5",
+      "answer": "4",
       "cfg": {
-        "wbText": "_ + 5 = 10",
+        "wbText": "_ + 4 = 8",
         "wbBorder": "#847AC9",
         "wbSkin": "#6b3520"
       }
