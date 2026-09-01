@@ -720,8 +720,35 @@ function nrRenderNumicon(cfg) {
   return `<svg viewBox="0 0 ${svgW} ${svgH}" xmlns="http://www.w3.org/2000/svg" style="width:${svgW}px;height:auto;max-width:100%">${paths}${circs}</svg>`;
 }
 
+function nrRenderPartWhole(cfg) {
+  const whole = cfg.pwWhole ?? '?';
+  const p1    = cfg.pwPart1 ?? '?';
+  const p2    = cfg.pwPart2 ?? '?';
+  const W=320, H=240, WR=55, PR=50;
+  const WCX=W/2, WCY=68, P1CX=78, P1CY=188, P2CX=242, P2CY=188;
+  function seg(cx,cy,r,val){
+    const isQ=(val==='?'||val==null);
+    const fs=Math.round(r*0.65);
+    const fill=isQ?'#F3F4F6':'#fff';
+    const stroke=isQ?'#9CA3AF':'#1A1A2E';
+    const dash=isQ?' stroke-dasharray="6,4"':'';
+    return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="2.5"${dash}/>
+    <text x="${cx}" y="${cy}" dominant-baseline="middle" text-anchor="middle" font-size="${fs}" font-weight="bold" font-family="system-ui,sans-serif" fill="${isQ?'#6B7280':'#1A1A2E'}">${val??'?'}</text>`;
+  }
+  function ln(x1,y1,r1,x2,y2,r2){
+    const a=Math.atan2(y2-y1,x2-x1);
+    return `<line x1="${(x1+r1*Math.cos(a)).toFixed(1)}" y1="${(y1+r1*Math.sin(a)).toFixed(1)}" x2="${(x2-r2*Math.cos(a)).toFixed(1)}" y2="${(y2-r2*Math.sin(a)).toFixed(1)}" stroke="#1A1A2E" stroke-width="2"/>`;
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto">
+    ${ln(WCX,WCY,WR,P1CX,P1CY,PR)}${ln(WCX,WCY,WR,P2CX,P2CY,PR)}
+    ${seg(WCX,WCY,WR,whole)}${seg(P1CX,P1CY,PR,p1)}${seg(P2CX,P2CY,PR,p2)}
+  </svg>`;
+}
+
 function nrRenderFromCfg(cfg) {
-  if (!cfg || !cfg.n) return '';
+  if (!cfg) return '';
+  if (cfg.rep === 'partwhole') return nrRenderPartWhole(cfg);
+  if (!cfg.n) return '';
   if (cfg.rep === 'frames')    return nrRenderFrames(cfg);
   if (cfg.rep === 'beads')     return nrRenderBeads(cfg);
   if (cfg.rep === 'multilink') return nrRenderMultilink(cfg);
