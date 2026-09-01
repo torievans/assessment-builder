@@ -12,6 +12,7 @@
       "answer": "4",
       "lineStyle": "terminate",
       "colour": "grey",
+      "revealAnswer": true,
       "jumpFrom": 2,
       "jumpTo": 4,
       "jumpType": "unit",
