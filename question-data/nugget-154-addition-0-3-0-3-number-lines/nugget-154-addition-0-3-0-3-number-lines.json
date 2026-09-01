@@ -4,64 +4,60 @@
   "nextQId": 319496,
   "questions": [
     {
-      "id": 1788266735004,
+      "id": 1788269054867,
       "visualType": "nl",
-      "text": "# 1 + 1 =",
-      "answer": "2",
-      "cfg": {
-        "start": 0,
-        "end": 10,
-        "partitions": 10,
-        "valuesGivenEvery": null,
-        "answer": "2",
-        "lineStyle": "terminate",
-        "colour": "grey",
-        "revealAnswer": true,
-        "jumpFrom": 1,
-        "jumpTo": 2,
-        "jumpType": "unit",
-        "jumpLabel": "",
-        "jumpArrow": true,
-        "jumpCircle": "none",
-        "jumpColour": "red"
-      },
-      "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
-    },
-    {
-      "id": 1788266735005,
-      "visualType": "nl",
-      "text": "# 2 + 1 =",
+      "text": "# 1 + 2 =",
       "answer": "3",
       "cfg": {
         "start": 0,
-        "end": 10,
-        "partitions": 10,
+        "end": 6,
+        "partitions": 6,
         "valuesGivenEvery": null,
         "answer": "3",
         "lineStyle": "terminate",
         "colour": "grey",
         "revealAnswer": true,
-        "jumpFrom": 2,
+        "jumpFrom": 1,
         "jumpTo": 3,
         "jumpType": "unit",
         "jumpLabel": "",
         "jumpArrow": true,
         "jumpCircle": "none",
-        "jumpColour": "orange"
-      },
-      "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
+        "jumpColour": "red"
+      }
     },
     {
-      "id": 1788266735006,
+      "id": 1788269054868,
+      "visualType": "nl",
+      "text": "# 2 + 3 =",
+      "answer": "5",
+      "cfg": {
+        "start": 0,
+        "end": 6,
+        "partitions": 6,
+        "valuesGivenEvery": null,
+        "answer": "5",
+        "lineStyle": "terminate",
+        "colour": "grey",
+        "revealAnswer": true,
+        "jumpFrom": 2,
+        "jumpTo": 5,
+        "jumpType": "unit",
+        "jumpLabel": "",
+        "jumpArrow": true,
+        "jumpCircle": "none",
+        "jumpColour": "orange"
+      }
+    },
+    {
+      "id": 1788269054869,
       "visualType": "nl",
       "text": "# 3 + 1 =",
       "answer": "4",
       "cfg": {
         "start": 0,
-        "end": 10,
-        "partitions": 10,
+        "end": 6,
+        "partitions": 6,
         "valuesGivenEvery": null,
         "answer": "4",
         "lineStyle": "terminate",
@@ -74,81 +70,75 @@
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "green"
-      },
-      "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
+      }
     },
     {
-      "id": 1788266735007,
+      "id": 1788269054870,
       "visualType": "nl",
-      "text": "# 2 + 3 =",
+      "text": "# 3 + 2 =",
       "answer": "5",
       "cfg": {
         "start": 0,
-        "end": 10,
-        "partitions": 10,
+        "end": 6,
+        "partitions": 6,
         "valuesGivenEvery": null,
         "answer": "5",
         "lineStyle": "terminate",
         "colour": "grey",
         "revealAnswer": true,
-        "jumpFrom": 2,
+        "jumpFrom": 3,
         "jumpTo": 5,
         "jumpType": "unit",
         "jumpLabel": "",
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "blue"
-      },
-      "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
+      }
     },
     {
-      "id": 1788266735008,
+      "id": 1788269054871,
       "visualType": "nl",
-      "text": "# 3 + 3 =",
-      "answer": "6",
+      "text": "# 1 + 1 =",
+      "answer": "2",
       "cfg": {
         "start": 0,
-        "end": 10,
-        "partitions": 10,
+        "end": 6,
+        "partitions": 6,
         "valuesGivenEvery": null,
-        "answer": "6",
+        "answer": "2",
         "lineStyle": "terminate",
         "colour": "grey",
         "revealAnswer": true,
-        "jumpFrom": 3,
-        "jumpTo": 6,
+        "jumpFrom": 1,
+        "jumpTo": 2,
         "jumpType": "unit",
         "jumpLabel": "",
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "purple"
-      },
-      "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
+      }
     }
   ],
   "exampleOverride": {
+    "visualType": "nl",
+    "text": "# 2 + 1 =",
+    "answer": "3",
     "cfg": {
       "start": 0,
-      "end": 10,
-      "partitions": 10,
+      "end": 6,
+      "partitions": 6,
       "valuesGivenEvery": null,
-      "answer": "4",
+      "answer": "3",
       "lineStyle": "terminate",
       "colour": "grey",
       "revealAnswer": true,
       "jumpFrom": 2,
-      "jumpTo": 4,
+      "jumpTo": 3,
       "jumpType": "unit",
       "jumpLabel": "",
       "jumpArrow": true,
       "jumpCircle": "none",
       "jumpColour": "purple"
-    },
-    "visualType": "nl",
-    "answer": "4",
-    "text": "# 2 + 2 ="
+    }
   }
 }
