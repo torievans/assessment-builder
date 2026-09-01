@@ -1,7 +1,7 @@
 {
   "nuggetId": 146,
   "status": "in-progress",
-  "nextQId": 319468,
+  "nextQId": 319471,
   "questions": [
     {
       "id": 146001,
@@ -19,6 +19,57 @@
       "qaComment": "",
       "createdAt": "2026-08-27",
       "updatedAt": "2026-08-27"
+    },
+    {
+      "id": 319468,
+      "text": "What number is missing?",
+      "answer": "4",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "16 + _ = 20",
+        "wbBorder": "#D46B55",
+        "wbSkin": "#d4895a"
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319469,
+      "text": "What number is missing?",
+      "answer": "8",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "12 + _ = 20",
+        "wbBorder": "#F5995B",
+        "wbSkin": "#b06530"
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319470,
+      "text": "What number is missing?",
+      "answer": "9",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "11 + _ = 20",
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#6b3520"
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
