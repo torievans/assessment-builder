@@ -4,53 +4,7 @@
   "nextQId": 319496,
   "questions": [
     {
-      "id": 1788269442961,
-      "visualType": "nl",
-      "text": "# 1 + 1 =",
-      "answer": "2",
-      "cfg": {
-        "start": 0,
-        "end": 6,
-        "partitions": 6,
-        "valuesGivenEvery": null,
-        "answer": "2",
-        "lineStyle": "terminate",
-        "colour": "grey",
-        "revealAnswer": true,
-        "jumpFrom": 1,
-        "jumpTo": 2,
-        "jumpType": "unit",
-        "jumpLabel": "",
-        "jumpArrow": true,
-        "jumpCircle": "none",
-        "jumpColour": "red"
-      }
-    },
-    {
-      "id": 1788269442962,
-      "visualType": "nl",
-      "text": "# 2 + 1 =",
-      "answer": "3",
-      "cfg": {
-        "start": 0,
-        "end": 6,
-        "partitions": 6,
-        "valuesGivenEvery": null,
-        "answer": "3",
-        "lineStyle": "terminate",
-        "colour": "grey",
-        "revealAnswer": true,
-        "jumpFrom": 2,
-        "jumpTo": 3,
-        "jumpType": "unit",
-        "jumpLabel": "",
-        "jumpArrow": true,
-        "jumpCircle": "none",
-        "jumpColour": "orange"
-      }
-    },
-    {
-      "id": 1788269442963,
+      "id": 1788269612485,
       "visualType": "nl",
       "text": "# 3 + 1 =",
       "answer": "4",
@@ -69,11 +23,34 @@
         "jumpLabel": "",
         "jumpArrow": true,
         "jumpCircle": "none",
-        "jumpColour": "green"
+        "jumpColour": "red"
       }
     },
     {
-      "id": 1788269442964,
+      "id": 1788269612486,
+      "visualType": "nl",
+      "text": "# 1 + 1 =",
+      "answer": "2",
+      "cfg": {
+        "start": 0,
+        "end": 6,
+        "partitions": 6,
+        "valuesGivenEvery": null,
+        "answer": "2",
+        "lineStyle": "terminate",
+        "colour": "grey",
+        "revealAnswer": true,
+        "jumpFrom": 1,
+        "jumpTo": 2,
+        "jumpType": "unit",
+        "jumpLabel": "",
+        "jumpArrow": true,
+        "jumpCircle": "none",
+        "jumpColour": "orange"
+      }
+    },
+    {
+      "id": 1788269612487,
       "visualType": "nl",
       "text": "# 3 + 2 =",
       "answer": "5",
@@ -92,11 +69,34 @@
         "jumpLabel": "",
         "jumpArrow": true,
         "jumpCircle": "none",
+        "jumpColour": "green"
+      }
+    },
+    {
+      "id": 1788269612488,
+      "visualType": "nl",
+      "text": "# 2 + 1 =",
+      "answer": "3",
+      "cfg": {
+        "start": 0,
+        "end": 6,
+        "partitions": 6,
+        "valuesGivenEvery": null,
+        "answer": "3",
+        "lineStyle": "terminate",
+        "colour": "grey",
+        "revealAnswer": true,
+        "jumpFrom": 2,
+        "jumpTo": 3,
+        "jumpType": "unit",
+        "jumpLabel": "",
+        "jumpArrow": true,
+        "jumpCircle": "none",
         "jumpColour": "blue"
       }
     },
     {
-      "id": 1788269442965,
+      "id": 1788269612489,
       "visualType": "nl",
       "text": "# 3 + 3 =",
       "answer": "6",
