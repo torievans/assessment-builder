@@ -1,7 +1,7 @@
 {
   "nuggetId": 144,
   "status": "in-progress",
-  "nextQId": 319459,
+  "nextQId": 319461,
   "questions": [
     {
       "id": 319456,
@@ -58,6 +58,48 @@
         "rep": "partwhole",
         "pwWhole": "20",
         "pwPart1": "13",
+        "pwPart2": "?",
+        "pwColWhole": 1,
+        "pwColPart1": 0,
+        "pwColPart2": 0
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319459,
+      "text": "# 12 + _ = 20",
+      "answer": "8",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nr",
+      "cfg": {
+        "rep": "partwhole",
+        "pwWhole": "20",
+        "pwPart1": "12",
+        "pwPart2": "?",
+        "pwColWhole": 1,
+        "pwColPart1": 0,
+        "pwColPart2": 0
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319460,
+      "text": "# 18 + _ = 20",
+      "answer": "2",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "nr",
+      "cfg": {
+        "rep": "partwhole",
+        "pwWhole": "20",
+        "pwPart1": "18",
         "pwPart2": "?",
         "pwColWhole": 1,
         "pwColPart1": 0,
