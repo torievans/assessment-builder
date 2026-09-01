@@ -37,7 +37,8 @@
         "segments": [
           {
             "value": 1,
-            "braceLabel": "1"
+            "braceLabel": "1",
+            "divisions": 1
           },
           {
             "value": 2,
@@ -111,7 +112,8 @@
         "segments": [
           {
             "value": 1,
-            "braceLabel": "1"
+            "braceLabel": "1",
+            "divisions": 1
           },
           {
             "value": 3,
