@@ -2,49 +2,7 @@
   "name": "Addition 3-5 + 3-5 (Bar Model Without Divisions)",
   "questions": [
     {
-      "id": 1788267769920,
-      "visualType": "bm",
-      "text": "# 3 + 4 =",
-      "answer": "7",
-      "cfg": {
-        "segments": [
-          {
-            "value": 3,
-            "segLabel": "3"
-          },
-          {
-            "value": 4,
-            "segLabel": "4"
-          }
-        ],
-        "total": "?",
-        "colorIdx": 0,
-        "multi": true
-      }
-    },
-    {
-      "id": 1788267769921,
-      "visualType": "bm",
-      "text": "# 5 + 3 =",
-      "answer": "8",
-      "cfg": {
-        "segments": [
-          {
-            "value": 5,
-            "segLabel": "5"
-          },
-          {
-            "value": 3,
-            "segLabel": "3"
-          }
-        ],
-        "total": "?",
-        "colorIdx": 1,
-        "multi": true
-      }
-    },
-    {
-      "id": 1788267769922,
+      "id": 1788268365991,
       "visualType": "bm",
       "text": "# 4 + 5 =",
       "answer": "9",
@@ -60,12 +18,75 @@
           }
         ],
         "total": "?",
+        "colorIdx": 0,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788268365992,
+      "visualType": "bm",
+      "text": "# 5 + 5 =",
+      "answer": "10",
+      "cfg": {
+        "segments": [
+          {
+            "value": 5,
+            "segLabel": "5"
+          },
+          {
+            "value": 5,
+            "segLabel": "5"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 1,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788268365993,
+      "visualType": "bm",
+      "text": "# 4 + 3 =",
+      "answer": "7",
+      "cfg": {
+        "segments": [
+          {
+            "value": 4,
+            "segLabel": "4"
+          },
+          {
+            "value": 3,
+            "segLabel": "3"
+          }
+        ],
+        "total": "?",
         "colorIdx": 2,
         "multi": true
       }
     },
     {
-      "id": 1788267769923,
+      "id": 1788268365994,
+      "visualType": "bm",
+      "text": "# 3 + 5 =",
+      "answer": "8",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "segLabel": "3"
+          },
+          {
+            "value": 5,
+            "segLabel": "5"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 4,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788268365995,
       "visualType": "bm",
       "text": "# 3 + 3 =",
       "answer": "6",
@@ -78,27 +99,6 @@
           {
             "value": 3,
             "segLabel": "3"
-          }
-        ],
-        "total": "?",
-        "colorIdx": 4,
-        "multi": true
-      }
-    },
-    {
-      "id": 1788267769924,
-      "visualType": "bm",
-      "text": "# 5 + 4 =",
-      "answer": "9",
-      "cfg": {
-        "segments": [
-          {
-            "value": 5,
-            "segLabel": "5"
-          },
-          {
-            "value": 4,
-            "segLabel": "4"
           }
         ],
         "total": "?",
