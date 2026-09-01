@@ -17,13 +17,16 @@
           },
           {
             "value": 3,
+            "divisions": 3,
             "braceLabel": "3"
           }
         ],
         "total": "?",
         "colorIdx": 0,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788269614581,
@@ -45,7 +48,9 @@
         "total": "?",
         "colorIdx": 1,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788269614582,
@@ -67,7 +72,9 @@
         "total": "?",
         "colorIdx": 2,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788269614583,
@@ -89,7 +96,9 @@
         "total": "?",
         "colorIdx": 4,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788269614584,
@@ -111,7 +120,9 @@
         "total": "?",
         "colorIdx": 5,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
