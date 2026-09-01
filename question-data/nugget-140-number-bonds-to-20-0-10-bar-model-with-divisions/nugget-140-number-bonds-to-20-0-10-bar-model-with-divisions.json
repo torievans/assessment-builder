@@ -6,7 +6,7 @@
     {
       "id": 140001,
       "text": "# _ + 10 = 20",
-      "answer": "13",
+      "answer": 10,
       "type": "exact",
       "visualType": "bm",
       "image": "",
