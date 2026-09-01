@@ -164,7 +164,7 @@ function numberLineSVG(config) {
       const arrowBaseY = arrowTipY - 7;
       const AW = 3.5;
       s += `<polygon points="${x.toFixed(1)},${arrowTipY.toFixed(1)} ${(x-AW).toFixed(1)},${arrowBaseY.toFixed(1)} ${(x+AW).toFixed(1)},${arrowBaseY.toFixed(1)}" fill="${LABEL_COLOR}" stroke="${LABEL_COLOR}" stroke-width="1" stroke-linejoin="round"/>`;
-      s += `<text x="${x.toFixed(1)}" y="${(arrowBaseY-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="15" fill="${LABEL_COLOR}">${revealAnswer ? String(value) : '?'}</text>`;
+      s += `<text x="${x.toFixed(1)}" y="${(arrowBaseY-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="17" fill="${LABEL_COLOR}">${revealAnswer ? String(value) : '?'}</text>`;
     } else if (show) {
       const lbl = (isAnswer && !revealAnswer) ? '?' : String(value);
       const ly  = (LINE_Y + TICK_HALF + 14).toFixed(1);
@@ -177,7 +177,7 @@ function numberLineSVG(config) {
         const circleCy = (parseFloat(ly) + 4).toFixed(1);
         s += `<circle cx="${x.toFixed(1)}" cy="${circleCy}" r="${acr}" fill="none" stroke="${LABEL_COLOR}" stroke-width="2"/>`;
       }
-      s += `<text x="${x.toFixed(1)}" y="${ly}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="15" fill="${LABEL_COLOR}">${lbl}</text>`;
+      s += `<text x="${x.toFixed(1)}" y="${ly}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="17" fill="${LABEL_COLOR}">${lbl}</text>`;
     }
   });
 
@@ -188,7 +188,7 @@ function numberLineSVG(config) {
     const arrowBaseY = arrowTipY - 8;
     const AW = 3.5;
     s += `<polygon points="${ax.toFixed(1)},${arrowTipY.toFixed(1)} ${(ax-AW).toFixed(1)},${arrowBaseY.toFixed(1)} ${(ax+AW).toFixed(1)},${arrowBaseY.toFixed(1)}" fill="${LABEL_COLOR}" stroke="${LABEL_COLOR}" stroke-width="1" stroke-linejoin="round"/>`;
-    s += `<text x="${ax.toFixed(1)}" y="${(arrowBaseY-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="15" fill="${LABEL_COLOR}">?</text>`;
+    s += `<text x="${ax.toFixed(1)}" y="${(arrowBaseY-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="17" fill="${LABEL_COLOR}">?</text>`;
   }
 
   // ── Jump arcs (shared setup) ──
@@ -217,7 +217,7 @@ function numberLineSVG(config) {
         s += `<polygon points="${x2.toFixed(1)},${arcY} ${(x2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(x2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${JC2}" stroke="${JC2}" stroke-width="1" stroke-linejoin="round"/>`;
       }
       if (jump2Label) {
-        s += `<text x="${((x1+x2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="15" fill="${JC2}">${jump2Label}</text>`;
+        s += `<text x="${((x1+x2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="17" fill="${JC2}">${jump2Label}</text>`;
       }
     } else {
       const direction2 = jump2To > jump2From ? 1 : -1;
@@ -236,7 +236,7 @@ function numberLineSVG(config) {
           s += `<polygon points="${ax2.toFixed(1)},${arcY} ${(ax2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(ax2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${JC2}" stroke="${JC2}" stroke-width="1" stroke-linejoin="round"/>`;
         }
         if (jump2Label) {
-          s += `<text x="${((ax1+ax2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="15" fill="${JC2}">${jump2Label}</text>`;
+          s += `<text x="${((ax1+ax2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="17" fill="${JC2}">${jump2Label}</text>`;
         }
       }
     }
@@ -250,7 +250,7 @@ function numberLineSVG(config) {
       const ly2 = (LINE_Y + TICK_HALF + 14).toFixed(1);
       const circleCy2 = (parseFloat(ly2) + 4).toFixed(1);
       s += `<circle cx="${cx2.toFixed(1)}" cy="${circleCy2}" r="${cr2}" fill="none" stroke="${JC2}" stroke-width="2"/>`;
-      s += `<text x="${cx2.toFixed(1)}" y="${ly2}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="15" fill="${JC2}">${lbl2}</text>`;
+      s += `<text x="${cx2.toFixed(1)}" y="${ly2}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="17" fill="${JC2}">${lbl2}</text>`;
     }
   }
 
@@ -269,7 +269,7 @@ function numberLineSVG(config) {
         s += `<polygon points="${x2.toFixed(1)},${arcY} ${(x2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(x2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${JC1}" stroke="${JC1}" stroke-width="1" stroke-linejoin="round"/>`;
       }
       if (jumpLabel) {
-        s += `<text x="${((x1+x2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="15" fill="${JC1}">${jumpLabel}</text>`;
+        s += `<text x="${((x1+x2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="17" fill="${JC1}">${jumpLabel}</text>`;
       }
     } else {
       const direction = jumpTo > jumpFrom ? 1 : -1;
@@ -288,7 +288,7 @@ function numberLineSVG(config) {
           s += `<polygon points="${ax2.toFixed(1)},${arcY} ${(ax2-AW).toFixed(1)},${(arcY-AH).toFixed(1)} ${(ax2+AW).toFixed(1)},${(arcY-AH).toFixed(1)}" fill="${JC1}" stroke="${JC1}" stroke-width="1" stroke-linejoin="round"/>`;
         }
         if (jumpLabel) {
-          s += `<text x="${((ax1+ax2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="15" fill="${JC1}">${jumpLabel}</text>`;
+          s += `<text x="${((ax1+ax2)/2).toFixed(1)}" y="${(arcTop + h * 0.25 - 4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="700" font-size="17" fill="${JC1}">${jumpLabel}</text>`;
         }
       }
     }
@@ -408,7 +408,7 @@ function barModelSVG(config) {
       if (bl != null && bl !== '') {
         const x1 = cx, x2 = cx + sw, bY = by + BAR_H + 5, mid = (x1 + x2) / 2;
         s += `<path d="M${x1},${bY} V${bY + BRACE_ARM} H${(mid - 3).toFixed(1)} L${mid},${bY + BRACE_TIP} L${(mid + 3).toFixed(1)},${bY + BRACE_ARM} H${x2} V${bY}" fill="none" stroke="#AAAAAA" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;
-        s += `<text x="${mid}" y="${bY + BRACE_TIP + 5}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="15" fill="#AAAAAA">${bl}</text>`;
+        s += `<text x="${mid}" y="${bY + BRACE_TIP + 5}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="17" fill="#AAAAAA">${bl}</text>`;
       }
       cx += sw; return;
     }
@@ -440,7 +440,7 @@ function barModelSVG(config) {
     if (bl != null && bl !== '') {
       const x1 = cx, x2 = cx + sw, bY = by + BAR_H + 5, mid = (x1 + x2) / 2;
       s += `<path d="M${x1},${bY} V${bY + BRACE_ARM} H${(mid - 3).toFixed(1)} L${mid},${bY + BRACE_TIP} L${(mid + 3).toFixed(1)},${bY + BRACE_ARM} H${x2} V${bY}" fill="none" stroke="${segStroke}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;
-      s += `<text x="${mid}" y="${bY + BRACE_TIP + 5}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="15" fill="${segTextColor}">${bl}</text>`;
+      s += `<text x="${mid}" y="${bY + BRACE_TIP + 5}" text-anchor="middle" dominant-baseline="hanging" font-family="${FONT}" font-weight="700" font-size="17" fill="${segTextColor}">${bl}</text>`;
     }
     cx += sw;
   });
