@@ -1,8 +1,117 @@
 {
   "nuggetId": 141,
   "status": "in-progress",
-  "nextQId": 319478,
-  "questions": [],
+  "nextQId": 319482,
+  "questions": [
+    {
+      "id": 319478,
+      "text": "# 15 + _ = 20",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 15,
+            "segLabel": "16"
+          },
+          {
+            "value": 5,
+            "segLabel": "?"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 2,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319479,
+      "text": "# 14 + _ = 20",
+      "answer": "6",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 14,
+            "segLabel": "16"
+          },
+          {
+            "value": 6,
+            "segLabel": "?"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 4,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319480,
+      "text": "# 11 + _ = 20",
+      "answer": "9",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 11,
+            "segLabel": "16"
+          },
+          {
+            "value": 9,
+            "segLabel": "?"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 5,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 319481,
+      "text": "# 13 + _ = 20",
+      "answer": "7",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "bm",
+      "cfg": {
+        "segments": [
+          {
+            "value": 13,
+            "segLabel": "16"
+          },
+          {
+            "value": 7,
+            "segLabel": "?"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 6,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "segments": [
