@@ -114,6 +114,7 @@
           },
           {
             "value": 3,
+            "divisions": 3,
             "braceLabel": "3"
           }
         ],
