@@ -733,27 +733,25 @@ function nrRenderPartWhole(cfg) {
   const partCY = H - R - 20;
   const FONT = SHARED_FONT;
   const LINE_C = '#1A1A2E';
-  function circleStyle(idx) {
-    if (idx >= 0 && idx < BM_BOX_COLORS.length) {
-      return { fill: BM_BAR_LIGHT_FILLS[idx], stroke: BM_BOX_COLORS[idx], text: BM_BOX_TEXT_COLORS[idx] };
-    }
-    return { fill: '#fff', stroke: '#1A1A2E', text: '#1A1A2E' };
+  function resolveColour(idx) {
+    return (idx >= 0 && idx < BM_BOX_COLORS.length) ? BM_BOX_COLORS[idx] : '#1A1A2E';
   }
-  function lineToCircle(x1, y1, x2, y2) {
+  function lineToCircle(x1, y1, x2, y2, lineCol) {
     const dx = x2 - x1, dy = y2 - y1, d = Math.sqrt(dx * dx + dy * dy);
     const sx = x1 + R * dx / d, sy = y1 + R * dy / d;
     const ex = x2 - R * dx / d, ey = y2 - R * dy / d;
-    return '<line x1="' + sx.toFixed(1) + '" y1="' + sy.toFixed(1) + '" x2="' + ex.toFixed(1) + '" y2="' + ey.toFixed(1) + '" stroke="' + LINE_C + '" stroke-width="2.5" stroke-linecap="round"/>';
+    return '<line x1="' + sx.toFixed(1) + '" y1="' + sy.toFixed(1) + '" x2="' + ex.toFixed(1) + '" y2="' + ey.toFixed(1) + '" stroke="' + lineCol + '" stroke-width="2.5" stroke-linecap="round"/>';
   }
   function circle(cx, cy, label, colorIdx) {
-    const s = circleStyle(colorIdx);
+    const col = resolveColour(colorIdx);
     const fs = label === '?' ? 28 : 22;
-    return '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="' + s.fill + '" stroke="' + s.stroke + '" stroke-width="2.5"/>' +
-      '<text x="' + cx + '" y="' + cy + '" text-anchor="middle" dominant-baseline="central" font-family="' + FONT + '" font-size="' + fs + '" font-weight="bold" fill="' + s.text + '">' + label + '</text>';
+    return '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#fff" stroke="' + col + '" stroke-width="2.5"/>' +
+      '<text x="' + cx + '" y="' + cy + '" text-anchor="middle" dominant-baseline="central" font-family="' + FONT + '" font-size="' + fs + '" font-weight="bold" fill="' + col + '">' + label + '</text>';
   }
+  const lineCol = resolveColour(colW);
   return '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">' +
-    lineToCircle(wholeCX, wholeCY, part1CX, partCY) +
-    lineToCircle(wholeCX, wholeCY, part2CX, partCY) +
+    lineToCircle(wholeCX, wholeCY, part1CX, partCY, lineCol) +
+    lineToCircle(wholeCX, wholeCY, part2CX, partCY, lineCol) +
     circle(wholeCX, wholeCY, whole, colW) +
     circle(part1CX, partCY, part1, colP1) +
     circle(part2CX, partCY, part2, colP2) +
