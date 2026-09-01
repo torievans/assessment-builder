@@ -1,26 +1,8 @@
 {
   "nuggetId": 113,
   "status": "ready-for-qa",
-  "nextQId": 319360,
+  "nextQId": 319492,
   "questions": [
-    {
-      "id": 319305,
-      "text": "Write the number in numerals.",
-      "answer": "3",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "three",
-        "wbBorder": "#847AC9",
-        "wbSkin": "#b06530"
-      },
-      "imagePath": "",
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
-    },
     {
       "id": 319306,
       "text": "Write the number in numerals.",
@@ -36,8 +18,8 @@
         "wbSkin": "#ffa99c"
       },
       "imagePath": "",
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 319307,
@@ -54,8 +36,8 @@
         "wbSkin": "#b06530"
       },
       "imagePath": "",
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 319308,
@@ -71,8 +53,8 @@
         "wbSkin": "#ffa99c",
         "wbText": "four"
       },
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 319309,
@@ -89,8 +71,8 @@
         "wbSkin": "#d4895a"
       },
       "imagePath": "",
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 319310,
@@ -107,8 +89,8 @@
         "wbSkin": "#6b3520"
       },
       "imagePath": "",
-      "updatedAt": "2026-08-27",
-      "createdAt": "2026-08-27"
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
