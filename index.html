@@ -2836,7 +2836,10 @@ function getSharedBatchRowCfg(tr){
   if(tool==='bm'){
     const segs=(sharedBatchStructure.segments||[]).map((s,i)=>{
       const raw=g('seg'+i); const v=raw===''?s.value:(raw==='?'?'?':parseFloat(raw));
-      return {...s, value:v};
+      const seg={...s,value:v};
+      // Keep divisions in sync with value so "with divisions" bars stay correct
+      if(seg.divisions!==undefined&&typeof v==='number')seg.divisions=Math.max(1,Math.round(v));
+      return seg;
     });
     const rowIdx=parseInt(tr.dataset.rowIdx);
     const colorIdx=sharedBatchRowColors[rowIdx]?.colorIdx??sharedBatchStructure.colorIdx??0;
