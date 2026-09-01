@@ -55,8 +55,8 @@
     {
       "id": 1788268363706,
       "visualType": "bm",
-      "text": "# 4 + 4 =",
-      "answer": "8",
+      "text": "# 4 + 5 =",
+      "answer": "9",
       "cfg": {
         "segments": [
           {
@@ -66,8 +66,8 @@
           },
           {
             "value": 4,
-            "braceLabel": "4",
-            "divisions": 4
+            "divisions": 5,
+            "braceLabel": "4"
           }
         ],
         "total": "?",
