@@ -39,6 +39,24 @@
       "createdAt": "2026-09-01"
     },
     {
+      "id": 319476,
+      "text": "What number is missing?",
+      "answer": "13",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "wb",
+      "cfg": {
+        "wbText": "_ + 7 = 20",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      },
+      "imagePath": "",
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
       "id": 319474,
       "text": "What number is missing?",
       "answer": "8",
@@ -68,24 +86,6 @@
         "wbText": "_ + 5 = 20",
         "wbBorder": "#FECC6B",
         "wbSkin": "#6b3520"
-      },
-      "imagePath": "",
-      "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
-    },
-    {
-      "id": 319476,
-      "text": "What number is missing?",
-      "answer": "13",
-      "type": "exact",
-      "image": "",
-      "display": "",
-      "qaComment": "",
-      "visualType": "wb",
-      "cfg": {
-        "wbText": "_ + 7 = 20",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
       },
       "imagePath": "",
       "updatedAt": "2026-09-01",
