@@ -1,7 +1,34 @@
 {
   "nuggetId": 168,
-  "nextQId": 1790100000076,
-  "questions": [],
+  "nextQId": 1790100000077,
+  "questions": [
+    {
+      "id": 1790100000076,
+      "text": "hjgk",
+      "answer": "h",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "visualType": "pv",
+      "cfg": {
+        "n": 24,
+        "repType": "counters",
+        "dispMode": "standalone",
+        "numEqMode": "none",
+        "missingVals": [],
+        "blkColors": {
+          "1": "#C86464",
+          "10": "#F0B478",
+          "100": "#50B4A0",
+          "1000": "#788CB4"
+        },
+        "pvColors": {}
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "segments": [
