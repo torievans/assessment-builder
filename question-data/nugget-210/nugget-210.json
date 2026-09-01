@@ -32,14 +32,16 @@
       "id": 1790100000073,
       "visualType": "wb",
       "text": "",
-      "answer": "17",
+      "answer": "16",
       "cfg": {
-        "wbText": "7 + 10 = ",
+        "wbText": "7 + 9 = ",
         "wbBorder": "#5BAD5B",
         "wbSkin": "#b06530"
       },
       "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
+      "createdAt": "2026-09-01",
+      "imagePath": "",
+      "image": ""
     },
     {
       "id": 1790100000074,
