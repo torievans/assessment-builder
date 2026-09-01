@@ -2,19 +2,19 @@
   "name": "Addition 4-9 + 0-3 (Bar Model Without Divisions)",
   "questions": [
     {
-      "id": 1788267766577,
+      "id": 1788268219718,
       "visualType": "bm",
-      "text": "# 4 + 1 =",
-      "answer": "5",
+      "text": "# 7 + 3 =",
+      "answer": "10",
       "cfg": {
         "segments": [
           {
-            "value": 4,
-            "segLabel": "4"
+            "value": 7,
+            "segLabel": "7"
           },
           {
-            "value": 1,
-            "segLabel": "1"
+            "value": 3,
+            "segLabel": "3"
           }
         ],
         "total": "?",
@@ -23,7 +23,49 @@
       }
     },
     {
-      "id": 1788267766578,
+      "id": 1788268219719,
+      "visualType": "bm",
+      "text": "# 8 + 1 =",
+      "answer": "9",
+      "cfg": {
+        "segments": [
+          {
+            "value": 8,
+            "segLabel": "8"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 1,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788268219720,
+      "visualType": "bm",
+      "text": "# 8 + 3 =",
+      "answer": "11",
+      "cfg": {
+        "segments": [
+          {
+            "value": 8,
+            "segLabel": "8"
+          },
+          {
+            "value": 3,
+            "segLabel": "3"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 2,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788268219721,
       "visualType": "bm",
       "text": "# 5 + 3 =",
       "answer": "8",
@@ -39,15 +81,15 @@
           }
         ],
         "total": "?",
-        "colorIdx": 1,
+        "colorIdx": 4,
         "multi": true
       }
     },
     {
-      "id": 1788267766579,
+      "id": 1788268219722,
       "visualType": "bm",
-      "text": "# 6 + 0 =",
-      "answer": "6",
+      "text": "# 6 + 2 =",
+      "answer": "8",
       "cfg": {
         "segments": [
           {
@@ -55,50 +97,8 @@
             "segLabel": "6"
           },
           {
-            "value": 0,
-            "segLabel": "0"
-          }
-        ],
-        "total": "?",
-        "colorIdx": 2,
-        "multi": true
-      }
-    },
-    {
-      "id": 1788267766580,
-      "visualType": "bm",
-      "text": "# 8 + 2 =",
-      "answer": "10",
-      "cfg": {
-        "segments": [
-          {
-            "value": 8,
-            "segLabel": "8"
-          },
-          {
             "value": 2,
             "segLabel": "2"
-          }
-        ],
-        "total": "?",
-        "colorIdx": 4,
-        "multi": true
-      }
-    },
-    {
-      "id": 1788267766581,
-      "visualType": "bm",
-      "text": "# 9 + 3 =",
-      "answer": "12",
-      "cfg": {
-        "segments": [
-          {
-            "value": 9,
-            "segLabel": "9"
-          },
-          {
-            "value": 3,
-            "segLabel": "3"
           }
         ],
         "total": "?",
