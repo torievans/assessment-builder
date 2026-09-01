@@ -53,7 +53,7 @@
         "rep": "frames",
         "fType": "10",
         "fc1": 1,
-        "fc2": 4,
+        "fc2": 3,
         "fSplitOn": true,
         "fSplit": 7,
         "bg": 5,
