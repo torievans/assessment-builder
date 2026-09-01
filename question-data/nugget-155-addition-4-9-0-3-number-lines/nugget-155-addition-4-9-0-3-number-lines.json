@@ -110,7 +110,7 @@
       "answer": "11",
       "cfg": {
         "start": 0,
-        "end": 10,
+        "end": 12,
         "partitions": 12,
         "valuesGivenEvery": null,
         "answer": "11",
