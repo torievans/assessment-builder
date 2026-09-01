@@ -58,22 +58,24 @@
       "id": 1788268222634,
       "visualType": "wb",
       "text": "",
-      "answer": "10",
+      "answer": "12",
       "cfg": {
-        "wbText": "9 + 1 = ",
+        "wbText": "9 + 3 = ",
         "wbBorder": "#847AC9",
         "wbSkin": "#6b3520"
       },
       "updatedAt": "2026-09-01",
-      "createdAt": "2026-09-01"
+      "createdAt": "2026-09-01",
+      "imagePath": "",
+      "image": ""
     }
   ],
   "exampleOverride": {
     "visualType": "wb",
     "text": "",
-    "answer": "8",
+    "answer": "9",
     "cfg": {
-      "wbText": "6 + 2 = ",
+      "wbText": "8 + 1 = ",
       "wbBorder": "#7898F0",
       "wbSkin": "#b06530"
     }
