@@ -88,14 +88,7 @@
         "answer": "8",
         "lineStyle": "terminate",
         "colour": "grey",
-        "revealAnswer": true,
-        "jumpFrom": 3,
-        "jumpTo": 8,
-        "jumpType": "unit",
-        "jumpLabel": "",
-        "jumpArrow": true,
-        "jumpCircle": "none",
-        "jumpColour": "purple"
+        "revealAnswer": true
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
