@@ -4,17 +4,17 @@
   "nextQId": 319496,
   "questions": [
     {
-      "id": 1788269440819,
+      "id": 1788269610235,
       "visualType": "pr",
-      "text": "1 + 1 =",
-      "answer": "2",
+      "text": "1 + 2 =",
+      "answer": "3",
       "cfg": {
         "mode": "addsub",
         "display": "array",
         "align": "centre",
         "countA": 1,
         "imageIdA": "illus:animals/cat_orange",
-        "countB": 1,
+        "countB": 2,
         "imageIdB": "illus:animals/cat_orange",
         "op": "add",
         "subMode": "crossed",
@@ -34,17 +34,17 @@
       }
     },
     {
-      "id": 1788269440820,
+      "id": 1788269610236,
       "visualType": "pr",
-      "text": "1 + 2 =",
-      "answer": "3",
+      "text": "2 + 3 =",
+      "answer": "5",
       "cfg": {
         "mode": "addsub",
         "display": "array",
         "align": "centre",
-        "countA": 1,
+        "countA": 2,
         "imageIdA": "illus:animals/dog_brown",
-        "countB": 2,
+        "countB": 3,
         "imageIdB": "illus:animals/dog_brown",
         "op": "add",
         "subMode": "crossed",
@@ -64,17 +64,17 @@
       }
     },
     {
-      "id": 1788269440821,
+      "id": 1788269610237,
       "visualType": "pr",
-      "text": "2 + 2 =",
-      "answer": "4",
+      "text": "1 + 1 =",
+      "answer": "2",
       "cfg": {
         "mode": "addsub",
         "display": "array",
         "align": "centre",
-        "countA": 2,
+        "countA": 1,
         "imageIdA": "illus:animals/bird_blue",
-        "countB": 2,
+        "countB": 1,
         "imageIdB": "illus:animals/bird_blue",
         "op": "add",
         "subMode": "crossed",
@@ -94,17 +94,17 @@
       }
     },
     {
-      "id": 1788269440822,
+      "id": 1788269610238,
       "visualType": "pr",
-      "text": "2 + 3 =",
-      "answer": "5",
+      "text": "2 + 2 =",
+      "answer": "4",
       "cfg": {
         "mode": "addsub",
         "display": "array",
         "align": "centre",
         "countA": 2,
         "imageIdA": "illus:food/fruit/apple_red",
-        "countB": 3,
+        "countB": 2,
         "imageIdB": "illus:food/fruit/apple_red",
         "op": "add",
         "subMode": "crossed",
@@ -124,7 +124,7 @@
       }
     },
     {
-      "id": 1788269440823,
+      "id": 1788269610239,
       "visualType": "pr",
       "text": "3 + 3 =",
       "answer": "6",
