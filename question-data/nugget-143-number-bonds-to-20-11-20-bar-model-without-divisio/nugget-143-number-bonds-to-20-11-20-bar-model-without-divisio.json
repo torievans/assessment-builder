@@ -1,6 +1,26 @@
 {
   "nuggetId": 143,
-  "status": "not-started",
-  "nextQId": 319482,
-  "questions": []
+  "status": "in-progress",
+  "nextQId": 319483,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 15,
+          "segLabel": "?"
+        },
+        {
+          "value": 5,
+          "segLabel": "5"
+        }
+      ],
+      "total": 20,
+      "colorIdx": 4,
+      "multi": true
+    },
+    "visualType": "bm",
+    "answer": "15",
+    "text": "# _ + 5 = 20"
+  }
 }
