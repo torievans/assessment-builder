@@ -76,14 +76,7 @@
         "answer": "15",
         "lineStyle": "terminate",
         "colour": "grey",
-        "revealAnswer": true,
-        "jumpFrom": 2,
-        "jumpTo": 15,
-        "jumpType": "unit",
-        "jumpLabel": "",
-        "jumpArrow": true,
-        "jumpCircle": "none",
-        "jumpColour": "green"
+        "revealAnswer": true
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
