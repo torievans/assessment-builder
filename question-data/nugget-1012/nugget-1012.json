@@ -31,7 +31,7 @@
     },
     {
       "id": 2,
-      "text": "How many **tens** are there in 45?",
+      "text": "**How many tens** are there in 45?",
       "answer": "4",
       "type": "exact",
       "image": "",
