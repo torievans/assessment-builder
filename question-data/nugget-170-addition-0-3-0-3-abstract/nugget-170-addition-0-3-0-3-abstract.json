@@ -1,6 +1,6 @@
 {
   "nuggetId": 170,
-  "status": "in-progress",
+  "status": "ready-for-qa",
   "nextQId": 319496,
   "questions": [
     {
@@ -12,7 +12,9 @@
         "wbText": "3 + 3 = ",
         "wbBorder": "#D46B55",
         "wbSkin": "#d4895a"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788269619095,
@@ -23,7 +25,9 @@
         "wbText": "3 + 1 = ",
         "wbBorder": "#FECC6B",
         "wbSkin": "#ffa99c"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788269619096,
@@ -34,7 +38,9 @@
         "wbText": "1 + 2 = ",
         "wbBorder": "#FC7E91",
         "wbSkin": "#b06530"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788269619097,
@@ -45,7 +51,9 @@
         "wbText": "2 + 3 = ",
         "wbBorder": "#319377",
         "wbSkin": "#ffa99c"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788269619098,
@@ -56,7 +64,9 @@
         "wbText": "1 + 1 = ",
         "wbBorder": "#847AC9",
         "wbSkin": "#6b3520"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
