@@ -1,6 +1,6 @@
 {
   "nuggetId": 200,
-  "nextQId": 1790100000026,
+  "nextQId": 1790100000076,
   "questions": [
     {
       "id": 1790100000021,
@@ -129,9 +129,6 @@
     }
   ],
   "exampleOverride": {
-    "visualType": "nl",
-    "text": "# 2 + 11 =",
-    "answer": "13",
     "cfg": {
       "start": 0,
       "end": 25,
@@ -140,14 +137,10 @@
       "answer": "13",
       "lineStyle": "terminate",
       "colour": "grey",
-      "revealAnswer": true,
-      "jumpFrom": 2,
-      "jumpTo": 13,
-      "jumpType": "unit",
-      "jumpLabel": "",
-      "jumpArrow": true,
-      "jumpCircle": "none",
-      "jumpColour": "purple"
-    }
+      "revealAnswer": true
+    },
+    "visualType": "nl",
+    "answer": "13",
+    "text": "# 2 + 11 ="
   }
 }
