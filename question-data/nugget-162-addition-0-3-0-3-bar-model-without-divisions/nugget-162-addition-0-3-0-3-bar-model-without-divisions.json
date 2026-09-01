@@ -4,7 +4,7 @@
   "nextQId": 319496,
   "questions": [
     {
-      "id": 1788269447087,
+      "id": 1788269616691,
       "visualType": "bm",
       "text": "# 1 + 1 =",
       "answer": "2",
@@ -25,19 +25,19 @@
       }
     },
     {
-      "id": 1788269447088,
+      "id": 1788269616692,
       "visualType": "bm",
-      "text": "# 2 + 1 =",
-      "answer": "3",
+      "text": "# 3 + 3 =",
+      "answer": "6",
       "cfg": {
         "segments": [
           {
-            "value": 2,
-            "segLabel": "2"
+            "value": 3,
+            "segLabel": "3"
           },
           {
-            "value": 1,
-            "segLabel": "1"
+            "value": 3,
+            "segLabel": "3"
           }
         ],
         "total": "?",
@@ -46,7 +46,7 @@
       }
     },
     {
-      "id": 1788269447089,
+      "id": 1788269616693,
       "visualType": "bm",
       "text": "# 2 + 2 =",
       "answer": "4",
@@ -67,7 +67,28 @@
       }
     },
     {
-      "id": 1788269447090,
+      "id": 1788269616694,
+      "visualType": "bm",
+      "text": "# 2 + 1 =",
+      "answer": "3",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "segLabel": "2"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 4,
+        "multi": true
+      }
+    },
+    {
+      "id": 1788269616695,
       "visualType": "bm",
       "text": "# 3 + 2 =",
       "answer": "5",
@@ -80,27 +101,6 @@
           {
             "value": 2,
             "segLabel": "2"
-          }
-        ],
-        "total": "?",
-        "colorIdx": 4,
-        "multi": true
-      }
-    },
-    {
-      "id": 1788269447091,
-      "visualType": "bm",
-      "text": "# 3 + 3 =",
-      "answer": "6",
-      "cfg": {
-        "segments": [
-          {
-            "value": 3,
-            "segLabel": "3"
-          },
-          {
-            "value": 3,
-            "segLabel": "3"
           }
         ],
         "total": "?",
