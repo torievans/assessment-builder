@@ -129,25 +129,25 @@
     }
   ],
   "exampleOverride": {
-    "visualType": "bm",
-    "text": "# 4 + 4 =",
-    "answer": "8",
     "cfg": {
       "segments": [
         {
-          "value": 4,
+          "value": 3,
           "divisions": 4,
           "braceLabel": "4"
         },
         {
           "value": 4,
-          "braceLabel": "4",
-          "divisions": 4
+          "divisions": 4,
+          "braceLabel": "4"
         }
       ],
       "total": "?",
       "colorIdx": 3,
       "multi": true
-    }
+    },
+    "visualType": "bm",
+    "answer": "8",
+    "text": "# 4 + 4 ="
   }
 }
