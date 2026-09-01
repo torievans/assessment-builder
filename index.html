@@ -1996,7 +1996,7 @@ function addToolQuestion(type){
   else if(type==='pv'){text=document.getElementById('pv-text').value.trim();answer=document.getElementById('pv-answer').value.trim();}
   else if(type==='pr'){text=document.getElementById('pr-text').value.trim();answer=document.getElementById('pr-answer').value.trim();}
   else{text=document.getElementById('text-q-text').value.trim();answer=document.getElementById('text-answer').value.trim();}
-  if(!text){alert('Please enter the question text.');return;}
+  if(!text&&type!=='pr'&&type!=='custom'){alert('Please enter the question text.');return;}
   if(!answer){alert('Please enter the correct answer.');return;}
   // ── Edit mode: update existing question ──────────────────────────
   if(editingQId!==null){
