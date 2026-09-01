@@ -1,5 +1,6 @@
 {
-  "name": "Addition 3-5 + 3-5 (Images)",
+  "nuggetId": 153,
+  "nextQId": 319496,
   "questions": [
     {
       "id": 1788268359053,
@@ -29,7 +30,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268359054,
@@ -59,7 +62,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268359055,
@@ -89,7 +94,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268359056,
@@ -119,7 +126,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268359057,
@@ -149,7 +158,9 @@
         "crayonBoxes": 1,
         "crayonFontSize": 148,
         "crayonLabel": "5 Crayons"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
