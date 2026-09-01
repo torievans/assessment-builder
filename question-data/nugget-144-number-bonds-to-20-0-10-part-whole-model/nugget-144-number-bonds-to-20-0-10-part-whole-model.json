@@ -38,9 +38,9 @@
         "pwWhole": "20",
         "pwPart1": "14",
         "pwPart2": "?",
-        "pwColWhole": 0,
-        "pwColPart1": 3,
-        "pwColPart2": 3
+        "pwColWhole": 4,
+        "pwColPart1": 0,
+        "pwColPart2": 0
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
