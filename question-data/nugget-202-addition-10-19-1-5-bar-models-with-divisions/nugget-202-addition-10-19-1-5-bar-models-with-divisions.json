@@ -1,0 +1,142 @@
+{
+  "questions": [
+    {
+      "id": 1790100000031,
+      "visualType": "bm",
+      "text": "# 11 + 2 =",
+      "answer": "13",
+      "cfg": {
+        "segments": [
+          {
+            "value": 11,
+            "divisions": 11,
+            "braceLabel": "11"
+          },
+          {
+            "value": 2,
+            "divisions": 2,
+            "braceLabel": "2"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 1,
+        "multi": true
+      }
+    },
+    {
+      "id": 1790100000032,
+      "visualType": "bm",
+      "text": "# 14 + 5 =",
+      "answer": "19",
+      "cfg": {
+        "segments": [
+          {
+            "value": 14,
+            "divisions": 14,
+            "braceLabel": "14"
+          },
+          {
+            "value": 5,
+            "divisions": 5,
+            "braceLabel": "5"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 3,
+        "multi": true
+      }
+    },
+    {
+      "id": 1790100000033,
+      "visualType": "bm",
+      "text": "# 14 + 1 =",
+      "answer": "15",
+      "cfg": {
+        "segments": [
+          {
+            "value": 14,
+            "divisions": 14,
+            "braceLabel": "14"
+          },
+          {
+            "value": 1,
+            "divisions": 1,
+            "braceLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 0,
+        "multi": true
+      }
+    },
+    {
+      "id": 1790100000034,
+      "visualType": "bm",
+      "text": "# 18 + 3 =",
+      "answer": "21",
+      "cfg": {
+        "segments": [
+          {
+            "value": 18,
+            "divisions": 18,
+            "braceLabel": "18"
+          },
+          {
+            "value": 3,
+            "divisions": 3,
+            "braceLabel": "3"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 5,
+        "multi": true
+      }
+    },
+    {
+      "id": 1790100000035,
+      "visualType": "bm",
+      "text": "# 13 + 4 =",
+      "answer": "17",
+      "cfg": {
+        "segments": [
+          {
+            "value": 13,
+            "divisions": 13,
+            "braceLabel": "13"
+          },
+          {
+            "value": 4,
+            "divisions": 4,
+            "braceLabel": "4"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 2,
+        "multi": true
+      }
+    }
+  ],
+  "exampleOverride": {
+    "visualType": "bm",
+    "text": "# 15 + 3 =",
+    "answer": "18",
+    "cfg": {
+      "segments": [
+        {
+          "value": 15,
+          "divisions": 15,
+          "braceLabel": "15"
+        },
+        {
+          "value": 3,
+          "divisions": 3,
+          "braceLabel": "3"
+        }
+      ],
+      "total": "?",
+      "colorIdx": 4,
+      "multi": true
+    }
+  },
+  "nextQId": 1790100000036
+}
