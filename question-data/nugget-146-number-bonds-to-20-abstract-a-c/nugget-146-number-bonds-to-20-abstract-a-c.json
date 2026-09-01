@@ -1,18 +1,18 @@
 {
   "nuggetId": 146,
   "status": "in-progress",
-  "nextQId": 146002,
+  "nextQId": 319467,
   "questions": [
     {
       "id": 146001,
-      "text": "7 + ? = 20",
+      "text": "What number is missing?",
       "answer": "13",
       "type": "exact",
       "visualType": "wb",
       "image": "",
       "imagePath": "",
       "cfg": {
-        "wbText": "7 + ? = 20",
+        "wbText": "7 + _ = 20",
         "wbBorder": "#319377",
         "wbSkin": "#ffa99c"
       },
