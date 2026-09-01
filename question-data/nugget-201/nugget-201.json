@@ -69,14 +69,7 @@
         "answer": "19",
         "lineStyle": "terminate",
         "colour": "grey",
-        "revealAnswer": true,
-        "jumpFrom": 9,
-        "jumpTo": 19,
-        "jumpType": "unit",
-        "jumpLabel": "",
-        "jumpArrow": true,
-        "jumpCircle": "none",
-        "jumpColour": "green"
+        "revealAnswer": true
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
