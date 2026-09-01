@@ -125,7 +125,7 @@
         "rep": "frames",
         "fType": "10",
         "fc1": 3,
-        "fc2": 4,
+        "fc2": 5,
         "fSplitOn": true,
         "fSplit": 6,
         "bg": 5,
