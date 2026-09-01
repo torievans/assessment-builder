@@ -57,7 +57,7 @@
     },
     {
       "id": 3,
-      "text": "How many **tens** are there in 61?",
+      "text": "**How many tens** are there in 61?",
       "answer": "6",
       "type": "exact",
       "image": "",
