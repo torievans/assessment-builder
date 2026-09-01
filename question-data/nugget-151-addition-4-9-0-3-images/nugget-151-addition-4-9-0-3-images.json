@@ -2,7 +2,7 @@
   "name": "Addition 4-9 + 0-3 (Images)",
   "questions": [
     {
-      "id": 1788267749636,
+      "id": 1788268213696,
       "visualType": "pr",
       "text": "4 + 1 =",
       "answer": "5",
@@ -32,17 +32,17 @@
       }
     },
     {
-      "id": 1788267749637,
+      "id": 1788268213697,
       "visualType": "pr",
-      "text": "5 + 3 =",
-      "answer": "8",
+      "text": "5 + 2 =",
+      "answer": "7",
       "cfg": {
         "mode": "addsub",
         "display": "array",
         "align": "centre",
         "countA": 5,
         "imageIdA": "illus:animals/crocodile_green",
-        "countB": 3,
+        "countB": 2,
         "imageIdB": "illus:animals/crocodile_green",
         "op": "add",
         "subMode": "crossed",
@@ -62,17 +62,17 @@
       }
     },
     {
-      "id": 1788267749638,
+      "id": 1788268213698,
       "visualType": "pr",
-      "text": "6 + 0 =",
-      "answer": "6",
+      "text": "6 + 3 =",
+      "answer": "9",
       "cfg": {
         "mode": "addsub",
         "display": "array",
         "align": "centre",
         "countA": 6,
         "imageIdA": "illus:animals/rhinoceros_grey",
-        "countB": 0,
+        "countB": 3,
         "imageIdB": "illus:animals/rhinoceros_grey",
         "op": "add",
         "subMode": "crossed",
@@ -92,17 +92,17 @@
       }
     },
     {
-      "id": 1788267749639,
+      "id": 1788268213699,
       "visualType": "pr",
-      "text": "8 + 2 =",
-      "answer": "10",
+      "text": "7 + 1 =",
+      "answer": "8",
       "cfg": {
         "mode": "addsub",
         "display": "array",
         "align": "centre",
-        "countA": 8,
+        "countA": 7,
         "imageIdA": "illus:food/veg/pumpkin_orange",
-        "countB": 2,
+        "countB": 1,
         "imageIdB": "illus:food/veg/pumpkin_orange",
         "op": "add",
         "subMode": "crossed",
@@ -122,17 +122,17 @@
       }
     },
     {
-      "id": 1788267749640,
+      "id": 1788268213700,
       "visualType": "pr",
-      "text": "9 + 3 =",
-      "answer": "12",
+      "text": "9 + 1 =",
+      "answer": "10",
       "cfg": {
         "mode": "addsub",
         "display": "array",
         "align": "centre",
         "countA": 9,
         "imageIdA": "illus:sports/ball_basketball_orange",
-        "countB": 3,
+        "countB": 1,
         "imageIdB": "illus:sports/ball_basketball_orange",
         "op": "add",
         "subMode": "crossed",
