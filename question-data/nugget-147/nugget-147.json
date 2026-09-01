@@ -30,10 +30,11 @@
       "qaComment": "",
       "visualType": "wb",
       "cfg": {
-        "wbText": "_ + 10 = 20",
+        "wbText": "_ + 11 = 20",
         "wbBorder": "#D46B55",
         "wbSkin": "#d4895a"
       },
+      "imagePath": "",
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
     },
