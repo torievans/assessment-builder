@@ -1,0 +1,25 @@
+{
+  "exampleOverride": {
+    "visualType": "bm",
+    "text": "# _ + 3 =",
+    "answer": "4",
+    "cfg": {
+      "segments": [
+        {
+          "value": "?",
+          "divisions": 1,
+          "braceLabel": "?"
+        },
+        {
+          "value": 3,
+          "divisions": 3,
+          "braceLabel": "3"
+        }
+      ],
+      "total": 7,
+      "colorIdx": 3,
+      "multi": true
+    }
+  },
+  "questions": []
+}
