@@ -5,7 +5,7 @@
   "questions": [
     {
       "id": 140001,
-      "text": "What is the missing number?",
+      "text": "# _ + 10 = 20",
       "answer": "13",
       "type": "exact",
       "visualType": "bm",
@@ -14,16 +14,19 @@
       "cfg": {
         "segments": [
           {
-            "value": 7,
-            "divisions": 7
+            "value": 10,
+            "divisions": 10,
+            "braceLabel": "?"
           },
           {
-            "value": "?",
-            "segLabel": "?"
+            "value": 10,
+            "divisions": 10,
+            "braceLabel": "10"
           }
         ],
         "total": 20,
-        "colorIdx": 0
+        "colorIdx": 0,
+        "multi": true
       },
       "qaComment": "",
       "createdAt": "2026-08-27",
