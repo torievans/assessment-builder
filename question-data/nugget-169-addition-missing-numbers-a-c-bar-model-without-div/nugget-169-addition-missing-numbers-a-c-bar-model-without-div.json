@@ -2,7 +2,143 @@
   "nuggetId": 169,
   "status": "not-started",
   "nextQId": 1790100000077,
-  "questions": [],
+  "questions": [
+    {
+      "id": 1756900000016,
+      "visualType": "bm",
+      "text": "# 3 + _ = 7",
+      "answer": "4",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "segLabel": "3"
+          },
+          {
+            "value": "?",
+            "segLabel": "?"
+          }
+        ],
+        "total": 7,
+        "colorIdx": 0,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1756900000017,
+      "visualType": "bm",
+      "text": "# 7 + _ = 9",
+      "answer": "2",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "cfg": {
+        "segments": [
+          {
+            "value": 7,
+            "segLabel": "7"
+          },
+          {
+            "value": "?",
+            "segLabel": "?"
+          }
+        ],
+        "total": 9,
+        "colorIdx": 1,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1756900000018,
+      "visualType": "bm",
+      "text": "# 3 + _ = 8",
+      "answer": "5",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "segLabel": "3"
+          },
+          {
+            "value": "?",
+            "segLabel": "?"
+          }
+        ],
+        "total": 8,
+        "colorIdx": 2,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1756900000019,
+      "visualType": "bm",
+      "text": "# 4 + _ = 10",
+      "answer": "6",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "cfg": {
+        "segments": [
+          {
+            "value": 4,
+            "segLabel": "4"
+          },
+          {
+            "value": "?",
+            "segLabel": "?"
+          }
+        ],
+        "total": 10,
+        "colorIdx": 4,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    },
+    {
+      "id": 1756900000020,
+      "visualType": "bm",
+      "text": "# 6 + _ = 9",
+      "answer": "3",
+      "type": "exact",
+      "image": "",
+      "display": "",
+      "qaComment": "",
+      "cfg": {
+        "segments": [
+          {
+            "value": 6,
+            "segLabel": "6"
+          },
+          {
+            "value": "?",
+            "segLabel": "?"
+          }
+        ],
+        "total": 9,
+        "colorIdx": 5,
+        "multi": true
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "segments": [
