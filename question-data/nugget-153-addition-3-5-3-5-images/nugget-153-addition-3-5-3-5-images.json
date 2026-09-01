@@ -101,7 +101,7 @@
     {
       "id": 1788268359056,
       "visualType": "pr",
-      "text": "3 + 5 =",
+      "text": "# 3 + 5 =",
       "answer": "8",
       "cfg": {
         "mode": "addsub",
