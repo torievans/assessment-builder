@@ -15,6 +15,7 @@ let nr_N=5,nr_rep='frames',nr_fType='5',nr_fc1=0,nr_fc2=4,nr_fSplitOn=false,nr_f
 let nr_bg=5,nr_ba=4,nr_bb=0,nr_beadPreset='colour',nr_beadSplitOn=false,nr_beadSplit=5;
 let nr_mc=4,nr_mc2=0,nr_mlRows='10',nr_mlFill='row',nr_mlGap=false,nr_mlSplitOn=false,nr_mlSplit=5;
 let nr_niSplitOn=false,nr_niSplit=5;
+let nr_pwWhole=10,nr_pwPart1=6,nr_pwPart2=4;
 
 function nrMkSwatches(id,activeIdx,cb){
   const el=document.getElementById(id);if(!el)return;el.innerHTML='';
@@ -35,9 +36,10 @@ function nrResetState(){
   nr_bg=5;nr_ba=4;nr_bb=0;nr_beadPreset='colour';nr_beadSplitOn=false;nr_beadSplit=5;
   nr_mc=4;nr_mc2=0;nr_mlRows='10';nr_mlFill='row';nr_mlGap=false;nr_mlSplitOn=false;nr_mlSplit=5;
   nr_niSplitOn=false;nr_niSplit=5;
+  nr_pwWhole=10;nr_pwPart1=6;nr_pwPart2=4;
   document.getElementById('nr-num-in').value=5;
   document.querySelectorAll('[data-nrrep]').forEach(b=>b.classList.toggle('active',b.dataset.nrrep==='frames'));
-  ['frames','beads','multilink','numicon'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x==='frames'?'':'none';});
+  ['frames','beads','multilink','numicon','partwhole'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x==='frames'?'':'none';});
   document.querySelectorAll('[data-nrft]').forEach(b=>b.classList.toggle('active',b.dataset.nrft==='5'));
   document.querySelectorAll('[data-nrfsp]').forEach(b=>b.classList.toggle('active',b.dataset.nrfsp==='off'));
   document.getElementById('nr-fsplit-row').style.display='none';
@@ -75,7 +77,8 @@ function nrSetNum(v){
   autoPreviewNR();
 }
 function nrChangeNum(d){nrSetNum(nr_N+d);}
-function nrSetRep(btn){nr_rep=btn.dataset.nrrep;document.querySelectorAll('[data-nrrep]').forEach(b=>b.classList.toggle('active',b.dataset.nrrep===nr_rep));['frames','beads','multilink','numicon'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x===nr_rep?'':'none';});autoPreviewNR();}
+function nrSetRep(btn){nr_rep=btn.dataset.nrrep;document.querySelectorAll('[data-nrrep]').forEach(b=>b.classList.toggle('active',b.dataset.nrrep===nr_rep));['frames','beads','multilink','numicon','partwhole'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x===nr_rep?'':'none';});const numRow=document.getElementById('nr-num-row');if(numRow)numRow.style.display=nr_rep==='partwhole'?'none':'';autoPreviewNR();}
+function nrSetPW(field,v){const n=parseInt(v);if(isNaN(n))return;if(field==='whole'){nr_pwWhole=n;}else if(field==='part1'){nr_pwPart1=n;}else if(field==='part2'){nr_pwPart2=n;}autoPreviewNR();}
 function nrSetFT(btn){nr_fType=btn.dataset.nrft;document.querySelectorAll('[data-nrft]').forEach(b=>b.classList.toggle('active',b.dataset.nrft===nr_fType));autoPreviewNR();}
 function nrSetFSplit(btn,on){nr_fSplitOn=on;document.querySelectorAll('[data-nrfsp]').forEach(b=>b.classList.toggle('active',b.dataset.nrfsp===(on?'on':'off')));document.getElementById('nr-fsplit-row').style.display=on?'':'none';autoPreviewNR();}
 function nrChangeFSplit(d){nrSetFSplitAt(nr_fSplit+d);}
@@ -102,12 +105,25 @@ function autoPreviewNR(){
 }
 
 function getNRConfig(){
+  if(nr_rep==='partwhole')return{rep:'partwhole',pwWhole:nr_pwWhole,pwPart1:nr_pwPart1,pwPart2:nr_pwPart2};
   return{n:nr_N,rep:nr_rep,fType:nr_fType,fc1:nr_fc1,fc2:nr_fc2,fSplitOn:nr_fSplitOn,fSplit:nr_fSplit,bg:nr_bg,ba:nr_ba,bb:nr_bb,beadPreset:nr_beadPreset,beadSplitOn:nr_beadSplitOn,beadSplit:nr_beadSplit,mc:nr_mc,mc2:nr_mc2,mlRows:nr_mlRows,mlFill:nr_mlFill,mlGap:nr_mlGap,mlSplitOn:nr_mlSplitOn,mlSplit:nr_mlSplit,niSplitOn:nr_niSplitOn,niSplit:nr_niSplit};
 }
 
 function restoreNRConfig(cfg){
-  if(!cfg||!cfg.n)return;
-  nr_N=cfg.n||5;nr_rep=cfg.rep||'frames';nr_fType=cfg.fType||'5';nr_fc1=cfg.fc1??0;nr_fc2=cfg.fc2??4;
+  if(!cfg)return;
+  nr_rep=cfg.rep||'frames';
+  if(nr_rep==='partwhole'){
+    nr_pwWhole=cfg.pwWhole??10;nr_pwPart1=cfg.pwPart1??6;nr_pwPart2=cfg.pwPart2??4;
+    document.querySelectorAll('[data-nrrep]').forEach(b=>b.classList.toggle('active',b.dataset.nrrep==='partwhole'));
+    ['frames','beads','multilink','numicon','partwhole'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x==='partwhole'?'':'none';});
+    const numRow=document.getElementById('nr-num-row');if(numRow)numRow.style.display='none';
+    const pww=document.getElementById('nr-pw-whole');if(pww)pww.value=nr_pwWhole;
+    const pwp1=document.getElementById('nr-pw-part1');if(pwp1)pwp1.value=nr_pwPart1;
+    const pwp2=document.getElementById('nr-pw-part2');if(pwp2)pwp2.value=nr_pwPart2;
+    autoPreviewNR();return;
+  }
+  if(!cfg.n)return;
+  nr_N=cfg.n||5;nr_fType=cfg.fType||'5';nr_fc1=cfg.fc1??0;nr_fc2=cfg.fc2??4;
   nr_fSplitOn=cfg.fSplitOn||false;nr_fSplit=cfg.fSplit||5;
   nr_bg=cfg.bg||5;nr_ba=cfg.ba??4;nr_bb=cfg.bb??0;nr_beadPreset=cfg.beadPreset||'colour';nr_beadSplitOn=cfg.beadSplitOn||false;nr_beadSplit=cfg.beadSplit??5;
   nr_mc=cfg.mc??4;nr_mc2=cfg.mc2??0;nr_mlRows=cfg.mlRows||'10';nr_mlFill=cfg.mlFill||'row';
@@ -115,7 +131,8 @@ function restoreNRConfig(cfg){
   nr_niSplitOn=cfg.niSplitOn||false;nr_niSplit=cfg.niSplit||5;
   document.getElementById('nr-num-in').value=nr_N;
   document.querySelectorAll('[data-nrrep]').forEach(b=>b.classList.toggle('active',b.dataset.nrrep===nr_rep));
-  ['frames','beads','multilink','numicon'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x===nr_rep?'':'none';});
+  ['frames','beads','multilink','numicon','partwhole'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x===nr_rep?'':'none';});
+  const numRow=document.getElementById('nr-num-row');if(numRow)numRow.style.display='';
   document.querySelectorAll('[data-nrft]').forEach(b=>b.classList.toggle('active',b.dataset.nrft===nr_fType));
   document.querySelectorAll('[data-nrfsp]').forEach(b=>b.classList.toggle('active',b.dataset.nrfsp===(nr_fSplitOn?'on':'off')));
   document.getElementById('nr-fsplit-row').style.display=nr_fSplitOn?'':'none';
@@ -149,7 +166,7 @@ function nrPanelHTML(){
               <div class="field field-sm"><label>Answer</label><input type="text" id="nr-answer" placeholder="e.g. 7"></div>
             </div>
             <div class="form-row" style="align-items:center">
-              <div class="field field-sm"><label>Number</label>
+              <div class="field field-sm" id="nr-num-row"><label>Number</label>
                 <div style="display:flex;align-items:center;gap:4px">
                   <button class="tog-btn" onclick="nrChangeNum(-1)" style="width:30px;height:30px;padding:0">−</button>
                   <input type="number" id="nr-num-in" min="1" max="20" value="5" style="width:46px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetNum(parseInt(this.value))">
@@ -162,6 +179,7 @@ function nrPanelHTML(){
                   <button class="tog-btn" data-nrrep="beads" onclick="nrSetRep(this)">Beads</button>
                   <button class="tog-btn" data-nrrep="multilink" onclick="nrSetRep(this)">Multilink</button>
                   <button class="tog-btn" data-nrrep="numicon" onclick="nrSetRep(this)">Number Shapes</button>
+                  <button class="tog-btn" data-nrrep="partwhole" onclick="nrSetRep(this)">Part-Whole</button>
                 </div>
               </div>
             </div>
@@ -283,6 +301,20 @@ function nrPanelHTML(){
                     <input type="number" id="nr-nisplit-in" min="1" max="10" value="5" style="width:44px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:3px;font-size:13px" oninput="nrSetNISplitAt(parseInt(this.value))">
                     <button class="tog-btn" onclick="nrChangeNISplit(1)" style="width:28px;height:28px;padding:0">+</button>
                   </div>
+                </div>
+              </div>
+            </div>
+            <!-- Sub-options: Part-Whole Model -->
+            <div id="nr-opts-partwhole" style="display:none">
+              <div class="form-row">
+                <div class="field field-sm"><label>Whole</label>
+                  <input type="number" id="nr-pw-whole" min="0" max="100" value="10" style="width:60px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetPW('whole',this.value)">
+                </div>
+                <div class="field field-sm"><label>Part 1</label>
+                  <input type="number" id="nr-pw-part1" min="0" max="100" value="6" style="width:60px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetPW('part1',this.value)">
+                </div>
+                <div class="field field-sm"><label>Part 2</label>
+                  <input type="number" id="nr-pw-part2" min="0" max="100" value="4" style="width:60px;text-align:center;border:1.5px solid #E2E5EA;border-radius:8px;padding:4px;font-size:14px" oninput="nrSetPW('part2',this.value)">
                 </div>
               </div>
             </div>
