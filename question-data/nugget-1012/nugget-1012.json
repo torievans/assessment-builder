@@ -1,11 +1,11 @@
 {
   "nuggetId": 1012,
   "status": "ready-for-qa",
-  "nextQId": 319304,
+  "nextQId": 319445,
   "questions": [
     {
       "id": 1,
-      "text": "How many **tens** are there in 23?",
+      "text": "**How many tens** are there in 23?",
       "answer": "2",
       "type": "exact",
       "image": "",
