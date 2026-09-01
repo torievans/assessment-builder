@@ -69,13 +69,12 @@
     }
   ],
   "exampleOverride": {
-    "visualType": "wb",
-    "text": "",
-    "answer": "16",
     "cfg": {
       "wbText": "8 + 8 = ",
-      "wbBorder": "#5BAD5B",
-      "wbSkin": "#ffa99c"
-    }
+      "wbBorder": "#D46B55",
+      "wbSkin": "#b06530"
+    },
+    "visualType": "wb",
+    "answer": "16"
   }
 }
