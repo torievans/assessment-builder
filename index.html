@@ -2676,7 +2676,7 @@ function openSharedBatch(tool){
   document.getElementById('shared-batch-tbody').innerHTML='';sharedBatchRowIdx=0;
   // Seed with one row pre-filled from current tool state
   const seed={};
-  if(tool==='bm'){(sharedBatchStructure.segments||[]).forEach((s,i)=>{seed[`seg${i}`]=s.value;});seed.answer=document.getElementById('bm-answer').value.trim();seed.text=document.getElementById('bm-text').value.trim();}
+  if(tool==='bm'){(sharedBatchStructure.segments||[]).forEach((s,i)=>{seed[`seg${i}`]=s.value;seed[`brace${i}`]=s.braceLabel??'';});seed.answer=document.getElementById('bm-answer').value.trim();seed.text=document.getElementById('bm-text').value.trim();}
   else if(tool==='nt'){seed.seq=document.getElementById('nt-seq').value.trim();seed.answer=document.getElementById('nt-answer').value.trim();seed.text=document.getElementById('nt-text').value.trim();}
   else if(tool==='nr'){seed.n=sharedBatchStructure.n;if(nrHasSplit(sharedBatchStructure))seed.split=nrGetSplit(sharedBatchStructure);seed.colorIdx=sharedBatchNRNextOffset%7;seed.answer=document.getElementById('nr-answer').value.trim();seed.text=document.getElementById('nr-text').value.trim();}
   else if(tool==='pv'){seed.n=sharedBatchStructure.n;seed.answer=document.getElementById('pv-answer').value.trim();seed.text=document.getElementById('pv-text').value.trim();}
@@ -2704,7 +2704,7 @@ function buildSharedBatchHeaders(){
   if(sharedBatchTool==='bm'){
     const n=sharedBatchStructure.segments?.length||2;
     cols=['Preview','Question'];
-    for(let i=0;i<n;i++)cols.push(`Seg ${i+1}`);
+    for(let i=0;i<n;i++){cols.push(`Seg ${i+1}`);cols.push(`Brace ${i+1}`);}
     cols.push('Answer','');
   } else if(sharedBatchTool==='nt'){
     cols=['Preview','Question','Sequence','Answer',''];
@@ -2744,7 +2744,10 @@ function addSharedBatchRow(defaults={}){
   cells+=`<td>${t('text',defaults.text??'','batch-input-text').replace('class="batch-input batch-input-text"',`class="batch-input batch-input-text" style="width:${textW}"`)}</td>`;
   if(tool==='bm'){
     const segs=sharedBatchStructure.segments||[];
-    segs.forEach((s,i)=>{ cells+=`<td>${n('seg'+i, defaults['seg'+i]??s.value)}</td>`; });
+    segs.forEach((s,i)=>{
+      cells+=`<td>${n('seg'+i, defaults['seg'+i]??s.value)}</td>`;
+      cells+=`<td>${t('brace'+i, defaults['brace'+i]??s.braceLabel??'','batch-input-text').replace('class="batch-input batch-input-text"','class="batch-input batch-input-text" style="width:60px"')}</td>`;
+    });
   } else if(tool==='nt'){
     // Track a unique colourOffset per row so each question starts on a different palette colour
     sharedBatchRowColors[idx]={colourOffset:sharedBatchNTNextOffset%7};sharedBatchNTNextOffset++;
@@ -2839,6 +2842,8 @@ function getSharedBatchRowCfg(tr){
       const seg={...s,value:v};
       // Keep divisions in sync with value so "with divisions" bars stay correct
       if(seg.divisions!==undefined&&typeof v==='number')seg.divisions=Math.max(1,Math.round(v));
+      // Per-row brace label
+      const bl=g('brace'+i);seg.braceLabel=bl||undefined;
       return seg;
     });
     const rowIdx=parseInt(tr.dataset.rowIdx);
