@@ -2,10 +2,10 @@
   "name": "Addition 4-9 + 0-3 (Bar Model With Divisions)",
   "questions": [
     {
-      "id": 1788267760777,
+      "id": 1788268217676,
       "visualType": "bm",
-      "text": "# 4 + 1 =",
-      "answer": "5",
+      "text": "# 4 + 3 =",
+      "answer": "7",
       "cfg": {
         "segments": [
           {
@@ -14,8 +14,8 @@
             "braceLabel": "4"
           },
           {
-            "value": 1,
-            "braceLabel": "1"
+            "value": 3,
+            "braceLabel": "3"
           }
         ],
         "total": "?",
@@ -24,10 +24,10 @@
       }
     },
     {
-      "id": 1788267760778,
+      "id": 1788268217677,
       "visualType": "bm",
-      "text": "# 5 + 3 =",
-      "answer": "8",
+      "text": "# 5 + 1 =",
+      "answer": "6",
       "cfg": {
         "segments": [
           {
@@ -36,8 +36,8 @@
             "braceLabel": "5"
           },
           {
-            "value": 3,
-            "braceLabel": "3"
+            "value": 1,
+            "braceLabel": "1"
           }
         ],
         "total": "?",
@@ -46,10 +46,10 @@
       }
     },
     {
-      "id": 1788267760779,
+      "id": 1788268217678,
       "visualType": "bm",
-      "text": "# 6 + 0 =",
-      "answer": "6",
+      "text": "# 6 + 2 =",
+      "answer": "8",
       "cfg": {
         "segments": [
           {
@@ -58,8 +58,8 @@
             "braceLabel": "6"
           },
           {
-            "value": 0,
-            "braceLabel": "0"
+            "value": 2,
+            "braceLabel": "2"
           }
         ],
         "total": "?",
@@ -68,16 +68,16 @@
       }
     },
     {
-      "id": 1788267760780,
+      "id": 1788268217679,
       "visualType": "bm",
-      "text": "# 8 + 2 =",
-      "answer": "10",
+      "text": "# 7 + 2 =",
+      "answer": "9",
       "cfg": {
         "segments": [
           {
-            "value": 8,
-            "divisions": 8,
-            "braceLabel": "8"
+            "value": 7,
+            "divisions": 7,
+            "braceLabel": "7"
           },
           {
             "value": 2,
@@ -90,7 +90,7 @@
       }
     },
     {
-      "id": 1788267760781,
+      "id": 1788268217680,
       "visualType": "bm",
       "text": "# 9 + 3 =",
       "answer": "12",
