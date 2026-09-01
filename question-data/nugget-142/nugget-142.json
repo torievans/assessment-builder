@@ -1,0 +1,36 @@
+{
+  "nuggetId": 142,
+  "status": "in-progress",
+  "nextQId": 319445,
+  "questions": [
+    {
+      "id": 142001,
+      "text": "# _ + 7 = 20",
+      "answer": "7",
+      "type": "exact",
+      "visualType": "bm",
+      "image": "",
+      "imagePath": "",
+      "cfg": {
+        "segments": [
+          {
+            "value": 13,
+            "divisions": 13,
+            "braceLabel": "?"
+          },
+          {
+            "value": "?",
+            "divisions": 7,
+            "braceLabel": "7"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 0,
+        "multi": true
+      },
+      "qaComment": "",
+      "createdAt": "2026-08-27",
+      "updatedAt": "2026-08-27"
+    }
+  ]
+}
