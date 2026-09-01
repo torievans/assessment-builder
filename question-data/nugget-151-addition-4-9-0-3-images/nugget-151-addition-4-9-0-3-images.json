@@ -165,15 +165,15 @@
   ],
   "exampleOverride": {
     "visualType": "pr",
-    "text": "6 + 2 =",
+    "text": "5 + 3 =",
     "answer": "8",
     "cfg": {
       "mode": "addsub",
       "display": "array",
       "align": "centre",
-      "countA": 6,
+      "countA": 5,
       "imageIdA": "illus:animals/tiger_orange",
-      "countB": 2,
+      "countB": 3,
       "imageIdB": "illus:animals/tiger_orange",
       "op": "add",
       "subMode": "crossed",
