@@ -12,6 +12,7 @@
 
 // NR state
 let nr_N=5,nr_rep='frames',nr_fType='5',nr_fc1=0,nr_fc2=4,nr_fSplitOn=false,nr_fSplit=5;
+let nr_pwWhole='20',nr_pwPart1='7',nr_pwPart2='?';
 let nr_bg=5,nr_ba=4,nr_bb=0,nr_beadPreset='colour',nr_beadSplitOn=false,nr_beadSplit=5;
 let nr_mc=4,nr_mc2=0,nr_mlRows='10',nr_mlFill='row',nr_mlGap=false,nr_mlSplitOn=false,nr_mlSplit=5;
 let nr_niSplitOn=false,nr_niSplit=5;
@@ -37,7 +38,7 @@ function nrResetState(){
   nr_niSplitOn=false;nr_niSplit=5;
   document.getElementById('nr-num-in').value=5;
   document.querySelectorAll('[data-nrrep]').forEach(b=>b.classList.toggle('active',b.dataset.nrrep==='frames'));
-  ['frames','beads','multilink','numicon'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x==='frames'?'':'none';});
+  ['frames','beads','multilink','numicon','partwhole'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x==='frames'?'':'none';});
   document.querySelectorAll('[data-nrft]').forEach(b=>b.classList.toggle('active',b.dataset.nrft==='5'));
   document.querySelectorAll('[data-nrfsp]').forEach(b=>b.classList.toggle('active',b.dataset.nrfsp==='off'));
   document.getElementById('nr-fsplit-row').style.display='none';
@@ -75,7 +76,7 @@ function nrSetNum(v){
   autoPreviewNR();
 }
 function nrChangeNum(d){nrSetNum(nr_N+d);}
-function nrSetRep(btn){nr_rep=btn.dataset.nrrep;document.querySelectorAll('[data-nrrep]').forEach(b=>b.classList.toggle('active',b.dataset.nrrep===nr_rep));['frames','beads','multilink','numicon'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x===nr_rep?'':'none';});autoPreviewNR();}
+function nrSetRep(btn){nr_rep=btn.dataset.nrrep;document.querySelectorAll('[data-nrrep]').forEach(b=>b.classList.toggle('active',b.dataset.nrrep===nr_rep));['frames','beads','multilink','numicon','partwhole'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x===nr_rep?'':'none';});const numRow=document.getElementById('nr-num-row');if(numRow)numRow.style.display=nr_rep==='partwhole'?'none':'';autoPreviewNR();}
 function nrSetFT(btn){nr_fType=btn.dataset.nrft;document.querySelectorAll('[data-nrft]').forEach(b=>b.classList.toggle('active',b.dataset.nrft===nr_fType));autoPreviewNR();}
 function nrSetFSplit(btn,on){nr_fSplitOn=on;document.querySelectorAll('[data-nrfsp]').forEach(b=>b.classList.toggle('active',b.dataset.nrfsp===(on?'on':'off')));document.getElementById('nr-fsplit-row').style.display=on?'':'none';autoPreviewNR();}
 function nrChangeFSplit(d){nrSetFSplitAt(nr_fSplit+d);}
@@ -102,6 +103,13 @@ function autoPreviewNR(){
 }
 
 function getNRConfig(){
+  if(nr_rep==='partwhole'){
+    const w=document.getElementById('nr-pw-whole')?.value.trim()||nr_pwWhole;
+    const p1=document.getElementById('nr-pw-part1')?.value.trim()||nr_pwPart1;
+    const p2=document.getElementById('nr-pw-part2')?.value.trim()||nr_pwPart2;
+    nr_pwWhole=w;nr_pwPart1=p1;nr_pwPart2=p2;
+    return{n:1,rep:'partwhole',pwWhole:w,pwPart1:p1,pwPart2:p2};
+  }
   return{n:nr_N,rep:nr_rep,fType:nr_fType,fc1:nr_fc1,fc2:nr_fc2,fSplitOn:nr_fSplitOn,fSplit:nr_fSplit,bg:nr_bg,ba:nr_ba,bb:nr_bb,beadPreset:nr_beadPreset,beadSplitOn:nr_beadSplitOn,beadSplit:nr_beadSplit,mc:nr_mc,mc2:nr_mc2,mlRows:nr_mlRows,mlFill:nr_mlFill,mlGap:nr_mlGap,mlSplitOn:nr_mlSplitOn,mlSplit:nr_mlSplit,niSplitOn:nr_niSplitOn,niSplit:nr_niSplit};
 }
 
@@ -115,7 +123,8 @@ function restoreNRConfig(cfg){
   nr_niSplitOn=cfg.niSplitOn||false;nr_niSplit=cfg.niSplit||5;
   document.getElementById('nr-num-in').value=nr_N;
   document.querySelectorAll('[data-nrrep]').forEach(b=>b.classList.toggle('active',b.dataset.nrrep===nr_rep));
-  ['frames','beads','multilink','numicon'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x===nr_rep?'':'none';});
+  ['frames','beads','multilink','numicon','partwhole'].forEach(x=>{const el=document.getElementById('nr-opts-'+x);if(el)el.style.display=x===nr_rep?'':'none';});
+  const numRow=document.getElementById('nr-num-row');if(numRow)numRow.style.display=nr_rep==='partwhole'?'none':'';
   document.querySelectorAll('[data-nrft]').forEach(b=>b.classList.toggle('active',b.dataset.nrft===nr_fType));
   document.querySelectorAll('[data-nrfsp]').forEach(b=>b.classList.toggle('active',b.dataset.nrfsp===(nr_fSplitOn?'on':'off')));
   document.getElementById('nr-fsplit-row').style.display=nr_fSplitOn?'':'none';
@@ -139,6 +148,14 @@ function restoreNRConfig(cfg){
     const el=document.getElementById(id);if(!el)return;
     el.querySelectorAll('.swatch').forEach((b,i)=>b.classList.toggle('selected',i===val));
   });
+  // Partwhole restore
+  if(cfg.rep==='partwhole'){
+    nr_pwWhole=cfg.pwWhole??'20';nr_pwPart1=cfg.pwPart1??'7';nr_pwPart2=cfg.pwPart2??'?';
+    const ew=document.getElementById('nr-pw-whole');if(ew)ew.value=nr_pwWhole;
+    const ep1=document.getElementById('nr-pw-part1');if(ep1)ep1.value=nr_pwPart1;
+    const ep2=document.getElementById('nr-pw-part2');if(ep2)ep2.value=nr_pwPart2;
+  }
+  const numRow=document.getElementById('nr-num-row');if(numRow)numRow.style.display=nr_rep==='partwhole'?'none':'';
   autoPreviewNR();
 }
 
@@ -148,7 +165,7 @@ function nrPanelHTML(){
               <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('nr-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><input type="text" id="nr-text" placeholder="e.g. Show 7 on a ten frame."></div>
               <div class="field field-sm"><label>Answer</label><input type="text" id="nr-answer" placeholder="e.g. 7"></div>
             </div>
-            <div class="form-row" style="align-items:center">
+            <div class="form-row" id="nr-num-row" style="align-items:center">
               <div class="field field-sm"><label>Number</label>
                 <div style="display:flex;align-items:center;gap:4px">
                   <button class="tog-btn" onclick="nrChangeNum(-1)" style="width:30px;height:30px;padding:0">−</button>
@@ -162,6 +179,7 @@ function nrPanelHTML(){
                   <button class="tog-btn" data-nrrep="beads" onclick="nrSetRep(this)">Beads</button>
                   <button class="tog-btn" data-nrrep="multilink" onclick="nrSetRep(this)">Multilink</button>
                   <button class="tog-btn" data-nrrep="numicon" onclick="nrSetRep(this)">Number Shapes</button>
+                  <button class="tog-btn" data-nrrep="partwhole" onclick="nrSetRep(this)">Part-Whole</button>
                 </div>
               </div>
             </div>
@@ -284,6 +302,13 @@ function nrPanelHTML(){
                     <button class="tog-btn" onclick="nrChangeNISplit(1)" style="width:28px;height:28px;padding:0">+</button>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div id="nr-opts-partwhole" style="display:none">
+              <div class="form-row">
+                <div class="field field-sm"><label>Whole</label><input type="text" id="nr-pw-whole" value="20" placeholder="20 or ?" style="width:60px" oninput="autoPreviewNR()"></div>
+                <div class="field field-sm"><label>Part 1</label><input type="text" id="nr-pw-part1" value="7" placeholder="7 or ?" style="width:60px" oninput="autoPreviewNR()"></div>
+                <div class="field field-sm"><label>Part 2</label><input type="text" id="nr-pw-part2" value="?" placeholder="13 or ?" style="width:60px" oninput="autoPreviewNR()"></div>
               </div>
             </div>
             <div class="preview-box" id="nr-preview"><p class="preview-empty">Select a number above to preview.</p></div>
