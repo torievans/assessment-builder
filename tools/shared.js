@@ -748,10 +748,9 @@ function nrRenderPartWhole(cfg) {
     return '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#fff" stroke="' + col + '" stroke-width="2.5"/>' +
       '<text x="' + cx + '" y="' + cy + '" text-anchor="middle" dominant-baseline="central" font-family="' + FONT + '" font-size="' + fs + '" font-weight="bold" fill="' + col + '">' + label + '</text>';
   }
-  const lineCol = resolveColour(colW);
   return '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">' +
-    lineToCircle(wholeCX, wholeCY, part1CX, partCY, lineCol) +
-    lineToCircle(wholeCX, wholeCY, part2CX, partCY, lineCol) +
+    lineToCircle(wholeCX, wholeCY, part1CX, partCY, resolveColour(colP1)) +
+    lineToCircle(wholeCX, wholeCY, part2CX, partCY, resolveColour(colP2)) +
     circle(wholeCX, wholeCY, whole, colW) +
     circle(part1CX, partCY, part1, colP1) +
     circle(part2CX, partCY, part2, colP2) +
