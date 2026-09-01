@@ -6,7 +6,7 @@
     {
       "id": 1788269610235,
       "visualType": "pr",
-      "text": "# 1 + 2 =",
+      "text": "1 + 2 =",
       "answer": "3",
       "cfg": {
         "mode": "addsub",
@@ -18,10 +18,10 @@
         "imageIdB": "illus:animals/hippo_purple",
         "op": "add",
         "subMode": "crossed",
-        "cols": 10,
+        "cols": 5,
         "groupSize": 1,
         "mrows": 2,
-        "mcols": 10,
+        "mcols": 5,
         "illusOutline": "individual",
         "imgScale": 1,
         "numA": false,
@@ -38,7 +38,7 @@
     {
       "id": 1788269610236,
       "visualType": "pr",
-      "text": "# 2 + 3 =",
+      "text": "2 + 3 =",
       "answer": "5",
       "cfg": {
         "mode": "addsub",
@@ -50,10 +50,10 @@
         "imageIdB": "illus:animals/toucan_black",
         "op": "add",
         "subMode": "crossed",
-        "cols": 10,
+        "cols": 5,
         "groupSize": 1,
         "mrows": 2,
-        "mcols": 10,
+        "mcols": 5,
         "illusOutline": "individual",
         "imgScale": 1,
         "numA": false,
@@ -70,7 +70,7 @@
     {
       "id": 1788269610237,
       "visualType": "pr",
-      "text": "# 1 + 1 =",
+      "text": "1 + 1 =",
       "answer": "2",
       "cfg": {
         "mode": "addsub",
@@ -82,10 +82,10 @@
         "imageIdB": "illus:animals/elephant_grey",
         "op": "add",
         "subMode": "crossed",
-        "cols": 10,
+        "cols": 5,
         "groupSize": 1,
         "mrows": 2,
-        "mcols": 10,
+        "mcols": 5,
         "illusOutline": "individual",
         "imgScale": 1,
         "numA": false,
@@ -102,7 +102,7 @@
     {
       "id": 1788269610238,
       "visualType": "pr",
-      "text": "# 2 + 2 =",
+      "text": "2 + 2 =",
       "answer": "4",
       "cfg": {
         "mode": "addsub",
@@ -114,10 +114,10 @@
         "imageIdB": "illus:food/veg/pumpkin_orange",
         "op": "add",
         "subMode": "crossed",
-        "cols": 10,
+        "cols": 5,
         "groupSize": 1,
         "mrows": 2,
-        "mcols": 10,
+        "mcols": 5,
         "illusOutline": "individual",
         "imgScale": 1,
         "numA": false,
@@ -134,7 +134,7 @@
     {
       "id": 1788269610239,
       "visualType": "pr",
-      "text": "# 3 + 3 =",
+      "text": "3 + 3 =",
       "answer": "6",
       "cfg": {
         "mode": "addsub",
@@ -146,10 +146,10 @@
         "imageIdB": "illus:food/fruit/apple_orange",
         "op": "add",
         "subMode": "crossed",
-        "cols": 10,
+        "cols": 5,
         "groupSize": 1,
         "mrows": 2,
-        "mcols": 10,
+        "mcols": 5,
         "illusOutline": "individual",
         "imgScale": 1,
         "numA": false,
@@ -165,9 +165,6 @@
     }
   ],
   "exampleOverride": {
-    "visualType": "pr",
-    "text": "# 2 + 1 =",
-    "answer": "3",
     "cfg": {
       "mode": "addsub",
       "display": "array",
@@ -178,10 +175,10 @@
       "imageIdB": "illus:animals/tiger_orange",
       "op": "add",
       "subMode": "crossed",
-      "cols": 10,
+      "cols": 5,
       "groupSize": 1,
       "mrows": 2,
-      "mcols": 10,
+      "mcols": 5,
       "illusOutline": "individual",
       "imgScale": 1,
       "numA": false,
@@ -191,6 +188,9 @@
       "crayonBoxes": 1,
       "crayonFontSize": 148,
       "crayonLabel": "5 Crayons"
-    }
+    },
+    "visualType": "pr",
+    "answer": "3",
+    "text": "# 2 + 1 ="
   }
 }
