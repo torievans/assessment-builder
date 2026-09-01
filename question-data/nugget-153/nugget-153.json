@@ -37,7 +37,7 @@
     {
       "id": 1788268359054,
       "visualType": "pr",
-      "text": "4 + 5 =",
+      "text": "# 4 + 5 =",
       "answer": "9",
       "cfg": {
         "mode": "addsub",
