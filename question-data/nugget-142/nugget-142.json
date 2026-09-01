@@ -1,7 +1,7 @@
 {
   "nuggetId": 142,
   "status": "in-progress",
-  "nextQId": 319445,
+  "nextQId": 319446,
   "questions": [
     {
       "id": 142001,
@@ -32,5 +32,27 @@
       "createdAt": "2026-08-27",
       "updatedAt": "2026-08-27"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 15,
+          "divisions": 15,
+          "braceLabel": "?"
+        },
+        {
+          "value": 5,
+          "divisions": 5,
+          "braceLabel": "5"
+        }
+      ],
+      "total": 20,
+      "colorIdx": 3,
+      "multi": true
+    },
+    "visualType": "bm",
+    "answer": "15",
+    "text": "# _ + 5 = 20"
+  }
 }
