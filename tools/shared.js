@@ -56,7 +56,7 @@ function numberLineSVG(config) {
 
   const terminate  = lineStyle === 'terminate';
   const C          = resolveNLColour(colour);
-  const BAR_W      = 380;
+  const BAR_W      = Math.max(380, partitions * 22);
   const pxPerUnit  = BAR_W / (end - start);
   const labelStep  = (!isNaN(valuesGivenEvery) && valuesGivenEvery > 0) ? valuesGivenEvery : null;
   const answerNum  = answer ? Math.round(parseFloat(answer) * 1000) / 1000 : null;
