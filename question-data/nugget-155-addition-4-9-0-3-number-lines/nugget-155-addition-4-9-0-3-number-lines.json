@@ -1,5 +1,6 @@
 {
-  "name": "Addition 4-9 + 0-3 (Number Lines)",
+  "nuggetId": 155,
+  "nextQId": 319496,
   "questions": [
     {
       "id": 1788268215828,
@@ -22,7 +23,9 @@
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "red"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268215829,
@@ -45,7 +48,9 @@
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "orange"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268215830,
@@ -68,7 +73,9 @@
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "green"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268215831,
@@ -91,7 +98,9 @@
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "blue"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268215832,
@@ -114,7 +123,9 @@
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "purple"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
