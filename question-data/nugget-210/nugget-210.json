@@ -10,7 +10,7 @@
       "cfg": {
         "wbText": "5 + 5 = ",
         "wbBorder": "#D46B55",
-        "wbSkin": "#d4895a"
+        "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
@@ -23,7 +23,7 @@
       "cfg": {
         "wbText": "6 + 8 = ",
         "wbBorder": "#7898F0",
-        "wbSkin": "#9b7550"
+        "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
@@ -36,7 +36,7 @@
       "cfg": {
         "wbText": "7 + 10 = ",
         "wbBorder": "#5BAD5B",
-        "wbSkin": "#6b9040"
+        "wbSkin": "#b06530"
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
@@ -49,7 +49,7 @@
       "cfg": {
         "wbText": "10 + 5 = ",
         "wbBorder": "#B06BB3",
-        "wbSkin": "#c4855a"
+        "wbSkin": "#6b3520"
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
@@ -62,20 +62,19 @@
       "cfg": {
         "wbText": "10 + 9 = ",
         "wbBorder": "#F0A030",
-        "wbSkin": "#c87830"
+        "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-09-01",
       "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
-    "visualType": "wb",
-    "text": "",
-    "answer": "16",
     "cfg": {
       "wbText": "8 + 8 = ",
-      "wbBorder": "#5BAD5B",
-      "wbSkin": "#6b9040"
-    }
+      "wbBorder": "#D46B55",
+      "wbSkin": "#b06530"
+    },
+    "visualType": "wb",
+    "answer": "16"
   }
 }
