@@ -1,5 +1,6 @@
 {
-  "name": "Addition 0-3 + 4-9 (Bar Model Without Divisions)",
+  "nuggetId": 164,
+  "nextQId": 319496,
   "questions": [
     {
       "id": 1788268356821,
@@ -20,7 +21,9 @@
         "total": "?",
         "colorIdx": 0,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268356822,
@@ -41,7 +44,9 @@
         "total": "?",
         "colorIdx": 1,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268356823,
@@ -62,7 +67,9 @@
         "total": "?",
         "colorIdx": 2,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268356824,
@@ -83,7 +90,9 @@
         "total": "?",
         "colorIdx": 4,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1788268356825,
@@ -104,7 +113,9 @@
         "total": "?",
         "colorIdx": 5,
         "multi": true
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
