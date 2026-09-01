@@ -721,31 +721,42 @@ function nrRenderNumicon(cfg) {
 }
 
 function nrRenderPartWhole(cfg) {
-  const whole = cfg.pwWhole ?? 10;
-  const part1 = cfg.pwPart1 ?? 6;
-  const part2 = cfg.pwPart2 ?? 4;
+  const whole = String(cfg.pwWhole ?? '10');
+  const part1 = String(cfg.pwPart1 ?? '6');
+  const part2 = String(cfg.pwPart2 ?? '4');
+  const colW  = cfg.pwColWhole  ?? -1;
+  const colP1 = cfg.pwColPart1  ?? -1;
+  const colP2 = cfg.pwColPart2  ?? -1;
   const W = 280, H = 200, R = 36;
   const wholeCX = W / 2, wholeCY = R + 20;
   const part1CX = W / 2 - 72, part2CX = W / 2 + 72;
   const partCY = H - R - 20;
   const FONT = SHARED_FONT;
-  const STROKE = '#1A1A2E';
+  const LINE_C = '#1A1A2E';
+  function circleStyle(idx) {
+    if (idx >= 0 && idx < BM_BOX_COLORS.length) {
+      return { fill: BM_BAR_LIGHT_FILLS[idx], stroke: BM_BOX_COLORS[idx], text: BM_BOX_TEXT_COLORS[idx] };
+    }
+    return { fill: '#fff', stroke: '#1A1A2E', text: '#1A1A2E' };
+  }
   function lineToCircle(x1, y1, x2, y2) {
     const dx = x2 - x1, dy = y2 - y1, d = Math.sqrt(dx * dx + dy * dy);
     const sx = x1 + R * dx / d, sy = y1 + R * dy / d;
     const ex = x2 - R * dx / d, ey = y2 - R * dy / d;
-    return '<line x1="' + sx.toFixed(1) + '" y1="' + sy.toFixed(1) + '" x2="' + ex.toFixed(1) + '" y2="' + ey.toFixed(1) + '" stroke="' + STROKE + '" stroke-width="2.5" stroke-linecap="round"/>';
+    return '<line x1="' + sx.toFixed(1) + '" y1="' + sy.toFixed(1) + '" x2="' + ex.toFixed(1) + '" y2="' + ey.toFixed(1) + '" stroke="' + LINE_C + '" stroke-width="2.5" stroke-linecap="round"/>';
   }
-  function circle(cx, cy, label) {
-    return '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#fff" stroke="' + STROKE + '" stroke-width="2.5"/>' +
-      '<text x="' + cx + '" y="' + cy + '" text-anchor="middle" dominant-baseline="central" font-family="' + FONT + '" font-size="22" font-weight="bold" fill="' + STROKE + '">' + label + '</text>';
+  function circle(cx, cy, label, colorIdx) {
+    const s = circleStyle(colorIdx);
+    const fs = label === '?' ? 28 : 22;
+    return '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="' + s.fill + '" stroke="' + s.stroke + '" stroke-width="2.5"/>' +
+      '<text x="' + cx + '" y="' + cy + '" text-anchor="middle" dominant-baseline="central" font-family="' + FONT + '" font-size="' + fs + '" font-weight="bold" fill="' + s.text + '">' + label + '</text>';
   }
   return '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">' +
     lineToCircle(wholeCX, wholeCY, part1CX, partCY) +
     lineToCircle(wholeCX, wholeCY, part2CX, partCY) +
-    circle(wholeCX, wholeCY, whole) +
-    circle(part1CX, partCY, part1) +
-    circle(part2CX, partCY, part2) +
+    circle(wholeCX, wholeCY, whole, colW) +
+    circle(part1CX, partCY, part1, colP1) +
+    circle(part2CX, partCY, part2, colP2) +
     '</svg>';
 }
 
