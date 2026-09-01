@@ -1,4 +1,7 @@
 {
+  "nuggetId": 167,
+  "nextQId": 1790100000076,
+  "questions": [],
   "exampleOverride": {
     "visualType": "bm",
     "text": "# 4 + _ =",
@@ -20,6 +23,5 @@
       "colorIdx": 3,
       "multi": true
     }
-  },
-  "questions": []
+  }
 }
