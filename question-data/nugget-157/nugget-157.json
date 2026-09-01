@@ -1,7 +1,7 @@
 {
   "nuggetId": 157,
   "status": "ready-for-qa",
-  "nextQId": 319496,
+  "nextQId": 1790100000076,
   "questions": [
     {
       "id": 1788268361625,
@@ -138,14 +138,7 @@
       "answer": "9",
       "lineStyle": "terminate",
       "colour": "grey",
-      "revealAnswer": true,
-      "jumpFrom": 4,
-      "jumpTo": 9,
-      "jumpType": "unit",
-      "jumpLabel": "",
-      "jumpArrow": true,
-      "jumpCircle": "none",
-      "jumpColour": "purple"
+      "revealAnswer": true
     },
     "visualType": "nl",
     "answer": "9",
