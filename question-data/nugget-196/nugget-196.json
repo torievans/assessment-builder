@@ -17,7 +17,7 @@
         "imageIdB": "counter:0:5:2",
         "op": "add",
         "subMode": "crossed",
-        "cols": 10,
+        "cols": 5,
         "groupSize": 1,
         "mrows": 2,
         "mcols": 10,
