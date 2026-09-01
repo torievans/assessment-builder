@@ -4,9 +4,32 @@
   "nextQId": 319496,
   "questions": [
     {
-      "id": 1788269054867,
+      "id": 1788269442961,
       "visualType": "nl",
-      "text": "# 1 + 2 =",
+      "text": "# 1 + 1 =",
+      "answer": "2",
+      "cfg": {
+        "start": 0,
+        "end": 6,
+        "partitions": 6,
+        "valuesGivenEvery": null,
+        "answer": "2",
+        "lineStyle": "terminate",
+        "colour": "grey",
+        "revealAnswer": true,
+        "jumpFrom": 1,
+        "jumpTo": 2,
+        "jumpType": "unit",
+        "jumpLabel": "",
+        "jumpArrow": true,
+        "jumpCircle": "none",
+        "jumpColour": "red"
+      }
+    },
+    {
+      "id": 1788269442962,
+      "visualType": "nl",
+      "text": "# 2 + 1 =",
       "answer": "3",
       "cfg": {
         "start": 0,
@@ -17,31 +40,8 @@
         "lineStyle": "terminate",
         "colour": "grey",
         "revealAnswer": true,
-        "jumpFrom": 1,
-        "jumpTo": 3,
-        "jumpType": "unit",
-        "jumpLabel": "",
-        "jumpArrow": true,
-        "jumpCircle": "none",
-        "jumpColour": "red"
-      }
-    },
-    {
-      "id": 1788269054868,
-      "visualType": "nl",
-      "text": "# 2 + 3 =",
-      "answer": "5",
-      "cfg": {
-        "start": 0,
-        "end": 6,
-        "partitions": 6,
-        "valuesGivenEvery": null,
-        "answer": "5",
-        "lineStyle": "terminate",
-        "colour": "grey",
-        "revealAnswer": true,
         "jumpFrom": 2,
-        "jumpTo": 5,
+        "jumpTo": 3,
         "jumpType": "unit",
         "jumpLabel": "",
         "jumpArrow": true,
@@ -50,7 +50,7 @@
       }
     },
     {
-      "id": 1788269054869,
+      "id": 1788269442963,
       "visualType": "nl",
       "text": "# 3 + 1 =",
       "answer": "4",
@@ -73,7 +73,7 @@
       }
     },
     {
-      "id": 1788269054870,
+      "id": 1788269442964,
       "visualType": "nl",
       "text": "# 3 + 2 =",
       "answer": "5",
@@ -96,21 +96,21 @@
       }
     },
     {
-      "id": 1788269054871,
+      "id": 1788269442965,
       "visualType": "nl",
-      "text": "# 1 + 1 =",
-      "answer": "2",
+      "text": "# 3 + 3 =",
+      "answer": "6",
       "cfg": {
         "start": 0,
         "end": 6,
         "partitions": 6,
         "valuesGivenEvery": null,
-        "answer": "2",
+        "answer": "6",
         "lineStyle": "terminate",
         "colour": "grey",
         "revealAnswer": true,
-        "jumpFrom": 1,
-        "jumpTo": 2,
+        "jumpFrom": 3,
+        "jumpTo": 6,
         "jumpType": "unit",
         "jumpLabel": "",
         "jumpArrow": true,
