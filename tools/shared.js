@@ -720,8 +720,39 @@ function nrRenderNumicon(cfg) {
   return `<svg viewBox="0 0 ${svgW} ${svgH}" xmlns="http://www.w3.org/2000/svg" style="width:${svgW}px;height:auto;max-width:100%">${paths}${circs}</svg>`;
 }
 
+function nrRenderPartWhole(cfg) {
+  const whole = cfg.pwWhole ?? 10;
+  const part1 = cfg.pwPart1 ?? 6;
+  const part2 = cfg.pwPart2 ?? 4;
+  const W = 280, H = 200, R = 36;
+  const wholeCX = W / 2, wholeCY = R + 20;
+  const part1CX = W / 2 - 72, part2CX = W / 2 + 72;
+  const partCY = H - R - 20;
+  const FONT = SHARED_FONT;
+  const STROKE = '#1A1A2E';
+  function lineToCircle(x1, y1, x2, y2) {
+    const dx = x2 - x1, dy = y2 - y1, d = Math.sqrt(dx * dx + dy * dy);
+    const sx = x1 + R * dx / d, sy = y1 + R * dy / d;
+    const ex = x2 - R * dx / d, ey = y2 - R * dy / d;
+    return '<line x1="' + sx.toFixed(1) + '" y1="' + sy.toFixed(1) + '" x2="' + ex.toFixed(1) + '" y2="' + ey.toFixed(1) + '" stroke="' + STROKE + '" stroke-width="2.5" stroke-linecap="round"/>';
+  }
+  function circle(cx, cy, label) {
+    return '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#fff" stroke="' + STROKE + '" stroke-width="2.5"/>' +
+      '<text x="' + cx + '" y="' + cy + '" text-anchor="middle" dominant-baseline="central" font-family="' + FONT + '" font-size="22" font-weight="bold" fill="' + STROKE + '">' + label + '</text>';
+  }
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">' +
+    lineToCircle(wholeCX, wholeCY, part1CX, partCY) +
+    lineToCircle(wholeCX, wholeCY, part2CX, partCY) +
+    circle(wholeCX, wholeCY, whole) +
+    circle(part1CX, partCY, part1) +
+    circle(part2CX, partCY, part2) +
+    '</svg>';
+}
+
 function nrRenderFromCfg(cfg) {
-  if (!cfg || !cfg.n) return '';
+  if (!cfg) return '';
+  if (cfg.rep === 'partwhole') return nrRenderPartWhole(cfg);
+  if (!cfg.n) return '';
   if (cfg.rep === 'frames')    return nrRenderFrames(cfg);
   if (cfg.rep === 'beads')     return nrRenderBeads(cfg);
   if (cfg.rep === 'multilink') return nrRenderMultilink(cfg);
