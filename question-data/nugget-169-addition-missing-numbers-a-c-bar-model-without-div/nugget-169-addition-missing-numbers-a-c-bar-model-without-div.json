@@ -3,23 +3,23 @@
   "nextQId": 1790100000077,
   "questions": [],
   "exampleOverride": {
-    "visualType": "bm",
-    "text": "# 4 + _ =",
-    "answer": "3",
     "cfg": {
       "segments": [
         {
-          "value": 4,
-          "segLabel": "4"
+          "value": 6,
+          "segLabel": "6"
         },
         {
           "value": "?",
           "segLabel": "?"
         }
       ],
-      "total": 7,
+      "total": 8,
       "colorIdx": 3,
       "multi": true
-    }
+    },
+    "visualType": "bm",
+    "answer": "2",
+    "text": "# 6 + _ = 8"
   }
 }
