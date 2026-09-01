@@ -1,4 +1,6 @@
 {
+  "nuggetId": 199,
+  "nextQId": 1790100000021,
   "questions": [
     {
       "id": 1790100000016,
@@ -21,7 +23,9 @@
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "red"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000017,
@@ -44,7 +48,9 @@
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "blue"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000018,
@@ -67,7 +73,9 @@
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "purple"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000019,
@@ -90,7 +98,9 @@
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "green"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     },
     {
       "id": 1790100000020,
@@ -113,7 +123,9 @@
         "jumpArrow": true,
         "jumpCircle": "none",
         "jumpColour": "orange"
-      }
+      },
+      "updatedAt": "2026-09-01",
+      "createdAt": "2026-09-01"
     }
   ],
   "exampleOverride": {
@@ -137,6 +149,5 @@
       "jumpCircle": "none",
       "jumpColour": "purple"
     }
-  },
-  "nextQId": 1790100000021
+  }
 }
