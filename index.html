@@ -1782,7 +1782,7 @@ function renderQVisual(q){
   if(q.visualType==='nl'&&q.cfg&&Object.keys(q.cfg).length){try{return`<div class="q-svg-wrap">${numberLineSVG(q.cfg)}</div>`;}catch(e){}}
   if(q.visualType==='bm'&&q.cfg&&Object.keys(q.cfg).length){try{return`<div class="q-svg-wrap">${barModelSVG(q.cfg)}</div>`;}catch(e){}}
   if(q.visualType==='nt'&&q.cfg&&q.cfg.sequence){try{return`<div class="q-svg-wrap">${numberTrackSVG(q.cfg)}</div>`;}catch(e){}}
-  if(q.visualType==='nr'&&q.cfg&&q.cfg.n){try{return`<div class="q-svg-wrap">${nrRenderFromCfg(q.cfg)}</div>`;}catch(e){}}
+  if(q.visualType==='nr'&&q.cfg&&(q.cfg.n||q.cfg.rep==='partwhole')){try{return`<div class="q-svg-wrap">${nrRenderFromCfg(q.cfg)}</div>`;}catch(e){}}
   if(q.visualType==='pv'&&q.cfg&&q.cfg.n!=null){try{return`<div class="q-svg-wrap"><img src="${pvGetDataURL(q.cfg,4)}" style="max-width:100%;height:auto;display:block"></div>`;}catch(e){}}
   if(q.visualType==='pr'&&q.cfg&&q.cfg.mode){try{return`<div class="q-svg-wrap">${pictorialSVG(q.cfg)}</div>`;}catch(e){}}
   if(q.visualType==='wb'&&q.cfg&&q.cfg.wbText!==undefined){try{return`<div class="q-svg-wrap">${whiteboardSVG(q.cfg.wbText,q.cfg.wbBorder||'#319377',q.cfg.wbSkin||'#ffa99c')}</div>`;}catch(e){}}
