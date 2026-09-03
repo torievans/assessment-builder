@@ -38,7 +38,8 @@
         "jumpLabel": "–1",
         "jumpArrow": true,
         "jumpColour": "dark"
-      }
+      },
+      "id": 182001
     },
     {
       "visualType": "nl",
@@ -58,7 +59,8 @@
         "jumpLabel": "–2",
         "jumpArrow": true,
         "jumpColour": "dark"
-      }
+      },
+      "id": 182002
     },
     {
       "visualType": "nl",
@@ -78,7 +80,8 @@
         "jumpLabel": "–2",
         "jumpArrow": true,
         "jumpColour": "dark"
-      }
+      },
+      "id": 182003
     },
     {
       "visualType": "nl",
@@ -98,7 +101,8 @@
         "jumpLabel": "–3",
         "jumpArrow": true,
         "jumpColour": "dark"
-      }
+      },
+      "id": 182004
     },
     {
       "visualType": "nl",
@@ -118,7 +122,10 @@
         "jumpLabel": "–3",
         "jumpArrow": true,
         "jumpColour": "dark"
-      }
+      },
+      "id": 182005
     }
-  ]
+  ],
+  "nextQId": 182006,
+  "nuggetId": 182
 }
