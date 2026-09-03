@@ -1,0 +1,179 @@
+{
+  "nuggetId": 241,
+  "status": "in-progress",
+  "nextQId": 241007,
+  "exampleOverride": {
+    "visualType": "bm",
+    "answer": "5",
+    "text": "There are 3 dogs in the park.\n2 more arrive.\nHow many dogs are there altogether?",
+    "cfg": {
+      "segments": [
+        {
+          "value": 3,
+          "braceLabel": "3"
+        },
+        {
+          "value": 2,
+          "braceLabel": "2"
+        }
+      ],
+      "total": "?",
+      "topBar": true,
+      "topBrace": true,
+      "multi": true,
+      "colorIdx": 0
+    }
+  },
+  "questions": [
+    {
+      "id": 241001,
+      "visualType": "bm",
+      "text": "There are 2 birds in a tree.\n5 more fly in.\nHow many birds are in the tree now?",
+      "answer": "7",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "braceLabel": "2"
+          },
+          {
+            "value": 5,
+            "braceLabel": "5"
+          }
+        ],
+        "total": "?",
+        "topBar": true,
+        "topBrace": true,
+        "multi": true,
+        "colorIdx": 0
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 241002,
+      "visualType": "bm",
+      "text": "Ben baked 5 biscuits.\nHe baked 3 more.\nHow many biscuits did he bake in total?",
+      "answer": "8",
+      "cfg": {
+        "segments": [
+          {
+            "value": 5,
+            "braceLabel": "5"
+          },
+          {
+            "value": 3,
+            "braceLabel": "3"
+          }
+        ],
+        "total": "?",
+        "topBar": true,
+        "topBrace": true,
+        "multi": true,
+        "colorIdx": 1
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 241003,
+      "visualType": "bm",
+      "text": "Mo counts 5 stars.\nThen he counts 4 more.\nHow many stars does he count in all?",
+      "answer": "9",
+      "cfg": {
+        "segments": [
+          {
+            "value": 5,
+            "braceLabel": "5"
+          },
+          {
+            "value": 4,
+            "braceLabel": "4"
+          }
+        ],
+        "total": "?",
+        "topBar": true,
+        "topBrace": true,
+        "multi": true,
+        "colorIdx": 2
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 241004,
+      "visualType": "bm",
+      "text": "There are 2 rabbits in the hutch.\n7 more hop in.\nHow many rabbits are there altogether?",
+      "answer": "9",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "braceLabel": "2"
+          },
+          {
+            "value": 7,
+            "braceLabel": "7"
+          }
+        ],
+        "total": "?",
+        "topBar": true,
+        "topBrace": true,
+        "multi": true,
+        "colorIdx": 3
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 241005,
+      "visualType": "bm",
+      "text": "There are 4 grapes in one bunch and 3 in another.\nHow many grapes are there in total?",
+      "answer": "7",
+      "cfg": {
+        "segments": [
+          {
+            "value": 4,
+            "braceLabel": "4"
+          },
+          {
+            "value": 3,
+            "braceLabel": "3"
+          }
+        ],
+        "total": "?",
+        "topBar": true,
+        "topBrace": true,
+        "multi": true,
+        "colorIdx": 4
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 241006,
+      "visualType": "bm",
+      "text": "There are 5 children on the swings.\n5 more join them.\nHow many children are there now?",
+      "answer": "10",
+      "cfg": {
+        "segments": [
+          {
+            "value": 5,
+            "braceLabel": "5"
+          },
+          {
+            "value": 5,
+            "braceLabel": "5"
+          }
+        ],
+        "total": "?",
+        "topBar": true,
+        "topBrace": true,
+        "multi": true,
+        "colorIdx": 5
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    }
+  ]
+}
