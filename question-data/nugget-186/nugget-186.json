@@ -1,7 +1,7 @@
 {
   "nuggetId": 186,
   "status": "ready-for-qa",
-  "nextQId": 1790100000086,
+  "nextQId": 1790100000087,
   "questions": [
     {
       "visualType": "bm",
@@ -28,7 +28,8 @@
         "topBrace": true
       },
       "updatedAt": "2026-09-03",
-      "createdAt": "2026-09-03"
+      "createdAt": "2026-09-03",
+      "id": 186001
     },
     {
       "visualType": "bm",
@@ -43,19 +44,19 @@
           },
           {
             "value": 1,
-            "divisions": 1,
             "braceLabel": "1"
           }
         ],
         "total": 5,
-        "colorIdx": 0,
+        "colorIdx": 5,
         "multi": true,
         "topBar": true,
         "topBarDivisions": 5,
         "topBrace": true
       },
       "updatedAt": "2026-09-03",
-      "createdAt": "2026-09-03"
+      "createdAt": "2026-09-03",
+      "id": 186002
     },
     {
       "visualType": "bm",
@@ -82,7 +83,8 @@
         "topBrace": true
       },
       "updatedAt": "2026-09-03",
-      "createdAt": "2026-09-03"
+      "createdAt": "2026-09-03",
+      "id": 186003
     },
     {
       "visualType": "bm",
@@ -109,7 +111,8 @@
         "topBrace": true
       },
       "updatedAt": "2026-09-03",
-      "createdAt": "2026-09-03"
+      "createdAt": "2026-09-03",
+      "id": 186004
     },
     {
       "visualType": "bm",
@@ -136,7 +139,8 @@
         "topBrace": true
       },
       "updatedAt": "2026-09-03",
-      "createdAt": "2026-09-03"
+      "createdAt": "2026-09-03",
+      "id": 186005
     }
   ],
   "exampleOverride": {
