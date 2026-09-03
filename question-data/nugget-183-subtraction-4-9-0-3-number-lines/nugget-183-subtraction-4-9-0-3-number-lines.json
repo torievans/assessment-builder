@@ -1,0 +1,131 @@
+{
+  "nuggetId": 183,
+  "nextQId": 183006,
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 9,
+      "partitions": 9,
+      "valuesGivenEvery": 1,
+      "answer": 6,
+      "lineStyle": "terminate",
+      "colour": "orange",
+      "jumpFrom": 8,
+      "jumpTo": 6,
+      "jumpType": "single",
+      "jumpLabel": "−2",
+      "jumpArrow": true,
+      "jumpColour": "dark"
+    },
+    "visualType": "nl",
+    "answer": "6",
+    "text": "# 8 – 2 ="
+  },
+  "questions": [
+    {
+      "id": 183001,
+      "visualType": "nl",
+      "text": "# 9 – 3 =",
+      "answer": "6",
+      "cfg": {
+        "start": 0,
+        "end": 9,
+        "partitions": 9,
+        "valuesGivenEvery": 1,
+        "answer": 6,
+        "lineStyle": "terminate",
+        "colour": "red",
+        "jumpFrom": 9,
+        "jumpTo": 6,
+        "jumpType": "single",
+        "jumpLabel": "−3",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      }
+    },
+    {
+      "id": 183002,
+      "visualType": "nl",
+      "text": "# 7 – 2 =",
+      "answer": "5",
+      "cfg": {
+        "start": 0,
+        "end": 9,
+        "partitions": 9,
+        "valuesGivenEvery": 1,
+        "answer": 5,
+        "lineStyle": "terminate",
+        "colour": "green",
+        "jumpFrom": 7,
+        "jumpTo": 5,
+        "jumpType": "single",
+        "jumpLabel": "−2",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      }
+    },
+    {
+      "id": 183003,
+      "visualType": "nl",
+      "text": "# 5 – 3 =",
+      "answer": "2",
+      "cfg": {
+        "start": 0,
+        "end": 9,
+        "partitions": 9,
+        "valuesGivenEvery": 1,
+        "answer": 2,
+        "lineStyle": "terminate",
+        "colour": "blue",
+        "jumpFrom": 5,
+        "jumpTo": 2,
+        "jumpType": "single",
+        "jumpLabel": "−3",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      }
+    },
+    {
+      "id": 183004,
+      "visualType": "nl",
+      "text": "# 8 – 1 =",
+      "answer": "7",
+      "cfg": {
+        "start": 0,
+        "end": 9,
+        "partitions": 9,
+        "valuesGivenEvery": 1,
+        "answer": 7,
+        "lineStyle": "terminate",
+        "colour": "purple",
+        "jumpFrom": 8,
+        "jumpTo": 7,
+        "jumpType": "single",
+        "jumpLabel": "−1",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      }
+    },
+    {
+      "id": 183005,
+      "visualType": "nl",
+      "text": "# 6 – 3 =",
+      "answer": "3",
+      "cfg": {
+        "start": 0,
+        "end": 9,
+        "partitions": 9,
+        "valuesGivenEvery": 1,
+        "answer": 3,
+        "lineStyle": "terminate",
+        "colour": "pink",
+        "jumpFrom": 6,
+        "jumpTo": 3,
+        "jumpType": "single",
+        "jumpLabel": "−3",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      }
+    }
+  ]
+}
