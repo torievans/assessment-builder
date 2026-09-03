@@ -29,8 +29,12 @@
       "cfg": {
         "start": 0,
         "end": 10,
-        "jumps": [],
-        "revealAnswer": false
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "8",
+        "lineStyle": "terminate",
+        "colour": "red",
+        "revealAnswer": true
       },
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
