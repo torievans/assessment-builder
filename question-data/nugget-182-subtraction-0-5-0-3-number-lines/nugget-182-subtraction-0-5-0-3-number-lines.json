@@ -63,7 +63,7 @@
         "valuesGivenEvery": 1,
         "answer": "1",
         "lineStyle": "terminate",
-        "colour": "red",
+        "colour": "blue",
         "revealAnswer": true,
         "jumpFrom": 3,
         "jumpTo": 1,
