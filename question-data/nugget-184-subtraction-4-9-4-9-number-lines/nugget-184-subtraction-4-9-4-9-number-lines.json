@@ -1,0 +1,131 @@
+{
+  "nuggetId": 184,
+  "nextQId": 184006,
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 9,
+      "partitions": 9,
+      "valuesGivenEvery": 1,
+      "answer": 3,
+      "lineStyle": "terminate",
+      "colour": "purple",
+      "jumpFrom": 8,
+      "jumpTo": 3,
+      "jumpType": "single",
+      "jumpLabel": "−5",
+      "jumpArrow": true,
+      "jumpColour": "dark"
+    },
+    "visualType": "nl",
+    "answer": "3",
+    "text": "# 8 – 5 ="
+  },
+  "questions": [
+    {
+      "id": 184001,
+      "visualType": "nl",
+      "text": "# 9 – 4 =",
+      "answer": "5",
+      "cfg": {
+        "start": 0,
+        "end": 9,
+        "partitions": 9,
+        "valuesGivenEvery": 1,
+        "answer": 5,
+        "lineStyle": "terminate",
+        "colour": "red",
+        "jumpFrom": 9,
+        "jumpTo": 5,
+        "jumpType": "single",
+        "jumpLabel": "−4",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      }
+    },
+    {
+      "id": 184002,
+      "visualType": "nl",
+      "text": "# 8 – 4 =",
+      "answer": "4",
+      "cfg": {
+        "start": 0,
+        "end": 9,
+        "partitions": 9,
+        "valuesGivenEvery": 1,
+        "answer": 4,
+        "lineStyle": "terminate",
+        "colour": "orange",
+        "jumpFrom": 8,
+        "jumpTo": 4,
+        "jumpType": "single",
+        "jumpLabel": "−4",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      }
+    },
+    {
+      "id": 184003,
+      "visualType": "nl",
+      "text": "# 7 – 4 =",
+      "answer": "3",
+      "cfg": {
+        "start": 0,
+        "end": 9,
+        "partitions": 9,
+        "valuesGivenEvery": 1,
+        "answer": 3,
+        "lineStyle": "terminate",
+        "colour": "green",
+        "jumpFrom": 7,
+        "jumpTo": 3,
+        "jumpType": "single",
+        "jumpLabel": "−4",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      }
+    },
+    {
+      "id": 184004,
+      "visualType": "nl",
+      "text": "# 9 – 7 =",
+      "answer": "2",
+      "cfg": {
+        "start": 0,
+        "end": 9,
+        "partitions": 9,
+        "valuesGivenEvery": 1,
+        "answer": 2,
+        "lineStyle": "terminate",
+        "colour": "blue",
+        "jumpFrom": 9,
+        "jumpTo": 2,
+        "jumpType": "single",
+        "jumpLabel": "−7",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      }
+    },
+    {
+      "id": 184005,
+      "visualType": "nl",
+      "text": "# 6 – 5 =",
+      "answer": "1",
+      "cfg": {
+        "start": 0,
+        "end": 9,
+        "partitions": 9,
+        "valuesGivenEvery": 1,
+        "answer": 1,
+        "lineStyle": "terminate",
+        "colour": "pink",
+        "jumpFrom": 6,
+        "jumpTo": 1,
+        "jumpType": "single",
+        "jumpLabel": "−5",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      }
+    }
+  ]
+}
