@@ -18,12 +18,12 @@
     },
     "visualType": "bm",
     "answer": "4",
-    "text": "# 5 \u2013 1 ="
+    "text": "# 5 – 1 ="
   },
   "questions": [
     {
       "visualType": "bm",
-      "text": "# 4 \u2013 2 =",
+      "text": "# 4 – 2 =",
       "answer": "2",
       "cfg": {
         "segments": [
@@ -40,11 +40,12 @@
         "colorIdx": 4,
         "multi": true,
         "topBar": true
-      }
+      },
+      "id": 190001
     },
     {
       "visualType": "bm",
-      "text": "# 5 \u2013 3 =",
+      "text": "# 5 – 3 =",
       "answer": "2",
       "cfg": {
         "segments": [
@@ -61,11 +62,12 @@
         "colorIdx": 4,
         "multi": true,
         "topBar": true
-      }
+      },
+      "id": 190002
     },
     {
       "visualType": "bm",
-      "text": "# 3 \u2013 1 =",
+      "text": "# 3 – 1 =",
       "answer": "2",
       "cfg": {
         "segments": [
@@ -82,11 +84,12 @@
         "colorIdx": 4,
         "multi": true,
         "topBar": true
-      }
+      },
+      "id": 190003
     },
     {
       "visualType": "bm",
-      "text": "# 4 \u2013 1 =",
+      "text": "# 4 – 1 =",
       "answer": "3",
       "cfg": {
         "segments": [
@@ -103,11 +106,12 @@
         "colorIdx": 4,
         "multi": true,
         "topBar": true
-      }
+      },
+      "id": 190004
     },
     {
       "visualType": "bm",
-      "text": "# 3 \u2013 2 =",
+      "text": "# 3 – 2 =",
       "answer": "1",
       "cfg": {
         "segments": [
@@ -124,7 +128,10 @@
         "colorIdx": 4,
         "multi": true,
         "topBar": true
-      }
+      },
+      "id": 190005
     }
-  ]
+  ],
+  "nextQId": 190006,
+  "nuggetId": 190
 }
