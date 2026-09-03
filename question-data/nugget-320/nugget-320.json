@@ -118,7 +118,7 @@
     {
       "id": 320005,
       "visualType": "bm",
-      "text": "# _ – 1 = 4",
+      "text": "# _ – 5 = 4",
       "answer": "5",
       "cfg": {
         "segments": [
@@ -128,16 +128,16 @@
             "braceLabel": "4"
           },
           {
-            "value": 1,
-            "divisions": 1,
-            "braceLabel": "1"
+            "value": 5,
+            "divisions": 5,
+            "braceLabel": "5"
           }
         ],
         "total": "?",
         "colorIdx": 6,
         "multi": true,
         "topBar": true,
-        "topBarDivisions": 5,
+        "topBarDivisions": 9,
         "topBrace": true
       },
       "createdAt": "2026-09-03",
