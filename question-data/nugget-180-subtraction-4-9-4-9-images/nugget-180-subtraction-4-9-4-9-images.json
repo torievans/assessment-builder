@@ -1,29 +1,6 @@
 {
   "nuggetId": 180,
-  "nextQId": 180006,
-  "exampleOverride": {
-    "cfg": {
-      "mode": "count",
-      "display": "array",
-      "align": "centre",
-      "countA": 8,
-      "imageIdA": "counter:1:4:1",
-      "countB": 5,
-      "imageIdB": "counter:1:6:1",
-      "op": "add",
-      "subMode": "crossed",
-      "cols": 5,
-      "groupSize": 1,
-      "illusOutline": "individual",
-      "imgScale": 1,
-      "numA": false,
-      "numB": false,
-      "showEq": false
-    },
-    "visualType": "pr",
-    "answer": "3",
-    "text": "# 8 – 5 ="
-  },
+  "nextQId": 1790100000087,
   "questions": [
     {
       "id": 180001,
@@ -47,7 +24,9 @@
         "numA": false,
         "numB": false,
         "showEq": false
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "id": 180002,
@@ -71,7 +50,9 @@
         "numA": false,
         "numB": false,
         "showEq": false
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "id": 180003,
@@ -95,7 +76,9 @@
         "numA": false,
         "numB": false,
         "showEq": false
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "id": 180004,
@@ -119,7 +102,9 @@
         "numA": false,
         "numB": false,
         "showEq": false
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "id": 180005,
@@ -143,7 +128,32 @@
         "numA": false,
         "numB": false,
         "showEq": false
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "mode": "count",
+      "display": "array",
+      "align": "centre",
+      "countA": 8,
+      "imageIdA": "counter:1:4:1",
+      "countB": 5,
+      "imageIdB": "counter:1:6:1",
+      "op": "add",
+      "subMode": "crossed",
+      "cols": 5,
+      "groupSize": 1,
+      "illusOutline": "individual",
+      "imgScale": 1,
+      "numA": false,
+      "numB": false,
+      "showEq": false
+    },
+    "visualType": "pr",
+    "answer": "3",
+    "text": "# 8 – 5 ="
+  }
 }
