@@ -1,32 +1,7 @@
 {
   "nuggetId": 225,
-  "status": "in-progress",
-  "nextQId": 225006,
-  "exampleOverride": {
-    "cfg": {
-      "segments": [
-        {
-          "value": 11,
-          "divisions": 11,
-          "braceLabel": "?"
-        },
-        {
-          "value": 8,
-          "divisions": 8,
-          "braceLabel": "8"
-        }
-      ],
-      "total": 19,
-      "colorIdx": 2,
-      "multi": true,
-      "topBar": true,
-      "topBarDivisions": 19,
-      "topBrace": true
-    },
-    "visualType": "bm",
-    "answer": "11",
-    "text": "# 19 – 8 ="
-  },
+  "status": "ready-for-qa",
+  "nextQId": 1790100000087,
   "questions": [
     {
       "id": 225001,
@@ -168,5 +143,30 @@
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 11,
+          "divisions": 11,
+          "braceLabel": "?"
+        },
+        {
+          "value": 8,
+          "divisions": 8,
+          "braceLabel": "8"
+        }
+      ],
+      "total": 19,
+      "colorIdx": 2,
+      "multi": true,
+      "topBar": true,
+      "topBarDivisions": 19,
+      "topBrace": true
+    },
+    "visualType": "bm",
+    "answer": "11",
+    "text": "# 19 – 8 ="
+  }
 }
