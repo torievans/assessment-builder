@@ -78,7 +78,7 @@
     {
       "id": 240006,
       "visualType": "nl",
-      "text": "There are 7 building blocks in one pile and 3 in another.\nHow many blocks are there altogether?",
+      "text": "There are 7 blue bricks and 3 red bricks.\nHow many bricks are there altogether?",
       "answer": "10",
       "cfg": {
         "start": 0,
