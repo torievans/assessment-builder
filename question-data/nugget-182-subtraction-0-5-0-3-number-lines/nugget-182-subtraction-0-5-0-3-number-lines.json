@@ -1,9 +1,28 @@
 {
-  "exampleOverride": null,
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 5,
+      "partitions": 5,
+      "valuesGivenEvery": 1,
+      "answer": 2,
+      "lineStyle": "terminate",
+      "colour": "red",
+      "jumpFrom": 4,
+      "jumpTo": 2,
+      "jumpType": "single",
+      "jumpLabel": "−2",
+      "jumpArrow": true,
+      "jumpColour": "dark"
+    },
+    "visualType": "nl",
+    "answer": "2",
+    "text": "# 4 – 2 ="
+  },
   "questions": [
     {
       "visualType": "nl",
-      "text": "# 4 \u2013 1 =",
+      "text": "# 4 – 1 =",
       "answer": "3",
       "cfg": {
         "start": 0,
@@ -16,14 +35,14 @@
         "jumpFrom": 4,
         "jumpTo": 3,
         "jumpType": "single",
-        "jumpLabel": "\u20131",
+        "jumpLabel": "–1",
         "jumpArrow": true,
         "jumpColour": "dark"
       }
     },
     {
       "visualType": "nl",
-      "text": "# 5 \u2013 2 =",
+      "text": "# 5 – 2 =",
       "answer": "3",
       "cfg": {
         "start": 0,
@@ -32,18 +51,18 @@
         "valuesGivenEvery": 1,
         "answer": 3,
         "lineStyle": "terminate",
-        "colour": "red",
+        "colour": "orange",
         "jumpFrom": 5,
         "jumpTo": 3,
         "jumpType": "single",
-        "jumpLabel": "\u20132",
+        "jumpLabel": "–2",
         "jumpArrow": true,
         "jumpColour": "dark"
       }
     },
     {
       "visualType": "nl",
-      "text": "# 3 \u2013 2 =",
+      "text": "# 3 – 2 =",
       "answer": "1",
       "cfg": {
         "start": 0,
@@ -52,18 +71,18 @@
         "valuesGivenEvery": 1,
         "answer": 1,
         "lineStyle": "terminate",
-        "colour": "red",
+        "colour": "green",
         "jumpFrom": 3,
         "jumpTo": 1,
         "jumpType": "single",
-        "jumpLabel": "\u20132",
+        "jumpLabel": "–2",
         "jumpArrow": true,
         "jumpColour": "dark"
       }
     },
     {
       "visualType": "nl",
-      "text": "# 4 \u2013 3 =",
+      "text": "# 4 – 3 =",
       "answer": "1",
       "cfg": {
         "start": 0,
@@ -72,18 +91,18 @@
         "valuesGivenEvery": 1,
         "answer": 1,
         "lineStyle": "terminate",
-        "colour": "red",
+        "colour": "blue",
         "jumpFrom": 4,
         "jumpTo": 1,
         "jumpType": "single",
-        "jumpLabel": "\u20133",
+        "jumpLabel": "–3",
         "jumpArrow": true,
         "jumpColour": "dark"
       }
     },
     {
       "visualType": "nl",
-      "text": "# 5 \u2013 3 =",
+      "text": "# 5 – 3 =",
       "answer": "2",
       "cfg": {
         "start": 0,
@@ -92,11 +111,11 @@
         "valuesGivenEvery": 1,
         "answer": 2,
         "lineStyle": "terminate",
-        "colour": "red",
+        "colour": "purple",
         "jumpFrom": 5,
         "jumpTo": 2,
         "jumpType": "single",
-        "jumpLabel": "\u20133",
+        "jumpLabel": "–3",
         "jumpArrow": true,
         "jumpColour": "dark"
       }
