@@ -56,7 +56,7 @@
     {
       "id": 241003,
       "visualType": "bm",
-      "text": "Mo counts 5 stars.\nThen he counts 4 more.\nHow many stars does he count in all?",
+      "text": "Mo counts 5 stars.\nThen he counts 4 more.\nHow many stars does he count in total?",
       "answer": "9",
       "cfg": {
         "segments": [
@@ -70,10 +70,9 @@
           }
         ],
         "total": "?",
-        "topBar": true,
-        "topBrace": false,
+        "colorIdx": 2,
         "multi": true,
-        "colorIdx": 2
+        "topBar": true
       },
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
