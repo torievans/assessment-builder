@@ -130,8 +130,8 @@
       "revealAnswer": true,
       "jumpFrom": 8,
       "jumpTo": 3,
-      "jumpType": "single",
-      "jumpLabel": "−5",
+      "jumpType": "unit",
+      "jumpLabel": "",
       "jumpArrow": true,
       "jumpCircle": "none",
       "jumpColour": "dark"
