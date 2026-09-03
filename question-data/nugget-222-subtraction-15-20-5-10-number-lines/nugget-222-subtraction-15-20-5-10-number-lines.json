@@ -2,5 +2,27 @@
   "nuggetId": 222,
   "status": "not-started",
   "nextQId": 1790100000087,
-  "questions": []
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 16,
+      "partitions": 16,
+      "valuesGivenEvery": 1,
+      "answer": "10",
+      "lineStyle": "terminate",
+      "colour": "green",
+      "revealAnswer": true,
+      "jumpFrom": 16,
+      "jumpTo": 10,
+      "jumpType": "unit",
+      "jumpLabel": "",
+      "jumpArrow": true,
+      "jumpCircle": "none",
+      "jumpColour": "red"
+    },
+    "visualType": "nl",
+    "answer": "10",
+    "text": "# 16 – 6 ="
+  }
 }
