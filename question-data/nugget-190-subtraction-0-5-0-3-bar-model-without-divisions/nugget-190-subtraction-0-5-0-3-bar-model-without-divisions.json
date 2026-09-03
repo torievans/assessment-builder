@@ -31,26 +31,5 @@
       "updatedAt": "2026-09-03",
       "createdAt": "2026-09-03"
     }
-  ],
-  "exampleOverride": {
-    "cfg": {
-      "segments": [
-        {
-          "value": 2,
-          "segLabel": "?"
-        },
-        {
-          "value": 2,
-          "segLabel": "2"
-        }
-      ],
-      "total": 4,
-      "colorIdx": 4,
-      "multi": true,
-      "topBar": true
-    },
-    "visualType": "bm",
-    "answer": "2",
-    "text": "# 4 – 2 ="
-  }
+  ]
 }
