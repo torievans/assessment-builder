@@ -1,29 +1,7 @@
 {
   "nuggetId": 241,
   "status": "in-progress",
-  "nextQId": 241007,
-  "exampleOverride": {
-    "visualType": "bm",
-    "answer": "5",
-    "text": "There are 3 dogs in the park.\n2 more arrive.\nHow many dogs are there altogether?",
-    "cfg": {
-      "segments": [
-        {
-          "value": 3,
-          "braceLabel": "3"
-        },
-        {
-          "value": 2,
-          "braceLabel": "2"
-        }
-      ],
-      "total": "?",
-      "topBar": true,
-      "topBrace": true,
-      "multi": true,
-      "colorIdx": 0
-    }
-  },
+  "nextQId": 1790100000088,
   "questions": [
     {
       "id": 241001,
@@ -175,5 +153,27 @@
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "visualType": "bm",
+    "answer": "5",
+    "text": "There are 3 dogs in the park.\n2 more arrive.\nHow many dogs are there altogether?",
+    "cfg": {
+      "segments": [
+        {
+          "value": 3,
+          "braceLabel": "3"
+        },
+        {
+          "value": 2,
+          "braceLabel": "2"
+        }
+      ],
+      "total": "?",
+      "topBar": true,
+      "topBrace": true,
+      "multi": true,
+      "colorIdx": 0
+    }
+  }
 }
