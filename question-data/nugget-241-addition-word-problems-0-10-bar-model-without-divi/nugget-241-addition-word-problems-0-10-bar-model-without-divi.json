@@ -127,31 +127,6 @@
       },
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
-    },
-    {
-      "id": 241006,
-      "visualType": "bm",
-      "text": "There are 5 children on the swings.\n5 more join them.\nHow many children are there now?",
-      "answer": "10",
-      "cfg": {
-        "segments": [
-          {
-            "value": 5,
-            "segLabel": "5"
-          },
-          {
-            "value": 5,
-            "segLabel": "5"
-          }
-        ],
-        "total": "?",
-        "topBar": true,
-        "topBrace": false,
-        "multi": true,
-        "colorIdx": 5
-      },
-      "createdAt": "2026-09-03",
-      "updatedAt": "2026-09-03"
     }
   ],
   "exampleOverride": {
