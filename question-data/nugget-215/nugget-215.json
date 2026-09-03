@@ -1,0 +1,14 @@
+{
+  "nuggetId": 215,
+  "nextQId": 1790100000087,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "8 + _ = 15",
+      "wbBorder": "#319377",
+      "wbSkin": "#ffa99c"
+    },
+    "visualType": "wb",
+    "answer": "7"
+  }
+}
