@@ -1,25 +1,6 @@
 {
-  "exampleOverride": {
-    "cfg": {
-      "segments": [
-        {
-          "value": 4,
-          "segLabel": "?"
-        },
-        {
-          "value": 1,
-          "segLabel": "1"
-        }
-      ],
-      "total": 5,
-      "colorIdx": 4,
-      "multi": true,
-      "topBar": true
-    },
-    "visualType": "bm",
-    "answer": "4",
-    "text": "# 5 – 1 ="
-  },
+  "nuggetId": 190,
+  "nextQId": 1790100000087,
   "questions": [
     {
       "visualType": "bm",
@@ -41,7 +22,9 @@
         "multi": true,
         "topBar": true
       },
-      "id": 190001
+      "id": 190001,
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "visualType": "bm",
@@ -63,7 +46,9 @@
         "multi": true,
         "topBar": true
       },
-      "id": 190002
+      "id": 190002,
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "visualType": "bm",
@@ -85,7 +70,9 @@
         "multi": true,
         "topBar": true
       },
-      "id": 190003
+      "id": 190003,
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "visualType": "bm",
@@ -107,7 +94,9 @@
         "multi": true,
         "topBar": true
       },
-      "id": 190004
+      "id": 190004,
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "visualType": "bm",
@@ -129,9 +118,30 @@
         "multi": true,
         "topBar": true
       },
-      "id": 190005
+      "id": 190005,
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     }
   ],
-  "nextQId": 190006,
-  "nuggetId": 190
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 4,
+          "segLabel": "?"
+        },
+        {
+          "value": 1,
+          "segLabel": "1"
+        }
+      ],
+      "total": 5,
+      "colorIdx": 4,
+      "multi": true,
+      "topBar": true
+    },
+    "visualType": "bm",
+    "answer": "4",
+    "text": "# 5 – 1 ="
+  }
 }
