@@ -40,24 +40,6 @@
       "updatedAt": "2026-09-03"
     },
     {
-      "id": 240003,
-      "visualType": "nl",
-      "text": "Ali has 1 coin.\nShe finds 8 more.\nHow many coins does she have now?",
-      "answer": "9",
-      "cfg": {
-        "start": 0,
-        "end": 10,
-        "partitions": 10,
-        "valuesGivenEvery": null,
-        "answer": "9",
-        "lineStyle": "terminate",
-        "colour": "pink",
-        "revealAnswer": true
-      },
-      "createdAt": "2026-09-03",
-      "updatedAt": "2026-09-03"
-    },
-    {
       "id": 240004,
       "visualType": "nl",
       "text": "There are 3 cats in the garden.\n3 more come in.\nHow many cats are there altogether?",
