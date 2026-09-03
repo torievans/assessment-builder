@@ -78,8 +78,12 @@
       "cfg": {
         "start": 0,
         "end": 10,
-        "jumps": [],
-        "revealAnswer": false
+        "partitions": 10,
+        "valuesGivenEvery": null,
+        "answer": "10",
+        "lineStyle": "terminate",
+        "colour": "pink",
+        "revealAnswer": true
       },
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
