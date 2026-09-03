@@ -6,37 +6,37 @@
     "cfg": {
       "segments": [
         {
-          "value": 3,
-          "segLabel": "3"
+          "value": 4,
+          "segLabel": "4"
         },
         {
-          "value": 5,
+          "value": 3,
           "segLabel": "?"
         }
       ],
-      "total": 8,
+      "total": 7,
       "colorIdx": 2,
       "multi": true,
       "topBar": true
     },
     "visualType": "bm",
-    "answer": "5",
-    "text": "# 8 – _ = 3"
+    "answer": "3",
+    "text": "# 7 – _ = 4"
   },
   "questions": [
     {
       "id": 323001,
       "visualType": "bm",
-      "text": "# 9 – _ = 2",
-      "answer": "7",
+      "text": "# 9 – _ = 3",
+      "answer": "6",
       "cfg": {
         "segments": [
           {
-            "value": 2,
-            "segLabel": "2"
+            "value": 3,
+            "segLabel": "3"
           },
           {
-            "value": 7,
+            "value": 6,
             "segLabel": "?"
           }
         ],
@@ -51,20 +51,20 @@
     {
       "id": 323002,
       "visualType": "bm",
-      "text": "# 5 – _ = 4",
+      "text": "# 6 – _ = 5",
       "answer": "1",
       "cfg": {
         "segments": [
           {
-            "value": 4,
-            "segLabel": "4"
+            "value": 5,
+            "segLabel": "5"
           },
           {
             "value": 1,
             "segLabel": "?"
           }
         ],
-        "total": 5,
+        "total": 6,
         "colorIdx": 3,
         "multi": true,
         "topBar": true
@@ -75,8 +75,8 @@
     {
       "id": 323003,
       "visualType": "bm",
-      "text": "# 7 – _ = 3",
-      "answer": "4",
+      "text": "# 8 – _ = 3",
+      "answer": "5",
       "cfg": {
         "segments": [
           {
@@ -84,11 +84,11 @@
             "segLabel": "3"
           },
           {
-            "value": 4,
+            "value": 5,
             "segLabel": "?"
           }
         ],
-        "total": 7,
+        "total": 8,
         "colorIdx": 4,
         "multi": true,
         "topBar": true
@@ -99,20 +99,20 @@
     {
       "id": 323004,
       "visualType": "bm",
-      "text": "# 6 – _ = 4",
+      "text": "# 5 – _ = 3",
       "answer": "2",
       "cfg": {
         "segments": [
           {
-            "value": 4,
-            "segLabel": "4"
+            "value": 3,
+            "segLabel": "3"
           },
           {
             "value": 2,
             "segLabel": "?"
           }
         ],
-        "total": 6,
+        "total": 5,
         "colorIdx": 5,
         "multi": true,
         "topBar": true
@@ -123,16 +123,16 @@
     {
       "id": 323005,
       "visualType": "bm",
-      "text": "# 9 – _ = 6",
-      "answer": "3",
+      "text": "# 9 – _ = 5",
+      "answer": "4",
       "cfg": {
         "segments": [
           {
-            "value": 6,
-            "segLabel": "6"
+            "value": 5,
+            "segLabel": "5"
           },
           {
-            "value": 3,
+            "value": 4,
             "segLabel": "?"
           }
         ],
