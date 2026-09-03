@@ -70,7 +70,7 @@
     {
       "id": 237003,
       "visualType": "pr",
-      "text": "There are 6 ice creams and 3 lollies.\nHow many treats are there altogether?",
+      "text": "There are 6 ice creams and 3 lollies.\nHow many are there altogether?",
       "answer": "9",
       "cfg": {
         "mode": "addsub",
