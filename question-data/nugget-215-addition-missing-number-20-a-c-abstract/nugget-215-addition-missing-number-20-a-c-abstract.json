@@ -1,0 +1,13 @@
+{
+  "exampleOverride": {
+    "visualType": "wb",
+    "text": "# 8 + _ = 15",
+    "answer": "7",
+    "cfg": {
+      "wbText": "8 + _ = 15",
+      "wbBorder": "#319377",
+      "wbSkin": "#ffa99c"
+    }
+  },
+  "questions": []
+}
