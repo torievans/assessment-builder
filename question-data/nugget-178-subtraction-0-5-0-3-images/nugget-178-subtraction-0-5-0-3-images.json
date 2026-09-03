@@ -50,7 +50,8 @@
         "numA": false,
         "numB": false,
         "showEq": false
-      }
+      },
+      "id": 178001
     },
     {
       "visualType": "pr",
@@ -73,7 +74,8 @@
         "numA": false,
         "numB": false,
         "showEq": false
-      }
+      },
+      "id": 178002
     },
     {
       "visualType": "pr",
@@ -96,7 +98,8 @@
         "numA": false,
         "numB": false,
         "showEq": false
-      }
+      },
+      "id": 178003
     },
     {
       "visualType": "pr",
@@ -119,7 +122,8 @@
         "numA": false,
         "numB": false,
         "showEq": false
-      }
+      },
+      "id": 178004
     },
     {
       "visualType": "pr",
@@ -142,7 +146,10 @@
         "numA": false,
         "numB": false,
         "showEq": false
-      }
+      },
+      "id": 178005
     }
-  ]
+  ],
+  "nextQId": 178006,
+  "nuggetId": 178
 }
