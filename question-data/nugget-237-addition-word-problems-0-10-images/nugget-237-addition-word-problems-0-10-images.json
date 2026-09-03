@@ -1,36 +1,7 @@
 {
   "nuggetId": 237,
   "status": "in-progress",
-  "nextQId": 237006,
-  "exampleOverride": {
-    "cfg": {
-      "mode": "addsub",
-      "display": "array",
-      "align": "centre",
-      "countA": 3,
-      "imageIdA": "illus:food/fruit/apple_orange",
-      "countB": 2,
-      "imageIdB": "illus:food/fruit/apple_green",
-      "op": "add",
-      "subMode": "crossed",
-      "cols": 5,
-      "groupSize": 1,
-      "mrows": 2,
-      "mcols": 5,
-      "illusOutline": "individual",
-      "imgScale": 1,
-      "numA": false,
-      "numB": false,
-      "showEq": false,
-      "crayonCount": 5,
-      "crayonBoxes": 1,
-      "crayonFontSize": 148,
-      "crayonLabel": "5 Crayons"
-    },
-    "visualType": "pr",
-    "answer": "5",
-    "text": "There are 3 red apples and 2 green apples.\nHow many apples are there altogether?"
-  },
+  "nextQId": 1790100000087,
   "questions": [
     {
       "id": 237001,
@@ -192,5 +163,34 @@
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "mode": "addsub",
+      "display": "array",
+      "align": "centre",
+      "countA": 3,
+      "imageIdA": "illus:food/fruit/apple_orange",
+      "countB": 2,
+      "imageIdB": "illus:food/fruit/apple_green",
+      "op": "add",
+      "subMode": "crossed",
+      "cols": 5,
+      "groupSize": 1,
+      "mrows": 2,
+      "mcols": 5,
+      "illusOutline": "individual",
+      "imgScale": 1,
+      "numA": false,
+      "numB": false,
+      "showEq": false,
+      "crayonCount": 5,
+      "crayonBoxes": 1,
+      "crayonFontSize": 148,
+      "crayonLabel": "5 Crayons"
+    },
+    "visualType": "pr",
+    "answer": "5",
+    "text": "There are 3 red apples and 2 green apples.\nHow many apples are there altogether?"
+  }
 }
