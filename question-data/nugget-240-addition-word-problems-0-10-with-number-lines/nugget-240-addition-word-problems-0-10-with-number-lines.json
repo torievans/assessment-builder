@@ -100,7 +100,8 @@
       "valuesGivenEvery": null,
       "answer": "5",
       "lineStyle": "terminate",
-      "colour": "grey"
+      "colour": "blue",
+      "revealAnswer": true
     },
     "visualType": "nl",
     "answer": "5",
