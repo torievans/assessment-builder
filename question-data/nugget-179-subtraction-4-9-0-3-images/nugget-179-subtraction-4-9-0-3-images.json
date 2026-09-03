@@ -1,0 +1,149 @@
+{
+  "nuggetId": 179,
+  "nextQId": 179006,
+  "exampleOverride": {
+    "cfg": {
+      "mode": "count",
+      "display": "array",
+      "align": "centre",
+      "countA": 8,
+      "imageIdA": "counter:0:0:0",
+      "countB": 2,
+      "imageIdB": "counter:0:6:0",
+      "op": "add",
+      "subMode": "crossed",
+      "cols": 5,
+      "groupSize": 1,
+      "illusOutline": "individual",
+      "imgScale": 1,
+      "numA": false,
+      "numB": false,
+      "showEq": false
+    },
+    "visualType": "pr",
+    "answer": "6",
+    "text": "# 8 – 2 ="
+  },
+  "questions": [
+    {
+      "id": 179001,
+      "visualType": "pr",
+      "text": "# 9 – 3 =",
+      "answer": "6",
+      "cfg": {
+        "mode": "count",
+        "display": "array",
+        "align": "centre",
+        "countA": 9,
+        "imageIdA": "counter:1:1:2",
+        "countB": 3,
+        "imageIdB": "counter:1:4:2",
+        "op": "add",
+        "subMode": "crossed",
+        "cols": 5,
+        "groupSize": 1,
+        "illusOutline": "individual",
+        "imgScale": 1,
+        "numA": false,
+        "numB": false,
+        "showEq": false
+      }
+    },
+    {
+      "id": 179002,
+      "visualType": "pr",
+      "text": "# 7 – 2 =",
+      "answer": "5",
+      "cfg": {
+        "mode": "count",
+        "display": "array",
+        "align": "centre",
+        "countA": 7,
+        "imageIdA": "counter:2:3:5",
+        "countB": 2,
+        "imageIdB": "counter:2:0:5",
+        "op": "add",
+        "subMode": "crossed",
+        "cols": 5,
+        "groupSize": 1,
+        "illusOutline": "individual",
+        "imgScale": 1,
+        "numA": false,
+        "numB": false,
+        "showEq": false
+      }
+    },
+    {
+      "id": 179003,
+      "visualType": "pr",
+      "text": "# 5 – 3 =",
+      "answer": "2",
+      "cfg": {
+        "mode": "count",
+        "display": "array",
+        "align": "centre",
+        "countA": 5,
+        "imageIdA": "counter:3:4:8",
+        "countB": 3,
+        "imageIdB": "counter:3:2:8",
+        "op": "add",
+        "subMode": "crossed",
+        "cols": 5,
+        "groupSize": 1,
+        "illusOutline": "individual",
+        "imgScale": 1,
+        "numA": false,
+        "numB": false,
+        "showEq": false
+      }
+    },
+    {
+      "id": 179004,
+      "visualType": "pr",
+      "text": "# 8 – 1 =",
+      "answer": "7",
+      "cfg": {
+        "mode": "count",
+        "display": "array",
+        "align": "centre",
+        "countA": 8,
+        "imageIdA": "counter:4:5:11",
+        "countB": 1,
+        "imageIdB": "counter:4:1:11",
+        "op": "add",
+        "subMode": "crossed",
+        "cols": 5,
+        "groupSize": 1,
+        "illusOutline": "individual",
+        "imgScale": 1,
+        "numA": false,
+        "numB": false,
+        "showEq": false
+      }
+    },
+    {
+      "id": 179005,
+      "visualType": "pr",
+      "text": "# 6 – 3 =",
+      "answer": "3",
+      "cfg": {
+        "mode": "count",
+        "display": "array",
+        "align": "centre",
+        "countA": 6,
+        "imageIdA": "counter:5:2:13",
+        "countB": 3,
+        "imageIdB": "counter:5:3:13",
+        "op": "add",
+        "subMode": "crossed",
+        "cols": 5,
+        "groupSize": 1,
+        "illusOutline": "individual",
+        "imgScale": 1,
+        "numA": false,
+        "numB": false,
+        "showEq": false
+      }
+    }
+  ]
+}
