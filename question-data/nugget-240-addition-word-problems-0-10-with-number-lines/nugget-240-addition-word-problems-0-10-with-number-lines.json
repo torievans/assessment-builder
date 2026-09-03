@@ -65,7 +65,8 @@
         "valuesGivenEvery": null,
         "answer": "9",
         "lineStyle": "terminate",
-        "colour": "blue"
+        "colour": "blue",
+        "revealAnswer": true
       },
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
