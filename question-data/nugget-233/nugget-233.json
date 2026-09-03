@@ -1,0 +1,172 @@
+{
+  "nuggetId": 233,
+  "status": "ready-for-qa",
+  "nextQId": 1790100000087,
+  "questions": [
+    {
+      "id": 233001,
+      "visualType": "bm",
+      "text": "# 3 + _ = 17",
+      "answer": "14",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "divisions": 3,
+            "braceLabel": "3"
+          },
+          {
+            "value": 14,
+            "divisions": 14,
+            "braceLabel": "?"
+          }
+        ],
+        "total": 17,
+        "colorIdx": 0,
+        "multi": true,
+        "topBar": true,
+        "topBarDivisions": 17,
+        "topBrace": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 233002,
+      "visualType": "bm",
+      "text": "# 14 + _ = 17",
+      "answer": "3",
+      "cfg": {
+        "segments": [
+          {
+            "value": 14,
+            "divisions": 14,
+            "braceLabel": "14"
+          },
+          {
+            "value": 3,
+            "divisions": 3,
+            "braceLabel": "?"
+          }
+        ],
+        "total": 17,
+        "colorIdx": 3,
+        "multi": true,
+        "topBar": true,
+        "topBarDivisions": 17,
+        "topBrace": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 233003,
+      "visualType": "bm",
+      "text": "# 5 + _ = 18",
+      "answer": "13",
+      "cfg": {
+        "segments": [
+          {
+            "value": 5,
+            "divisions": 5,
+            "braceLabel": "5"
+          },
+          {
+            "value": 13,
+            "divisions": 13,
+            "braceLabel": "?"
+          }
+        ],
+        "total": 18,
+        "colorIdx": 4,
+        "multi": true,
+        "topBar": true,
+        "topBarDivisions": 18,
+        "topBrace": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 233004,
+      "visualType": "bm",
+      "text": "# 11 + _ = 16",
+      "answer": "5",
+      "cfg": {
+        "segments": [
+          {
+            "value": 11,
+            "divisions": 11,
+            "braceLabel": "11"
+          },
+          {
+            "value": 5,
+            "divisions": 5,
+            "braceLabel": "?"
+          }
+        ],
+        "total": 16,
+        "colorIdx": 5,
+        "multi": true,
+        "topBar": true,
+        "topBarDivisions": 16,
+        "topBrace": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 233005,
+      "visualType": "bm",
+      "text": "# 8 + _ = 17",
+      "answer": "9",
+      "cfg": {
+        "segments": [
+          {
+            "value": 8,
+            "divisions": 8,
+            "braceLabel": "8"
+          },
+          {
+            "value": 9,
+            "divisions": 9,
+            "braceLabel": "?"
+          }
+        ],
+        "total": 17,
+        "colorIdx": 6,
+        "multi": true,
+        "topBar": true,
+        "topBarDivisions": 17,
+        "topBrace": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    }
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 7,
+          "divisions": 7,
+          "braceLabel": "7"
+        },
+        {
+          "value": 11,
+          "divisions": 11,
+          "braceLabel": "?"
+        }
+      ],
+      "total": 18,
+      "colorIdx": 2,
+      "multi": true,
+      "topBar": true,
+      "topBarDivisions": 18,
+      "topBrace": true
+    },
+    "visualType": "bm",
+    "answer": "11",
+    "text": "# 7 + _ = 18"
+  }
+}
