@@ -18,7 +18,8 @@
         "wbText": "4 – _ = 2",
         "wbBorder": "#D46B55",
         "wbSkin": "#ffa99c"
-      }
+      },
+      "id": 328001
     },
     {
       "visualType": "wb",
@@ -28,7 +29,8 @@
         "wbText": "5 – _ = 2",
         "wbBorder": "#7898F0",
         "wbSkin": "#d4895a"
-      }
+      },
+      "id": 328002
     },
     {
       "visualType": "wb",
@@ -38,7 +40,8 @@
         "wbText": "3 – _ = 2",
         "wbBorder": "#FECC6B",
         "wbSkin": "#b06530"
-      }
+      },
+      "id": 328003
     },
     {
       "visualType": "wb",
@@ -48,7 +51,8 @@
         "wbText": "4 – _ = 1",
         "wbBorder": "#847AC9",
         "wbSkin": "#6b3520"
-      }
+      },
+      "id": 328004
     },
     {
       "visualType": "wb",
@@ -58,7 +62,10 @@
         "wbText": "5 – _ = 3",
         "wbBorder": "#F5995B",
         "wbSkin": "#ffa99c"
-      }
+      },
+      "id": 328005
     }
-  ]
+  ],
+  "nextQId": 328006,
+  "nuggetId": 328
 }
