@@ -82,7 +82,7 @@
         "imageIdB": "illus:food/bakery/muffin_brown",
         "op": "add",
         "subMode": "crossed",
-        "cols": 5,
+        "cols": 6,
         "groupSize": 1,
         "mrows": 2,
         "mcols": 5,
