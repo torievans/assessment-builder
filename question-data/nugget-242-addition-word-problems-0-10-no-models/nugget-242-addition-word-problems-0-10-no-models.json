@@ -1,13 +1,7 @@
 {
   "nuggetId": 242,
   "status": "in-progress",
-  "nextQId": 242007,
-  "exampleOverride": {
-    "visualType": null,
-    "answer": "5",
-    "text": "There are 3 dogs in the park.\n2 more arrive.\nHow many dogs are there altogether?",
-    "cfg": {}
-  },
+  "nextQId": 1790100000087,
   "questions": [
     {
       "id": 242001,
@@ -63,5 +57,11 @@
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "visualType": null,
+    "answer": "5",
+    "text": "There are 3 dogs in the park.\n2 more arrive.\nHow many dogs are there altogether?",
+    "cfg": {}
+  }
 }
