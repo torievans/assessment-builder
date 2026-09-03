@@ -99,20 +99,5 @@
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
     }
-  ],
-  "exampleOverride": {
-    "cfg": {
-      "start": 0,
-      "end": 10,
-      "partitions": 10,
-      "valuesGivenEvery": null,
-      "answer": "5",
-      "lineStyle": "terminate",
-      "colour": "blue",
-      "revealAnswer": true
-    },
-    "visualType": "nl",
-    "answer": "5",
-    "text": "There are 3 dogs in the park.\n2 more arrive.\nHow many dogs are there altogether?"
-  }
+  ]
 }
