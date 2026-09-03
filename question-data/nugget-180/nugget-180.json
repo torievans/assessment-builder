@@ -70,7 +70,7 @@
         "display": "array",
         "align": "centre",
         "countA": 7,
-        "imageIdA": "counter:4:6:10",
+        "imageIdA": "counter:4:6:6",
         "countB": 4,
         "imageIdB": "counter:4:2:10",
         "op": "add",
