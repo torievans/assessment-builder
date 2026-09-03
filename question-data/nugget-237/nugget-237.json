@@ -134,7 +134,7 @@
     {
       "id": 237005,
       "visualType": "pr",
-      "text": "There are 4 carrots and 4 peppers.\nHow many vegetables are there altogether?",
+      "text": "There are 4 carrots and 4 peppers.\nHow many are there altogether?",
       "answer": "8",
       "cfg": {
         "mode": "addsub",
