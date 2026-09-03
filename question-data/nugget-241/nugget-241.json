@@ -56,17 +56,17 @@
     {
       "id": 241003,
       "visualType": "bm",
-      "text": "Mo counts 5 stars.\nThen he counts 4 more.\nHow many stars does he count in total?",
-      "answer": "9",
+      "text": "Mo has 2 brothers and 2 sisters.\nHow many brothers and sisters does he have in total?",
+      "answer": "4",
       "cfg": {
         "segments": [
           {
-            "value": 5,
-            "segLabel": "5"
+            "value": 2,
+            "segLabel": "2"
           },
           {
-            "value": 4,
-            "segLabel": "4"
+            "value": 2,
+            "segLabel": "2"
           }
         ],
         "total": "?",
