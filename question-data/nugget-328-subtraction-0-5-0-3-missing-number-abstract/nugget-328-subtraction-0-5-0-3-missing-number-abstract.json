@@ -1,16 +1,64 @@
 {
-  "nuggetId": 328,
-  "status": "in-progress",
-  "nextQId": 1790100000086,
-  "questions": [],
   "exampleOverride": {
     "cfg": {
-      "wbText": "3 – _ = 1",
+      "wbText": "3 \u2013 _ = 1",
       "wbBorder": "#319377",
       "wbSkin": "#ffa99c"
     },
     "visualType": "wb",
     "answer": "2",
     "text": ""
-  }
+  },
+  "questions": [
+    {
+      "visualType": "wb",
+      "text": "",
+      "answer": "2",
+      "cfg": {
+        "wbText": "4 \u2013 _ = 2",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      }
+    },
+    {
+      "visualType": "wb",
+      "text": "",
+      "answer": "3",
+      "cfg": {
+        "wbText": "5 \u2013 _ = 2",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      }
+    },
+    {
+      "visualType": "wb",
+      "text": "",
+      "answer": "1",
+      "cfg": {
+        "wbText": "3 \u2013 _ = 2",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      }
+    },
+    {
+      "visualType": "wb",
+      "text": "",
+      "answer": "3",
+      "cfg": {
+        "wbText": "4 \u2013 _ = 1",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      }
+    },
+    {
+      "visualType": "wb",
+      "text": "",
+      "answer": "2",
+      "cfg": {
+        "wbText": "5 \u2013 _ = 3",
+        "wbBorder": "#319377",
+        "wbSkin": "#ffa99c"
+      }
+    }
+  ]
 }
