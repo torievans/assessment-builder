@@ -1,29 +1,7 @@
 {
   "nuggetId": 221,
-  "status": "in-progress",
-  "nextQId": 221006,
-  "exampleOverride": {
-    "cfg": {
-      "start": 0,
-      "end": 16,
-      "partitions": 16,
-      "valuesGivenEvery": 1,
-      "answer": 12,
-      "lineStyle": "terminate",
-      "colour": "red",
-      "jumpFrom": 16,
-      "jumpTo": 12,
-      "jumpType": "unit",
-      "jumpLabel": "",
-      "jumpArrow": true,
-      "jumpColour": "dark",
-      "revealAnswer": true,
-      "jumpCircle": "none"
-    },
-    "visualType": "nl",
-    "answer": "12",
-    "text": "# 16 – 4 ="
-  },
+  "status": "ready-for-qa",
+  "nextQId": 1790100000087,
   "questions": [
     {
       "id": 221001,
@@ -150,5 +128,27 @@
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 16,
+      "partitions": 16,
+      "valuesGivenEvery": 1,
+      "answer": 12,
+      "lineStyle": "terminate",
+      "colour": "red",
+      "jumpFrom": 16,
+      "jumpTo": 12,
+      "jumpType": "unit",
+      "jumpLabel": "",
+      "jumpArrow": true,
+      "jumpColour": "dark",
+      "revealAnswer": true,
+      "jumpCircle": "none"
+    },
+    "visualType": "nl",
+    "answer": "12",
+    "text": "# 16 – 4 ="
+  }
 }
