@@ -1,6 +1,25 @@
 {
-  "nuggetId": 211,
-  "status": "not-started",
-  "nextQId": 1790100000077,
+  "exampleOverride": {
+    "visualType": "bm",
+    "text": "# 8 + _ = 15",
+    "answer": "7",
+    "cfg": {
+      "segments": [
+        {
+          "value": 8,
+          "divisions": 8,
+          "braceLabel": "8"
+        },
+        {
+          "value": "?",
+          "divisions": 7,
+          "braceLabel": "?"
+        }
+      ],
+      "total": 15,
+      "colorIdx": 3,
+      "multi": true
+    }
+  },
   "questions": []
 }
