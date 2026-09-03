@@ -40,20 +40,6 @@
       "updatedAt": "2026-09-03"
     },
     {
-      "id": 240004,
-      "visualType": "nl",
-      "text": "There are 3 cats in the garden.\n3 more come in.\nHow many cats are there altogether?",
-      "answer": "6",
-      "cfg": {
-        "start": 0,
-        "end": 10,
-        "jumps": [],
-        "revealAnswer": false
-      },
-      "createdAt": "2026-09-03",
-      "updatedAt": "2026-09-03"
-    },
-    {
       "id": 240005,
       "visualType": "nl",
       "text": "There are 6 fish in the tank.\n3 more are added.\nHow many fish are in the tank now?",
