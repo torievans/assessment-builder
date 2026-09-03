@@ -1,26 +1,6 @@
 {
   "nuggetId": 184,
-  "nextQId": 184006,
-  "exampleOverride": {
-    "cfg": {
-      "start": 0,
-      "end": 9,
-      "partitions": 9,
-      "valuesGivenEvery": 1,
-      "answer": 3,
-      "lineStyle": "terminate",
-      "colour": "purple",
-      "jumpFrom": 8,
-      "jumpTo": 3,
-      "jumpType": "single",
-      "jumpLabel": "−5",
-      "jumpArrow": true,
-      "jumpColour": "dark"
-    },
-    "visualType": "nl",
-    "answer": "3",
-    "text": "# 8 – 5 ="
-  },
+  "nextQId": 1790100000087,
   "questions": [
     {
       "id": 184001,
@@ -41,7 +21,9 @@
         "jumpLabel": "−4",
         "jumpArrow": true,
         "jumpColour": "dark"
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "id": 184002,
@@ -62,7 +44,9 @@
         "jumpLabel": "−4",
         "jumpArrow": true,
         "jumpColour": "dark"
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "id": 184003,
@@ -83,7 +67,9 @@
         "jumpLabel": "−4",
         "jumpArrow": true,
         "jumpColour": "dark"
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "id": 184004,
@@ -104,7 +90,9 @@
         "jumpLabel": "−7",
         "jumpArrow": true,
         "jumpColour": "dark"
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "id": 184005,
@@ -125,7 +113,29 @@
         "jumpLabel": "−5",
         "jumpArrow": true,
         "jumpColour": "dark"
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 9,
+      "partitions": 9,
+      "valuesGivenEvery": 1,
+      "answer": 3,
+      "lineStyle": "terminate",
+      "colour": "purple",
+      "jumpFrom": 8,
+      "jumpTo": 3,
+      "jumpType": "single",
+      "jumpLabel": "−5",
+      "jumpArrow": true,
+      "jumpColour": "dark"
+    },
+    "visualType": "nl",
+    "answer": "3",
+    "text": "# 8 – 5 ="
+  }
 }
