@@ -1,36 +1,7 @@
 {
   "nuggetId": 220,
-  "status": "in-progress",
-  "nextQId": 220006,
-  "exampleOverride": {
-    "cfg": {
-      "mode": "count",
-      "display": "array",
-      "align": "centre",
-      "countA": 18,
-      "imageIdA": "counter:0:0:2",
-      "countB": 12,
-      "imageIdB": "counter:1:4:2",
-      "op": "add",
-      "subMode": "crossed",
-      "cols": 5,
-      "groupSize": 1,
-      "mrows": 2,
-      "mcols": 5,
-      "illusOutline": "individual",
-      "imgScale": 1,
-      "numA": false,
-      "numB": false,
-      "showEq": false,
-      "crayonCount": 5,
-      "crayonBoxes": 1,
-      "crayonFontSize": 148,
-      "crayonLabel": "5 Crayons"
-    },
-    "visualType": "pr",
-    "answer": "6",
-    "text": "# 18 – 12 ="
-  },
+  "status": "ready-for-qa",
+  "nextQId": 1790100000087,
   "questions": [
     {
       "id": 220001,
@@ -192,5 +163,34 @@
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "mode": "count",
+      "display": "array",
+      "align": "centre",
+      "countA": 18,
+      "imageIdA": "counter:0:0:2",
+      "countB": 12,
+      "imageIdB": "counter:1:4:2",
+      "op": "add",
+      "subMode": "crossed",
+      "cols": 5,
+      "groupSize": 1,
+      "mrows": 2,
+      "mcols": 5,
+      "illusOutline": "individual",
+      "imgScale": 1,
+      "numA": false,
+      "numB": false,
+      "showEq": false,
+      "crayonCount": 5,
+      "crayonBoxes": 1,
+      "crayonFontSize": 148,
+      "crayonLabel": "5 Crayons"
+    },
+    "visualType": "pr",
+    "answer": "6",
+    "text": "# 18 – 12 ="
+  }
 }
