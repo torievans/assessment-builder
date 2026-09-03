@@ -1,0 +1,148 @@
+{
+  "nuggetId": 227,
+  "status": "in-progress",
+  "nextQId": 227006,
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 12,
+          "segLabel": "?"
+        },
+        {
+          "value": 3,
+          "segLabel": "3"
+        }
+      ],
+      "total": 15,
+      "colorIdx": 2,
+      "multi": true,
+      "topBar": true
+    },
+    "visualType": "bm",
+    "answer": "12",
+    "text": "# 15 – 3 ="
+  },
+  "questions": [
+    {
+      "id": 227001,
+      "visualType": "bm",
+      "text": "# 20 – 4 =",
+      "answer": "16",
+      "cfg": {
+        "segments": [
+          {
+            "value": 16,
+            "segLabel": "?"
+          },
+          {
+            "value": 4,
+            "segLabel": "4"
+          }
+        ],
+        "total": 20,
+        "colorIdx": 0,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 227002,
+      "visualType": "bm",
+      "text": "# 17 – 2 =",
+      "answer": "15",
+      "cfg": {
+        "segments": [
+          {
+            "value": 15,
+            "segLabel": "?"
+          },
+          {
+            "value": 2,
+            "segLabel": "2"
+          }
+        ],
+        "total": 17,
+        "colorIdx": 3,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 227003,
+      "visualType": "bm",
+      "text": "# 19 – 5 =",
+      "answer": "14",
+      "cfg": {
+        "segments": [
+          {
+            "value": 14,
+            "segLabel": "?"
+          },
+          {
+            "value": 5,
+            "segLabel": "5"
+          }
+        ],
+        "total": 19,
+        "colorIdx": 4,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 227004,
+      "visualType": "bm",
+      "text": "# 16 – 1 =",
+      "answer": "15",
+      "cfg": {
+        "segments": [
+          {
+            "value": 15,
+            "segLabel": "?"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": 16,
+        "colorIdx": 5,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 227005,
+      "visualType": "bm",
+      "text": "# 18 – 5 =",
+      "answer": "13",
+      "cfg": {
+        "segments": [
+          {
+            "value": 13,
+            "segLabel": "?"
+          },
+          {
+            "value": 5,
+            "segLabel": "5"
+          }
+        ],
+        "total": 18,
+        "colorIdx": 6,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    }
+  ]
+}
