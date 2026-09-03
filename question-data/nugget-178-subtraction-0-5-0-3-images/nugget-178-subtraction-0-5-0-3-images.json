@@ -1,8 +1,4 @@
 {
-  "nuggetId": 178,
-  "status": "in-progress",
-  "nextQId": 1790100000078,
-  "questions": [],
   "exampleOverride": {
     "cfg": {
       "mode": "count",
@@ -30,6 +26,123 @@
     },
     "visualType": "pr",
     "answer": "3",
-    "text": "# 3 – 2 ="
-  }
+    "text": "# 3 \u2013 2 ="
+  },
+  "questions": [
+    {
+      "visualType": "pr",
+      "text": "# 2 \u2013 1 =",
+      "answer": "1",
+      "cfg": {
+        "mode": "count",
+        "display": "array",
+        "align": "centre",
+        "countA": 2,
+        "imageIdA": "counter:0:0:0",
+        "countB": 1,
+        "imageIdB": "counter:0:6:0",
+        "op": "add",
+        "subMode": "crossed",
+        "cols": 5,
+        "groupSize": 1,
+        "illusOutline": "individual",
+        "imgScale": 1,
+        "numA": false,
+        "numB": false,
+        "showEq": false
+      }
+    },
+    {
+      "visualType": "pr",
+      "text": "# 4 \u2013 2 =",
+      "answer": "2",
+      "cfg": {
+        "mode": "count",
+        "display": "array",
+        "align": "centre",
+        "countA": 4,
+        "imageIdA": "counter:0:0:0",
+        "countB": 2,
+        "imageIdB": "counter:0:6:0",
+        "op": "add",
+        "subMode": "crossed",
+        "cols": 5,
+        "groupSize": 1,
+        "illusOutline": "individual",
+        "imgScale": 1,
+        "numA": false,
+        "numB": false,
+        "showEq": false
+      }
+    },
+    {
+      "visualType": "pr",
+      "text": "# 5 \u2013 3 =",
+      "answer": "2",
+      "cfg": {
+        "mode": "count",
+        "display": "array",
+        "align": "centre",
+        "countA": 5,
+        "imageIdA": "counter:0:0:0",
+        "countB": 3,
+        "imageIdB": "counter:0:6:0",
+        "op": "add",
+        "subMode": "crossed",
+        "cols": 5,
+        "groupSize": 1,
+        "illusOutline": "individual",
+        "imgScale": 1,
+        "numA": false,
+        "numB": false,
+        "showEq": false
+      }
+    },
+    {
+      "visualType": "pr",
+      "text": "# 4 \u2013 1 =",
+      "answer": "3",
+      "cfg": {
+        "mode": "count",
+        "display": "array",
+        "align": "centre",
+        "countA": 4,
+        "imageIdA": "counter:0:0:0",
+        "countB": 1,
+        "imageIdB": "counter:0:6:0",
+        "op": "add",
+        "subMode": "crossed",
+        "cols": 5,
+        "groupSize": 1,
+        "illusOutline": "individual",
+        "imgScale": 1,
+        "numA": false,
+        "numB": false,
+        "showEq": false
+      }
+    },
+    {
+      "visualType": "pr",
+      "text": "# 5 \u2013 2 =",
+      "answer": "3",
+      "cfg": {
+        "mode": "count",
+        "display": "array",
+        "align": "centre",
+        "countA": 5,
+        "imageIdA": "counter:0:0:0",
+        "countB": 2,
+        "imageIdB": "counter:0:6:0",
+        "op": "add",
+        "subMode": "crossed",
+        "cols": 5,
+        "groupSize": 1,
+        "illusOutline": "individual",
+        "imgScale": 1,
+        "numA": false,
+        "numB": false,
+        "showEq": false
+      }
+    }
+  ]
 }
