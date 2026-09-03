@@ -465,7 +465,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
           <div class="form-card">
             <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px">For abstract questions with no image — e.g. <strong>4 + 4 = ?</strong> or <strong>How many more to make 10?</strong></p>
             <div class="form-row">
-              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('text-q-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><input type="text" id="text-q-text" placeholder="e.g. 4 + 4 = ?"></div>
+              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('text-q-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><textarea id="text-q-text" rows="2" placeholder="e.g. 4 + 4 = ?" style="resize:vertical;font:inherit;width:100%;box-sizing:border-box;padding:6px 10px;border:1px solid var(--border,#D1D5D8);border-radius:8px;background:var(--input-bg,#fff);color:inherit;line-height:1.4"></textarea></div>
               <div class="field field-sm"><label>Answer</label><input type="text" id="text-answer" placeholder="e.g. 8"></div>
             </div>
             <div class="form-actions" style="margin-top:14px">
@@ -480,7 +480,7 @@ body{font-family:var(--font);background:var(--hbg);color:var(--text);height:100v
           <div class="form-card">
             <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px">For questions with a unique image — e.g. a photo, hand-drawn diagram, or screenshot.</p>
             <div class="form-row">
-              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('custom-q-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><input type="text" id="custom-q-text" placeholder="e.g. How many squares can you see?"></div>
+              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('custom-q-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><textarea id="custom-q-text" rows="2" placeholder="e.g. How many squares can you see?" style="resize:vertical;font:inherit;width:100%;box-sizing:border-box;padding:6px 10px;border:1px solid var(--border,#D1D5D8);border-radius:8px;background:var(--input-bg,#fff);color:inherit;line-height:1.4"></textarea></div>
               <div class="field field-sm"><label>Answer</label><input type="text" id="custom-answer" placeholder="e.g. 4"></div>
             </div>
             <div style="margin:8px 0 4px">
