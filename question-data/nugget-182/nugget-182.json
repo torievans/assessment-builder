@@ -1,0 +1,28 @@
+{
+  "nuggetId": 182,
+  "status": "in-progress",
+  "nextQId": 1790100000079,
+  "questions": [],
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 10,
+      "partitions": 10,
+      "valuesGivenEvery": null,
+      "answer": "2",
+      "lineStyle": "terminate",
+      "colour": "green",
+      "revealAnswer": true,
+      "jumpFrom": 3,
+      "jumpTo": 2,
+      "jumpType": "single",
+      "jumpLabel": "",
+      "jumpArrow": true,
+      "jumpCircle": "none",
+      "jumpColour": "purple"
+    },
+    "visualType": "nl",
+    "answer": "2",
+    "text": "# 3 – 1 ="
+  }
+}
