@@ -36,13 +36,15 @@
     "cfg": {
       "segments": [
         {
-          "value": 2
+          "value": 4,
+          "segLabel": "?"
         },
         {
-          "value": 2
+          "value": 1,
+          "segLabel": "1"
         }
       ],
-      "total": "?",
+      "total": 5,
       "colorIdx": 4,
       "multi": true,
       "topBar": true
