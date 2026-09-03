@@ -134,15 +134,15 @@
     {
       "id": 238006,
       "visualType": "pr",
-      "text": "In the zoo there are 3 female tigers and 1 male tiger.\nHow many tigers are there in total?",
-      "answer": "4",
+      "text": "In the zoo there are 3 tigers lying down.\n2 more are hiding.\nHow many tigers are there in total?",
+      "answer": "3",
       "cfg": {
         "mode": "count",
         "display": "array",
         "align": "centre",
         "countA": 3,
         "imageIdA": "illus:animals/tiger_orange",
-        "countB": 0,
+        "countB": 3,
         "imageIdB": "illus:animals/tiger_orange",
         "op": "add",
         "subMode": "crossed",
