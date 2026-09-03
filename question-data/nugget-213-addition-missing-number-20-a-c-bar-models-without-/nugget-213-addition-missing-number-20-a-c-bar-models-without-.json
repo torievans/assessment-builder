@@ -1,28 +1,7 @@
 {
   "nuggetId": 213,
   "status": "ready-for-qa",
-  "nextQId": 213006,
-  "exampleOverride": {
-    "cfg": {
-      "segments": [
-        {
-          "value": 4,
-          "segLabel": "4"
-        },
-        {
-          "value": 7,
-          "segLabel": "?"
-        }
-      ],
-      "total": 11,
-      "colorIdx": 2,
-      "multi": true,
-      "topBar": true
-    },
-    "visualType": "bm",
-    "answer": "7",
-    "text": "# 4 + _ = 11"
-  },
+  "nextQId": 1790100000077,
   "questions": [
     {
       "id": 213001,
@@ -144,5 +123,26 @@
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 4,
+          "segLabel": "4"
+        },
+        {
+          "value": 7,
+          "segLabel": "?"
+        }
+      ],
+      "total": 11,
+      "colorIdx": 2,
+      "multi": true,
+      "topBar": true
+    },
+    "visualType": "bm",
+    "answer": "7",
+    "text": "# 4 + _ = 11"
+  }
 }
