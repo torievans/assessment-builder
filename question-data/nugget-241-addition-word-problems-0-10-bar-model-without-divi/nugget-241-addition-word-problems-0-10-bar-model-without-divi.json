@@ -137,18 +137,17 @@
           "segLabel": "3"
         },
         {
-          "value": 2,
-          "segLabel": "2"
+          "value": 3,
+          "segLabel": "3"
         }
       ],
       "total": "?",
-      "colorIdx": 0,
+      "colorIdx": 5,
       "multi": true,
-      "topBar": true,
-      "topBrace": false
+      "topBar": true
     },
     "visualType": "bm",
     "answer": "5",
-    "text": "There are 3 dogs in the park.\n2 more arrive.\nHow many dogs are there altogether?"
+    "text": "There are 3 plans in a garden. \n3 more are planted.\nHow many plants are there altogether?"
   }
 }
