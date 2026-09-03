@@ -104,7 +104,7 @@
     {
       "id": 241005,
       "visualType": "bm",
-      "text": "There are 4 grapes in one bunch and 3 in another.\nHow many grapes are there in total?",
+      "text": "There are 4 black cars and 3 white cars in a car park.\nHow many cars are there in total?",
       "answer": "7",
       "cfg": {
         "segments": [
@@ -118,10 +118,9 @@
           }
         ],
         "total": "?",
-        "topBar": true,
-        "topBrace": false,
+        "colorIdx": 4,
         "multi": true,
-        "colorIdx": 4
+        "topBar": true
       },
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
