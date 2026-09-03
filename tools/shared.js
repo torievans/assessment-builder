@@ -310,7 +310,9 @@ function barModelSVG(config) {
   const TOP_BAR_H = BAR_H, TOP_BAR_GAP = 4;
   const hasBrace = segments.some(sg => (sg.braceLabel ?? sg.label) != null && (sg.braceLabel ?? sg.label) !== '');
   const topBrace = !!(config.topBrace);
-  const TOP_PAD = config.topBar ? (14 + TOP_BAR_H + TOP_BAR_GAP + (topBrace ? 50 : 0)) : 50;
+  // When topBar + topBrace, push the top bar down to leave room for the brace above it
+  const tbY = config.topBar ? (topBrace ? 50 : 14) : 0;
+  const TOP_PAD = config.topBar ? (tbY + TOP_BAR_H + TOP_BAR_GAP) : 50;
   const BOT_PAD = hasBrace ? 50 : 20;
   const knownSum = segments.reduce((s, sg) => s + (typeof sg.value === 'number' ? sg.value : 0), 0);
   const fullTotal = typeof total === 'number' ? total : knownSum;
@@ -329,7 +331,6 @@ function barModelSVG(config) {
 
   // Top bar — comparison bar model
   if (config.topBar) {
-    const tbY = 14;
     const tbDivs = (config.topBarDivisions ?? 1);
     const tbDivLabel = config.topBarDivLabel;
     if (tbDivs > 1) {
@@ -469,9 +470,11 @@ function barModelSVG(config) {
 
   // Top brace + total
   if ((!config.topBar || topBrace) && !config.hideTotal) {
-    const tY = by - 5, tMid = bx + BAR_W / 2;
-    s += `<path d="M${bx},${tY} V${tY - BRACE_ARM} H${(tMid - 3).toFixed(1)} L${tMid},${tY - BRACE_TIP} L${(tMid + 3).toFixed(1)},${tY - BRACE_ARM} H${bx + BAR_W} V${tY}" fill="none" stroke="#AAAAAA" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;
-    s += `<text x="${tMid}" y="${tY - BRACE_TIP - 4}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="900" font-size="22" fill="#AAAAAA">${totalLbl}</text>`;
+    // When topBar+topBrace, draw brace above the top bar; otherwise above the segments bar
+    const tY = (config.topBar && topBrace) ? tbY - 5 : by - 5;
+    const tMid = bx + BAR_W / 2;
+    s += `<path d="M${bx},${tY} V${(tY-BRACE_ARM).toFixed(1)} H${(tMid-3).toFixed(1)} L${tMid},${(tY-BRACE_TIP).toFixed(1)} L${(tMid+3).toFixed(1)},${(tY-BRACE_ARM).toFixed(1)} H${bx+BAR_W} V${tY}" fill="none" stroke="#AAAAAA" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;
+    s += `<text x="${tMid}" y="${(tY-BRACE_TIP-4).toFixed(1)}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="900" font-size="22" fill="#AAAAAA">${totalLbl}</text>`;
   }
   s += `</svg>`;
   return s;
