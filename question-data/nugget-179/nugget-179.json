@@ -128,7 +128,7 @@
       "id": 179005,
       "visualType": "pr",
       "text": "# 6 – 3 =",
-      "answer": "3",
+      "answer": "6",
       "cfg": {
         "mode": "count",
         "display": "array",
@@ -139,13 +139,19 @@
         "imageIdB": "counter:5:3:13",
         "op": "add",
         "subMode": "crossed",
-        "cols": 5,
+        "cols": 3,
         "groupSize": 1,
+        "mrows": 2,
+        "mcols": 5,
         "illusOutline": "individual",
         "imgScale": 1,
         "numA": false,
         "numB": false,
-        "showEq": false
+        "showEq": false,
+        "crayonCount": 5,
+        "crayonBoxes": 1,
+        "crayonFontSize": 148,
+        "crayonLabel": "5 Crayons"
       },
       "updatedAt": "2026-09-03",
       "createdAt": "2026-09-03"
