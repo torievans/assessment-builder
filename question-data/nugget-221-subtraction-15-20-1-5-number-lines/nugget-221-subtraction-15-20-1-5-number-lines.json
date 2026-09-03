@@ -1,0 +1,142 @@
+{
+  "nuggetId": 221,
+  "status": "in-progress",
+  "nextQId": 221006,
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 16,
+      "partitions": 16,
+      "valuesGivenEvery": 1,
+      "answer": 12,
+      "lineStyle": "terminate",
+      "colour": "red",
+      "jumpFrom": 16,
+      "jumpTo": 12,
+      "jumpType": "unit",
+      "jumpLabel": "",
+      "jumpArrow": true,
+      "jumpColour": "dark"
+    },
+    "visualType": "nl",
+    "answer": "12",
+    "text": "# 16 – 4 ="
+  },
+  "questions": [
+    {
+      "id": 221001,
+      "visualType": "nl",
+      "text": "# 20 – 2 =",
+      "answer": "18",
+      "cfg": {
+        "start": 0,
+        "end": 20,
+        "partitions": 20,
+        "valuesGivenEvery": 1,
+        "answer": 18,
+        "lineStyle": "terminate",
+        "colour": "orange",
+        "jumpFrom": 20,
+        "jumpTo": 18,
+        "jumpType": "unit",
+        "jumpLabel": "",
+        "jumpArrow": true,
+        "jumpColour": "purple"
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 221002,
+      "visualType": "nl",
+      "text": "# 18 – 5 =",
+      "answer": "13",
+      "cfg": {
+        "start": 0,
+        "end": 18,
+        "partitions": 18,
+        "valuesGivenEvery": 1,
+        "answer": 13,
+        "lineStyle": "terminate",
+        "colour": "green",
+        "jumpFrom": 18,
+        "jumpTo": 13,
+        "jumpType": "unit",
+        "jumpLabel": "",
+        "jumpArrow": true,
+        "jumpColour": "red"
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 221003,
+      "visualType": "nl",
+      "text": "# 19 – 3 =",
+      "answer": "16",
+      "cfg": {
+        "start": 0,
+        "end": 19,
+        "partitions": 19,
+        "valuesGivenEvery": 1,
+        "answer": 16,
+        "lineStyle": "terminate",
+        "colour": "blue",
+        "jumpFrom": 19,
+        "jumpTo": 16,
+        "jumpType": "unit",
+        "jumpLabel": "",
+        "jumpArrow": true,
+        "jumpColour": "orange"
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 221004,
+      "visualType": "nl",
+      "text": "# 15 – 1 =",
+      "answer": "14",
+      "cfg": {
+        "start": 0,
+        "end": 15,
+        "partitions": 15,
+        "valuesGivenEvery": 1,
+        "answer": 14,
+        "lineStyle": "terminate",
+        "colour": "purple",
+        "jumpFrom": 15,
+        "jumpTo": 14,
+        "jumpType": "unit",
+        "jumpLabel": "",
+        "jumpArrow": true,
+        "jumpColour": "green"
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 221005,
+      "visualType": "nl",
+      "text": "# 17 – 4 =",
+      "answer": "13",
+      "cfg": {
+        "start": 0,
+        "end": 17,
+        "partitions": 17,
+        "valuesGivenEvery": 1,
+        "answer": 13,
+        "lineStyle": "terminate",
+        "colour": "pink",
+        "jumpFrom": 17,
+        "jumpTo": 13,
+        "jumpType": "unit",
+        "jumpLabel": "",
+        "jumpArrow": true,
+        "jumpColour": "blue"
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    }
+  ]
+}
