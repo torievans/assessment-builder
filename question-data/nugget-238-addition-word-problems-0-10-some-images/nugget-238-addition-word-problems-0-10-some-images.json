@@ -1,36 +1,7 @@
 {
   "nuggetId": 238,
   "status": "in-progress",
-  "nextQId": 238007,
-  "exampleOverride": {
-    "cfg": {
-      "mode": "count",
-      "display": "array",
-      "align": "centre",
-      "countA": 4,
-      "imageIdA": "illus:animals/elephant_grey",
-      "countB": 0,
-      "imageIdB": "illus:animals/elephant_grey",
-      "op": "add",
-      "subMode": "crossed",
-      "cols": 5,
-      "groupSize": 1,
-      "mrows": 2,
-      "mcols": 5,
-      "illusOutline": "individual",
-      "imgScale": 1,
-      "numA": false,
-      "numB": false,
-      "showEq": false,
-      "crayonCount": 5,
-      "crayonBoxes": 1,
-      "crayonFontSize": 148,
-      "crayonLabel": "5 Crayons"
-    },
-    "visualType": "pr",
-    "answer": "6",
-    "text": "There are 4 elephants.\n2 more elephants join.\nHow many are there in total?"
-  },
+  "nextQId": 1790100000087,
   "questions": [
     {
       "id": 238001,
@@ -224,5 +195,34 @@
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "mode": "count",
+      "display": "array",
+      "align": "centre",
+      "countA": 4,
+      "imageIdA": "illus:animals/elephant_grey",
+      "countB": 0,
+      "imageIdB": "illus:animals/elephant_grey",
+      "op": "add",
+      "subMode": "crossed",
+      "cols": 5,
+      "groupSize": 1,
+      "mrows": 2,
+      "mcols": 5,
+      "illusOutline": "individual",
+      "imgScale": 1,
+      "numA": false,
+      "numB": false,
+      "showEq": false,
+      "crayonCount": 5,
+      "crayonBoxes": 1,
+      "crayonFontSize": 148,
+      "crayonLabel": "5 Crayons"
+    },
+    "visualType": "pr",
+    "answer": "6",
+    "text": "There are 4 elephants.\n2 more elephants join.\nHow many are there in total?"
+  }
 }
