@@ -28,7 +28,8 @@
         "topBrace": true
       },
       "updatedAt": "2026-09-03",
-      "createdAt": "2026-09-03"
+      "createdAt": "2026-09-03",
+      "id": 186001
     },
     {
       "visualType": "bm",
@@ -55,7 +56,8 @@
         "topBrace": true
       },
       "updatedAt": "2026-09-03",
-      "createdAt": "2026-09-03"
+      "createdAt": "2026-09-03",
+      "id": 186002
     },
     {
       "visualType": "bm",
@@ -82,7 +84,8 @@
         "topBrace": true
       },
       "updatedAt": "2026-09-03",
-      "createdAt": "2026-09-03"
+      "createdAt": "2026-09-03",
+      "id": 186003
     },
     {
       "visualType": "bm",
@@ -109,7 +112,8 @@
         "topBrace": true
       },
       "updatedAt": "2026-09-03",
-      "createdAt": "2026-09-03"
+      "createdAt": "2026-09-03",
+      "id": 186004
     },
     {
       "visualType": "bm",
@@ -136,7 +140,8 @@
         "topBrace": true
       },
       "updatedAt": "2026-09-03",
-      "createdAt": "2026-09-03"
+      "createdAt": "2026-09-03",
+      "id": 186005
     }
   ],
   "exampleOverride": {
