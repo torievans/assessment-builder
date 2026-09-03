@@ -1,6 +1,7 @@
 {
   "nuggetId": 324,
-  "nextQId": 1790100000086,
+  "status": "not-started",
+  "nextQId": 1790100000087,
   "questions": [
     {
       "visualType": "wb",
