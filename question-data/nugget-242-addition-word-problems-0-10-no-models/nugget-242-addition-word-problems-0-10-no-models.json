@@ -1,11 +1,11 @@
 {
   "nuggetId": 242,
   "status": "in-progress",
-  "nextQId": 1790100000087,
+  "nextQId": 1790100000088,
   "questions": [
     {
       "id": 242001,
-      "visualType": "text",
+      "visualType": null,
       "text": "Mia has 3 stickers.\nHer friend gives her 4 more.\nHow many stickers does she have altogether?",
       "answer": "7",
       "cfg": {},
@@ -14,7 +14,7 @@
     },
     {
       "id": 242002,
-      "visualType": "text",
+      "visualType": null,
       "text": "Sam sees 6 ducks in the pond.\n2 more swim over.\nHow many ducks are there in total?",
       "answer": "8",
       "cfg": {},
@@ -23,7 +23,7 @@
     },
     {
       "id": 242003,
-      "visualType": "text",
+      "visualType": null,
       "text": "There are 4 frogs on a log.\n5 more jump on.\nHow many frogs are there in total?",
       "answer": "9",
       "cfg": {},
@@ -32,7 +32,7 @@
     },
     {
       "id": 242004,
-      "visualType": "text",
+      "visualType": null,
       "text": "There are 2 apples in the bowl.\nMum puts in 5 more.\nHow many apples are in the bowl now?",
       "answer": "7",
       "cfg": {},
@@ -41,7 +41,7 @@
     },
     {
       "id": 242005,
-      "visualType": "text",
+      "visualType": null,
       "text": "There are 3 ladybirds on a leaf.\n5 more land on it.\nHow many ladybirds are on the leaf now?",
       "answer": "8",
       "cfg": {},
@@ -50,7 +50,7 @@
     },
     {
       "id": 242006,
-      "visualType": "text",
+      "visualType": null,
       "text": "There are 4 crayons in one box and 6 in another.\nHow many crayons are there altogether?",
       "answer": "10",
       "cfg": {},
@@ -59,9 +59,9 @@
     }
   ],
   "exampleOverride": {
+    "cfg": {},
     "visualType": "text",
     "answer": "5",
-    "text": "There are 3 dogs in the park.\n2 more arrive.\nHow many dogs are there altogether?",
-    "cfg": {}
+    "text": "There are 3 children in the park.\n2 more arrive.\nHow many children are there altogether?"
   }
 }
