@@ -1,7 +1,7 @@
 {
   "nuggetId": 190,
   "status": "in-progress",
-  "nextQId": 1790100000084,
+  "nextQId": 1790100000085,
   "questions": [
     {
       "id": 1790100000083,
@@ -31,5 +31,24 @@
       "updatedAt": "2026-09-03",
       "createdAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 2
+        },
+        {
+          "value": 2
+        }
+      ],
+      "total": "?",
+      "colorIdx": 4,
+      "multi": true,
+      "topBar": true
+    },
+    "visualType": "bm",
+    "answer": "4",
+    "text": "# 5 – 1 ="
+  }
 }
