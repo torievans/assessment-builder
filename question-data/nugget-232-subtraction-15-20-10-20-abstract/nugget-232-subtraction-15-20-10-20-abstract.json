@@ -1,17 +1,7 @@
 {
   "nuggetId": 232,
-  "status": "in-progress",
-  "nextQId": 232006,
-  "exampleOverride": {
-    "cfg": {
-      "wbText": "19 – 11 =",
-      "wbBorder": "#847AC9",
-      "wbSkin": "#ffa99c"
-    },
-    "visualType": "wb",
-    "answer": "8",
-    "text": ""
-  },
+  "status": "ready-for-qa",
+  "nextQId": 1790100000087,
   "questions": [
     {
       "id": 232001,
@@ -78,5 +68,15 @@
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "19 – 11 =",
+      "wbBorder": "#847AC9",
+      "wbSkin": "#ffa99c"
+    },
+    "visualType": "wb",
+    "answer": "8",
+    "text": ""
+  }
 }
