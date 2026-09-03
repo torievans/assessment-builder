@@ -142,12 +142,12 @@
         }
       ],
       "total": "?",
-      "colorIdx": 5,
+      "colorIdx": 0,
       "multi": true,
       "topBar": true
     },
     "visualType": "bm",
     "answer": "5",
-    "text": "There are 3 plans in a garden. \n3 more are planted.\nHow many plants are there altogether?"
+    "text": "Yesterday I planted 3 plants. \nToday I planted 3 more.\nHow many plants have I planted altogether?"
   }
 }
