@@ -39,7 +39,7 @@ function getBMConfig(){
   const mkSeg=n=>{const v=parseBMV(document.getElementById(`bm-seg${n}-val`).value);if(v===undefined)return null;const sg={value:v};const divsRaw=parseInt(document.getElementById(`bm-seg${n}-divs`)?.value)||1;const hasDivs=divsRaw>1;if(hasDivs){sg.divisions=divsRaw;const dl=document.getElementById(`bm-seg${n}-divlbl`)?.value.trim();if(dl)sg.divLabel=dl;}else{const l=document.getElementById(`bm-seg${n}-lbl`).value.trim();if(l)sg.segLabel=l;}const b=document.getElementById(`bm-seg${n}-brace`).value.trim();if(b)sg.braceLabel=b;if(bmSegT[n]==='blank')sg.blank=true;return sg;};
   const segs=[mkSeg(1),mkSeg(2)].filter(Boolean);if(bmSeg3){const s3=mkSeg(3);if(s3)segs.push(s3);}if(!segs.length)return null;
   const cfg={segments:segs,total,colorIdx:bmColIdx,multi:bmMulti||undefined,topBar:bmTotDisp==='top bar'||undefined,hideTotal:bmTotDisp==='none'||undefined};
-  if(bmTotDisp==='top bar'){const tbDivs=parseInt(document.getElementById('bm-topbar-divs')?.value)||1;if(tbDivs>1){cfg.topBarDivisions=tbDivs;const tbLbl=document.getElementById('bm-topbar-divlbl')?.value.trim();if(tbLbl)cfg.topBarDivLabel=tbLbl;}if(document.getElementById('bm-topbar-brace')?.checked)cfg.topBrace=true;}
+  if(bmTotDisp==='top bar'){const tbDivs=parseInt(document.getElementById('bm-topbar-divs')?.value)||1;if(tbDivs>1){cfg.topBarDivisions=tbDivs;const tbLbl=document.getElementById('bm-topbar-divlbl')?.value.trim();if(tbLbl)cfg.topBarDivLabel=tbLbl;}}
   return cfg;
 }
 function bmToggleSeg3(show){bmSeg3=show;document.getElementById('bm-seg3-block').style.display=show?'block':'none';document.getElementById('bm-add-seg3').style.display=show?'none':'inline-flex';if(!show)['bm-seg3-val','bm-seg3-lbl','bm-seg3-brace','bm-seg3-divs','bm-seg3-divlbl'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});autoPreviewBM();}
@@ -77,7 +77,6 @@ function restoreBMConfig(cfg){
   // Top bar divisions
   const tbDivsEl=document.getElementById('bm-topbar-divs');if(tbDivsEl)tbDivsEl.value=(cfg.topBarDivisions??1)>1?cfg.topBarDivisions:'';
   const tbDivlblEl=document.getElementById('bm-topbar-divlbl');if(tbDivlblEl)tbDivlblEl.value=cfg.topBarDivLabel??'';
-  const tbBraceEl=document.getElementById('bm-topbar-brace');if(tbBraceEl)tbBraceEl.checked=!!cfg.topBrace;
   const tbRow=document.getElementById('bm-topbar-divs-row');if(tbRow)tbRow.style.display=bmTotDisp==='top bar'?'':'none';
   bmTopBarDivsChange();
   autoPreviewBM();
@@ -86,7 +85,7 @@ function restoreBMConfig(cfg){
 // ── Panel HTML ─────────────────────────────────────────────────
 function bmPanelHTML(){
   return `<div class="form-row">
-              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('bm-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><input type="text" id="bm-text" placeholder="e.g. What is the missing number?"></div>
+              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('bm-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><textarea id="bm-text" rows="2" placeholder="e.g. What is the missing number?" style="resize:vertical;font:inherit;width:100%;box-sizing:border-box;padding:6px 10px;border:1px solid var(--border,#D1D5D8);border-radius:8px;background:var(--input-bg,#fff);color:inherit;line-height:1.4"></textarea></div>
               <div class="field field-sm"><label>Answer</label><input type="text" id="bm-answer" placeholder="e.g. 6"></div>
             </div>
             <div class="form-row">
@@ -97,7 +96,7 @@ function bmPanelHTML(){
             </div>
             <div class="form-row" id="bm-topbar-divs-row" style="display:none">
               <div class="field field-sm"><label>Top bar divisions</label><input type="number" id="bm-topbar-divs" min="2" max="20" placeholder="e.g. 10" oninput="bmTopBarDivsChange()" onchange="bmTopBarDivsChange()" style="width:70px"></div>
-              <div class="field field-grow" id="bm-topbar-divlbl-field" style="display:none"><label>Div label</label><input type="text" id="bm-topbar-divlbl" placeholder="optional"></div><div class="field"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="bm-topbar-brace" onchange="autoPreviewBM()"> Also show brace</label></div>
+              <div class="field field-grow" id="bm-topbar-divlbl-field" style="display:none"><label>Div label</label><input type="text" id="bm-topbar-divlbl" placeholder="optional"></div>
             </div>
             <div class="sec-hr"></div>
             <div class="seg-block">
