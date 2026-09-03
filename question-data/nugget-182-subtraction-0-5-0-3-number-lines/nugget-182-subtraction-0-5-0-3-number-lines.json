@@ -1,24 +1,6 @@
 {
-  "exampleOverride": {
-    "cfg": {
-      "start": 0,
-      "end": 5,
-      "partitions": 5,
-      "valuesGivenEvery": 1,
-      "answer": 2,
-      "lineStyle": "terminate",
-      "colour": "red",
-      "jumpFrom": 4,
-      "jumpTo": 2,
-      "jumpType": "single",
-      "jumpLabel": "−2",
-      "jumpArrow": true,
-      "jumpColour": "dark"
-    },
-    "visualType": "nl",
-    "answer": "2",
-    "text": "# 4 – 2 ="
-  },
+  "nuggetId": 182,
+  "nextQId": 1790100000087,
   "questions": [
     {
       "visualType": "nl",
@@ -39,7 +21,8 @@
         "jumpArrow": true,
         "jumpColour": "dark"
       },
-      "id": 182001
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "visualType": "nl",
@@ -52,7 +35,7 @@
         "valuesGivenEvery": 1,
         "answer": 3,
         "lineStyle": "terminate",
-        "colour": "orange",
+        "colour": "red",
         "jumpFrom": 5,
         "jumpTo": 3,
         "jumpType": "single",
@@ -60,7 +43,8 @@
         "jumpArrow": true,
         "jumpColour": "dark"
       },
-      "id": 182002
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "visualType": "nl",
@@ -73,7 +57,7 @@
         "valuesGivenEvery": 1,
         "answer": 1,
         "lineStyle": "terminate",
-        "colour": "green",
+        "colour": "red",
         "jumpFrom": 3,
         "jumpTo": 1,
         "jumpType": "single",
@@ -81,7 +65,8 @@
         "jumpArrow": true,
         "jumpColour": "dark"
       },
-      "id": 182003
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "visualType": "nl",
@@ -94,7 +79,7 @@
         "valuesGivenEvery": 1,
         "answer": 1,
         "lineStyle": "terminate",
-        "colour": "blue",
+        "colour": "red",
         "jumpFrom": 4,
         "jumpTo": 1,
         "jumpType": "single",
@@ -102,7 +87,8 @@
         "jumpArrow": true,
         "jumpColour": "dark"
       },
-      "id": 182004
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "visualType": "nl",
@@ -115,7 +101,7 @@
         "valuesGivenEvery": 1,
         "answer": 2,
         "lineStyle": "terminate",
-        "colour": "purple",
+        "colour": "red",
         "jumpFrom": 5,
         "jumpTo": 2,
         "jumpType": "single",
@@ -123,9 +109,30 @@
         "jumpArrow": true,
         "jumpColour": "dark"
       },
-      "id": 182005
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     }
   ],
-  "nextQId": 182006,
-  "nuggetId": 182
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 5,
+      "partitions": 5,
+      "valuesGivenEvery": null,
+      "answer": "4",
+      "lineStyle": "terminate",
+      "colour": "green",
+      "revealAnswer": true,
+      "jumpFrom": 4,
+      "jumpTo": 2,
+      "jumpType": "unit",
+      "jumpLabel": "",
+      "jumpArrow": true,
+      "jumpCircle": "none",
+      "jumpColour": "blue"
+    },
+    "visualType": "nl",
+    "answer": "4",
+    "text": "4 – 2 ="
+  }
 }
