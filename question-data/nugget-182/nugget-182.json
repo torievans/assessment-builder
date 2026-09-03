@@ -11,15 +11,17 @@
         "end": 5,
         "partitions": 5,
         "valuesGivenEvery": 1,
-        "answer": 3,
+        "answer": "3",
         "lineStyle": "terminate",
         "colour": "red",
+        "revealAnswer": true,
         "jumpFrom": 4,
         "jumpTo": 3,
         "jumpType": "single",
-        "jumpLabel": "–1",
+        "jumpLabel": "",
         "jumpArrow": true,
-        "jumpColour": "dark"
+        "jumpCircle": "none",
+        "jumpColour": "green"
       },
       "updatedAt": "2026-09-03",
       "createdAt": "2026-09-03"
