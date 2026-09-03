@@ -1,5 +1,6 @@
 {
   "nuggetId": 328,
+  "status": "not-started",
   "nextQId": 1790100000087,
   "questions": [
     {
@@ -57,9 +58,9 @@
     {
       "visualType": "wb",
       "text": "",
-      "answer": "5",
+      "answer": "3",
       "cfg": {
-        "wbText": "5 – _ = 0",
+        "wbText": "3 – _ = 0",
         "wbBorder": "#F5995B",
         "wbSkin": "#ffa99c"
       },
