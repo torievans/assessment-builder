@@ -1,25 +1,27 @@
 {
+  "nuggetId": 212,
+  "nextQId": 1790100000087,
+  "questions": [],
   "exampleOverride": {
-    "visualType": "bm",
-    "text": "# _ + 5 = 13",
-    "answer": "8",
     "cfg": {
       "segments": [
         {
           "value": "?",
-          "divisions": 8,
+          "divisions": 7,
           "braceLabel": "?"
         },
         {
-          "value": 5,
-          "divisions": 5,
-          "braceLabel": "5"
+          "value": 7,
+          "divisions": 7,
+          "braceLabel": "7"
         }
       ],
       "total": 13,
-      "colorIdx": 3,
+      "colorIdx": 5,
       "multi": true
-    }
-  },
-  "questions": []
+    },
+    "visualType": "bm",
+    "answer": "7",
+    "text": "# _ + 7 = 14"
+  }
 }
