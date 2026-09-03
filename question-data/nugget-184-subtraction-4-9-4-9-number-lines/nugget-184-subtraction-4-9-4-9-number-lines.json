@@ -117,10 +117,12 @@
         "colour": "pink",
         "jumpFrom": 6,
         "jumpTo": 1,
-        "jumpType": "single",
-        "jumpLabel": "−5",
+        "jumpType": "unit",
+        "jumpLabel": "",
         "jumpArrow": true,
-        "jumpColour": "dark"
+        "jumpColour": "dark",
+        "revealAnswer": true,
+        "jumpCircle": "none"
       },
       "updatedAt": "2026-09-03",
       "createdAt": "2026-09-03"
