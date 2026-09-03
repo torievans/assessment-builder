@@ -1,12 +1,13 @@
 {
   "nuggetId": 179,
+  "status": "ready-for-qa",
   "nextQId": 1790100000087,
   "questions": [
     {
       "id": 179001,
       "visualType": "pr",
       "text": "# 9 – 3 =",
-      "answer": "9",
+      "answer": "6",
       "cfg": {
         "mode": "count",
         "display": "array",
@@ -38,7 +39,7 @@
       "id": 179002,
       "visualType": "pr",
       "text": "# 7 – 2 =",
-      "answer": "7",
+      "answer": "5",
       "cfg": {
         "mode": "count",
         "display": "array",
@@ -96,7 +97,7 @@
       "id": 179004,
       "visualType": "pr",
       "text": "# 8 – 1 =",
-      "answer": "8",
+      "answer": "7",
       "cfg": {
         "mode": "count",
         "display": "array",
@@ -128,7 +129,7 @@
       "id": 179005,
       "visualType": "pr",
       "text": "# 6 – 3 =",
-      "answer": "6",
+      "answer": "3",
       "cfg": {
         "mode": "count",
         "display": "array",
@@ -183,7 +184,7 @@
       "crayonLabel": "5 Crayons"
     },
     "visualType": "pr",
-    "answer": "8",
+    "answer": "6",
     "text": "# 8 – 2 ="
   }
 }
