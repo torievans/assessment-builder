@@ -1,0 +1,25 @@
+{
+  "nuggetId": 214,
+  "nextQId": 1790100000087,
+  "questions": [],
+  "exampleOverride": {
+    "visualType": "bm",
+    "text": "# _ + 5 = 13",
+    "answer": "8",
+    "cfg": {
+      "segments": [
+        {
+          "value": "?",
+          "segLabel": "?"
+        },
+        {
+          "value": 5,
+          "segLabel": "5"
+        }
+      ],
+      "total": 13,
+      "colorIdx": 3,
+      "multi": true
+    }
+  }
+}
