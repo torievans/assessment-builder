@@ -1,0 +1,172 @@
+{
+  "nuggetId": 321,
+  "status": "in-progress",
+  "nextQId": 1790100000087,
+  "questions": [
+    {
+      "id": 321001,
+      "visualType": "bm",
+      "text": "# 9 – _ = 2",
+      "answer": "7",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "divisions": 2,
+            "braceLabel": "2"
+          },
+          {
+            "value": 7,
+            "divisions": 7,
+            "braceLabel": "?"
+          }
+        ],
+        "total": 9,
+        "colorIdx": 0,
+        "multi": true,
+        "topBar": true,
+        "topBarDivisions": 9,
+        "topBrace": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 321002,
+      "visualType": "bm",
+      "text": "# 5 – _ = 4",
+      "answer": "1",
+      "cfg": {
+        "segments": [
+          {
+            "value": 4,
+            "divisions": 4,
+            "braceLabel": "4"
+          },
+          {
+            "value": 1,
+            "divisions": 1,
+            "braceLabel": "?"
+          }
+        ],
+        "total": 5,
+        "colorIdx": 3,
+        "multi": true,
+        "topBar": true,
+        "topBarDivisions": 5,
+        "topBrace": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 321003,
+      "visualType": "bm",
+      "text": "# 7 – _ = 3",
+      "answer": "4",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "divisions": 3,
+            "braceLabel": "3"
+          },
+          {
+            "value": 4,
+            "divisions": 4,
+            "braceLabel": "?"
+          }
+        ],
+        "total": 7,
+        "colorIdx": 4,
+        "multi": true,
+        "topBar": true,
+        "topBarDivisions": 7,
+        "topBrace": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 321004,
+      "visualType": "bm",
+      "text": "# 6 – _ = 4",
+      "answer": "2",
+      "cfg": {
+        "segments": [
+          {
+            "value": 4,
+            "divisions": 4,
+            "braceLabel": "4"
+          },
+          {
+            "value": 2,
+            "divisions": 2,
+            "braceLabel": "?"
+          }
+        ],
+        "total": 6,
+        "colorIdx": 5,
+        "multi": true,
+        "topBar": true,
+        "topBarDivisions": 6,
+        "topBrace": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 321005,
+      "visualType": "bm",
+      "text": "# 9 – _ = 6",
+      "answer": "3",
+      "cfg": {
+        "segments": [
+          {
+            "value": 6,
+            "divisions": 6,
+            "braceLabel": "6"
+          },
+          {
+            "value": 3,
+            "divisions": 3,
+            "braceLabel": "?"
+          }
+        ],
+        "total": 9,
+        "colorIdx": 6,
+        "multi": true,
+        "topBar": true,
+        "topBarDivisions": 9,
+        "topBrace": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    }
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 3,
+          "divisions": 3,
+          "braceLabel": "3"
+        },
+        {
+          "value": 5,
+          "divisions": 5,
+          "braceLabel": "?"
+        }
+      ],
+      "total": 8,
+      "colorIdx": 2,
+      "multi": true,
+      "topBar": true,
+      "topBarDivisions": 8,
+      "topBrace": true
+    },
+    "visualType": "bm",
+    "answer": "5",
+    "text": "# 8 – _ = 3"
+  }
+}
