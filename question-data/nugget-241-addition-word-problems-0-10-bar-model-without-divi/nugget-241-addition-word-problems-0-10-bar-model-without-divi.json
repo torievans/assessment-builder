@@ -21,7 +21,7 @@
         ],
         "total": "?",
         "topBar": true,
-        "topBrace": true,
+        "topBrace": false,
         "multi": true,
         "colorIdx": 0
       },
@@ -46,7 +46,7 @@
         ],
         "total": "?",
         "topBar": true,
-        "topBrace": true,
+        "topBrace": false,
         "multi": true,
         "colorIdx": 1
       },
@@ -71,7 +71,7 @@
         ],
         "total": "?",
         "topBar": true,
-        "topBrace": true,
+        "topBrace": false,
         "multi": true,
         "colorIdx": 2
       },
@@ -96,7 +96,7 @@
         ],
         "total": "?",
         "topBar": true,
-        "topBrace": true,
+        "topBrace": false,
         "multi": true,
         "colorIdx": 3
       },
@@ -121,7 +121,7 @@
         ],
         "total": "?",
         "topBar": true,
-        "topBrace": true,
+        "topBrace": false,
         "multi": true,
         "colorIdx": 4
       },
@@ -146,7 +146,7 @@
         ],
         "total": "?",
         "topBar": true,
-        "topBrace": true,
+        "topBrace": false,
         "multi": true,
         "colorIdx": 5
       },
@@ -169,7 +169,8 @@
       "total": "?",
       "colorIdx": 0,
       "multi": true,
-      "topBar": true
+      "topBar": true,
+      "topBrace": false
     },
     "visualType": "bm",
     "answer": "5",
