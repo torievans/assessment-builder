@@ -102,7 +102,7 @@
     {
       "id": 237004,
       "visualType": "pr",
-      "text": "There are 2 bagels and 7 pretzels.\nHow many snacks are there altogether?",
+      "text": "There are 2 bagels and 7 pretzels.\nHow many are there altogether?",
       "answer": "9",
       "cfg": {
         "mode": "addsub",
