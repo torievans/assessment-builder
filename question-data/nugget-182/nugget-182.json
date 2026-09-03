@@ -38,7 +38,7 @@
         "valuesGivenEvery": 1,
         "answer": "3",
         "lineStyle": "terminate",
-        "colour": "red",
+        "colour": "orange",
         "revealAnswer": true,
         "jumpFrom": 5,
         "jumpTo": 3,
