@@ -1,23 +1,25 @@
 {
+  "nuggetId": 213,
+  "nextQId": 1790100000087,
+  "questions": [],
   "exampleOverride": {
-    "visualType": "bm",
-    "text": "# 8 + _ = 15",
-    "answer": "7",
     "cfg": {
       "segments": [
         {
-          "value": 8,
-          "segLabel": "8"
+          "value": 6,
+          "segLabel": "6"
         },
         {
           "value": "?",
           "segLabel": "?"
         }
       ],
-      "total": 15,
+      "total": 17,
       "colorIdx": 3,
       "multi": true
-    }
-  },
-  "questions": []
+    },
+    "visualType": "bm",
+    "answer": "11",
+    "text": "# 6 + _ = 17"
+  }
 }
