@@ -135,7 +135,7 @@
       "end": 5,
       "partitions": 5,
       "valuesGivenEvery": null,
-      "answer": "4",
+      "answer": "2",
       "lineStyle": "terminate",
       "colour": "green",
       "revealAnswer": true,
@@ -148,7 +148,7 @@
       "jumpColour": "blue"
     },
     "visualType": "nl",
-    "answer": "4",
+    "answer": "2",
     "text": "4 – 2 ="
   }
 }
