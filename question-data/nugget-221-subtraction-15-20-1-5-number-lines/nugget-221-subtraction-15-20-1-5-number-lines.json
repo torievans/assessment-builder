@@ -16,7 +16,9 @@
       "jumpType": "unit",
       "jumpLabel": "",
       "jumpArrow": true,
-      "jumpColour": "dark"
+      "jumpColour": "dark",
+      "revealAnswer": true,
+      "jumpCircle": "none"
     },
     "visualType": "nl",
     "answer": "12",
@@ -41,7 +43,9 @@
         "jumpType": "unit",
         "jumpLabel": "",
         "jumpArrow": true,
-        "jumpColour": "purple"
+        "jumpColour": "purple",
+        "revealAnswer": true,
+        "jumpCircle": "none"
       },
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
@@ -64,7 +68,9 @@
         "jumpType": "unit",
         "jumpLabel": "",
         "jumpArrow": true,
-        "jumpColour": "red"
+        "jumpColour": "red",
+        "revealAnswer": true,
+        "jumpCircle": "none"
       },
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
@@ -87,7 +93,9 @@
         "jumpType": "unit",
         "jumpLabel": "",
         "jumpArrow": true,
-        "jumpColour": "orange"
+        "jumpColour": "orange",
+        "revealAnswer": true,
+        "jumpCircle": "none"
       },
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
@@ -110,7 +118,9 @@
         "jumpType": "unit",
         "jumpLabel": "",
         "jumpArrow": true,
-        "jumpColour": "green"
+        "jumpColour": "green",
+        "revealAnswer": true,
+        "jumpCircle": "none"
       },
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
@@ -133,7 +143,9 @@
         "jumpType": "unit",
         "jumpLabel": "",
         "jumpArrow": true,
-        "jumpColour": "blue"
+        "jumpColour": "blue",
+        "revealAnswer": true,
+        "jumpCircle": "none"
       },
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
