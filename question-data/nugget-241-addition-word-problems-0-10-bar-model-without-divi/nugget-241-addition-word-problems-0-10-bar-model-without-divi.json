@@ -31,7 +31,7 @@
     {
       "id": 241002,
       "visualType": "bm",
-      "text": "Ben baked 5 star shaped biscuits and 3 round biscuits.\nHow many biscuits did he bake in total?",
+      "text": "Ben baked 5 star-shaped biscuits and 3 round biscuits.\nHow many biscuits did he bake in total?",
       "answer": "8",
       "cfg": {
         "segments": [
