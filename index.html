@@ -1787,7 +1787,7 @@ function renderQVisual(q){
 function editExample(){
   if(!activeId)return;
   const ex=nuggetState[activeId]?.exampleOverride;if(!ex||!ex.cfg)return;
-  const rawType=ex.visualType;if(!rawType)return;
+  const rawType=ex.visualType||'text';if(!rawType)return;
   const type=rawType==='wb'?'custom':rawType;
   if(activeTool&&activeTool!==type)closeTool();
   if(activeTool!==type){
