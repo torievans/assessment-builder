@@ -1,0 +1,102 @@
+{
+  "nuggetId": 240,
+  "status": "in-progress",
+  "nextQId": 240007,
+  "exampleOverride": {
+    "visualType": "nl",
+    "answer": "5",
+    "text": "There are 3 dogs in the park.\n2 more arrive.\nHow many dogs are there altogether?",
+    "cfg": {
+      "start": 0,
+      "end": 10,
+      "jumps": [],
+      "revealAnswer": false
+    }
+  },
+  "questions": [
+    {
+      "id": 240001,
+      "visualType": "nl",
+      "text": "Tom has 4 toy cars.\nHe gets 3 more for his birthday.\nHow many toy cars does he have now?",
+      "answer": "7",
+      "cfg": {
+        "start": 0,
+        "end": 10,
+        "jumps": [],
+        "revealAnswer": false
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 240002,
+      "visualType": "nl",
+      "text": "There are 4 red flowers and 4 yellow flowers.\nHow many flowers are there altogether?",
+      "answer": "8",
+      "cfg": {
+        "start": 0,
+        "end": 10,
+        "jumps": [],
+        "revealAnswer": false
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 240003,
+      "visualType": "nl",
+      "text": "Ali has 1 coin.\nShe finds 8 more.\nHow many coins does she have now?",
+      "answer": "9",
+      "cfg": {
+        "start": 0,
+        "end": 10,
+        "jumps": [],
+        "revealAnswer": false
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 240004,
+      "visualType": "nl",
+      "text": "There are 3 cats in the garden.\n3 more come in.\nHow many cats are there altogether?",
+      "answer": "6",
+      "cfg": {
+        "start": 0,
+        "end": 10,
+        "jumps": [],
+        "revealAnswer": false
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 240005,
+      "visualType": "nl",
+      "text": "There are 6 fish in the tank.\n3 more are added.\nHow many fish are in the tank now?",
+      "answer": "9",
+      "cfg": {
+        "start": 0,
+        "end": 10,
+        "jumps": [],
+        "revealAnswer": false
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 240006,
+      "visualType": "nl",
+      "text": "There are 7 building blocks in one pile and 3 in another.\nHow many blocks are there altogether?",
+      "answer": "10",
+      "cfg": {
+        "start": 0,
+        "end": 10,
+        "jumps": [],
+        "revealAnswer": false
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    }
+  ]
+}
