@@ -1,5 +1,6 @@
 {
   "nuggetId": 180,
+  "status": "not-started",
   "nextQId": 1790100000087,
   "questions": [
     {
@@ -32,7 +33,7 @@
       "id": 180002,
       "visualType": "pr",
       "text": "# 8 – 4 =",
-      "answer": "8",
+      "answer": "4",
       "cfg": {
         "mode": "count",
         "display": "array",
@@ -64,7 +65,7 @@
       "id": 180003,
       "visualType": "pr",
       "text": "# 7 – 4 =",
-      "answer": "7",
+      "answer": "3",
       "cfg": {
         "mode": "count",
         "display": "array",
@@ -96,7 +97,7 @@
       "id": 180004,
       "visualType": "pr",
       "text": "# 9 – 7 =",
-      "answer": "9",
+      "answer": "2",
       "cfg": {
         "mode": "count",
         "display": "array",
@@ -177,7 +178,7 @@
       "crayonLabel": "5 Crayons"
     },
     "visualType": "pr",
-    "answer": "8",
+    "answer": "3",
     "text": "# 8 – 5 ="
   }
 }
