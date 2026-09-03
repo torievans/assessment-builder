@@ -32,7 +32,7 @@
       "id": 180002,
       "visualType": "pr",
       "text": "# 8 – 4 =",
-      "answer": "4",
+      "answer": "8",
       "cfg": {
         "mode": "count",
         "display": "array",
@@ -43,13 +43,19 @@
         "imageIdB": "counter:3:1:7",
         "op": "add",
         "subMode": "crossed",
-        "cols": 5,
+        "cols": 4,
         "groupSize": 1,
+        "mrows": 2,
+        "mcols": 5,
         "illusOutline": "individual",
         "imgScale": 1,
         "numA": false,
         "numB": false,
-        "showEq": false
+        "showEq": false,
+        "crayonCount": 5,
+        "crayonBoxes": 1,
+        "crayonFontSize": 148,
+        "crayonLabel": "5 Crayons"
       },
       "updatedAt": "2026-09-03",
       "createdAt": "2026-09-03"
