@@ -1,27 +1,7 @@
 {
   "nuggetId": 223,
   "status": "in-progress",
-  "nextQId": 223006,
-  "exampleOverride": {
-    "cfg": {
-      "start": 0,
-      "end": 19,
-      "partitions": 19,
-      "valuesGivenEvery": 1,
-      "answer": 6,
-      "lineStyle": "terminate",
-      "colour": "purple",
-      "jumpFrom": 19,
-      "jumpTo": 6,
-      "jumpType": "unit",
-      "jumpLabel": "",
-      "jumpArrow": true,
-      "jumpColour": "green"
-    },
-    "visualType": "nl",
-    "answer": "6",
-    "text": "# 19 – 13 ="
-  },
+  "nextQId": 1790100000087,
   "questions": [
     {
       "id": 223001,
@@ -138,5 +118,25 @@
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "start": 0,
+      "end": 19,
+      "partitions": 19,
+      "valuesGivenEvery": 1,
+      "answer": 6,
+      "lineStyle": "terminate",
+      "colour": "purple",
+      "jumpFrom": 19,
+      "jumpTo": 6,
+      "jumpType": "unit",
+      "jumpLabel": "",
+      "jumpArrow": true,
+      "jumpColour": "green"
+    },
+    "visualType": "nl",
+    "answer": "6",
+    "text": "# 19 – 13 ="
+  }
 }
