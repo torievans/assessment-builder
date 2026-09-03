@@ -1,7 +1,7 @@
 {
   "nuggetId": 242,
   "status": "in-progress",
-  "nextQId": 1790100000087,
+  "nextQId": 1790100000088,
   "questions": [
     {
       "id": 242001,
@@ -59,9 +59,9 @@
     }
   ],
   "exampleOverride": {
-    "visualType": null,
+    "cfg": {},
+    "visualType": "text",
     "answer": "5",
-    "text": "There are 3 dogs in the park.\n2 more arrive.\nHow many dogs are there altogether?",
-    "cfg": {}
+    "text": "There are 3 children in the park.\n2 more arrive.\nHow many children are there altogether?"
   }
 }
