@@ -144,16 +144,22 @@
       "imageIdB": "counter:0:6:0",
       "op": "add",
       "subMode": "crossed",
-      "cols": 5,
+      "cols": 4,
       "groupSize": 1,
+      "mrows": 2,
+      "mcols": 5,
       "illusOutline": "individual",
       "imgScale": 1,
       "numA": false,
       "numB": false,
-      "showEq": false
+      "showEq": false,
+      "crayonCount": 5,
+      "crayonBoxes": 1,
+      "crayonFontSize": 148,
+      "crayonLabel": "5 Crayons"
     },
     "visualType": "pr",
-    "answer": "6",
+    "answer": "8",
     "text": "# 8 – 2 ="
   }
 }
