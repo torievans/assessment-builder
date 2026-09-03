@@ -93,7 +93,6 @@
         "segments": [
           {
             "value": 1,
-            "divisions": 1,
             "braceLabel": "?"
           },
           {
@@ -103,7 +102,7 @@
           }
         ],
         "total": 4,
-        "colorIdx": 0,
+        "colorIdx": 3,
         "multi": true,
         "topBar": true,
         "topBarDivisions": 4,
