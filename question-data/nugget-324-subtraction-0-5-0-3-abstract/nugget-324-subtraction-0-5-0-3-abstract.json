@@ -8,8 +8,8 @@
       "answer": "4",
       "cfg": {
         "wbText": "4 – 0 = ",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#D46B55",
+        "wbSkin": "#d4895a"
       },
       "imagePath": "",
       "image": "",
@@ -22,8 +22,8 @@
       "answer": "2",
       "cfg": {
         "wbText": "5 – 3 = ",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#7898F0",
+        "wbSkin": "#b06530"
       },
       "updatedAt": "2026-09-03",
       "createdAt": "2026-09-03"
@@ -34,8 +34,8 @@
       "answer": "2",
       "cfg": {
         "wbText": "3 – 1 = ",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#847AC9",
+        "wbSkin": "#6b3520"
       },
       "updatedAt": "2026-09-03",
       "createdAt": "2026-09-03"
@@ -46,7 +46,7 @@
       "answer": "1",
       "cfg": {
         "wbText": "4 – 3 = ",
-        "wbBorder": "#319377",
+        "wbBorder": "#F5995B",
         "wbSkin": "#ffa99c"
       },
       "updatedAt": "2026-09-03",
@@ -58,8 +58,8 @@
       "answer": "3",
       "cfg": {
         "wbText": "5 – 2 = ",
-        "wbBorder": "#319377",
-        "wbSkin": "#ffa99c"
+        "wbBorder": "#FC7E91",
+        "wbSkin": "#d4895a"
       },
       "updatedAt": "2026-09-03",
       "createdAt": "2026-09-03"
