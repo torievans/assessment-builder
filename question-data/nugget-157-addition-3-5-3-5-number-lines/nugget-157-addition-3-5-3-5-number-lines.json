@@ -15,7 +15,7 @@
         "valuesGivenEvery": null,
         "answer": "7",
         "lineStyle": "terminate",
-        "colour": "grey",
+        "colour": "pink",
         "revealAnswer": true
       },
       "updatedAt": "2026-09-01",
@@ -33,7 +33,7 @@
         "valuesGivenEvery": null,
         "answer": "8",
         "lineStyle": "terminate",
-        "colour": "grey",
+        "colour": "pink",
         "revealAnswer": true
       },
       "updatedAt": "2026-09-01",
@@ -51,7 +51,7 @@
         "valuesGivenEvery": null,
         "answer": "10",
         "lineStyle": "terminate",
-        "colour": "grey",
+        "colour": "pink",
         "revealAnswer": true
       },
       "updatedAt": "2026-09-01",
@@ -69,7 +69,7 @@
         "valuesGivenEvery": null,
         "answer": "7",
         "lineStyle": "terminate",
-        "colour": "grey",
+        "colour": "pink",
         "revealAnswer": true
       },
       "updatedAt": "2026-09-01",
@@ -87,7 +87,7 @@
         "valuesGivenEvery": null,
         "answer": "8",
         "lineStyle": "terminate",
-        "colour": "grey",
+        "colour": "pink",
         "revealAnswer": true
       },
       "updatedAt": "2026-09-01",
@@ -102,7 +102,7 @@
       "valuesGivenEvery": null,
       "answer": "9",
       "lineStyle": "terminate",
-      "colour": "grey",
+      "colour": "pink",
       "revealAnswer": true
     },
     "visualType": "nl",
