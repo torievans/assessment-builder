@@ -1,15 +1,12 @@
 {
   "nuggetId": 214,
-  "nextQId": 1790100000087,
-  "questions": [],
+  "status": "ready-for-qa",
+  "nextQId": 214006,
   "exampleOverride": {
-    "visualType": "bm",
-    "text": "# _ + 5 = 13",
-    "answer": "8",
     "cfg": {
       "segments": [
         {
-          "value": "?",
+          "value": 7,
           "segLabel": "?"
         },
         {
@@ -17,9 +14,135 @@
           "segLabel": "5"
         }
       ],
-      "total": 13,
-      "colorIdx": 3,
-      "multi": true
+      "total": 12,
+      "colorIdx": 2,
+      "multi": true,
+      "topBar": true
+    },
+    "visualType": "bm",
+    "answer": "7",
+    "text": "# _ + 5 = 12"
+  },
+  "questions": [
+    {
+      "id": 214001,
+      "visualType": "bm",
+      "text": "# _ + 3 = 18",
+      "answer": "15",
+      "cfg": {
+        "segments": [
+          {
+            "value": 15,
+            "segLabel": "?"
+          },
+          {
+            "value": 3,
+            "segLabel": "3"
+          }
+        ],
+        "total": 18,
+        "colorIdx": 0,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 214002,
+      "visualType": "bm",
+      "text": "# _ + 14 = 17",
+      "answer": "3",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "segLabel": "?"
+          },
+          {
+            "value": 14,
+            "segLabel": "14"
+          }
+        ],
+        "total": 17,
+        "colorIdx": 3,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 214003,
+      "visualType": "bm",
+      "text": "# _ + 4 = 15",
+      "answer": "11",
+      "cfg": {
+        "segments": [
+          {
+            "value": 11,
+            "segLabel": "?"
+          },
+          {
+            "value": 4,
+            "segLabel": "4"
+          }
+        ],
+        "total": 15,
+        "colorIdx": 4,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 214004,
+      "visualType": "bm",
+      "text": "# _ + 11 = 16",
+      "answer": "5",
+      "cfg": {
+        "segments": [
+          {
+            "value": 5,
+            "segLabel": "?"
+          },
+          {
+            "value": 11,
+            "segLabel": "11"
+          }
+        ],
+        "total": 16,
+        "colorIdx": 5,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 214005,
+      "visualType": "bm",
+      "text": "# _ + 6 = 19",
+      "answer": "13",
+      "cfg": {
+        "segments": [
+          {
+            "value": 13,
+            "segLabel": "?"
+          },
+          {
+            "value": 6,
+            "segLabel": "6"
+          }
+        ],
+        "total": 19,
+        "colorIdx": 6,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
     }
-  }
+  ]
 }
