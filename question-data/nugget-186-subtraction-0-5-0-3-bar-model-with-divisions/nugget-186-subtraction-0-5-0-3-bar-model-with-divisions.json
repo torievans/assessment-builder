@@ -1,7 +1,7 @@
 {
   "nuggetId": 186,
   "status": "ready-for-qa",
-  "nextQId": 1790100000086,
+  "nextQId": 1790100000087,
   "questions": [
     {
       "visualType": "bm",
@@ -44,12 +44,11 @@
           },
           {
             "value": 1,
-            "divisions": 1,
             "braceLabel": "1"
           }
         ],
         "total": 5,
-        "colorIdx": 0,
+        "colorIdx": 5,
         "multi": true,
         "topBar": true,
         "topBarDivisions": 5,
