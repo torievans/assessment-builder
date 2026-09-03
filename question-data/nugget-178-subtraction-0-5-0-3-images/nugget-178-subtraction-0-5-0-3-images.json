@@ -89,7 +89,7 @@
         "display": "array",
         "align": "centre",
         "countA": 4,
-        "imageIdA": "counter:4:5:5",
+        "imageIdA": "counter:4:5:3",
         "countB": 1,
         "imageIdB": "counter:4:1:11",
         "op": "add",
