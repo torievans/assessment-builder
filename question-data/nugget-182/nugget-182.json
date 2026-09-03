@@ -1,28 +1,138 @@
 {
   "nuggetId": 182,
-  "status": "in-progress",
-  "nextQId": 1790100000079,
-  "questions": [],
+  "nextQId": 1790100000087,
+  "questions": [
+    {
+      "visualType": "nl",
+      "text": "# 4 – 1 =",
+      "answer": "3",
+      "cfg": {
+        "start": 0,
+        "end": 5,
+        "partitions": 5,
+        "valuesGivenEvery": 1,
+        "answer": 3,
+        "lineStyle": "terminate",
+        "colour": "red",
+        "jumpFrom": 4,
+        "jumpTo": 3,
+        "jumpType": "single",
+        "jumpLabel": "–1",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
+    },
+    {
+      "visualType": "nl",
+      "text": "# 5 – 2 =",
+      "answer": "3",
+      "cfg": {
+        "start": 0,
+        "end": 5,
+        "partitions": 5,
+        "valuesGivenEvery": 1,
+        "answer": 3,
+        "lineStyle": "terminate",
+        "colour": "red",
+        "jumpFrom": 5,
+        "jumpTo": 3,
+        "jumpType": "single",
+        "jumpLabel": "–2",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
+    },
+    {
+      "visualType": "nl",
+      "text": "# 3 – 2 =",
+      "answer": "1",
+      "cfg": {
+        "start": 0,
+        "end": 5,
+        "partitions": 5,
+        "valuesGivenEvery": 1,
+        "answer": 1,
+        "lineStyle": "terminate",
+        "colour": "red",
+        "jumpFrom": 3,
+        "jumpTo": 1,
+        "jumpType": "single",
+        "jumpLabel": "–2",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
+    },
+    {
+      "visualType": "nl",
+      "text": "# 4 – 3 =",
+      "answer": "1",
+      "cfg": {
+        "start": 0,
+        "end": 5,
+        "partitions": 5,
+        "valuesGivenEvery": 1,
+        "answer": 1,
+        "lineStyle": "terminate",
+        "colour": "red",
+        "jumpFrom": 4,
+        "jumpTo": 1,
+        "jumpType": "single",
+        "jumpLabel": "–3",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
+    },
+    {
+      "visualType": "nl",
+      "text": "# 5 – 3 =",
+      "answer": "2",
+      "cfg": {
+        "start": 0,
+        "end": 5,
+        "partitions": 5,
+        "valuesGivenEvery": 1,
+        "answer": 2,
+        "lineStyle": "terminate",
+        "colour": "red",
+        "jumpFrom": 5,
+        "jumpTo": 2,
+        "jumpType": "single",
+        "jumpLabel": "–3",
+        "jumpArrow": true,
+        "jumpColour": "dark"
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
+    }
+  ],
   "exampleOverride": {
     "cfg": {
       "start": 0,
-      "end": 10,
-      "partitions": 10,
+      "end": 5,
+      "partitions": 5,
       "valuesGivenEvery": null,
-      "answer": "2",
+      "answer": "4",
       "lineStyle": "terminate",
       "colour": "green",
       "revealAnswer": true,
-      "jumpFrom": 3,
+      "jumpFrom": 4,
       "jumpTo": 2,
-      "jumpType": "single",
+      "jumpType": "unit",
       "jumpLabel": "",
       "jumpArrow": true,
       "jumpCircle": "none",
-      "jumpColour": "purple"
+      "jumpColour": "blue"
     },
     "visualType": "nl",
-    "answer": "2",
-    "text": "# 3 – 1 ="
+    "answer": "4",
+    "text": "4 – 2 ="
   }
 }
