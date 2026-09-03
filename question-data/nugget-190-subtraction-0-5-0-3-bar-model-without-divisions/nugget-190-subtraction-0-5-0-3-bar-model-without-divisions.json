@@ -1,8 +1,4 @@
 {
-  "nuggetId": 190,
-  "status": "in-progress",
-  "nextQId": 1790100000085,
-  "questions": [],
   "exampleOverride": {
     "cfg": {
       "segments": [
@@ -22,6 +18,113 @@
     },
     "visualType": "bm",
     "answer": "4",
-    "text": "# 5 – 1 ="
-  }
+    "text": "# 5 \u2013 1 ="
+  },
+  "questions": [
+    {
+      "visualType": "bm",
+      "text": "# 4 \u2013 2 =",
+      "answer": "2",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "segLabel": "?"
+          },
+          {
+            "value": 2,
+            "segLabel": "2"
+          }
+        ],
+        "total": 4,
+        "colorIdx": 4,
+        "multi": true,
+        "topBar": true
+      }
+    },
+    {
+      "visualType": "bm",
+      "text": "# 5 \u2013 3 =",
+      "answer": "2",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "segLabel": "?"
+          },
+          {
+            "value": 3,
+            "segLabel": "3"
+          }
+        ],
+        "total": 5,
+        "colorIdx": 4,
+        "multi": true,
+        "topBar": true
+      }
+    },
+    {
+      "visualType": "bm",
+      "text": "# 3 \u2013 1 =",
+      "answer": "2",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "segLabel": "?"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": 3,
+        "colorIdx": 4,
+        "multi": true,
+        "topBar": true
+      }
+    },
+    {
+      "visualType": "bm",
+      "text": "# 4 \u2013 1 =",
+      "answer": "3",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "segLabel": "?"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": 4,
+        "colorIdx": 4,
+        "multi": true,
+        "topBar": true
+      }
+    },
+    {
+      "visualType": "bm",
+      "text": "# 3 \u2013 2 =",
+      "answer": "1",
+      "cfg": {
+        "segments": [
+          {
+            "value": 1,
+            "segLabel": "?"
+          },
+          {
+            "value": 2,
+            "segLabel": "2"
+          }
+        ],
+        "total": 3,
+        "colorIdx": 4,
+        "multi": true,
+        "topBar": true
+      }
+    }
+  ]
 }
