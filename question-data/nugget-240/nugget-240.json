@@ -89,14 +89,17 @@
     }
   ],
   "exampleOverride": {
-    "visualType": "nl",
-    "answer": "5",
-    "text": "There are 3 dogs in the park.\n2 more arrive.\nHow many dogs are there altogether?",
     "cfg": {
       "start": 0,
       "end": 10,
-      "jumps": [],
-      "revealAnswer": false
-    }
+      "partitions": 10,
+      "valuesGivenEvery": null,
+      "answer": "5",
+      "lineStyle": "terminate",
+      "colour": "grey"
+    },
+    "visualType": "nl",
+    "answer": "5",
+    "text": "There are 3 dogs in the park.\n2 more arrive.\nHow many dogs are there altogether?"
   }
 }
