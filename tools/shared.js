@@ -309,7 +309,8 @@ function barModelSVG(config) {
   const BAR_H = 50;
   const TOP_BAR_H = BAR_H, TOP_BAR_GAP = 4;
   const hasBrace = segments.some(sg => (sg.braceLabel ?? sg.label) != null && (sg.braceLabel ?? sg.label) !== '');
-  const TOP_PAD = config.topBar ? (14 + TOP_BAR_H + TOP_BAR_GAP) : 50;
+  const topBrace = !!(config.topBrace);
+  const TOP_PAD = config.topBar ? (14 + TOP_BAR_H + TOP_BAR_GAP + (topBrace ? 50 : 0)) : 50;
   const BOT_PAD = hasBrace ? 50 : 20;
   const knownSum = segments.reduce((s, sg) => s + (typeof sg.value === 'number' ? sg.value : 0), 0);
   const fullTotal = typeof total === 'number' ? total : knownSum;
@@ -467,7 +468,7 @@ function barModelSVG(config) {
   }
 
   // Top brace + total
-  if (!config.topBar && !config.hideTotal) {
+  if ((!config.topBar || topBrace) && !config.hideTotal) {
     const tY = by - 5, tMid = bx + BAR_W / 2;
     s += `<path d="M${bx},${tY} V${tY - BRACE_ARM} H${(tMid - 3).toFixed(1)} L${tMid},${tY - BRACE_TIP} L${(tMid + 3).toFixed(1)},${tY - BRACE_ARM} H${bx + BAR_W} V${tY}" fill="none" stroke="#AAAAAA" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;
     s += `<text x="${tMid}" y="${tY - BRACE_TIP - 4}" text-anchor="middle" dominant-baseline="auto" font-family="${FONT}" font-weight="900" font-size="22" fill="#AAAAAA">${totalLbl}</text>`;
