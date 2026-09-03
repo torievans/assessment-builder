@@ -1,31 +1,6 @@
 {
   "nuggetId": 187,
-  "nextQId": 187006,
-  "exampleOverride": {
-    "cfg": {
-      "segments": [
-        {
-          "value": 6,
-          "divisions": 6,
-          "braceLabel": "?"
-        },
-        {
-          "value": 2,
-          "divisions": 2,
-          "braceLabel": "2"
-        }
-      ],
-      "total": 8,
-      "colorIdx": 2,
-      "multi": true,
-      "topBar": true,
-      "topBarDivisions": 8,
-      "topBrace": true
-    },
-    "visualType": "bm",
-    "answer": "6",
-    "text": "# 8 – 2 ="
-  },
+  "nextQId": 1790100000087,
   "questions": [
     {
       "id": 187001,
@@ -51,7 +26,9 @@
         "topBar": true,
         "topBarDivisions": 9,
         "topBrace": true
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "id": 187002,
@@ -77,7 +54,9 @@
         "topBar": true,
         "topBarDivisions": 7,
         "topBrace": true
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "id": 187003,
@@ -103,7 +82,9 @@
         "topBar": true,
         "topBarDivisions": 5,
         "topBrace": true
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "id": 187004,
@@ -129,7 +110,9 @@
         "topBar": true,
         "topBarDivisions": 8,
         "topBrace": true
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     },
     {
       "id": 187005,
@@ -155,7 +138,34 @@
         "topBar": true,
         "topBarDivisions": 6,
         "topBrace": true
-      }
+      },
+      "updatedAt": "2026-09-03",
+      "createdAt": "2026-09-03"
     }
-  ]
+  ],
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 6,
+          "divisions": 6,
+          "braceLabel": "?"
+        },
+        {
+          "value": 2,
+          "divisions": 2,
+          "braceLabel": "2"
+        }
+      ],
+      "total": 8,
+      "colorIdx": 2,
+      "multi": true,
+      "topBar": true,
+      "topBarDivisions": 8,
+      "topBrace": true
+    },
+    "visualType": "bm",
+    "answer": "6",
+    "text": "# 8 – 2 ="
+  }
 }
