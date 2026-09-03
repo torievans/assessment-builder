@@ -94,7 +94,7 @@
         "revealAnswer": true,
         "jumpFrom": 8,
         "jumpTo": 7,
-        "jumpType": "single",
+        "jumpType": "unit",
         "jumpLabel": "",
         "jumpArrow": true,
         "jumpCircle": "none",
