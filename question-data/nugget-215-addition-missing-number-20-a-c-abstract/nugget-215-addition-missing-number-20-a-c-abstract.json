@@ -1,14 +1,82 @@
 {
   "nuggetId": 215,
-  "nextQId": 1790100000087,
-  "questions": [],
+  "status": "ready-for-qa",
+  "nextQId": 215006,
   "exampleOverride": {
     "cfg": {
-      "wbText": "8 + _ = 15",
+      "wbText": "4 + _ = 11",
       "wbBorder": "#319377",
       "wbSkin": "#ffa99c"
     },
     "visualType": "wb",
-    "answer": "7"
-  }
+    "answer": "7",
+    "text": ""
+  },
+  "questions": [
+    {
+      "id": 215001,
+      "visualType": "wb",
+      "text": "",
+      "answer": "15",
+      "cfg": {
+        "wbText": "2 + _ = 17",
+        "wbBorder": "#D46B55",
+        "wbSkin": "#d4895a"
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 215002,
+      "visualType": "wb",
+      "text": "",
+      "answer": "3",
+      "cfg": {
+        "wbText": "12 + _ = 15",
+        "wbBorder": "#7898F0",
+        "wbSkin": "#b06530"
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 215003,
+      "visualType": "wb",
+      "text": "",
+      "answer": "11",
+      "cfg": {
+        "wbText": "5 + _ = 16",
+        "wbBorder": "#F5995B",
+        "wbSkin": "#6b3520"
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 215004,
+      "visualType": "wb",
+      "text": "",
+      "answer": "5",
+      "cfg": {
+        "wbText": "9 + _ = 14",
+        "wbBorder": "#847AC9",
+        "wbSkin": "#ffa99c"
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 215005,
+      "visualType": "wb",
+      "text": "",
+      "answer": "13",
+      "cfg": {
+        "wbText": "6 + _ = 19",
+        "wbBorder": "#FC7E91",
+        "wbSkin": "#d4895a"
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    }
+  ]
 }
