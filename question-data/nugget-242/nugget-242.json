@@ -47,15 +47,6 @@
       "cfg": {},
       "createdAt": "2026-09-03",
       "updatedAt": "2026-09-03"
-    },
-    {
-      "id": 242006,
-      "visualType": null,
-      "text": "There are 4 crayons in one box and 6 in another.\nHow many crayons are there altogether?",
-      "answer": "10",
-      "cfg": {},
-      "createdAt": "2026-09-03",
-      "updatedAt": "2026-09-03"
     }
   ],
   "exampleOverride": {
