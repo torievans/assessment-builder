@@ -36,7 +36,7 @@ function restoreNTConfig(cfg){
 // ── Panel HTML ─────────────────────────────────────────────────
 function ntPanelHTML(){
   return `<div class="form-row">
-              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('nt-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><input type="text" id="nt-text" placeholder="e.g. What number is missing?"></div>
+              <div class="field field-grow"><label>Question text<button class="apply-all-btn" onclick="applyTextToAll('nt-text')" title="Apply this stem to every question in the nugget">Apply to all</button></label><textarea id="nt-text" rows="2" placeholder="e.g. What number is missing?" style="resize:vertical;font:inherit;width:100%;box-sizing:border-box;padding:6px 10px;border:1px solid var(--border,#D1D5D8);border-radius:8px;background:var(--input-bg,#fff);color:inherit;line-height:1.4"></textarea></div>
               <div class="field field-sm"><label>Answer</label><input type="text" id="nt-answer" placeholder="e.g. 7"></div>
             </div>
             <div class="form-row">
