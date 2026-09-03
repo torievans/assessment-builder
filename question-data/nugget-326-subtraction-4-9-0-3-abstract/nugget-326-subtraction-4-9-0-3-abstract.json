@@ -1,0 +1,71 @@
+{
+  "nuggetId": 326,
+  "nextQId": 326006,
+  "exampleOverride": {
+    "cfg": {
+      "wbText": "8 – 2 = ",
+      "wbBorder": "#7898F0",
+      "wbSkin": "#d4895a"
+    },
+    "visualType": "wb",
+    "answer": "6",
+    "text": ""
+  },
+  "questions": [
+    {
+      "id": 326001,
+      "visualType": "wb",
+      "text": "",
+      "answer": "6",
+      "cfg": {
+        "wbText": "9 – 3 = ",
+        "wbBorder": "#D46B55",
+        "wbSkin": "#b06530"
+      }
+    },
+    {
+      "id": 326002,
+      "visualType": "wb",
+      "text": "",
+      "answer": "5",
+      "cfg": {
+        "wbText": "7 – 2 = ",
+        "wbBorder": "#F5995B",
+        "wbSkin": "#6b3520"
+      }
+    },
+    {
+      "id": 326003,
+      "visualType": "wb",
+      "text": "",
+      "answer": "2",
+      "cfg": {
+        "wbText": "5 – 3 = ",
+        "wbBorder": "#847AC9",
+        "wbSkin": "#ffa99c"
+      }
+    },
+    {
+      "id": 326004,
+      "visualType": "wb",
+      "text": "",
+      "answer": "7",
+      "cfg": {
+        "wbText": "8 – 1 = ",
+        "wbBorder": "#FC7E91",
+        "wbSkin": "#d4895a"
+      }
+    },
+    {
+      "id": 326005,
+      "visualType": "wb",
+      "text": "",
+      "answer": "3",
+      "cfg": {
+        "wbText": "6 – 3 = ",
+        "wbBorder": "#FECC6B",
+        "wbSkin": "#b06530"
+      }
+    }
+  ]
+}
