@@ -70,15 +70,15 @@
     {
       "id": 238004,
       "visualType": "pr",
-      "text": "I bought 5 cakes.\nI was given 1 more for free.\nHow many cakes do I have in total?",
+      "text": "I bought 6 cakes.\nI was given 1 more for free.\nHow many cakes do I have in total?",
       "answer": "6",
       "cfg": {
         "mode": "count",
         "display": "array",
         "align": "centre",
-        "countA": 5,
+        "countA": 6,
         "imageIdA": "illus:food/bakery/muffin_brown",
-        "countB": 0,
+        "countB": 3,
         "imageIdB": "illus:food/bakery/muffin_brown",
         "op": "add",
         "subMode": "crossed",
