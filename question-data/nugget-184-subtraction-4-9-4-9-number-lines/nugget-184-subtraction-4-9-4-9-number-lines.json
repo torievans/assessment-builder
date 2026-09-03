@@ -37,15 +37,17 @@
         "end": 9,
         "partitions": 9,
         "valuesGivenEvery": 1,
-        "answer": 4,
+        "answer": "4",
         "lineStyle": "terminate",
         "colour": "orange",
+        "revealAnswer": true,
         "jumpFrom": 8,
         "jumpTo": 4,
-        "jumpType": "single",
-        "jumpLabel": "−4",
+        "jumpType": "unit",
+        "jumpLabel": "",
         "jumpArrow": true,
-        "jumpColour": "dark"
+        "jumpCircle": "none",
+        "jumpColour": "red"
       },
       "updatedAt": "2026-09-03",
       "createdAt": "2026-09-03"
