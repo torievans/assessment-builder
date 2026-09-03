@@ -29,13 +29,13 @@
     },
     "visualType": "pr",
     "answer": "5",
-    "text": "There are 3 red apples and 2 green apples. How many apples are there altogether?"
+    "text": "There are 3 red apples and 2 green apples.\nHow many apples are there altogether?"
   },
   "questions": [
     {
       "id": 237001,
       "visualType": "pr",
-      "text": "There are 4 red apples and 5 green apples. How many apples are there altogether?",
+      "text": "There are 4 red apples and 5 green apples.\nHow many apples are there altogether?",
       "answer": "9",
       "cfg": {
         "mode": "addsub",
@@ -67,7 +67,7 @@
     {
       "id": 237002,
       "visualType": "pr",
-      "text": "There are 3 footballs and 4 basketballs. How many balls are there altogether?",
+      "text": "There are 3 footballs and 4 basketballs.\nHow many balls are there altogether?",
       "answer": "7",
       "cfg": {
         "mode": "addsub",
@@ -99,7 +99,7 @@
     {
       "id": 237003,
       "visualType": "pr",
-      "text": "There are 6 ice creams and 3 lollies. How many treats are there altogether?",
+      "text": "There are 6 ice creams and 3 lollies.\nHow many treats are there altogether?",
       "answer": "9",
       "cfg": {
         "mode": "addsub",
@@ -131,7 +131,7 @@
     {
       "id": 237004,
       "visualType": "pr",
-      "text": "There are 2 bagels and 7 pretzels. How many snacks are there altogether?",
+      "text": "There are 2 bagels and 7 pretzels.\nHow many snacks are there altogether?",
       "answer": "9",
       "cfg": {
         "mode": "addsub",
@@ -163,7 +163,7 @@
     {
       "id": 237005,
       "visualType": "pr",
-      "text": "There are 4 carrots and 4 peppers. How many vegetables are there altogether?",
+      "text": "There are 4 carrots and 4 peppers.\nHow many vegetables are there altogether?",
       "answer": "8",
       "cfg": {
         "mode": "addsub",
