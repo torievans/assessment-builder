@@ -1,0 +1,148 @@
+{
+  "nuggetId": 322,
+  "status": "in-progress",
+  "nextQId": 322006,
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 5,
+          "segLabel": "5"
+        },
+        {
+          "value": 3,
+          "segLabel": "3"
+        }
+      ],
+      "total": "?",
+      "colorIdx": 2,
+      "multi": true,
+      "topBar": true
+    },
+    "visualType": "bm",
+    "answer": "8",
+    "text": "# _ – 3 = 5"
+  },
+  "questions": [
+    {
+      "id": 322001,
+      "visualType": "bm",
+      "text": "# _ – 6 = 3",
+      "answer": "9",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "segLabel": "3"
+          },
+          {
+            "value": 6,
+            "segLabel": "6"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 0,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 322002,
+      "visualType": "bm",
+      "text": "# _ – 1 = 3",
+      "answer": "4",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "segLabel": "3"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 3,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 322003,
+      "visualType": "bm",
+      "text": "# _ – 3 = 4",
+      "answer": "7",
+      "cfg": {
+        "segments": [
+          {
+            "value": 4,
+            "segLabel": "4"
+          },
+          {
+            "value": 3,
+            "segLabel": "3"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 4,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 322004,
+      "visualType": "bm",
+      "text": "# _ – 4 = 2",
+      "answer": "6",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "segLabel": "2"
+          },
+          {
+            "value": 4,
+            "segLabel": "4"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 5,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    },
+    {
+      "id": 322005,
+      "visualType": "bm",
+      "text": "# _ – 1 = 4",
+      "answer": "5",
+      "cfg": {
+        "segments": [
+          {
+            "value": 4,
+            "segLabel": "4"
+          },
+          {
+            "value": 1,
+            "segLabel": "1"
+          }
+        ],
+        "total": "?",
+        "colorIdx": 6,
+        "multi": true,
+        "topBar": true
+      },
+      "createdAt": "2026-09-03",
+      "updatedAt": "2026-09-03"
+    }
+  ]
+}
