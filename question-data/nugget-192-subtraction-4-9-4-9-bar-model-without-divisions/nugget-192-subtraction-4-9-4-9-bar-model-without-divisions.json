@@ -1,0 +1,137 @@
+{
+  "nuggetId": 192,
+  "nextQId": 192006,
+  "exampleOverride": {
+    "cfg": {
+      "segments": [
+        {
+          "value": 3,
+          "segLabel": "?"
+        },
+        {
+          "value": 5,
+          "segLabel": "5"
+        }
+      ],
+      "total": 8,
+      "colorIdx": 5,
+      "multi": true,
+      "topBar": true
+    },
+    "visualType": "bm",
+    "answer": "3",
+    "text": "# 8 – 5 ="
+  },
+  "questions": [
+    {
+      "id": 192001,
+      "visualType": "bm",
+      "text": "# 9 – 4 =",
+      "answer": "5",
+      "cfg": {
+        "segments": [
+          {
+            "value": 5,
+            "segLabel": "?"
+          },
+          {
+            "value": 4,
+            "segLabel": "4"
+          }
+        ],
+        "total": 9,
+        "colorIdx": 0,
+        "multi": true,
+        "topBar": true
+      }
+    },
+    {
+      "id": 192002,
+      "visualType": "bm",
+      "text": "# 8 – 4 =",
+      "answer": "4",
+      "cfg": {
+        "segments": [
+          {
+            "value": 4,
+            "segLabel": "?"
+          },
+          {
+            "value": 4,
+            "segLabel": "4"
+          }
+        ],
+        "total": 8,
+        "colorIdx": 1,
+        "multi": true,
+        "topBar": true
+      }
+    },
+    {
+      "id": 192003,
+      "visualType": "bm",
+      "text": "# 7 – 4 =",
+      "answer": "3",
+      "cfg": {
+        "segments": [
+          {
+            "value": 3,
+            "segLabel": "?"
+          },
+          {
+            "value": 4,
+            "segLabel": "4"
+          }
+        ],
+        "total": 7,
+        "colorIdx": 3,
+        "multi": true,
+        "topBar": true
+      }
+    },
+    {
+      "id": 192004,
+      "visualType": "bm",
+      "text": "# 9 – 7 =",
+      "answer": "2",
+      "cfg": {
+        "segments": [
+          {
+            "value": 2,
+            "segLabel": "?"
+          },
+          {
+            "value": 7,
+            "segLabel": "7"
+          }
+        ],
+        "total": 9,
+        "colorIdx": 4,
+        "multi": true,
+        "topBar": true
+      }
+    },
+    {
+      "id": 192005,
+      "visualType": "bm",
+      "text": "# 6 – 5 =",
+      "answer": "1",
+      "cfg": {
+        "segments": [
+          {
+            "value": 1,
+            "segLabel": "?"
+          },
+          {
+            "value": 5,
+            "segLabel": "5"
+          }
+        ],
+        "total": 6,
+        "colorIdx": 2,
+        "multi": true,
+        "topBar": true
+      }
+    }
+  ]
+}
